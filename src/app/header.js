@@ -1,7 +1,8 @@
+
 {/* Importing Link for navigation and icons */}
-import Link from 'next/link'
-import { ShoppingCartIcon } from '@heroicons/react/24/solid'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link';
+import { ShoppingCartIcon } from '@heroicons/react/24/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 
 export default function Header() {
@@ -28,9 +29,9 @@ export default function Header() {
                             Login
                         </Link>
                         <Link href="/register" className='class="text-sm text-blue-600 dark:text-blue-500 hover:underline"'>
-                            Register
+                            Register            
                         </Link>
-                    </div>
+                </div>
                 </div>
             </nav>
             <nav className="bg-gray-50 dark:bg-gray-700">

@@ -31,3 +31,164 @@ body {
     text-wrap: balance;
   }
 }
+/*Login page styling*/
+.card1 {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  background-color: #0E0C23;
+  width: 400px;
+  height: 600px;
+  align-items: center;
+  transition: 0.3s;
+  margin-left: 200px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  border-radius: 5px; /* 5px rounded corners */
+}
+.card2 {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  background-color: #0E0C23;
+  width: 400px;
+  height: 600px;
+  align-items: center;
+  transition: 0.3s;
+  margin-right: 200px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  border-radius: 5px; /* 5px rounded corners */
+}
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns:  auto auto auto auto;
+  background-color: #062656;
+  padding: 10px;
+  column-gap: 20px;
+  
+}
+.grid-item1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  align-items: center;
+}
+.grid-item2 {
+  grid-column-start: 3;
+  grid-column-end: 5;
+  align-items: center;
+}
+.loginButton {
+  background-color: #3EC744;
+  border-radius: 5px; /* 5px rounded corners */
+  text-align: center;
+  height: 30px;
+  width: 150px;
+}
+.loginButtonContainer{
+  display: flex;
+  align-items: center;
+  justify-content:end; /* Optional for horizontal alignment */
+}
+.cardBox{
+  padding: 30px;
+  align-items: center;
+  justify-content:center; /* Optional for horizontal alignment */
+}
+.H1Login{
+  text-align: center;
+  font-size: 40px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.loginAlternativeContainer{
+  display: flex;
+  align-items: center;
+  justify-content:center; /* Optional for horizontal alignment */
+}
+
+.loginButtonFacebook{
+  background-color: #1A68DC;
+  border-radius: 5px; /* 5px rounded corners */
+  text-align: center;
+  height: 30px;
+  width: 300px;
+}
+.loginButtonGoogle{
+  display: inline-block;
+  background-color: #C7573E;
+  border-radius: 5px; /* 5px rounded corners */
+  vertical-align: middle;
+  height: 30px;
+  width: 300px;
+  height: 30px;
+}
+.grid-div1{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  margin-right: 10px;
+}
+.grid-div2{
+  grid-column-start: 3;
+  grid-column-end: 3;
+  text-align:justify;
+}
+.grid-div3{
+  grid-column-start: 4;
+  grid-column-end: 6;
+}
+.grid-containerDivider {
+  display:grid;
+  grid-template-columns:  80px 80px 30px 80px 80px;
+  margin-top: 20px;
+}
+.subtitle{
+  text-align: center;
+  margin-top: 20px;
+  text-indent: 5px;
+  padding-inline: 10px;
+}
+.grid-benefit{
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns:  auto auto;
+  grid-template-rows: auto auto;
+  padding: 10px;
+  column-gap: 40px;
+  row-gap: 80px;
+}
+.benefit{
+  font-size: 15px;
+  text-align: center;
+  font-family:monospace
+}
+.registerContainer{
+  display: flex;
+  align-items: center;
+  justify-content:center; /* Optional for horizontal alignment */
+  margin-top: 50px;
+
+}
+.registerButton{
+  background-color: #3EC744;
+  border-radius: 5px; /* 5px rounded corners */
+  text-align: center;
+  height: 30px;
+  width: 300px;
+}
+.desc1{
+  margin: 5px;
+  align-items: center;
+}
+.desc2{
+  margin: 5px;
+  align-items: center;
+}
+.desc3{
+  margin: 5px;
+  align-items: center;
+}
+.desc4{
+  margin: 5px;
+  align-items: center;
+}
+
