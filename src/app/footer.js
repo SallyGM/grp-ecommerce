@@ -1,6 +1,6 @@
 {/* Importing Link for navigation and icons */}
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from 'next/link';
+import Image from 'next/image';
 import amexIcon from './images/amexIcon.png';
 import masterCardIcon from './images/mastercardIcon.png';
 import visaIcon from './images/visaIcon.png';
@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <div className="grid grid-rows-3 grid-cols-5 gap-1 text-xs mx-3 mt-2">
 
-      <div>
+      <div className='mx-3'>
         <b>MY ACCOUNT</b> <br/>
         <Link href="/">
           MY ACCOUNT
@@ -28,20 +28,20 @@ export default function Footer() {
         SUPPORT@GAMEBUSTER.COM
       </div>
 
-      <div className='row-span-2'>
-        <b>WE ACCEPT:</b><br/>
+      <div className='row-span-2 text-center mx-auto'>
+        <b>WE ACCEPT:</b><br/><br/>
         <Image
           src={visaIcon}
           height={40}
           width={40}
           alt="visa card"
-        />
+        /><br/>
         <Image
           src={amexIcon}
           height={40}
           width={40}
           alt="amex"
-        />
+        /><br/>
         <Image
           src={masterCardIcon}
           height={40}
@@ -51,7 +51,7 @@ export default function Footer() {
       </div>
 
       <div className='col-span-4'>
-        <hr class="h-px my-8 bg-slate-600 border-0 dark:bg-gray-700"/>
+        <hr className="h-px my-8 bg-slate-600 border-0 dark:bg-gray-700"/>
       </div>
 
       <div className='col-span-5 text-center'>
