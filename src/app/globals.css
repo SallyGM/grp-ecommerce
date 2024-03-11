@@ -106,22 +106,7 @@ body {
   justify-content:center; /* Optional for horizontal alignment */
 }
 
-.loginButtonFacebook{
-  background-color: #1A68DC;
-  border-radius: 5px; /* 5px rounded corners */
-  text-align: center;
-  height: 30px;
-  width: 300px;
-}
-.loginButtonGoogle{
-  display: inline-block;
-  background-color: #C7573E;
-  border-radius: 5px; /* 5px rounded corners */
-  vertical-align: middle;
-  height: 30px;
-  width: 300px;
-  height: 30px;
-}
+
 .grid-div1{
   grid-column-start: 1;
   grid-column-end: 3;
