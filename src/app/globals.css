@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -37,9 +37,8 @@ body {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   background-color: #0E0C23;
   width: 400px;
-  height: 600px;
+  height: 620px;
   align-items: center;
-  transition: 0.3s;
   margin-left: 200px;
   margin-top: 50px;
   margin-bottom: 30px;
@@ -50,9 +49,8 @@ body {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   background-color: #0E0C23;
   width: 400px;
-  height: 600px;
+  height: 620px;
   align-items: center;
-  transition: 0.3s;
   margin-right: 200px;
   margin-top: 50px;
   margin-bottom: 30px;
@@ -64,14 +62,13 @@ body {
   display: grid;
   grid-template-columns:  auto auto auto auto;
   background-color: #062656;
-  padding: 10px;
+  padding-left: 40px;
   column-gap: 20px;
-  
 }
 .grid-item1 {
   grid-column-start: 1;
   grid-column-end: 3;
-  align-items: center;
+  align-items:center;
 }
 .grid-item2 {
   grid-column-start: 3;
@@ -176,4 +173,12 @@ body {
   margin: 5px;
   align-items: center;
 }
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
 
