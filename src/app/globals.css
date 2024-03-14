@@ -181,4 +181,75 @@ body {
   z-index: 2;
 }
 
+/*Css product page */
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin-bottom: 500px;
+}
 
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+
+.game-table {
+  width: 100%;
+  font-size: 18px; /* You can adjust the font size as needed */
+  text-align: center; /* Center-align text */
+  color: #fff; /* Default text color */
+  border-collapse: collapse; /* Collapse border spacing */
+  background-color: #020a4f;
+}
+
+.game-table tr {
+  padding: 5px; /* Padding inside table cells */
+  border: 1px solid #f0e8e8; /* Black border around cells */
+}
+
+.prod_btn{
+  width: 100%;
+  margin-top: 10px;
+  background-color: #3EC744;
+  color: #f0e8e8;
+}
+.product.data.items {
+  display: flex; /* Use flexbox for the container */
+  gap: 20px; /* Space between items */
+}
+
+.data.item.title {
+  border-radius: 5px;
+  font-family: quantico, sans-serif;
+  font-size: 20px;
+  letter-spacing: 1.54px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 0; /* Remove margin-bottom for spacing */
+}
+
+.data.item {
+  background-color: #020a4f;
+  padding: 10px; /* Add padding for spacing */
+}
+
+/* Optional: Adjust the styling of active title if needed */
+.product.data.items>.title.active {
+  background-color: #020a4f;
+  color: #fff; /* Set text color for active title */
+}
+.banner-game{
+  background-color: #020a4f;
+  color: #fff;
+  height: 50px;
+  width: 100%;
+}
