@@ -1,4 +1,3 @@
-
 {/* Importing Link for navigation and icons */}
 import Link from 'next/link';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
