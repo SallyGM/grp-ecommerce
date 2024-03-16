@@ -1,9 +1,56 @@
-
+"use client"; 
 import Image from 'next/image'
 import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
+import { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+
 
 export default function Home() {
+  //Use the useState Hook to keep track of each inputs value
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState('');           //Create email error
+  const [passwordError, setPasswordError] = useState('');     //Create password error
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Submit form if email and password are valid
+    if (emailError === '' && passwordError === '') {
+      console.log('Email:', email);
+      console.log('Password:', password);
+      // Add your form submission logic here
+    } else {
+      console.log('Form submission error');
+    }
+    // Add here validation that check if email is associated with a user as wellas if email has been validated
+  };
+    
+   
+  // Handle password change
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    // Validate email pattern
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+    if (!isEmailValid) {
+      setEmailError('Invalid email address');
+    } else {
+      setEmailError('');
+    }
+  };
+  //Handle password change
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    // Validate password pattern (at least 8 characters and must contain one special character)
+    const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
+    if (!isPasswordValid) {
+      setPasswordError('Password must be at least 8 characters long and contain one specal character');
+    } else {
+      setPasswordError('');
+    }
+  };
+
   return (
     <div className='grid grid-rows-1 grid-cols-2 display: flex justify-content: center gap-6 row-span-1 row-end-2 bg-blue-800 ' > 
     <Card className="justify-self-end h-auto w-2/3 my-6 bg-blue-900 border-blue-900"  >
@@ -12,7 +59,7 @@ export default function Home() {
           </h5>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6 text-white font-mono" action="#" method="POST">
+          <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}" >
             <div >
               <label htmlFor="email" >
                 Email address
@@ -25,8 +72,10 @@ export default function Home() {
                   autoComplete="email"
                   placeholder='Mary.dickson@gmail.com'
                   required
+                  value={email}
+                  onChange={handleEmailChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                />{emailError && <span style={{ color: 'red', fontSize: '14px' }}>{emailError}</span>}
               </div>
             </div>
 
@@ -46,8 +95,10 @@ export default function Home() {
                   autoComplete="current-password"
                   placeholder="•••••••••"
                   required
+                  value={password}
+                  onChange={handlePasswordChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                />{passwordError && <span style={{ color: 'red', fontSize: '14px' }}>{passwordError}</span>}
               </div>
             </div>
             <div className="text-sm">
