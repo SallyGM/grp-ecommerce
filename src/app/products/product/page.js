@@ -17,9 +17,9 @@ export default function Home() {
         <div className="container m-auto flex flex-wrap gap-20 " >
             <div className="flex-1" style={{ width: '500px', height: '385px', display:"flex", marginTop:"10px" }}>
                 <div className="card" style={{ background: 'url("https://flowbite.com/docs/images/carousel/carousel-1.svg")', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%' }} >
-                    <div className="container">
+                    <div className="flex-wrap w-full">
                         <div className="banner-game">
-                            <p style={{ margin: 0, fontSize: '12px' }}>PLAYSTATION VERSION</p>
+                            <p className="text-center m-auto" style={{fontSize: '12px', margin:"auto" }}>PLAYSTATION VERSION</p>
                         </div>
                     </div>
                 </div>
