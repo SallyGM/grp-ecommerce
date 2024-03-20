@@ -1,6 +1,8 @@
 "use client"; 
 import { Button } from "flowbite-react";
 import React, { useState } from 'react';
+import { Tabs } from 'flowbite-react';
+
 
 export default function Home() {
 
@@ -11,8 +13,8 @@ export default function Home() {
     };
   
   return (
-    <div>    
-        <div className="container m-auto flex flex-wrap gap-20" >
+    <div className=" bg-blue-800">    
+        <div className="container m-auto flex flex-wrap gap-20 " >
             <div className="flex-1" style={{ width: '500px', height: '385px', display:"flex", marginTop:"10px" }}>
                 <div className="card" style={{ background: 'url("https://flowbite.com/docs/images/carousel/carousel-1.svg")', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%' }} >
                     <div className="container">
@@ -23,13 +25,13 @@ export default function Home() {
                 </div>
             </div>
             <div className="flex-1" style={{  flex: 'wrap', alignItems:"right"}}>
-                <h1 className="text-center text-2xl">Game Title</h1>
-                <h2 className="text-left text-xl font-bold" > £69.99 </h2>
+                <h1 className="text-center text-2xl dark:text-white self-center text-white font-mono">Game Title</h1>
+                <h2 className="text-left text-xl font-bold dark:text-white self-center text-white font-mono" > £69.99 </h2>
                 <div className="relative overflow-x-auto">
-                    <table className="game-table" style={{border:"10px"}}>
+                    <table className="game-table dark:text-white self-center text-white font-mono" style={{border:"10px"}}>
                         <tbody>
                             <tr>
-                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
                                     Release Date
                                 </th>
                                 <td className="px-6 py-3">
@@ -37,7 +39,7 @@ export default function Home() {
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
                                     Developer
                                 </th>
                                 <td className="px-6 py-3">
@@ -45,7 +47,7 @@ export default function Home() {
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
                                     Publisher
                                 </th>
                                 <td className="px-6 py-3">
@@ -53,7 +55,7 @@ export default function Home() {
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
                                     Delivery
                                 </th>
                                 <td className="px-6 py-3">
@@ -78,31 +80,40 @@ export default function Home() {
                             </tr>
                         </tbody>
                     </table>
-                    <Button className='prod_btn'>
+                    <Button className='prod_btn w-52 bg-green-400'>
                     ADD TO CART
                     </Button>
                 </div>
             </div>   
         </div>
-        <div className="container m-auto grid grid-rows-2 gap-2" style={{ flexWrap: 'wrap', marginTop:"50px" , marginBottom:"50px", background:"green"}}>
+        <div className="container m-auto grid  gap-2" style={{ flexWrap: 'wrap', marginTop:"50px" , marginBottom:"50px", background:" #020a4f"}}>
             <div className="part2" style={{ width: 'auto', height: 'auto' }}>
-
-                <div className="product data items" style={{flex:"wrap"}}>
-                    <div className="data item title active" id="tab-label-description" >
-                        <a className="data switch" tabIndex="-1" data-toggle="trigger" href="#description" id="tab-label-description-title">About The Game</a>
-                    </div>
-                    <div className="data item title" id="tab-label-specifications">
-                        <a className="data switch" tabIndex="-1" data-toggle="trigger" href="#specifications" id="tab-label-specifications-title" onClick={toggleSpecifications}>Specifications</a>
-                    </div>
-                    <div className="data item content hidden" aria-labelledby="tab-label-specifications-title" id="specifications" data-role="content" style={{ display: showSpecifications ? 'block' : 'none' , gridCRows: '2 / span 3' }}>
-                        <p>asdsadsadsa</p>
-                    </div>
-                    <div className="data item title" id="tab-label-reviews">
-                        <a className="data switch" tabIndex="-1" data-toggle="trigger" href="#reviews" id="tab-label-reviews-title">Reviews</a>
-                    </div>
-                    <div className="data item content hidden" aria-labelledby="tab-label-reviews-title" id="reviews" data-role="content">
-                    </div>
-                </div>
+                <Tabs aria-label="Pills" style="fullWidth">
+                    <Tabs.Item active title="About The Game">
+                        <p className="text-sm text-white dark:text-white">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                         Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
+                         Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
+                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+                    </Tabs.Item>
+                    <Tabs.Item title="Specifications">
+                        <p className="text-sm text-white dark:text-white">""At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
+                         similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore,
+                          cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. 
+                         Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+                         Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.""</p>
+                    </Tabs.Item>
+                    <Tabs.Item title="Reviews">
+                        <p className="text-sm text-white dark:text-white">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                         Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
+                         Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
+                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+                    </Tabs.Item>
+     
+            </Tabs>
             </div>
             
         </div>
