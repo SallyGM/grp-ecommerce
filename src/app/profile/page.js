@@ -12,8 +12,8 @@ export default function Home() {
 
 
     return (
-        <div className='grid grid-rows-4 grid-cols-3 display: flex justify-content: center gap-6 row-start-1 row-end-3 col-start-1 col-end-5 bg-blue-800 ' > 
-        <Card className="justify-self-end ml-6  w-96 my-6 bg-blue-900 border-blue-900 row-span-4  col-span-1"  >
+        <div className='grid grid-rows-2 grid-cols-3 display: flex justify-content: center gap-5 row-start-1 row-end-3 col-start-1 col-end-5 bg-blue-800 ' > 
+        <Card className="justify-self-end ml-6 h-auto w-96 my-6 bg-blue-900 border-blue-900 row-span-2  col-span-1"  >
             <div class="py-10 overflow-y-auto">
                 <ul class="space-y-10 font-medium">
                     <li>
@@ -73,8 +73,46 @@ export default function Home() {
         
     
         </Card>
+        
    
-        <Card className=" justify-self-center h-2/3 w-2/3  bg-blue-900 border-blue-900 row-start-3 row-end-3 col-start-2 col-end-5" >
+        <Card className=" justify-self-start ml-20 h-auto w-2/3  bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5" >
+            <div className="mt-5 ">
+            <h5 className=" text-4xl my-12 font-bold tracking-tight text-white font-mono" > ACCOUNT INFORMATION</h5>
+                <ul>
+                    <li>
+                        <a href="#" class="flex self-start text-white font-mono">
+                            FIRST NAME:
+                            <span class="flex-1 ms-20 whitespace-nowrap">
+                                    <form class="max-w-sm mx-auto">
+                                        <input type="text" id="disabled-input" aria-label="disabled input" class="w-56 mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="Disabled input" disabled/>
+                                    </form>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex self-start text-white font-mono">
+                            LAST NAME:
+                            <span class="flex-1 ms-20 whitespace-nowrap">
+                                    <form class="max-w-sm mx-auto">
+                                        <input type="text" id="disabled-input" aria-label="disabled input" class="w-56 mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="Disabled input" disabled/>
+                                    </form>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex self-start text-white font-mono">
+                            EMAIL ADDRESS:
+                            <span class="flex-1 ms-20 whitespace-nowrap">
+                                    <form class="max-w-sm mx-auto">
+                                        <input type="text" id="disabled-input" aria-label="disabled input" class="w-56 mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="Disabled input" disabled/>
+                                    </form>
+                            </span>
+                        </a>
+                    </li>
+
+                    
+                </ul>
+            </div>
         
     
         </Card>
