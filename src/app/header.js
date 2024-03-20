@@ -30,6 +30,9 @@ export default function Header() {
                         <Link href="/register" className='class="text-sm text-blue-600 dark:text-blue-500 hover:underline"'>
                             Register            
                         </Link>
+                        <Link href="/profile" className='class="text-sm text-blue-600 dark:text-blue-500 hover:underline"'>
+                            Profile            
+                        </Link>
                 </div>
                 </div>
             </nav>
