@@ -53,7 +53,7 @@ export default function Home() {
 
   return (
     <div className='grid grid-rows-1 grid-cols-2 display: flex justify-content: center gap-6 row-span-1 row-end-2 bg-blue-800 ' > 
-    <Card className="justify-self-end h-auto w-2/3 my-6 bg-blue-900 border-blue-900"  >
+    <Card className="justify-self-end h-auto  w-2/3 my-6 bg-blue-900 border-blue-900"  >
     <h5 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono ">
             LOGIN
           </h5>
@@ -145,7 +145,7 @@ export default function Home() {
 
     </Card>
 
-    <Card className=" justify-self-start h-auto w-2/3 my-6 bg-blue-900 border-blue-900" >
+    <Card className=" justify-self-start h-auto  w-2/3 my-6 bg-blue-900 border-blue-900" >
     <h5 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono ">
             REGISTER
           </h5>
