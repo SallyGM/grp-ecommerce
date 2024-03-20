@@ -99,7 +99,6 @@ body {
 .prod_btn{
   width: 100%;
   margin-top: 10px;
-  background-color: #3EC744;
   color: #f0e8e8;
 }
 .product.data.items {
@@ -133,3 +132,4 @@ body {
   height: 50px;
   width: 100%;
 }
+
