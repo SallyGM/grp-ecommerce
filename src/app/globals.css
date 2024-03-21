@@ -41,6 +41,7 @@ body {
 .grid-div2{
   grid-column-start: 3;
   grid-column-end: 3;
+  color: white;
   text-align:justify;
 }
 .grid-div3{
