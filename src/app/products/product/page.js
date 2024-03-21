@@ -1,19 +1,19 @@
 "use client"; 
-import { Button } from "flowbite-react";
+import { Button, Tabs} from "flowbite-react";
 import React, { useState } from 'react';
-import { Tabs } from 'flowbite-react';
 
 export default function Home() {
 
     const [showSpecifications, setShowSpecifications] = useState(false);
 
     const toggleSpecifications = () => {
-      setShowSpecifications(!showSpecifications);
+        setShowSpecifications(!showSpecifications);
     };
 
+    
   return (
     <div className=" bg-blue-800">    
-        <div className="container m-auto flex flex-wrap gap-20 " >
+        <div className="pl-20 pr-20 pt-20 flex flex-wrap gap-20" >
             <div className="flex-1" style={{ width: '500px', height: '385px', display:"flex", marginTop:"10px" }}>
                 <div className="card" style={{ background: 'url("https://flowbite.com/docs/images/carousel/carousel-1.svg")', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%' }} >
                     <div className="flex-wrap w-full">
@@ -85,10 +85,10 @@ export default function Home() {
                 </div>
             </div>   
         </div>
-        <div className="flex mx-12 my-20 grid gap-2" >
-            <div className="">
-                <Tabs aria-label="Pills" style='pills'>
-                    <Tabs.Item active title="About The Game" style="fullWidth">
+        <div className="flex pl-20 pr-20 pb-20 my-20 gap-2 " >
+            <div className="p-5 ">
+                <Tabs className="tabs p-1 bg-sky-950" aria-label="Pills">
+                    <Tabs.Item className="tab_item_p" active title="About The Game" >
                         <p className="text-sm text-white dark:text-white">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
                         totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
                         Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
@@ -117,5 +117,7 @@ export default function Home() {
             
         </div>
     </div>
+
+    
   );
 }

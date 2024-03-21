@@ -1,8 +1,32 @@
+'use client'
 import {  Card, Button, Carousel } from 'flowbite-react';
 import Image from 'next/image';
 import amexIcon from './images/amexIcon.png';
+import {database} from './firebaseConfig.js'
+import { ref, get } from "firebase/database";
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+
+  const [product, setProducts] = useState([]);
+
+  useEffect(() => {
+    const prodRef = ref(database, "Product");
+    get(prodRef).then((snapshot) => {
+      if(snapshot.exists()){
+        const prodArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+          id, 
+          ...data,
+        }));
+        setProducts(prodArray);
+        console.log(prodArray.data)
+      } else{
+        console.log("No data found")
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  }, []);
 
   return (
     <div>

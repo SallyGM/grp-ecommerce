@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
-
 export default function Header() {
     return (
         <div>
@@ -46,22 +45,22 @@ export default function Header() {
                                 </Link>                     
                             </li>
                             <li>
-                                <Link href="/products"  className='text-gray-900 dark:text-white hover:underline'>
+                                <Link href={{ pathname: '/products', query: {search: "pc"} }} className='text-gray-900 dark:text-white hover:underline'>
                                     PC
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/products" className='text-gray-900 dark:text-white hover:underline'>
+                                <Link href={{ pathname: '/products', query: {search: "xbox"} }} className='text-gray-900 dark:text-white hover:underline'>
                                     XBOX
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/products" className='text-gray-900 dark:text-white hover:underline'>
+                                <Link href={{ pathname: '/products', query: {search: "playstation"} }} className='text-gray-900 dark:text-white hover:underline'>
                                 Playstation
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/products" className='text-gray-900 dark:text-white hover:underline'>
+                                <Link href={{ pathname: '/products', query: {search: "nintendo"} }} className='text-gray-900 dark:text-white hover:underline'>
                                 Nintendo
                                 </Link>
                             </li>
