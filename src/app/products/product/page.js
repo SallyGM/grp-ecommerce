@@ -85,10 +85,10 @@ export default function Home() {
                 </div>
             </div>   
         </div>
-        <div className="flex pl-20 pr-20 pb-20 my-20 gap-2 bg-black" >
-            <div className="p-10">
-                <Tabs aria-label="Pills" theme='fullWidth'style="fullWidth">
-                    <Tabs.Item active title="About The Game" style={{background:"#020a4f"}}>
+        <div className="flex pl-20 pr-20 pb-20 my-20 gap-2 " >
+            <div className="p-5 ">
+                <Tabs className="tabs p-1 bg-sky-950" aria-label="Pills">
+                    <Tabs.Item className="tab_item_p" active title="About The Game" >
                         <p className="text-sm text-white dark:text-white">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
                         totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
                         Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
