@@ -87,13 +87,13 @@ body {
   font-size: 18px; /* You can adjust the font size as needed */
   text-align: center; /* Center-align text */
   color: #fff; /* Default text color */
-  border-collapse: collapse; /* Collapse border spacing */
-  background-color: #020a4f;
+  border-collapse: collapse;
+  background-color: rgb(30 58 138);
 }
 
 .game-table tr {
   padding: 5px; /* Padding inside table cells */
-  border: 1px solid #f0e8e8; /* Black border around cells */
+  border: 2px solid rgb(23 37 84); /* Black border around cells */
 }
 
 .prod_btn{
@@ -127,10 +127,11 @@ body {
   color: #fff; /* Set text color for active title */
 }
 .banner-game{
-  background-color: #020a4f;
+  background-color: rgb(30 58 138);
   color: #fff;
   height: 50px;
   width: 100%;
+  border: 2px solid rgb(23 37 84);
 }
 
 .bg-dark-night{
@@ -139,4 +140,73 @@ body {
 
 * {
   --tw-ring-color: rgb(0 0 0 / 0) !important;
+}
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+p {
+  margin-top: 20px;
+  margin-bottom: 0;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1.5;
+  
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  background: rgb(30 64 175);
+  box-shadow: 0 48px 80px -32px rgba(0,0,0,0.3);
+}
+.input {
+  position: absolute;
+  opacity: 0;
+}
+.label {
+  width: 100%;
+  margin-right: 10px;
+  padding: 20px 30px;
+  background: rgb(3, 15, 47);
+  cursor: pointer;
+  color: #ffffff;
+  transition: background 0.1s, color 0.1s;
+}
+.label:hover {
+  background: #6497ff;
+}
+.label:active {
+  background: rgb(255, 255, 255);
+}
+.input:focus + .label {
+  z-index: 1;
+}
+.input:checked + .label {
+  background: rgb(30 58 138);
+  color: #ffffff;
+}
+@media (min-width: 600px) {
+  .label {
+    width: auto;
+  }
+}
+.panel {
+  display: none;
+  padding: 20px 30px 30px;
+  background: rgb(30 58 138);
+  color:white;
+
+}
+@media (min-width: 600px) {
+  .panel {
+    order: 99;
+  }
+}
+.input:checked + .label + .panel {
+  display: block;
 }
