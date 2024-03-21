@@ -61,6 +61,11 @@ export default function Header() {
                                 </Link>
                             </li>
                             <li>
+                                <Link href="/products" className='text-gray-900 dark:text-white hover:underline'>
+                                Nintendo
+                                </Link>
+                            </li>
+                            <li>
                                 <Link href="/products/bestsellers" className='text-gray-900 dark:text-white hover:underline'>
                                     Best Sellers
                                 </Link>

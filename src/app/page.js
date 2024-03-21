@@ -1,5 +1,4 @@
-import { Carousel } from 'flowbite-react';
-import { Card, Button } from 'flowbite-react';
+import {  Card, Button, Carousel } from 'flowbite-react';
 import Image from 'next/image';
 import amexIcon from './images/amexIcon.png';
 
@@ -113,19 +112,16 @@ export default function Home() {
             </Button>
           </Button.Group>
         </Card>
-
-        <div className='col-span-2'>
-          
+      </div>
+      
+      <div className="container my-3 py-10 px-10 mx-0 min-w-full flex flex-col items-center">
+        <div className="basis-1/4"></div>
+        <div className="basis-1/2">
+          <Button>
+            See more
+          </Button>
         </div>
-
-        <Button className='mx-auto mx-4 my-6'>
-          See more
-        </Button>
-
-        <div className='col-span-2'>
-          
-        </div>
-
+        <div className="basis-1/4"></div>
       </div>
       <br/>
     </div>

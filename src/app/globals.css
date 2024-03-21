@@ -133,3 +133,10 @@ body {
   width: 100%;
 }
 
+.bg-dark-night{
+  background-color: #020a4f;
+}
+
+* {
+  --tw-ring-color: rgb(0 0 0 / 0) !important;
+}
