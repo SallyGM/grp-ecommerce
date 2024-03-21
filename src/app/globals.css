@@ -99,7 +99,6 @@ body {
 .prod_btn{
   width: 100%;
   margin-top: 10px;
-  background-color: #3EC744;
   color: #f0e8e8;
 }
 .product.data.items {
@@ -132,4 +131,12 @@ body {
   color: #fff;
   height: 50px;
   width: 100%;
+}
+
+.bg-dark-night{
+  background-color: #020a4f;
+}
+
+* {
+  --tw-ring-color: rgb(0 0 0 / 0) !important;
 }
