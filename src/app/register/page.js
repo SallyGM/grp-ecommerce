@@ -4,9 +4,9 @@ import { Card, Button } from 'flowbite-react';
 export default function Home() {
   return (
     <div className='grid grid-rows-2 grid-cols-1 display: flex justify-content: center gap-6 row-span-1 row-end-2'>
+    
     <Card className="justify-self-center h-auto w-2/3 my-6 m-2.5">
-<<<<<<< Updated upstream
-      
+
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white self-center">
         PERSONAL INFORMATION
       </h5>
@@ -134,7 +134,7 @@ export default function Home() {
         </div>
       </form>
         </div>
->>>>>>> Stashed changes
+
 
     </Card>
 
