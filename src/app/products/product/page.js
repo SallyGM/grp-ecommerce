@@ -1,18 +1,18 @@
 "use client"; 
-import { Button } from "flowbite-react";
+import { Button, Tabs} from "flowbite-react";
 import React, { useState } from 'react';
-import { Tabs } from 'flowbite-react';
 
 export default function Home() {
 
     const [showSpecifications, setShowSpecifications] = useState(false);
 
     const toggleSpecifications = () => {
-      setShowSpecifications(!showSpecifications);
+        setShowSpecifications(!showSpecifications);
     };
 
+
   return (
-    <div className=" bg-blue-800">    
+    <div className="bg-blue-800">    
         <div className="container m-auto flex flex-wrap gap-20 " >
             <div className="flex-1" style={{ width: '500px', height: '385px', display:"flex", marginTop:"10px" }}>
                 <div className="card" style={{ background: 'url("https://flowbite.com/docs/images/carousel/carousel-1.svg")', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%' }} >
