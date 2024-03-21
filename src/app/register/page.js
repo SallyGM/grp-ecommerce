@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
 
+
 export default function Home() {
   return (
     <div className='grid grid-rows-2 grid-cols-1 p-8 display: flex justify-content: center gap-6 bg-blue-800 ' >
 
 
       {/*Personal information card*/}
-      <Card className="justify-self-center flex-wrap h-auto w-4/5 my-6 bg-blue-900 border-blue-900">
+      <Card className="justify-self-center h-auto w-4/5 my-6 bg-blue-900 border-blue-900">
 
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
         <br/>
@@ -26,7 +27,6 @@ export default function Home() {
           </div>
 
         </form>
-
       </Card>
 
 
@@ -61,7 +61,6 @@ export default function Home() {
             <input className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             type="password" id="confirmPassword" name="confirmPassword" required></input>            
           </div>
-
         </form>
       </Card>
 
