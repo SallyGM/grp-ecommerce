@@ -24,7 +24,7 @@ export default function Home() {
     } else {
       console.log('Form submission error');
     }
-    // Add here validation that check if email is associated with a user as wellas if email has been validated
+    // Add validation here that checks if email is associated with a user as well as if email has been validated
   };
     
    
