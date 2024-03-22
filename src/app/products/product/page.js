@@ -3,13 +3,13 @@ import { Button, Tabs} from "flowbite-react";
 import React, { useState } from 'react';
 
 export default function Home() {
+    const [activeTab, setActiveTab] = useState('tab-1');
 
-    const [showSpecifications, setShowSpecifications] = useState(false);
-
-    const toggleSpecifications = () => {
-        setShowSpecifications(!showSpecifications);
-    };
-
+    const handleTabChange = (tabId) => {
+        setActiveTab(tabId);
+    }
+   
+ 
     
   return (
     <div className=" bg-blue-800">    
@@ -18,7 +18,7 @@ export default function Home() {
                 <div className="card" style={{ background: 'url("https://flowbite.com/docs/images/carousel/carousel-1.svg")', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%' }} >
                     <div className="flex-wrap w-full">
                         <div className="banner-game">
-                            <p className="text-center m-auto" style={{fontSize: '12px', margin:"auto" }}>PLAYSTATION VERSION</p>
+                            <p className="text-center text-lg dark:text-white self-center text-white font-mono m-auto" >PLAYSTATION VERSION</p>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@ export default function Home() {
                     <table className="game-table dark:text-white self-center text-white font-mono" style={{border:"10px"}}>
                         <tbody>
                             <tr>
-                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
+                                <th id="release_date" scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
                                     Release Date
                                 </th>
                                 <td className="px-6 py-3">
@@ -87,32 +87,37 @@ export default function Home() {
         </div>
         <div className="flex pl-20 pr-20 pb-20 my-20 gap-2 " >
             <div className="p-5 ">
-                <Tabs className="tabs p-1 bg-sky-950" aria-label="Pills">
-                    <Tabs.Item className="tab_item_p" active title="About The Game" >
-                        <p className="text-sm text-white dark:text-white">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
-                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                         Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
-                         Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
-                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
-                    </Tabs.Item>
-                    <Tabs.Item title="Specifications">
-                        <p className="text-sm text-white dark:text-white">""At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
-                         similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore,
-                          cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. 
-                         Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
-                         Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.""</p>
-                    </Tabs.Item>
-                    <Tabs.Item title="Reviews">
-                        <p className="text-sm text-white dark:text-white">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
-                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                         Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
-                         Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
-                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
-                    </Tabs.Item>
-     
-            </Tabs>
+
+                <div class="tabs">
+                <input class="input" name="tabs" type="radio" id="tab-1" checked={activeTab ==='tab-1'} onChange={() => handleTabChange('tab-1')} />
+                <label class="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-1">ABOUT THE GAME</label>
+                <div class="panel text-lg dark:text-white text-white font-mono" >
+                    <p>Mauris ultrices eros in cursus turpis. Ut pharetra sit amet aliquam id diam maecenas. <br/>
+                    Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Quisque non tellus orci ac auctor augue mauris augue neque. Nisl tincidunt eget nullam non. <br/>
+                    Sed cras ornare arcu dui vivamus arcu felis bibendum ut. 
+                    Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus. Sem integer vitae justo eget magna. <br/>
+                    Blandit cursus risus at ultrices mi. Consectetur adipiscing elit ut aliquam purus sit.</p>
+                </div>
+                <input class="input" name="tabs" type="radio" id="tab-2" checked={activeTab ==='tab-2'} onChange={() => handleTabChange('tab-2')}/>
+                <label class="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-2">SPECIFICATIONS</label>
+                <div class="panel text-lg dark:text-white text-white font-mono">
+                    <p>ILorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu augue ut lectus arcu bibendum at.<br/>
+                         Sed blandit libero volutpat sed cras. Et malesuada fames ac turpis. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. <br/>
+                         Facilisis volutpat est velit egestas dui id. Non sodales neque sodales ut etiam sit amet nisl purus. A cras semper auctor neque vitae. <br/>
+                         Vulputate dignissim suspendisse in est ante in nibh mauris cursus. Quam nulla porttitor massa id neque aliquam vestibulum morbi. Purus gravida quis blandit turpis cursus in hac habitasse platea.<br/>
+                          Viverra nibh cras pulvinar mattis nunc sed blandit libero. Viverra vitae congue eu consequat. <br/>
+                        Aliquet risus feugiat in ante metus dictum. Ultrices in iaculis nunc sed augue lacus viverra vitae. Quis viverra nibh cras pulvinar mattis nunc sed blandit.</p>
+                </div>
+                <input class="input" name="tabs" type="radio" id="tab-3"checked={activeTab ==='tab-3'} onChange={() => handleTabChange('tab-3')}/>
+                <label class="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-3">REVIEWS</label>
+                <div class="panel text-lg dark:text-white text-white font-mono">
+                    <p>Eu consequat ac felis donec et. Magna etiam tempor orci eu lobortis elementum nibh tellus molestie. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. <br/>
+                    Augue ut lectus arcu bibendum at varius vel. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Habitasse platea dictumst quisque sagittis purus.<br/>
+                     Sed elementum tempus egestas sed. Maecenas pharetra convallis posuere morbi leo urna molestie at elementum. Imperdiet proin fermentum leo vel orci porta non pulvinar. <br/>
+                    Adipiscing diam donec adipiscing tristique risus. Quisque id diam vel quam elementum pulvinar etiam. <br/>
+                     Parturient montes nascetur ridiculus mus mauris vitae. Ultrices tincidunt arcu non sodales.</p>
+                </div>
+</div>
             </div>
             
         </div>
