@@ -3,18 +3,32 @@ import { Select } from 'flowbite-react';
 import { database } from '../firebaseConfig.js'
 import { ref, get } from "firebase/database";
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Card, Button} from 'flowbite-react';
-import Image from 'next/image';
-import amexIcon from '../images/amexIcon.png';
 
 export default function Product() {
 
   const searchParams = useSearchParams();
   const data = searchParams.get('search');
 
+  var platform = [
+    {value: 1, data: "All"},
+    {value: 2, data: "PC"},
+    {value: 3, data: "XBOX"},
+    {value: 4, data: "PlayStation"},
+    {value: 5, data: "Nintendo"},
+  ];
+
+  var sort = [
+    {value: 1, data: "Newest"},
+    {value: 2, data: "Oldest"},
+    {value: 3, data: "Lowest Price"},
+    {value: 4, data: "Highest Price"}
+  ];
+
   const [product, setProducts] = useState([]);
 
+  // load products 
   useEffect(() => {
     const prodRef = ref(database, "Product");
     get(prodRef).then((snapshot) => {
@@ -31,44 +45,51 @@ export default function Product() {
     }).catch((error) => {
       console.error(error);
     });
-  }, []);
+  }, []); 
+  
+  function changeOptionOnclick(event){
+    console.log(event.target.value);
+  }
 
   return (
     <div className=''>
+      
       <div className='grid grid-cols-4 mx-3 mt-3 mb-5 gap-4 text-sm'>
         <div className='mt-2 text-right'>
           Platform:
         </div>
         <div>
-          <Select id="category" required>
-            <option>PC</option>
-            <option>XBOX</option>
-            <option>PlayStation</option>
-            <option>Nintendo</option>
+          <Select variant="outlined" label="Select Version" id="category" onChange={changeOptionOnclick} required>
+             {platform.map(p => 
+              <option value={p.value}>{p.data}</option>
+             )}
           </Select>
         </div>
         <div className='mt-2 text-right'>
           Filter:
         </div>
         <div>
-          <Select id="sort" required>
-            <option>Newest</option>
-            <option>Oldest</option>
-            <option>Lowest Price</option>
-            <option>Highest Price</option>
+          <Select id="sort" variant="outlined" label="Select Version" onChange={changeOptionOnclick} required>
+             {sort.map(p => 
+              <option value={p.value}>{p.data}</option>
+             )}
           </Select>
         </div>
         {product.filter((item) => item.console.toLowerCase().includes(data)).map((p) => (
+
           <Card key={p.id} className="max-w-sm mx-3" renderImage={() => 
-            <Image className="mx-auto" width={50} height={50} src={amexIcon} alt="image 1"  />}>
-            
+          
+            <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" />}>             
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {p.name}
             </h5>
             <p className="font-normal text-gray-700 dark:text-gray-400">
               £{p.price}
             </p>
-            <Button.Group>
+            <p className="font-normal text-gray-700 dark:text-gray-400">
+              {p.console}
+            </p>
+            <Button.Group className='inline-flex rounded-md shadow-sm'>
               <Button color="gray">View product</Button>
               <Button color="gray">
                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -78,7 +99,7 @@ export default function Product() {
               </Button>
             </Button.Group>
           </Card>
-        ))}
+          ))} 
       </div>
     </div>  
   );
