@@ -32,37 +32,6 @@ body {
     text-wrap: balance;
   }
 }
-/*Login page styling*/
-.grid-div1{
-  grid-column-start: 1;
-  grid-column-end: 3;
-  margin-right: 10px;
-}
-.grid-div2{
-  grid-column-start: 3;
-  grid-column-end: 3;
-  color: white;
-  text-align:justify;
-}
-.grid-div3{
-  grid-column-start: 4;
-  grid-column-end: 6;
-}
-.grid-containerDivider {
-  display:grid;
-  grid-template-columns:  80px 80px 30px 80px 80px;
-  margin-top: 20px;
-}
-.grid-benefit{
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns:  auto auto;
-  grid-template-rows: auto auto;
-  padding: 10px;
-  column-gap: 40px;
-  row-gap: 80px;
-}
-
 
 /*Css product page */
 .card {
