@@ -20,17 +20,17 @@ export default function Home() {
       <div>
       <h1 className="text-center mb-5 text-3xl dark:text-white self-center text-white font-mono">MY CART</h1>
       </div>
-      <div className='top_bar_basket grid grid-cols-3 flex-wrap m-s ml-20 mr-20 mt-1 p-5'>
-        <h3 className='ml-20 ext-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white'>Product</h3>
-        <h3 className='ml-40 ext-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white'>Quantity</h3>
-        <h3 className='ml-20 ext-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white'>Subtotal</h3>
+      <div className='top_bar_basket grid grid-cols-4 flex-wrap ml-20 mr-20 p-5' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
+        <h3 className=' ext-4xl  font-bold tracking-tight dark:text-white text-white'>Product</h3>
+        <h3 className=' ext-4xl font-bold tracking-tight dark:text-white  text-white'>Quantity</h3>
+        <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Subtotal</h3>
       </div>
       <div className='grid grid-rows-3 flex-wrap m-s ml-20 mr-20 mt-5'>
         <Card className=" flex h-auto  w-full my-6 bg-transparent border-white" >
-          <div className='grid grid-cols-4 flex-wrap'>
-            <img class="items-start first-line:h-40 w-40 ml-4" src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="image description"/>
-            <form class="max-w-xs ml-70  self-center">
-              <div class="relative flex items-center max-w-[8rem]">
+          <div className='grid grid-cols-4 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr',justifyItems: 'center' }}>
+            <img class="first-line:h-40   w-40 " src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="image description"/>
+            <form class="max-w-xs ">
+              <div class="flex max-w-[8rem]">
                   <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input" class="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none" onClick={handleDecrement}>
                       <svg class="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
@@ -44,8 +44,8 @@ export default function Home() {
                   </button>
               </div>
             </form>        
-            <h2 id="sub_total" className="text-left flex ml-40 pl-3 text-2xl dark:text-white self-center text-white font-mono ">££££</h2>
-            <img class="first-line:h-10 w-10 flex-wrap self-center" src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt="image description"/>
+            <h2 id="sub_total" className="flex  text-2xl dark:text-white text-white font-mono ">££££</h2>
+            <img class="first-line:h-10  w-10 flex-wrap" src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt="image description"/>
 
           </div>
 
