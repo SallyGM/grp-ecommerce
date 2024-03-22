@@ -52,7 +52,7 @@ export default function Home() {
   };
 
   return (
-    <div className='grid grid-rows-1 grid-cols-2 display: flex justify-content: center gap-6 row-span-1 row-end-2 bg-blue-800 ' > 
+    <div className='grid grid-rows-1 grid-cols-2 display: flex  gap-6 row-span-1 row-end-2 bg-blue-800 ' > 
     <Card className="justify-self-end h-auto  w-2/3 my-6 bg-blue-900 border-blue-900"  >
     <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono ">
             LOGIN
@@ -143,12 +143,12 @@ export default function Home() {
           </form>
             </div>
 
-    </Card>
+    </Card> 
 
     <Card className=" justify-self-start h-auto  w-2/3 my-6 bg-blue-900 border-blue-900" >
-        <h1 className="text-4xl font-bold text-white font-mono ">
-          REGISTER
-        </h1>
+    <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono ">
+            REGISTER
+          </h1>
 
         <p className="text-white text-center font-mono my-8">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMUNITY</p>
         <div class="grid-benefit">
