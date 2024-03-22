@@ -64,7 +64,7 @@ export default function Home() {
         </form>
       </Card>
 
-      <Button className="w-4/12 justify-self-center bg-green-400" type="submit">CREATE ACCOUNT</Button>
+      <Button className="w-4/12 justify-self-center" color='success' type="submit">CREATE ACCOUNT</Button>
 
     </div>
   )}

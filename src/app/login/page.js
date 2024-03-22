@@ -36,7 +36,7 @@ export default function Home() {
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
     if (!isEmailValid) {
       setEmailError('Invalid email address');
-    } else {
+    }else {
       setEmailError('');
     }
   };
@@ -55,11 +55,11 @@ export default function Home() {
   };
 
   return (
-    <div className='grid grid-rows-1 grid-cols-2 display: flex justify-content: center gap-6 row-span-1 bg-blue-800 ' > 
-      <Card className="justify-self-end h-auto  w-2/3 my-6 bg-blue-900 border-blue-900"  >
-        <h1 className="self-center text-4xl font-bold text-white font-mono ">LOGIN</h1>
+    <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-blue-800'> 
+      <Card className="justify-self-end h-auto w-2/3 my-6 bg-blue-900 border-blue-900">
+        <h1 className="self-center text-4xl font-bold text-white font-mono">LOGIN</h1>
         <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}" >
+          <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}">
 
             <div>
               <label htmlFor="email">Email address</label>
@@ -76,7 +76,7 @@ export default function Home() {
             </div>
           </form>
           <a href="#" className="text-sm font-semibold text-indigo-600  hover:text-indigo-500 text-white">Forgot password?</a>
-          <Button className="justify-self-center w-full mt-7 bg-green-400" type="submit">LOGIN</Button>
+          <Button className="justify-self-center w-full mt-7 bg-green-400" type="submit" color='success' >LOGIN</Button>
           </div>
 
           {/*Divider between login options*/} 
@@ -87,16 +87,16 @@ export default function Home() {
           </div>
           
           {/*Facebook sign in button*/}
-          <Button className="inline-flex bg-blue-900 text-white w-72 self-center">
-            <svg className="w-6 h-6 text-white m-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <Button className="inline-flex bg-blue-900 text-white w-72 self-center" color='blue'>
+            <svg className="w-6 h-6 mr-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
             </svg>
             Sign in with Facebook
           </Button>
 
           {/*Google sign in button*/}
-          <Button className="inline-flex bg-red-700 text-white w-72 self-center">
-            <svg className="w-6 h-6 text-white m-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <Button className="inline-flex text-white w-72 self-center" color='red'>
+            <svg className="w-6 h-6 mr-3" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
             </svg>
             Sign in with Google
@@ -105,10 +105,8 @@ export default function Home() {
       </Card>
 
       <Card className=" justify-self-start h-auto  w-2/3 my-6 bg-blue-900 border-blue-900" >
-        <h1 className="self-center text-4xl font-bold text-white font-mono mt-8 ">REGISTER</h1>
-
+        <h1 className="self-center text-4xl font-bold text-white font-mono">REGISTER</h1>
         <p className="text-white text-center font-mono my-8">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMUNITY</p>
-        
         <div class="inline-flex mt-6 place-content-evenly">
           <svg className="text-white mr-6" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-tags" viewBox="0 0 16 16">
             <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z"/>
@@ -123,7 +121,7 @@ export default function Home() {
           <a className="text-white font-mono">BE PART OF A COMMUNITY</a>
         </div>
 
-        <Button type="submit" className=" self-center w-72 my-28 bg-green-400">
+        <Button type="submit" className=" self-center w-72 mt-6 " color='success'>
           <Link href="/register">REGISTER</Link>
         </Button>
 
