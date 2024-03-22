@@ -62,6 +62,8 @@ body {
   column-gap: 40px;
   row-gap: 80px;
 }
+
+
 /*Css product page */
 .card {
   /* Add shadows to create the "card" effect */
@@ -78,23 +80,20 @@ body {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-/* Add some padding inside the card container */
-.container {
-  padding: 2px 16px;
-}
+
 
 .game-table {
   width: 100%;
   font-size: 18px; /* You can adjust the font size as needed */
   text-align: center; /* Center-align text */
   color: #fff; /* Default text color */
-  border-collapse: collapse; /* Collapse border spacing */
-  background-color: #020a4f;
+  border-collapse: collapse;
+  background-color:rgb(3, 15, 47);
 }
 
 .game-table tr {
   padding: 5px; /* Padding inside table cells */
-  border: 1px solid #f0e8e8; /* Black border around cells */
+  border: 2px solid rgb(255, 255, 255); 
 }
 
 .prod_btn{
@@ -102,36 +101,13 @@ body {
   margin-top: 10px;
   color: #f0e8e8;
 }
-.product.data.items {
-  display: flex; /* Use flexbox for the container */
-  gap: 20px; /* Space between items */
-}
 
-.data.item.title {
-  border-radius: 5px;
-  font-family: quantico, sans-serif;
-  font-size: 20px;
-  letter-spacing: 1.54px;
-  text-transform: uppercase;
-  color: #fff;
-  margin-bottom: 0; /* Remove margin-bottom for spacing */
-}
-
-.data.item {
-  background-color: #020a4f;
-  padding: 10px; /* Add padding for spacing */
-}
-
-/* Optional: Adjust the styling of active title if needed */
-.product.data.items>.title.active {
-  background-color: #020a4f;
-  color: #fff; /* Set text color for active title */
-}
 .banner-game{
-  background-color: #020a4f;
+  background-color: rgb(30 58 138);
   color: #fff;
   height: 50px;
   width: 100%;
+  border: 2px solid rgb(23 37 84);
 }
 
 .bg-dark-night{
@@ -140,4 +116,78 @@ body {
 
 * {
   --tw-ring-color: rgb(0 0 0 / 0) !important;
+}
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin-top: 20px;
+  line-height: 1.5;
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  background: rgb(30 64 175);
+  box-shadow: 0 48px 80px -32px rgba(0,0,0,0.3);
+}
+.input {
+  position: absolute;
+  opacity: 0;
+}
+.label {
+  width: 100%;
+  margin-right: 10px;
+  padding: 20px 30px;
+  background: rgb(3, 15, 47);
+  cursor: pointer;
+  color: #ffffff;
+  transition: background 0.1s, color 0.1s;
+}
+.label:hover {
+  background: #6497ff;
+}
+.label:active {
+  background: rgb(255, 255, 255);
+  margin-bottom: 0px;
+}
+.input:focus + .label {
+  z-index: 1;
+}
+.input:checked + .label  {
+  background:rgb(3, 15, 47);
+  color: #ffffff;
+}
+@media (min-width: 600px) {
+  .label {
+    width: auto;
+  }
+}
+.panel {
+  display: none;
+  padding: 20px 30px 30px;
+  background:rgb(3, 15, 47);
+  color:white;
+
+}
+@media (min-width: 600px) {
+  .panel {
+    order: 99;
+  }
+}
+.input:checked + .label + .panel {
+  display: block;
+}
+/* Change color of space between tab and panel */
+.input:checked + .label::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px; /* Adjust the height of the space as needed */
+  background-color:rgb(30 64 175); /* Change the color of the space */
+  margin-top: 10px; /* Adjust the top margin to create space */
 }
