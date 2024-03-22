@@ -84,7 +84,7 @@ body {
 
 .game-table {
   width: 100%;
-  font-size: 18px; /* You can adjust the font size as needed */
+  font-size: 18px; 
   text-align: center; /* Center-align text */
   color: #fff; /* Default text color */
   border-collapse: collapse;
@@ -107,7 +107,7 @@ body {
   color: #fff;
   height: 50px;
   width: 100%;
-  border: 2px solid rgb(23 37 84);
+  border: 2px solid #020a4f;
 }
 
 .bg-dark-night{
@@ -190,4 +190,20 @@ p {
   height: 4px; /* Adjust the height of the space as needed */
   background-color:rgb(30 64 175); /* Change the color of the space */
   margin-top: 10px; /* Adjust the top margin to create space */
+}
+
+/*CSS BASKET*/
+.top_bar_basket{
+  background-color:#020a4f;
+}
+.basket_btn{
+  width:35%;
+}
+
+.total_box{
+  background-color: #020a4f;
+}
+.input_btn{
+  background-color: #020a4f;
+    
 }
