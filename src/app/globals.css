@@ -176,3 +176,15 @@ p {
   background-color: #020a4f;
     
 }
+
+.slick-slide > div {
+  margin: 0 15px;
+}
+
+.slick-dots li button:before {
+  color: gray !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color:white !important;
+}
