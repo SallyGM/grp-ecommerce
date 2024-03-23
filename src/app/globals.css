@@ -188,3 +188,9 @@ p {
 .slick-dots li.slick-active button:before {
   color:white !important;
 }
+
+
+.bg-salmon {
+  background-color: salmon;
+  color: white;
+}

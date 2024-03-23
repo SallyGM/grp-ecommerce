@@ -4,7 +4,7 @@ import { Card, Button } from 'flowbite-react';
 
 export default function Home() {
   return (
-    <div className='grid grid-rows-2 grid-cols-1 p-8 display: flex justify-content: center gap-6 bg-blue-800 ' >
+    <div className='grid grid-rows-2 grid-cols-1 p-8 display: flex justify-content: center gap-6 bg-dark-night'>
 
 
       {/*Personal information card*/}

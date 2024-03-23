@@ -55,7 +55,7 @@ export default function Home() {
   };
 
   return (
-    <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-blue-800'> 
+    <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-dark-night'> 
       <Card className="justify-self-end h-auto w-2/3 my-6 bg-blue-900 border-blue-900">
         <h1 className="self-center text-4xl font-bold text-white font-mono">LOGIN</h1>
         <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
