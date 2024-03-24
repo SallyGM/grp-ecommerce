@@ -10,7 +10,6 @@ import AddressBook from '@/addressBook';
 import CardStored from '@/cardStored';
 import MyOrders from '@/myorders';
 import MyReviews from '@/myReviews';
-import { SelectItem } from '@nextui-org/react';
 
 export default function Home() {
     //Use the useState Hook to manage side bar clicks

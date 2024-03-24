@@ -2,11 +2,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
-import { useEffect, useState } from 'react';
+//import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
-import {database} from './firebaseConfig.js'
-import { ref , get } from "firebase/database";
+//import {database} from './firebaseConfig.js';
+//import { ref , get } from "firebase/database";
 import { User } from '@nextui-org/react';
 
 
