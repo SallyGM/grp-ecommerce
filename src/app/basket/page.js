@@ -5,6 +5,8 @@ import { Card, Button } from 'flowbite-react';
 export default function Home() {
 
   const [quantity,setQuantity] = useState(1);
+  const[isVisible, setIsVisible] =  useState(true);
+ 
   const handleDecrement = () => {
     if(quantity >1){
       setQuantity(quantity -1);
@@ -12,6 +14,10 @@ export default function Home() {
   }
   const handleIncrement = () =>{
     setQuantity(quantity + 1);
+  };
+
+  const handleDelete = () => {
+    setIsVisible(false);
   };
   
 
@@ -25,7 +31,9 @@ export default function Home() {
         <h3 className=' ext-4xl font-bold tracking-tight dark:text-white  text-white'>Quantity</h3>
         <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Subtotal</h3>
       </div>
+     
       <div className='grid grid-rows-3 flex-wrap m-s ml-20 mr-20 mt-5'>
+      {isVisible &&(
         <Card className=" flex h-auto  w-full my-6 bg-transparent border-white" >
           <div className='grid grid-cols-4 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr',justifyItems: 'center' }}>
             <img class="first-line:h-40   w-40 " src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="image description"/>
@@ -45,11 +53,11 @@ export default function Home() {
               </div>
             </form>        
             <h2 id="sub_total" className="flex  text-2xl dark:text-white text-white font-mono ">££££</h2>
-            <img class="first-line:h-10  w-10 flex-wrap" src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt="image description"/>
+            <img class="first-line:h-10  w-10 flex-wrap" src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt="image description" onClick={handleDelete}/>
 
           </div>
 
-        </Card>
+        </Card> )}
       <Card className=" justify-self-start h-auto  w-full my-6 bg-transparent border-white" >
       </Card>
       <Card className=" justify-self-start h-auto  w-full my-6 bg-transparent border-white" >
