@@ -6,7 +6,6 @@ import { ref , get } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { database } from './app/firebaseConfig';
 
-//query: {search: "w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card"} 
 
 export default function CardStored() {
     // Firebase information retrival function here
@@ -14,7 +13,7 @@ export default function CardStored() {
     const [card, setCard] = useState([]);
 
     useEffect(() => {
-        const cardRef = firebase.database().ref('User').child("w1FJVaOVCsSlsog2b7mUIuG8Xgd2").child("card");
+        const cardRef = firebase.database().ref('User').child('w1FJVaOVCsSlsog2b7mUIuG8Xgd2').child('card');
         get(cardRef).then((snapshot) => {
           if(snapshot.exists()){
             const cardArray = Object.entries(snapshot.val()).map(([id, data]) => ({
@@ -47,7 +46,7 @@ export default function CardStored() {
                 {/*This is the card that can be used as a component nested in cardStored component */}
                 <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
                 {/*{card.map((c) => (*/}
-                    <Card className=" flex h-auto w-full bg-transparent border-white">{/*key={c.id}*/} 
+                    <Card className=" flex h-auto w-full bg-transparent border-white">{/*key={c.id}*/}
                         <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
                             <img id = "card_type" class="first-line:h-8 w-8 flex-wrap justify-self-center" src="https://www.iconbolt.com/iconsets/payment-method/american-card-express-method-payment.svg" alt="card"/>
                             <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{/*{c.fullName}*/}</h2>
@@ -57,7 +56,7 @@ export default function CardStored() {
                             <img class="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address"/>
                         </div>
                     </Card>
-               {/*} ))}*/}
+               {/* ))}*/}
 
                 </div>  
                 <div className='flex justify-self-start mt-10 ml-10'>
