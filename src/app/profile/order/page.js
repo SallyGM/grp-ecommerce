@@ -1,21 +1,16 @@
 "use client"; 
-import Image from 'next/image'
-import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
-import { useState } from 'react';
-import ReactDOM from 'react-dom/client';
 import React from 'react';
-
+import SubNavbar from '../subNavbar.js'
 
 export default function MyOrders() {
 
     // Firebase information retrival function here
 
-
-
-
     return(
-        <Card className=" justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+        <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
+            <SubNavbar />
+            <Card className=" justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
                 <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > MY ORDER HISTORY</h5>
 
                 <div className='top_bar_basket grid grid-cols-5 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
@@ -33,7 +28,7 @@ export default function MyOrders() {
                             <h2 id="order_date" className="flex dark:text-white text-white font-mono ">25/02/2024</h2>
                             <h2 id="order_amount" className="flex dark:text-white text-white font-mono ">£ 25.86</h2>
                             <h2 id="order_status" className="flex dark:text-white text-white font-mono ">PENDING</h2>
-                            <img class="first-line:h-6 w-6 flex-wrap" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/atlas-icons/navigation-move-movement-arrow-direction-pointer-control-next-right.svg" alt="edit address"/>
+                            <img className="first-line:h-6 w-6 flex-wrap" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/atlas-icons/navigation-move-movement-arrow-direction-pointer-control-next-right.svg" alt="edit address"/>
                         </div>
                     </Card>
 
@@ -43,7 +38,7 @@ export default function MyOrders() {
                             <h2 id="order_date" className="flex dark:text-white text-white font-mono ">19/03/2024</h2>
                             <h2 id="order_amount" className="flex dark:text-white text-white font-mono ">£ 75.46</h2>
                             <h2 id="order_status" className="flex dark:text-white text-white font-mono ">IN TRANSIT</h2>
-                            <img class="first-line:h-6 w-6 flex-wrap" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/atlas-icons/navigation-move-movement-arrow-direction-pointer-control-next-right.svg" alt="edit address"/>
+                            <img className="first-line:h-6 w-6 flex-wrap" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/atlas-icons/navigation-move-movement-arrow-direction-pointer-control-next-right.svg" alt="edit address"/>
                         </div>
                     </Card>
 
@@ -53,12 +48,11 @@ export default function MyOrders() {
                             <h2 id="order_date" className="flex dark:text-white text-white font-mono ">01/02/2024</h2>
                             <h2 id="order_amount" className="flex dark:text-white text-white font-mono ">£ 58.86</h2>
                             <h2 id="order_status" className="flex dark:text-white text-white font-mono ">DELIVERED</h2>
-                            <img class="first-line:h-6 w-6 flex-wrap" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/atlas-icons/navigation-move-movement-arrow-direction-pointer-control-next-right.svg" alt="edit address"/>
+                            <img className="first-line:h-6 w-6 flex-wrap" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/atlas-icons/navigation-move-movement-arrow-direction-pointer-control-next-right.svg" alt="edit address"/>
                         </div>
                     </Card>
-
-                </div>  
-                
-        </Card>
+                </div>             
+            </Card>
+        </div>   
     )
 }

@@ -1,38 +1,40 @@
 "use client"; 
 import { Card, Button } from 'flowbite-react';
-import ReactDOM from 'react-dom/client';
 import React from 'react';
 import { ref , get } from "firebase/database";
-import { useEffect, useState } from 'react';
-import { database } from './app/firebaseConfig';
-
+import { useEffect, useState} from 'react';
+import { database } from '../../firebaseConfig';
+import SubNavbar from '../subNavbar'
 
 export default function CardStored() {
     // Firebase information retrival function here
- {/*
-    const [card, setCard] = useState([]);
+ 
+    const [cardDetails, setCardDetails] = useState([]);
 
     useEffect(() => {
-        const cardRef = firebase.database().ref('User').child('w1FJVaOVCsSlsog2b7mUIuG8Xgd2').child('card');
+        const cardRef = ref(database, "User");
         get(cardRef).then((snapshot) => {
-          if(snapshot.exists()){
-            const cardArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-              id, 
-              ...data,
-            }));
-            setCard(cardArray);
-          } else{
-            console.log("No data found")
-          }
+            if (snapshot.exists()) {
+                const cardArray = Object.entries(snapshot.child('w1FJVaOVCsSlsog2b7mUIuG8Xgd2').child('card').val()).map(([id, data]) => ({
+                    id,
+                    ...data,
+                }));
+                setCardDetails(cardArray);
+            } else {
+                console.log("No data found")
+            }
         }).catch((error) => {
-          console.error(error);
+            console.error(error);
         });
-      }, []);
+    }, []); // Removed card from the dependency array
 
-*/}
+    console.log(cardDetails);
 
     return(
-        <Card className=" justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+        <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
+            <SubNavbar />
+
+            <Card className=" justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
                 <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > MY PAYMENT METHODS</h5>
 
                 <div className='top_bar_basket grid grid-cols-6 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
@@ -65,12 +67,13 @@ export default function CardStored() {
                         className="w-60 inline-flex text-white self-center " color='blue'> 
                         ADD NEW CARD
                         <svg className="w-6 h-6 ml-3" fill='currentColor' stroke='white' aria-hidden="true" xmlns="https://reactsvgicons.com/search?q=add" viewBox="0 0 512 512">
-                        <path fill="none" stroke="currentColor" strokeMiterlimit={10} strokeWidth={32} d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"/>
-                        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M256 176v160M336 256H176"/>
+                            <path fill="none" stroke="currentColor" strokeMiterlimit={10} strokeWidth={32} d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"/>
+                            <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M256 176v160M336 256H176"/>
                         </svg>
                     </Button>
                 </div>
                 
-        </Card>
+            </Card>
+        </div>
     )
 }

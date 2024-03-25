@@ -1,7 +1,5 @@
 'use client'
 import {  Card, Button, Carousel } from 'flowbite-react';
-import Image from 'next/image';
-import amexIcon from './images/amexIcon.png';
 import {database} from './firebaseConfig.js'
 import { ref, get } from "firebase/database";
 import { useEffect, useState } from 'react';
@@ -12,8 +10,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function Home() {
 
+  // variable that will hold all products 
   const [product, setProducts] = useState([]);
 
+  // settings for the slider
   var settings = {
     dots: true,
     infinite: true,
@@ -22,6 +22,7 @@ export default function Home() {
     slidesToScroll: 1,
   };
 
+  // retrieves the product table
   useEffect(() => {
     const prodRef = ref(database, "Product");
     get(prodRef).then((snapshot) => {
@@ -32,7 +33,7 @@ export default function Home() {
         }));
         setProducts(prodArray);
       } else{
-        console.log("No data found")
+        console.log("No data found");
       }
     }).catch((error) => {
       console.error(error);
@@ -78,27 +79,7 @@ export default function Home() {
               </Card>
             ))}
       </Slider>
-      {/***<div className='flex flex-row flex-wrap my-3 mx-5'> 
-        {product.sort((a, b) =>  a.sold < b.sold ? 1 : -1).slice(0, 5).map((p) => (
-          <Card className="w-1/5 mx-3 my-3" renderImage={() => <Image className="mx-auto" width={50} height={50} src={amexIcon} alt="image 1"  />}>
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {p.name}
-            </h5>
-            <p className="font-normal text-gray-700 dark:text-gray-400">
-              £{p.price}
-            </p>
-              <Button color="gray">View product</Button>
-              <Button color="gray">
-                Add to Cart
-                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd"/>
-                  <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd"/>
-                </svg>
-              </Button>
-            </Card>
-          ))}
-        </div>*/}
-      
+    
       <div className="container my-3 py-10 px-10 mx-0 min-w-full flex flex-col items-center">
         <div className="basis-1/4"></div>
         <div className="basis-1/2">
