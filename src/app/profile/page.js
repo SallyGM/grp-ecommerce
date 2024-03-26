@@ -60,6 +60,7 @@ export default function Home() {
 
 
     return (
+        
         <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
             <SubNavbar />
        
