@@ -47,18 +47,18 @@ export default function CardStored() {
                 </div>
                 {/*This is the card that can be used as a component nested in cardStored component */}
                 <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
-                {/*{card.map((c) => (*/}
-                    <Card className=" flex h-auto w-full bg-transparent border-white">{/*key={c.id}*/}
+                {cardDetails.map((c) => (
+                    <Card key={c.id} className=" flex h-auto w-full bg-transparent border-white mt-2">
                         <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
                             <img id = "card_type" class="first-line:h-8 w-8 flex-wrap justify-self-center" src="https://www.iconbolt.com/iconsets/payment-method/american-card-express-method-payment.svg" alt="card"/>
-                            <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{/*{c.fullName}*/}</h2>
-                            <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{/*{c.cardNumber}*/}</h2>
-                            <h2 id="billing_address" className="flex dark:text-white text-white font-mono ">{/*{c.billAddress}*/}</h2>
+                            <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.fullName}</h2>
+                            <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber}</h2>
+                            <h2 id="billing_address" className="flex dark:text-white text-white font-mono ">{c.billAddress}</h2>
                             <img class="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit address"/>
                             <img class="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address"/>
                         </div>
                     </Card>
-               {/* ))}*/}
+                ))}
 
                 </div>  
                 <div className='flex justify-self-start mt-10 ml-10'>

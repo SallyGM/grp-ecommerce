@@ -2,10 +2,33 @@
 import { Card, Button } from 'flowbite-react';
 import React from 'react';
 import SubNavbar from '../subNavbar.js'
+import { useEffect, useState} from 'react';
+import { ref , get } from "firebase/database";
+import { database } from '@/app/firebaseConfig.js';
 
 export default function AddressBook() {
 
     // Firebase information retrival function here
+    const [addressDetails, setAddressDetails] = useState([]);
+
+    useEffect(() => {
+        const addressRef = ref(database, "User");
+        get(addressRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const addressArray = Object.entries(snapshot.child('w1FJVaOVCsSlsog2b7mUIuG8Xgd2').child('address').val()).map(([id, data]) => ({
+                    id,
+                    ...data,
+                }));
+                setAddressDetails(addressArray);
+            } else {
+                console.log("No data found")
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }, []); // Removed card from the dependency array
+
+    console.log(addressDetails);
 
     return(
         <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
@@ -23,39 +46,18 @@ export default function AddressBook() {
                 </div>
                 {/*This is the card that can be used as a component nested in addressBook component */}
                 <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
-                    <Card className=" flex h-auto w-full bg-transparent border-white">
+                {addressDetails.map((a) => (
+                    <Card key={a.id} className=" flex h-auto w-full bg-transparent border-white">
                         <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
-                            <h2 id="street_name" className="flex dark:text-white text-white font-mono ">Gabriel street</h2>
-                            <h2 id="city" className="flex dark:text-white text-white font-mono ">London</h2>
-                            <h2 id="country" className="flex dark:text-white text-white font-mono ">United Kingdom</h2>
-                            <h2 id="postal_code" className="flex dark:text-white text-white font-mono ">SE18 2KU</h2>
+                            <h2 id="street_name" className="flex dark:text-white text-white font-mono ">{a.street}</h2>
+                            <h2 id="city" className="flex dark:text-white text-white font-mono ">{a.City}</h2>
+                            <h2 id="country" className="flex dark:text-white text-white font-mono ">{a.country}</h2>
+                            <h2 id="postal_code" className="flex dark:text-white text-white font-mono ">{a.postCode}</h2>
                             <img className="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit address"/>
                             <img className="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address"/>
                         </div>
                     </Card>
-
-                    <Card className=" flex h-auto w-full mt-2 bg-transparent border-white">
-                        <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
-                            <h2 id="street_name" className="flex dark:text-white text-white font-mono ">Gabriel street</h2>
-                            <h2 id="city" className="flex dark:text-white text-white font-mono ">London</h2>
-                            <h2 id="country" className="flex dark:text-white text-white font-mono ">United Kingdom</h2>
-                            <h2 id="postal_code" className="flex dark:text-white text-white font-mono ">SE18 2KU</h2>
-                            <img className="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit address"/>
-                            <img className="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address"/>
-                        </div>
-                    </Card>
-
-                    <Card className=" flex h-auto w-full mt-2 bg-transparent border-white">
-                        <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
-                            <h2 id="street_name" className="flex dark:text-white text-white font-mono ">Gabriel street</h2>
-                            <h2 id="city" className="flex dark:text-white text-white font-mono ">London</h2>
-                            <h2 id="country" className="flex dark:text-white text-white font-mono ">United Kingdom</h2>
-                            <h2 id="postal_code" className="flex dark:text-white text-white font-mono ">SE18 2KU</h2>
-                            <img className="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit address"/>
-                            <img className="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address"/>
-                        </div>
-                    </Card>
-
+                ))}
                 </div>    
                 <div className='flex justify-self-start mt-10 ml-10'>
                     <Button
