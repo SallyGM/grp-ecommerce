@@ -1,10 +1,11 @@
 "use client"; 
 import { Card, Button } from 'flowbite-react';
-import { useEffect, useState} from 'react';
+import { Fragment, useEffect, useState} from 'react';
 import { ref , get } from "firebase/database";
 import { database } from '../firebaseConfig.js';
 import React from 'react';
 import SubNavbar from './subNavbar.js'
+import Modal from '@/components/modal.js';
 
 
 export default function Home() {
@@ -16,6 +17,10 @@ export default function Home() {
     const [editButtonClicked, setEditButtonClicked] = useState(false);
     const [saveButtonClicked, setSaveButtonClicked] = useState(false);
     const [activateInputfields, setInputFieldActive] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const [showDeletedModal, setShowDeleteModal] = useState(false);
+    
 
     const handleEditButtonClick = () => {
         setEditButtonClicked(true);
@@ -27,11 +32,28 @@ export default function Home() {
     const handleSaveButtonClick = () => {
         setSaveButtonClicked(true);
         setEditButtonClicked(false);
-        //set input field disable only when the user confirm the edit changes(logic to be created)
-          
         setInputFieldActive(false)
         // Additional logic if needed
       };
+      // Function that handle confirm button click on personal details changes dialog
+      const handleConfirmButtonClick = () => {
+        // Write to Firebase the changes here
+        setShowModal(false);
+        setSaveButtonClicked(true);
+        setEditButtonClicked(false);
+        setInputFieldActive(false)
+      }
+      // Function that handle confirm button click on reset password changes dialog
+      const handleConfirmPasswordButtonClick = () => {
+        // Write to Firebase the changes here
+        setShowPasswordModal(false);
+      }
+      // Function that handle confirm button click on delete account dialog
+      const handleDeleteAccountButtonClick = () => {
+        // Write to Firebase the changes here
+        setShowDeleteModal(false);
+      }
+      
 
         
 
@@ -60,7 +82,7 @@ export default function Home() {
 
 
     return (
-        
+        <Fragment>
         <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
             <SubNavbar />
        
@@ -91,7 +113,7 @@ export default function Home() {
                             <Button
                                 type="submit"
                                 className="w-40 visible justify-self-end mr-24" color='success'
-                                onClick={handleSaveButtonClick} 
+                                onClick={()=> setShowModal(true)}
                                 disabled={!editButtonClicked || saveButtonClicked}>
                                 SAVE
                             </Button>
@@ -104,7 +126,9 @@ export default function Home() {
                 <div className='flex justify-evenly mt-10'>
                     <Button
                         type="submit"
-                        className="w-52" color='red'> 
+                        className="w-52 " color='red'
+                        onClick={()=> setShowPasswordModal(true)}
+                        disabled={showPasswordModal}>
                         CHANGE PASSWORD
                     </Button>
                     <Button
@@ -121,11 +145,62 @@ export default function Home() {
                 <div>
                     <Button
                         type="submit"
-                        className="w-96 text-white">
+                        className="w-96 text-white"
+                        onClick={()=> setShowDeleteModal(true)}
+                        disabled={showDeletedModal}>
                         DELETE ACCOUNT
                     </Button>
                 </div>
             </div>
         </div>   
+        {/*Personal details modal */}
+        <Modal isVisible={showModal} onClose ={()=> setShowModal(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>PERSONAL DETAILS CHANGES</h3>
+            <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to save the changes?</h3>
+            <div className='flex justify-evenly mt-10'>
+                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</Button>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmButtonClick()}>CONFIRM</Button>
+            </div>
+        </Modal>
+        {/*Change password modal */}
+        <Modal isVisible={showPasswordModal} onClose ={()=> setShowPasswordModal(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHANGE YOUR PASSWORD</h3>
+            <h3 className='flex self-center font-semibold text-white mb-5'>Fill out the form below</h3>
+            <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
+                <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}">
+                <div>
+                <label htmlFor="email" className='text-white'>Old Password</label>
+                <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="password" id="old_password" name="old_password" required/> 
+                </div>
+
+                <div>
+                <label htmlFor="password" className='text-white'>New Password</label>
+                <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="password" id="new_password" name="new_password" required/>
+                </div>
+
+                <div>
+                <label htmlFor="password" className='text-white'>Confirm New Password</label>
+                <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="password" id="confirm_new_password" name="confirm_new_password" required/>
+                </div>
+                </form>
+            </div>
+            <div className='flex justify-evenly mt-10'>
+                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmPasswordButtonClick()}>CONFIRM</Button>
+            </div>
+        </Modal>
+        {/*Delete account modal */}          
+        <Modal isVisible={showDeletedModal} onClose ={()=> setShowDeleteModal(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE ACCOUNT</h3>
+            <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete yur acount?</h3>
+            <div className='flex justify-evenly mt-10'>
+                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</Button>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</Button>
+            </div>
+        </Modal>
+        </Fragment>
     );
 }

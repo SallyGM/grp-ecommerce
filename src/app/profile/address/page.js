@@ -1,15 +1,36 @@
 "use client"; 
 import { Card, Button } from 'flowbite-react';
-import React from 'react';
+import React, { Fragment } from 'react';
 import SubNavbar from '../subNavbar.js'
 import { useEffect, useState} from 'react';
 import { ref , get } from "firebase/database";
 import { database } from '@/app/firebaseConfig.js';
+import Modal from '@/components/modal.js';
+
 
 export default function AddressBook() {
 
     // Firebase information retrival function here
     const [addressDetails, setAddressDetails] = useState([]);
+    const [showAddAddressModal, setShowAddAddressModal] = useState(false);
+    const [showEditAddress, setShowEditAddress] = useState(false);
+    const [showDeleteAddress, setShowDeleteAddress] = useState(false);
+
+    // Function that handle confirm button click on add new address dialog
+    const handleConfirmAddAddressClick = () => {
+        // Write to Firebase the changes here
+        showAddAddressModal(false);
+    }
+    // Function that handle confirm button click on edit address dialog
+    const handleConfirmEditAddressClick = () => {
+        // Write to Firebase the changes here
+        setShowEditAddress(false);
+    }
+    // Function that handle confirm button click on delete address dialog
+    const handleConfirmDeleteAddressClick = () => {
+        // Write to Firebase the changes here
+        setShowDeleteAddress(false);
+    }
 
     useEffect(() => {
         const addressRef = ref(database, "User");
@@ -31,6 +52,7 @@ export default function AddressBook() {
     console.log(addressDetails);
 
     return(
+        <Fragment>
         <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
             <SubNavbar />
             <Card className=" justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
@@ -53,8 +75,8 @@ export default function AddressBook() {
                             <h2 id="city" className="flex dark:text-white text-white font-mono ">{a.City}</h2>
                             <h2 id="country" className="flex dark:text-white text-white font-mono ">{a.country}</h2>
                             <h2 id="postal_code" className="flex dark:text-white text-white font-mono ">{a.postCode}</h2>
-                            <img className="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit address"/>
-                            <img className="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address"/>
+                            <img className="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit address" onClick={()=> setShowEditAddress(true)} disabled={showEditAddress}/>
+                            <img className="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address" onClick={()=> setShowDeleteAddress(true)} disabled={showDeleteAddress} />
                         </div>
                     </Card>
                 ))}
@@ -62,7 +84,9 @@ export default function AddressBook() {
                 <div className='flex justify-self-start mt-10 ml-10'>
                     <Button
                         type="submit"
-                        className="w-60 inline-flex text-white self-center " color='blue'> 
+                        className="w-60 inline-flex text-white self-center " color='blue'
+                        onClick={()=> setShowAddAddressModal(true)}
+                        disabled={showAddAddressModal}> 
                         ADD NEW ADDRESS
                         <svg className="w-6 h-6 ml-3" fill='currentColor' stroke='none' aria-hidden="true" xmlns="https://reactsvgicons.com/search?q=add" viewBox="0 0 24 24">
                             <path fill="none" d="M0 0h24v24H0z" />
@@ -72,6 +96,90 @@ export default function AddressBook() {
                 </div>
             </Card>
         </div>
+        {/*Add address modal */}
+        <Modal isVisible={showAddAddressModal} onClose ={()=> setShowAddAddressModal(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW ADDRESS</h3>
+            <h3 className='flex self-center font-semibold text-white mb-5'>Add new address by filling the details below</h3>
+            <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
+                <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}">
+                <div>
+                <label htmlFor="text" className='text-white'>Street Name</label>
+                <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="text" id="street_name" name="street_name" required/> 
+                </div>
+
+                <div className='inline-flex'>
+                    <div className='mr-3'>
+                        <label htmlFor="text" className='text-white'>Post Code</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="text" id="post_code" name="post_code" required/>
+                    </div> 
+                    <div className='ml-3'>
+                        <label htmlFor="text" className='text-white'>City</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="text" id="city" name="city" required/>
+                    </div>
+                </div>
+
+                <div>
+                <label htmlFor="text" className='text-white'>Country</label>
+                <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="text" id="country" name="country" required/>
+                </div>
+                </form>
+            </div>
+            <div className='flex justify-evenly mt-10'>
+                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowAddAddressModal(false)}> DISMISS</Button>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmAddAddressClick()}>CONFIRM</Button>
+            </div>
+        </Modal>
+        {/*Edit address on list modal */}
+        <Modal isVisible={showEditAddress} onClose ={()=> setShowEditAddress(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>EDIT YOUR ADDRESS</h3>
+            <h3 className='flex self-center font-semibold text-white mb-5'>Edit your address by modifying the details below</h3>
+            <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
+                <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}">
+                <div>
+                <label htmlFor="text" className='text-white'>Street Name</label>
+                <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="text" id="street_name" name="street_name" required/> 
+                </div>
+
+                <div className='inline-flex'>
+                    <div className='mr-3'>
+                        <label htmlFor="text" className='text-white'>Post Code</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="text" id="post_code" name="post_code" required/>
+                    </div> 
+                    <div className='ml-3'>
+                        <label htmlFor="text" className='text-white'>City</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="text" id="city" name="city" required/>
+                    </div>
+                </div>
+
+                <div>
+                <label htmlFor="text" className='text-white'>Country</label>
+                <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="text" id="country" name="country" required/>
+                </div>
+                </form>
+            </div>
+            <div className='flex justify-evenly mt-10'>
+                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowAddAddressModal(false)}> DISMISS</Button>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmAddAddressClick()}>CONFIRM</Button>
+            </div>
+        </Modal>
+        {/*Delete address modal */}          
+        <Modal isVisible={showDeleteAddress} onClose ={()=> setShowDeleteAddress(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE ADDRESS</h3>
+            <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this address?</h3>
+            <div className='flex justify-evenly mt-10'>
+                <Button type="submit"className="w-52" color="gray" onClick ={()=>showDeleteAddress(false)}> DISMISS</Button>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmDeleteAddressClick()}>CONFIRM</Button>
+            </div>
+        </Modal>
+        </Fragment>
         
     )
 }
