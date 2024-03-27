@@ -1,6 +1,12 @@
 "use client"; 
 import { Button, Tabs} from "flowbite-react";
-import React, { useState } from 'react';
+import {database} from './firebaseConfig.js'
+import { ref, get } from "firebase/database";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
+
+/*Product Page*/
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState('tab-1');
@@ -8,7 +14,33 @@ export default function Home() {
     const handleTabChange = (tabId) => {
         setActiveTab(tabId);
     }
-   
+
+    const router = useRouter();
+    const { id } = router.query;
+    const [product, setProduct] = useState(null);
+  
+    // Retrieve the product details based on the ID
+    useEffect(() => {
+      if (id) {
+        const prodRef = ref(database, `gameID`);
+        get(prodRef)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              setProduct(snapshot.val());
+            } else {
+              console.log("No data found for ID:", id);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching product data:", error);
+          });
+      }
+    }, [id]);
+  
+    if (!product) {
+      return <div>Loading...</div>; // Placeholder for when product data is loading
+    }
+  
  
     
   return (
@@ -24,7 +56,7 @@ export default function Home() {
                 </div>
             </div>
             <div className="flex-1" style={{  flex: 'wrap', alignItems:"right"}}>
-                <h1 className="text-center text-2xl dark:text-white self-center text-white font-mono">Game Title</h1>
+                <h1 className="text-center text-2xl dark:text-white self-center text-white font-mono">{product.name}</h1>
                 <h2 className="text-left text-xl font-bold dark:text-white self-center text-white font-mono" > £69.99 </h2>
                 <div className="relative overflow-x-auto">
                     <table className="game-table dark:text-white self-center text-white font-mono" style={{border:"10px"}}>
