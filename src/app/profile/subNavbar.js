@@ -1,8 +1,32 @@
 {/* Importing Link for navigation and icons */}
 import Link from 'next/link';
-import { Card } from 'flowbite-react';
+import { Card, Button } from 'flowbite-react';
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext.js'
+import { useRouter } from 'next/navigation'
 
 export default function Header() {
+
+    const { currentUser , signout } = useAuth();
+    const [error, setError] = useState(false);
+    const router = useRouter();
+
+    // function that logout the user
+    async function signOut(e){
+
+        try{
+            await signout()    
+            setError(false)
+        } catch(e){
+            setError(true)
+            console.log(e)
+        }
+
+        if(!error){ // if signout is successful it goes back to the login page
+            router.push('/login'); // Navigate to the main page
+        }   
+    }
+
     return (
     <Card className="justify-self-end h-auto w-auto my-6 bg-blue-900 border-blue-900 row-span-1 col-start-1 col-end-2"  >
         <div className="py-10 overflow-y-auto ">
@@ -50,12 +74,12 @@ export default function Header() {
                     </Link>
                 </li>                         
                 <li>
-                    <Link href="#" className="flex items-center p-2 text-white rounded hover:bg-gray-100 dark:hover:bg-gray-700 group ">
+                    <Button onClick={signOut} className="flex items-center p-2 text-white rounded hover:bg-gray-100 dark:hover:bg-gray-700 group ">
                         <svg className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
                         </svg>
                         <span className="flex-1 ms-3 whitespace-nowrap">LOGOUT</span>
-                    </Link>
+                    </Button>
                 </li>
             </ul>
         </div>

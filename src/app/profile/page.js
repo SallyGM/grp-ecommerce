@@ -7,13 +7,10 @@ import React from 'react';
 import SubNavbar from './subNavbar.js'
 import Modal from '@/components/modal.js';
 
-
 export default function Home() {
 
     // Firebase information retrival function here
- 
     const [userDetails, setUserDetails] = useState(null);
-
     const [editButtonClicked, setEditButtonClicked] = useState(false);
     const [saveButtonClicked, setSaveButtonClicked] = useState(false);
     const [activateInputfields, setInputFieldActive] = useState(false);
@@ -21,7 +18,6 @@ export default function Home() {
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showDeletedModal, setShowDeleteModal] = useState(false);
     
-
     const handleEditButtonClick = () => {
         setEditButtonClicked(true);
         setSaveButtonClicked(false)
@@ -53,9 +49,6 @@ export default function Home() {
         // Write to Firebase the changes here
         setShowDeleteModal(false);
       }
-      
-
-        
 
     useEffect(() => {
         const fetchData = async () => {

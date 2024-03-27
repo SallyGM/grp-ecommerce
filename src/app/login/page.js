@@ -2,14 +2,14 @@
 import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
 import { Divider } from '@nextui-org/react';
-import { redirect } from 'next/navigation'
-import { revalidatePath } from 'next/cache'
+import { useRouter } from 'next/navigation';
 import React, { useState, useRef } from "react";
 import { useAuth } from '../context/AuthContext'
 
 export default function Home() {
   //Use the useState Hook to keep track of each inputs value
   const { signin } = useAuth()
+  const router = useRouter();
   const email = useRef();
   const password = useRef();
   const [emailError, setEmailError] = useState('');           //Create email error
@@ -24,25 +24,22 @@ export default function Home() {
 
       try{    
 
-        setEmailError("")
-        setPasswordError("")
+        setEmailError('')
+        setPasswordError('')
         setLoading(true) // disable login button 
 
         await signin(email.current.value, password.current.value)
-        
-        // redirect to main page
-        revalidatePath('/') // Update cached posts
-        redirect(`/`) // Navigate to the main page
+
+        setLoading(false) // enable login button     
       }
-      catch {
-        setEmailError("Email is required")
-        setPasswordError("Password is required")
+      catch (e) {
+        console.log(e)  
       }
 
-      setLoading(false) // enable login button
-
+      router.push('/');
     } else {
-       console.log('Form submission error');
+      setEmailError("Email is required")
+      setPasswordError("Password is required")
     }  
   };
     
@@ -57,7 +54,6 @@ export default function Home() {
       setEmailError('');
     }
   };
-
 
   //Handle password change
   const handlePasswordChange = (e) => {
@@ -81,14 +77,14 @@ export default function Home() {
               <div>
                 <label htmlFor="email">Email address</label>
                 <input className="block w-full mt-2 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={handleEmailChange} ref={email} required />
+                onChange={handleEmailChange} ref={email}/>
                   {emailError && <span style={{ color: 'red', fontSize: '14px' }}>{emailError}</span>}  
               </div>
 
               <div>
                 <label htmlFor="password">Password</label>
                 <input className="block w-full mt-2 my-2.5 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={handlePasswordChange} ref={password} required/>
+                onChange={handlePasswordChange} type='password' ref={password}/>
                   {passwordError && <span style={{ color: 'red', fontSize: '14px' }}>{passwordError}</span>}
               </div>
 
@@ -101,7 +97,7 @@ export default function Home() {
           {/*Divider between login options*/} 
           <div className="inline-flex mt-6">
             <Divider className="self-center  w-40 m-3"></Divider>
-            <a className="justify-self-center text-white m-3">OR</a>
+              <a className="justify-self-center text-white m-3">OR</a>
             <Divider className="self-center w-40 m-3"></Divider>
           </div>
           

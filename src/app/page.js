@@ -9,7 +9,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from 'next/link'; // Import Link from Next.js
 
-
 export default function Home() {
 
   // variable that will hold all products 
@@ -61,9 +60,9 @@ export default function Home() {
       </div>
 
       <Slider className='my-3 mx-10' {...settings}>
-          {product.sort((a, b) =>  a.sold < b.sold ? 1 : -1).slice(0, 7).map((p) => (
+          {product.sort((a, b) => a.sold < b.sold ? 1 : -1).slice(0, 7).map((p) => (
             <Card key={p.id} className="mx-3 my-3" renderImage={() => 
-            <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" priority />}>
+            <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" />}>
               <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {p.name}
               </h5>
