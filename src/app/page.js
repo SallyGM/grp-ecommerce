@@ -1,6 +1,6 @@
 'use client'
 import {  Card, Button, Carousel } from 'flowbite-react';
-import {database} from './firebaseConfig.js'
+import { database } from './firebaseConfig.js'
 import { ref, get } from "firebase/database";
 import { useEffect, useState } from 'react';
 import React from "react";
@@ -13,6 +13,7 @@ export default function Home() {
 
   // variable that will hold all products 
   const [product, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // settings for the slider
   var settings = {
@@ -26,6 +27,7 @@ export default function Home() {
   // retrieves the product table
   useEffect(() => {
     const prodRef = ref(database, "Product");
+    setLoading(true);
     get(prodRef).then((snapshot) => {
       if(snapshot.exists()){
         const prodArray = Object.entries(snapshot.val()).map(([id, data]) => ({
@@ -33,6 +35,7 @@ export default function Home() {
           ...data,
         }));
         setProducts(prodArray);
+        setLoading(false);
       } else{
         console.log("No data found");
       }

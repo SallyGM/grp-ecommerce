@@ -1,9 +1,35 @@
+"use client"; 
 {/* Importing Link for navigation and icons */}
 import Link from 'next/link';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { useAuth } from './context/AuthContext'
+import React, { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 export default function Header() {
+
+    const { currentUser, signout } = useAuth()
+
+    const [error, setError] = useState(false);
+    const router = useRouter();
+
+    // function that logout the user
+    async function signOut(e){
+
+        try{
+            await signout()    
+            setError(false)
+        } catch(e){
+            setError(true)
+            console.log(e)
+        }
+
+        if(!error){ // if signout is successful it goes back to the login page
+            router.push('/login'); // Navigate to the main page
+        }   
+    }
+
     return (
         <div>
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -20,18 +46,31 @@ export default function Header() {
                         <input type="text" id="search-navbar" className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..."/>
                     </div>
                     <div className="flex items-center space-x-6 rtl:space-x-reverse">
-                        <Link href="/basket" className='class="text-sm dark:text-blue-500 hover:underline"'>
-                            <ShoppingCartIcon className="h-6 w-6 text-black-500" />
-                        </Link>
-                        <Link href="/login" className='class="text-sm text-blue-600 dark:text-blue-500 hover:underline"'>
-                            Login
-                        </Link>
-                        <Link href="/register" className='class="text-sm text-blue-600 dark:text-blue-500 hover:underline"'>
-                            Register            
-                        </Link>
-                        <Link href="/profile" className='class="text-sm text-blue-600 dark:text-blue-500 hover:underline"'>
-                            Profile            
-                        </Link>
+                        { currentUser != null ? (
+                            <>
+                                <Link href="/basket" className="text-sm dark:text-blue-500 hover:underline">
+                                    <ShoppingCartIcon className="h-6 w-6 text-black-500" />
+                                </Link>
+                                <Link href="/profile" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
+                                    Profile
+                                </Link>
+                                <button onClick={signOut} class="bg-transparent text-sm text-blue-600 dark:text-blue-500 hover:underline">
+                                    Log Out
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/basket" className="text-sm dark:text-blue-500 hover:underline">
+                                    <ShoppingCartIcon className="h-6 w-6 text-black-500" />
+                                </Link>
+                                <Link href="/login" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
+                                        Login
+                                </Link>
+                                <Link href="/register" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
+                                        Register
+                                 </Link>
+                            </>                   
+                        )}
                 </div>
                 </div>
             </nav>
