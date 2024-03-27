@@ -7,6 +7,8 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from 'next/link'; // Import Link from Next.js
+
 
 export default function Home() {
 
@@ -68,7 +70,11 @@ export default function Home() {
               <p className="font-normal text-gray-700 dark:text-gray-400">
                 £{p.price}
               </p>
-                <Button color="gray">View product</Button>
+              <Link href={`/[id]`} as={`/${p.id}`} passHref>
+                
+                  <Button color="gray">View product</Button>
+                
+              </Link>
                 <Button color="gray">
                   Add to Cart
                   <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">

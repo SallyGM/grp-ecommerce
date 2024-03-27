@@ -1,5 +1,6 @@
 "use client"; 
 import React, { useContext, useState, useEffect } from "react"
+import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebaseConfig"
 
 const AuthContext = React.createContext()
@@ -13,19 +14,21 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
+    //TODO: add other data to the table
+    return createUserWithEmailAndPassword(auth, email, password)
   }
 
   function signin(email, password) {
-    return auth.signInWithEmailAndPassword(email, password)
+    return signInWithEmailAndPassword(auth, email, password)
+
   }
 
   function signout() {
-    return auth.signOut()
+    return signOut()
   }
 
   function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email)
+    return sendPasswordResetEmail(auth, email)
   }
 
   function updateEmail(email) {
@@ -56,9 +59,8 @@ export function AuthProvider({ children }) {
   } 
 
   return (
-      <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={value}>
       {!loading && children}
     </AuthContext.Provider>
-    
   )
 }
