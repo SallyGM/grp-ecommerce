@@ -70,7 +70,7 @@ export default function Home() {
               <p className="font-normal text-gray-700 dark:text-gray-400">
                 £{p.price}
               </p>
-              <Link href={`/[id]`} as={`/${p.id}`} passHref>
+              <Link href={`/products/${p.id}`}>
                 
                   <Button color="gray">View product</Button>
                 
