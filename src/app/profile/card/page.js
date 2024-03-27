@@ -110,19 +110,19 @@ export default function CardStored() {
                 <div>
                     <label htmlFor="number" className='text-white'>Card Number</label>
                     <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="number" id="card_number" name="card_number" placeholder='4625 2563 2356 8514' required/> 
+                    type="tel" inputmode="numeric" id="card_number" name="card_number" maxLength={16} placeholder='4625 2563 2356 8514' required/> 
                     </div>
 
                     <div className='inline-flex justify-evenly'>
                         <div className='mr-5'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="date" id="exp_date" name="exp_date" placeholder='12/24' required/>
+                            type="month" id="exp_date" name="exp_date" placeholder='12/24' required/>
                         </div> 
                         <div className='ml-5'>
                             <label htmlFor="number" className='text-white'>CVV</label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="number" id="cvv" name="cvv" placeholder='342' required/>
+                            type="password" id="cvv" name="cvv" maxLength={3} placeholder='342' required/>
                         </div>
                     </div>
 
@@ -147,19 +147,19 @@ export default function CardStored() {
                 <div>
                     <label htmlFor="number" className='text-white'>Card Number</label>
                     <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="number" id="card_number" name="card_number" placeholder='4625 2563 2356 8514' required/> 
+                    type="tel" inputmode="numeric" id="card_number" name="card_number" maxLength={16} placeholder='4625 2563 2356 8514' required/> 
                     </div>
 
                     <div className='inline-flex justify-evenly'>
                         <div className='mr-3'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="date" id="exp_date" name="exp_date" placeholder='12/24' required/>
+                            type="month" id="exp_date" name="exp_date" placeholder='12/24' required/>
                         </div> 
                         <div className='ml-3'>
                             <label htmlFor="number" className='text-white'>CVV</label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="number" id="cvv" name="cvv" placeholder='342' required/>
+                            type="password" id="cvv" name="cvv" maxLength={3} placeholder='342' required/>
                         </div>
                     </div>
 
