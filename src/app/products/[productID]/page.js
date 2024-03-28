@@ -144,17 +144,17 @@ export default function Page({ params }) {
                                 <div className="tabs">
                                     <input className="input" name="tabs" type="radio" id="tab-1" checked={activeTab ==='tab-1'} onChange={() => handleTabChange('tab-1')} />
                                     <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-1">ABOUT THE GAME</label>
-                                    <div className="panel text-lg dark:text-white text-white font-mono" >
+                                    <div className="panel text-lg dark:text-white text-white font-mono" style={{ height: '300px', overflowY: 'auto' }} >
                                         <p>{product.description}</p>
                                     </div>
                                     <input className="input" name="tabs" type="radio" id="tab-2" checked={activeTab ==='tab-2'} onChange={() => handleTabChange('tab-2')}/>
                                     <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-2">SPECIFICATIONS</label>
-                                    <div className="panel text-lg dark:text-white text-white font-mono">
+                                    <div className="panel text-lg dark:text-white text-white font-mono" style={{ height: '300px', overflowY: 'auto' }}>
                                         <p>{product.specifications}</p>
                                     </div>
                                     <input className="input" name="tabs" type="radio" id="tab-3"checked={activeTab ==='tab-3'} onChange={() => handleTabChange('tab-3')}/>
-                                    <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-3">REVIEWS</label>
-                                    <div className="panel text-lg dark:text-white text-white font-mono">
+                                    <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-3" >REVIEWS</label>
+                                    <div className="panel text-lg dark:text-white text-white font-mono" style={{ height: '300px', overflowY: 'auto' }}>
                                         <p>Eu consequat ac felis donec et. Magna etiam tempor orci eu lobortis elementum nibh tellus molestie. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. <br/>
                                         Augue ut lectus arcu bibendum at varius vel. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Habitasse platea dictumst quisque sagittis purus.<br/>
                                         Sed elementum tempus egestas sed. Maecenas pharetra convallis posuere morbi leo urna molestie at elementum. Imperdiet proin fermentum leo vel orci porta non pulvinar. <br/>
