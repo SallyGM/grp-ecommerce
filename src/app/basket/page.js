@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import { Card, Button } from 'flowbite-react';
 
+
 export default function Home() {
 
   const [quantity,setQuantity] = useState(1);
   const[isVisible, setIsVisible] =  useState(true);
+  
  
   const handleDecrement = () => {
     if(quantity >1){

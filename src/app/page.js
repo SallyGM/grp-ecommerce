@@ -8,12 +8,32 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from 'next/link'; // Import Link from Next.js
+import { useRouter } from 'next/router';
+
 
 export default function Home() {
 
   // variable that will hold all products 
   const [product, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  /*const router = useRouter();
+ Not working jus yet to add to basket
+  const handleAddToBasket = (product) => {
+    const itemInfo = {
+      id: product.id,
+      name: product.name,
+      quantity: quantity,
+      price: product.price,
+      // Add other necessary item information here
+    };
+    router.push({
+      pathname: '/basket/page.js',
+      query: { item: JSON.stringify(itemInfo) }, // Pass item information as a query parameter
+    });
+  };
+*/
+
 
   // settings for the slider
   var settings = {
@@ -77,7 +97,8 @@ export default function Home() {
                   <Button color="gray">View product</Button>
                 
               </Link>
-                <Button color="gray">
+              
+                <Button color="gray" onClick={() => handleAddToBasket(p)}>
                   Add to Cart
                   <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                     <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd"/>
