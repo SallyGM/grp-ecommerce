@@ -38,17 +38,17 @@ body {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  width: 100%;
-  height: 100%;
   display: flex;
-  margin-bottom: 500px;
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-
+.back-prod{
+  background: rgb(2,0,36);
+background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
+}
 
 
 .game-table {
@@ -69,12 +69,20 @@ body {
   width: 100%;
   margin-top: 10px;
   color: #f0e8e8;
+  background:#6c0979;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+
+.prod_btn:hover{
+  background: #c50edd;
 }
 
 .banner-game{
   background-color: #020a4f;
   color: #fff;
-  height: 50px;
   width: 100%;
   border: 2px solid #020a4f;
 }
@@ -101,7 +109,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   max-width: 900px;
-  background: rgb(30 64 175);
+  background: rgb(30 64 175 / var(--tw-bg-opacity));
   box-shadow: 0 48px 80px -32px rgba(0,0,0,0.3);
 }
 .input {

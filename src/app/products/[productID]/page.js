@@ -39,21 +39,22 @@ export default function Page({ params }) {
                     
                 <div>
     
-                    <div className=" bg-blue-800">    
+                    <div className=" back-prod ">    
                     
-                        <div className="pl-20 pr-20 pt-20 flex flex-wrap gap-20" >
-                            <div className="flex-1" style={{ width: '500px', height: '385px', display:"flex", marginTop:"10px" }}>
-                                <div className="card" style={{ background: 'url("https://flowbite.com/docs/images/carousel/carousel-1.svg")', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%' }} >
-                                    <div className="flex-wrap w-full">
-                                        <div className="banner-game">
+                        <div className="grid grid-cols-2 gap-20 pt-20 mr-20 ml-20" >
+                            <div>
+                                <div className="card grid grid-rows-2 flex-wrap mt-16" style={{ gridTemplateRows: '1fr 3fr'}} >
+                                        <div className="banner-game pt-5 pb-5">
                                             <p className="text-center text-lg dark:text-white self-center text-white font-mono m-auto" >PLAYSTATION VERSION</p>
                                         </div>
-                                    </div>
+                                        <div className="prod-img ">
+                                            <img src={product.images[2]} alt="Image" className=" object-contain rounded-lg" />
+                                        </div>
                                 </div>
                             </div>
                             <div className="flex-1" style={{ flex: 'wrap', alignItems:"right"}}>
                                 <h1 className="text-center text-2xl dark:text-white self-center text-white font-mono">{product.name}</h1>
-                                <h2 className="text-left text-xl font-bold dark:text-white self-center text-white font-mono" > £69.99 </h2>
+                                <h2 className="text-left text-xl font-bold dark:text-white self-center text-white font-mono" > £{product.price} </h2>
                                 <div className="relative overflow-x-auto">
                                     <table className="game-table dark:text-white self-center text-white font-mono" style={{border:"10px"}}>
                                         <tbody>
@@ -62,7 +63,7 @@ export default function Page({ params }) {
                                                     Release Date
                                                 </th>
                                                 <td className="px-6 py-3">
-                                                    1/01/2024
+                                                    {product.releaseDate}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -70,7 +71,7 @@ export default function Page({ params }) {
                                                     Developer
                                                 </th>
                                                 <td className="px-6 py-3">
-                                                    AAAAAA
+                                                    {product.developer}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -78,7 +79,7 @@ export default function Page({ params }) {
                                                     Publisher
                                                 </th>
                                                 <td className="px-6 py-3">
-                                                    AAAAAAA
+                                                    {product.publisher}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -86,7 +87,7 @@ export default function Page({ params }) {
                                                     Delivery
                                                 </th>
                                                 <td className="px-6 py-3">
-                                                    Instant Delivery
+                                                    {product.delivery}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -94,7 +95,15 @@ export default function Page({ params }) {
                                                     Platform
                                                 </th>
                                                 <td className="px-6 py-3">
-                                                    AAAA
+                                                    {product.platform}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                                    Console
+                                                </th>
+                                                <td className="px-6 py-3">
+                                                    {product.console}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -102,14 +111,30 @@ export default function Page({ params }) {
                                                     Language
                                                 </th>
                                                 <td className="px-6 py-3">
-                                                    English
+                                                    {product.language}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                                    PG
+                                                </th>
+                                                <td className="px-6 py-3">
+                                                    {product.ageRestriction}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                                    Genre
+                                                </th>
+                                                <td className="px-6 py-3">
+                                                    {product.genre}
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <Button className='prod_btn w-52 bg-green-400'>
+                                    <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd'>
                                     ADD TO CART
-                                    </Button>
+                                    </button>
                                 </div>
                             </div>   
                         </div>
@@ -120,21 +145,12 @@ export default function Page({ params }) {
                                     <input className="input" name="tabs" type="radio" id="tab-1" checked={activeTab ==='tab-1'} onChange={() => handleTabChange('tab-1')} />
                                     <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-1">ABOUT THE GAME</label>
                                     <div className="panel text-lg dark:text-white text-white font-mono" >
-                                        <p>Mauris ultrices eros in cursus turpis. Ut pharetra sit amet aliquam id diam maecenas. <br/>
-                                        Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Quisque non tellus orci ac auctor augue mauris augue neque. Nisl tincidunt eget nullam non. <br/>
-                                        Sed cras ornare arcu dui vivamus arcu felis bibendum ut. 
-                                        Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus. Sem integer vitae justo eget magna. <br/>
-                                        Blandit cursus risus at ultrices mi. Consectetur adipiscing elit ut aliquam purus sit.</p>
+                                        <p>{product.description}</p>
                                     </div>
                                     <input className="input" name="tabs" type="radio" id="tab-2" checked={activeTab ==='tab-2'} onChange={() => handleTabChange('tab-2')}/>
                                     <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-2">SPECIFICATIONS</label>
                                     <div className="panel text-lg dark:text-white text-white font-mono">
-                                        <p>ILorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu augue ut lectus arcu bibendum at.<br/>
-                                            Sed blandit libero volutpat sed cras. Et malesuada fames ac turpis. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. <br/>
-                                            Facilisis volutpat est velit egestas dui id. Non sodales neque sodales ut etiam sit amet nisl purus. A cras semper auctor neque vitae. <br/>
-                                            Vulputate dignissim suspendisse in est ante in nibh mauris cursus. Quam nulla porttitor massa id neque aliquam vestibulum morbi. Purus gravida quis blandit turpis cursus in hac habitasse platea.<br/>
-                                            Viverra nibh cras pulvinar mattis nunc sed blandit libero. Viverra vitae congue eu consequat. <br/>
-                                            Aliquet risus feugiat in ante metus dictum. Ultrices in iaculis nunc sed augue lacus viverra vitae. Quis viverra nibh cras pulvinar mattis nunc sed blandit.</p>
+                                        <p>{product.specifications}</p>
                                     </div>
                                     <input className="input" name="tabs" type="radio" id="tab-3"checked={activeTab ==='tab-3'} onChange={() => handleTabChange('tab-3')}/>
                                     <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-3">REVIEWS</label>
