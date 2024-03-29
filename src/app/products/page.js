@@ -5,11 +5,17 @@ import { ref, get } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card, Button} from 'flowbite-react';
+import { FaceFrownIcon } from '@heroicons/react/24/solid';
 
 export default function Product() {
 
   const searchParams = useSearchParams();
-  const data = searchParams.get('search');
+  const search = searchParams.get('search');
+  const type = searchParams.get('type');
+  const [product, setProducts] = useState([]);
+  const [showProduct, setShowProducts] = useState([]);
+  const [error, setError] = useState(false);
+  const [size, setSize] = useState(0);
 
   var platform = [
     {value: 1, data: "All"},
@@ -26,8 +32,6 @@ export default function Product() {
     {value: 4, data: "Highest Price"}
   ];
 
-  const [product, setProducts] = useState([]);
-
   // load products 
   useEffect(() => {
     const prodRef = ref(database, "Product");
@@ -37,15 +41,33 @@ export default function Product() {
           id, 
           ...data,
         }));
+
+        setError(false);
         setProducts(prodArray);
-        console.log(prodArray);
+
+        //TODO: not the best way to approach
+        if(type === "search"){
+          setShowProducts(prodArray.filter((item) => item.name.toLowerCase().includes(search.toString())))         
+          //setSize(prodArray.filter((item) => item.name.toLowerCase().includes(search.toString())).length)
+        }
+        else{
+          setShowProducts(prodArray.filter((item) => item.console.toLowerCase().includes(search)))
+          //setSize(prodArray.filter((item) => item.console.toLowerCase().includes(search)))
+        }
       } else{
-        console.log("No data found")
+        setError(true)
       }
     }).catch((error) => {
-      console.error(error);
+      setError(true)
     });
-  }, []); 
+  }, [search, type]); 
+
+  useEffect(() => {
+    if(showProduct.length > 0){
+      setSize(showProduct.length)
+    }
+    
+  }, [showProduct]);
   
   function changeOptionOnclick(event){
     console.log(event.target.value);
@@ -53,16 +75,15 @@ export default function Product() {
 
   return (
     <div className=''>
-      
       <div className='grid grid-cols-4 mx-3 mt-3 mb-5 gap-4 text-sm'>
         <div className='mt-2 text-right'>
           Platform:
         </div>
         <div>
           <Select variant="outlined" label="Select Version" id="category" onChange={changeOptionOnclick} required>
-             {platform.map(p => 
+            {platform.map(p => 
               <option value={p.value}>{p.data}</option>
-             )}
+            )}
           </Select>
         </div>
         <div className='mt-2 text-right'>
@@ -70,37 +91,46 @@ export default function Product() {
         </div>
         <div>
           <Select id="sort" variant="outlined" label="Select Version" onChange={changeOptionOnclick} required>
-             {sort.map(p => 
+            {sort.map(p => 
               <option value={p.value}>{p.data}</option>
-             )}
+            )}
           </Select>
         </div>
-        {product.filter((item) => item.console.toLowerCase().includes(data)).map((p) => (
-
-          <Card key={p.id} className="max-w-sm mx-3" renderImage={() => 
-          
-            <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" />}>             
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {p.name}
-            </h5>
-            <p className="font-normal text-gray-700 dark:text-gray-400">
-              £{p.price}
-            </p>
-            <p className="font-normal text-gray-700 dark:text-gray-400">
-              {p.console}
-            </p>
-            <Button.Group className='inline-flex rounded-md shadow-sm'>
-              <Button color="gray">View product</Button>
-              <Button color="gray">
-                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd"/>
-                  <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd"/>
-                </svg>
-              </Button>
-            </Button.Group>
-          </Card>
-          ))} 
       </div>
+      { size === 0 ? (
+          <div className='mt-5 mb-7 content-center py-5 items-center text-center w-full'>
+              No results found...  <span class="inline-block"><FaceFrownIcon className="h-6 w-6 text-black-500" />
+            </span>
+            <br/><br/><br/><br/><br/><br/><br/>
+          </div>
+        ) : (
+        <> 
+            {showProduct.map((p) => (
+              <Card key={p.id} className="max-w-sm mx-3" renderImage={() => 
+    
+                <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" />}>             
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  {p.name}
+                </h5>
+                <p className="font-normal text-gray-700 dark:text-gray-400">
+                  £{p.price}
+                </p>
+                <p className="font-normal text-gray-700 dark:text-gray-400">
+                  {p.console}
+                </p>
+                <Button.Group className='inline-flex rounded-md shadow-sm'>
+                  <Button color="gray">View product</Button>
+                  <Button color="gray">
+                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd"/>
+                      <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd"/>
+                    </svg>
+                  </Button>
+                </Button.Group>
+              </Card>
+              ))}
+          </>
+        )}
     </div>  
   );
 }
