@@ -1,34 +1,121 @@
 "use client"; 
 import { Card, Button } from 'flowbite-react';
 import React, { Fragment } from 'react';
-import { ref , get } from "firebase/database";
+import { ref , get, update ,push, set, remove} from "firebase/database";
 import { useEffect, useState} from 'react';
 import { database } from '../../firebaseConfig';
 import SubNavbar from '../subNavbar'
 import Modal from '@/components/modal.js';
 
 export default function CardStored() {
-    // Firebase information retrival function here
  
     const [cardDetails, setCardDetails] = useState([]);
     const [showAddCardModal, setShowAddCardModal] = useState(false);
     const [showEditCard, setShowEditCard] = useState(false);
     const [showDeleteCard, setShowDeleteCard] = useState(false);
+    const [card, setCard] = useState('');
+    const [formData, setFormData] = useState({
+        cardNumber: '',
+        sortCode: '',
+        expDate: '',
+        securityCode: '',
+        cardName: ''
+    });
 
-    // Function that handle confirm button click on add new card dialog
-    const handleConfirmAddCardClick = () => {
-        // Write to Firebase the changes here
-        setShowAddCardModal(false);
-    }
+    
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name] : e.target.value
+        });
+    };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Create a new card object from the form data
+        const newCard = {
+            cardNumber: formData.cardNumber,
+            sortCode: formData.securityCode,
+            expDate: formData.expDate,
+            securityCode: formData.securityCode,
+            cardName: formData.cardName,
+            billAddress: formData.billAddress
+        };
+
+        // Generate a unique key for the new card
+        const newCardKey = push(ref(database, 'User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card')).key;
+
+        // Set the new card object at the specified path in the database
+        set(ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card/${newCardKey}`), newCard)
+            .then(() => {
+                console.log('New card added successfully');
+                setCardDetails(prevCardDetails => [...prevCardDetails, { id: newCardKey, ...newCard }]);
+                setFormData({
+                    cardNumber: '',
+                    sortCode: '',
+                    expDate: '',
+                    securityCode: '',
+                    cardName:'',
+                    billAddress:''
+                });
+                setShowAddCardModal(false);
+            })
+            .catch((error) => {
+                console.error('Error adding new card:', error);
+            });
+    };
+    
+    // Function to open edit card modal and set card
+    const openEditCardModal = (card) => {
+        setCard(card);
+        setShowEditCard(true);
+  };
+    // Function to open delete card modal and set card
+    const openDeleteCardModal = (card) => {
+        setCard(card);
+        setShowDeleteCard(true);
+    };
+
     // Function that handle confirm button click on edit card dialog
-    const handleConfirmEditCardClick = () => {
-        // Write to Firebase the changes here
-        setShowEditCard(false);
+    const handleConfirmEditCardClick = (card) => {
+        const cardRef = ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card/${card.id}`);
+        // Use the update method to update the address
+        update(cardRef, card)
+            .then(() => {
+                console.log("Card updated successfully");
+                // Update local state with the new values
+                setCardDetails(prevCardDetails => {
+                    // Find the index of the updated card in the array
+                    const updatedIndex = prevCardDetails.findIndex(crd => crd.id === card.id);
+                    // Create a new array with the updated address
+                    const updatedCardDetails = [...prevCardDetails];
+                    updatedCardDetails[updatedIndex] = {
+                        ...updatedCardDetails[updatedIndex],
+                        ...card // Merge the updated fields into the card
+                    };
+                    return updatedCardDetails;
+                    });
+                setShowEditCard(false);
+            })
+            .catch((error) => {
+                console.error("Error updating card:", error);
+            });
     }
     // Function that handle confirm button click on delete card dialog
-    const handleConfirmDeleteCardClick = () => {
-        // Write to Firebase the changes here
-        setShowDeleteCard(false);
+    const handleConfirmDeleteCardClick = (card) => {
+        const cardRef = ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card/${card.id}`);
+        // Use the update method to update the address
+        remove(cardRef, card)
+            .then(() => {
+                console.log("Card deleted successfully");
+                // Update local state with the new values
+                setCardDetails(prevCardDetails => prevCardDetails.filter(crd => crd.id !== card.id));
+                setShowDeleteCard(false);
+            })
+            .catch((error) => {
+                console.error("Error deleting card:", error);
+            });
     }
 
     useEffect(() => {
@@ -73,11 +160,11 @@ export default function CardStored() {
                             <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
 
                                 <img id = "card_type" class="first-line:h-8 w-8 flex-wrap justify-self-center" src="https://www.iconbolt.com/iconsets/payment-method/american-card-express-method-payment.svg" alt="card"/>
-                                <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.fullName}</h2>
+                                <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
                                 <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
                                 <h2 id="billing_address" className="flex dark:text-white text-white font-mono ">{c.billAddress}</h2>
-                                <img class="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit address" onClick={()=> setShowEditCard(true)} disabled={showEditCard}/>
-                                <img class="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address" onClick={()=> setShowDeleteCard(true)} disabled={showDeleteCard}/>
+                                <img class="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit address" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                <img class="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete address" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
 
 
                             </div>
@@ -106,82 +193,105 @@ export default function CardStored() {
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW CARD</h3>
             <h3 className='flex self-center font-semibold text-white mb-5'>Add card by filling the details below</h3>
             <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}">
-                <div>
-                    <label htmlFor="number" className='text-white'>Card Number</label>
-                    <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="tel" inputmode="numeric" id="card_number" name="card_number" maxLength={16} placeholder='4625 2563 2356 8514' required/> 
+                <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="number" className='text-white'>Card Number</label>
+                        <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="tel" inputmode="numeric" id="cardNumber" name="cardNumber" maxLength={16} placeholder='4625 2563 2356 8514' required value={formData.cardNumber} onChange={handleChange}/> 
+                    </div>
+
+                    <div>
+                        <label htmlFor="number" className='text-white'>Sort Code</label>
+                        <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="tel" inputmode="numeric" id="sortCode" name="sortCode" maxLength={6} placeholder='26-02-54' required value={formData.sortCode} onChange={handleChange}/> 
                     </div>
 
                     <div className='inline-flex justify-evenly'>
                         <div className='mr-5'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="month" id="exp_date" name="exp_date" placeholder='12/24' required/>
+                            type="month/year" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
                         </div> 
                         <div className='ml-5'>
                             <label htmlFor="number" className='text-white'>CVV</label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="password" id="cvv" name="cvv" maxLength={3} placeholder='342' required/>
+                            type="password" id="securityCode" name="securityCode" maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
                         </div>
                     </div>
 
                     <div>
-                    <label htmlFor="text" className='text-white'>Card Holder</label>
-                    <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="text" id="card_holder" name="card_holder" placeholder='John Wick' required/>
-                </div>
+                        <label htmlFor="text" className='text-white'>Card Holder</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChange}/>
+                    </div>
+                    <div>
+                        <label htmlFor="text" className='text-white'>Billing Address</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    type="text" id="billAddress" name="billAddress" placeholder='3 Admaston road' required value={formData.billAddress} onChange={handleChange}/>
+                    </div>
+                    <div className='flex justify-evenly mt-10'>
+                        <Button className="w-52 mr-1" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
+                        <Button type="submit" className="w-52 ml-1" color="gray">CONFIRM</Button>
+                    </div>
                 </form>
             </div>
-            <div className='flex justify-evenly mt-10'>
-                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmAddCardClick()}>CONFIRM</Button>
-            </div>
+            
         </Modal>
         {/*Edit card modal */}
-        <Modal isVisible={showEditCard} onClose ={()=> setShowEditCard(false)}>
+        <Modal isVisible={showEditCard} card = {card} onClose ={()=> setShowEditCard(false)}>
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>EDIT YOUR CARD</h3>
             <h3 className='flex self-center font-semibold text-white mb-5'>Edit your card by filling the details below</h3>
             <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}">
-                <div>
+            <form className="space-y-6 text-white font-mono" method="POST onSubmit={handleSubmit}">
+                    <div>
                     <label htmlFor="number" className='text-white'>Card Number</label>
                     <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="tel" inputmode="numeric" id="card_number" name="card_number" maxLength={16} placeholder='4625 2563 2356 8514' required/> 
+                    type="tel" inputmode="numeric" id="card_number" name="card_number" maxLength={16} placeholder='4625 2563 2356 8514' required value={card.cardNumber} onChange={(e) => setCard({ ...card, cardNumber: e.target.value })}/> 
+                    </div>
+
+                    <div>
+                    <label htmlFor="number" className='text-white'>Sort Code</label>
+                    <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    type="tel" inputmode="numeric" id="sort_code" name="sort_code" maxLength={6} placeholder='26-02-54' required value={card.sortCode} onChange={(e) => setCard({ ...card, sortCode: e.target.value })}/> 
                     </div>
 
                     <div className='inline-flex justify-evenly'>
                         <div className='mr-3'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
-                            <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="month" id="exp_date" name="exp_date" placeholder='12/24' required/>
+                            <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            type="month/year" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
                         </div> 
                         <div className='ml-3'>
                             <label htmlFor="number" className='text-white'>CVV</label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="password" id="cvv" name="cvv" maxLength={3} placeholder='342' required/>
+                            type="password" id="cvv" name="cvv" maxLength={3} placeholder='342' required value={card.securityCode} onChange={(e) => setCard({ ...card, securityCode: e.target.value })}/>
                         </div>
                     </div>
 
                     <div>
-                    <label htmlFor="text" className='text-white'>Card Holder</label>
-                    <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="text" id="card_holder" name="card_holder" placeholder='John Wick' required/>
-                </div>
+                        <label htmlFor="text" className='text-white'>Card Holder</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="text" id="card_holder" name="card_holder" placeholder='John Wick' required value={card.cardName} onChange={(e) => setCard({ ...card, fullName: e.target.value })}/>
+                    </div>
+                    <div>
+                        <label htmlFor="text" className='text-white'>Billing Address</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    type="text" id="billAddress" name="billAddress" placeholder='John Wick' required value={card.billAddress} onChange={(e) => setCard({ ...card, billAddress: e.target.value })}/>
+                    </div>
                 </form>
             </div>
             <div className='flex justify-evenly mt-10'>
                 <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowEditCard(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmEditCardClick()}>CONFIRM</Button>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</Button>
             </div>
         </Modal>
         {/*Delete card modal */}
-        <Modal isVisible={showDeleteCard} onClose ={()=> setShowDeleteCard(false)}>
+        <Modal isVisible={showDeleteCard} card = {card} onClose ={()=> setShowDeleteCard(false)}>
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE CARD</h3>
             <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this card?</h3>
             <div className='flex justify-evenly mt-10'>
                 <Button type="submit"className="w-52" color="gray" onClick ={()=>showDeleteCard(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmDeleteCardClick()}>CONFIRM</Button>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmDeleteCardClick(card)}>CONFIRM</Button>
             </div>
         </Modal>
         </Fragment>
