@@ -47,12 +47,10 @@ export default function Product() {
 
         //TODO: not the best way to approach
         if(type === "search"){
-          setShowProducts(prodArray.filter((item) => item.name.toLowerCase().includes(search.toString())))         
-          //setSize(prodArray.filter((item) => item.name.toLowerCase().includes(search.toString())).length)
+          setShowProducts(prodArray.filter((item) => item.name.toLowerCase().includes(search.toString())))   
         }
         else{
           setShowProducts(prodArray.filter((item) => item.console.toLowerCase().includes(search)))
-          //setSize(prodArray.filter((item) => item.console.toLowerCase().includes(search)))
         }
       } else{
         setError(true)
@@ -104,7 +102,7 @@ export default function Product() {
             <br/><br/><br/><br/><br/><br/><br/>
           </div>
         ) : (
-        <> 
+          <div className='grid grid-cols-5 mx-3 mt-3 mb-5 gap-4 text-sm'>
             {showProduct.map((p) => (
               <Card key={p.id} className="max-w-sm mx-3" renderImage={() => 
     
@@ -129,7 +127,7 @@ export default function Product() {
                 </Button.Group>
               </Card>
               ))}
-          </>
+            </div>
         )}
     </div>  
   );
