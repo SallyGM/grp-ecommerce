@@ -7,6 +7,7 @@ import { ref , get, update ,push, set, remove} from "firebase/database";
 import { database } from '@/app/firebaseConfig.js';
 import Modal from '@/components/modal.js';
 import { useAuth } from '@/app/context/AuthContext.js';
+import toast from 'react-hot-toast';
 
 
 export default function AddressBook() {
@@ -62,6 +63,7 @@ export default function AddressBook() {
         // Set the new address object at the specified path in the database
         set(ref(database, 'User/' + userId +'/address/' + newAddressKey), newAddress)
             .then(() => {
+                toast.success('New address added successfully');
                 console.log('New address added successfully');
                 setFormData({
                     street: '',
@@ -74,6 +76,7 @@ export default function AddressBook() {
                 setShowAddAddressModal(false);
             })
             .catch((error) => {
+                toast.error('Error adding new address:', error);
                 console.error('Error adding new address:', error);
             });
     };
@@ -89,6 +92,7 @@ export default function AddressBook() {
         // Use the update method to update the address
         update(addressRef, address)
             .then(() => {
+                toast.success("Address updated successfully");
                 console.log("Address updated successfully");
                 // Update local state with the new values
                 setAddressDetails(prevAddressDetails => {
@@ -105,6 +109,7 @@ export default function AddressBook() {
                 setShowEditAddress(false);
             })
             .catch((error) => {
+                toast.error("Error updating address:", error);
                 console.error("Error updating address:", error);
             });
     }
@@ -119,12 +124,14 @@ export default function AddressBook() {
         // Use the update method to update the address
         remove(AddressRef, address)
             .then(() => {
+                toast.success("Address deleted successfully");
                 console.log("Address deleted successfully");
                 // Update local state with the new values
                 setAddressDetails(prevAddressDetails => prevAddressDetails.filter(addr  => addr .id !== address.id));
                 setShowDeleteAddress(false);
             })
             .catch((error) => {
+                toast.error("Error deleting address:", error);
                 console.error("Error deleting address:", error);
             });
     }
@@ -149,9 +156,11 @@ export default function AddressBook() {
                 }));
                 setAddressDetails(addressArray);
             } else {
+                toast.error("No data found");
                 console.log("No data found")
             }
         }).catch((error) => {
+            toast.error(error);
             console.error(error);
         });
     }, []); // Removed card from the dependency array

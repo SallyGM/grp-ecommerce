@@ -7,6 +7,7 @@ import { database } from '../../firebaseConfig';
 import SubNavbar from '../subNavbar'
 import Modal from '@/components/modal.js';
 import { useAuth } from '@/app/context/AuthContext.js';
+import toast from 'react-hot-toast';
 
 export default function CardStored() {
  
@@ -58,6 +59,7 @@ export default function CardStored() {
         // Set the new card object at the specified path in the database
         set(ref(database, 'User/' + userId + '/card/' + newCardKey), newCard)
             .then(() => {
+                toast.success('New card added successfully');
                 console.log('New card added successfully');
                 setCardDetails(prevCardDetails => [...prevCardDetails, { id: newCardKey, ...newCard }]);
                 setFormData({
@@ -71,6 +73,7 @@ export default function CardStored() {
                 setShowAddCardModal(false);
             })
             .catch((error) => {
+                toast.error('Error adding new card:', error);
                 console.error('Error adding new card:', error);
             });
     };
@@ -97,6 +100,7 @@ export default function CardStored() {
         // Use the update method to update the address
         update(cardRef, card)
             .then(() => {
+                toast.success("Card updated successfully");
                 console.log("Card updated successfully");
                 // Update local state with the new values
                 setCardDetails(prevCardDetails => {
@@ -113,6 +117,7 @@ export default function CardStored() {
                 setShowEditCard(false);
             })
             .catch((error) => {
+                toast.error("Error updating card:", error);
                 console.error("Error updating card:", error);
             });
     }
@@ -127,12 +132,14 @@ export default function CardStored() {
         // Use the update method to update the address
         remove(cardRef, card)
             .then(() => {
+                toast.success("Card deleted successfully");
                 console.log("Card deleted successfully");
                 // Update local state with the new values
                 setCardDetails(prevCardDetails => prevCardDetails.filter(crd => crd.id !== card.id));
                 setShowDeleteCard(false);
             })
             .catch((error) => {
+                toast.error("Error deleting card:", error);
                 console.error("Error deleting card:", error);
             });
     }

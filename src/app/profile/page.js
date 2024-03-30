@@ -7,7 +7,7 @@ import React from 'react';
 import SubNavbar from './subNavbar.js'
 import Modal from '@/components/modal.js';
 import { useAuth } from '../context/AuthContext.js'
-
+import toast from 'react-hot-toast';
 
 export default function Home() {
 
@@ -43,13 +43,16 @@ export default function Home() {
 
             // reauthenticate 
             await reautentication(oldPassword.current.value)
+            
 
             // changes password
             await updatepassword(newPassword.current.value)
             setShowPasswordModal(false) 
+            // Display confirm toast message
+            toast.success("Password Updated Successfully!")
           }
           catch (e) {
-            // TODO: Treat error in this part
+            toast.error(e)
             console.log(e)  
           }
             
@@ -110,14 +113,12 @@ export default function Home() {
         setEditButtonClicked(true);
         setSaveButtonClicked(false)
         setInputFieldActive(true)
-        // Additional logic if needed
     };
 
     const handleSaveButtonClick = () => {
         setSaveButtonClicked(true);
         setEditButtonClicked(false);
         setInputFieldActive(false)
-        // Additional logic if needed
     };
       // Function that handle confirm button click on personal details changes dialog
     const handleConfirmButtonClick = ()=> {   //THERE IS AN ISSUE WITH THIS BLOCK ON CODE
@@ -131,6 +132,7 @@ export default function Home() {
         const userId = currentUser.uid;
 
         if (!userId) {
+            toast.error("No current user logged in")
             console.log("No current user logged in");
             return;
         }
@@ -145,8 +147,11 @@ export default function Home() {
                 setSaveButtonClicked(true);
                 setEditButtonClicked(false);
                 setInputFieldActive(false)
+                // Display confirm toast message
+                toast.success("Details Updated Successfully!");
             })
             .catch((error) => {
+                toast.error(error);
                 console.error("Error updating details:", error);
             });
     }
@@ -177,9 +182,10 @@ export default function Home() {
                 const { firstName, lastName, email } = userDetails;
                 setUserDetails({ firstName, lastName, email });
             } else {
-            console.log("No data available");
+                console.log("No data available");
             }
         } catch (error) {
+            toast.error("No Data available",error)
             console.error("Error fetching data:", error);
         }
         };

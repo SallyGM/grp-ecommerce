@@ -3,6 +3,8 @@ import "./globals.css";
 import Header from "./header";
 import Footer from "./footer";
 import { AuthProvider } from "./context/AuthContext";
+import { Toaster } from "react-hot-toast";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +20,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <Header/>
           {children}
+          <Toaster position = "bottom-center"/>
           <Footer/>
         </AuthProvider>
       
