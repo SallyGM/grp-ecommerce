@@ -14,6 +14,7 @@ export default function Home() {
 
     // Firebase information retrival function here
     const [userDetails, setUserDetails] = useState(null);
+    const [user, setUser] = useState()
     const [editButtonClicked, setEditButtonClicked] = useState(false);
     const [saveButtonClicked, setSaveButtonClicked] = useState(false);
     const [activateInputfields, setInputFieldActive] = useState(false);
@@ -27,35 +28,11 @@ export default function Home() {
     const oldPassword = useRef();
     const newPassword = useRef();
     const newConfPassword = useRef();
-    const { updatePassword } = useAuth()
-    // Get the currently signed-in user
-    const { currentUser } = useAuth();
+
+    const { currentUser, updatepassword, updateemail, reautentication } = useAuth()
    
     async function handleSubmit(e){
         e.preventDefault();
-
-    //Use the useState Hook to manage side bar clicks
-    const [tab, setTab] = useState(Account);
-    
-
-    //Function that retrive card information base on the menu tab selected
-    const handleMenuClick= (compName) => (e) => {
-        if(compName == 'MY ACCOUNT'){
-            setTab(Account);
-        }
-        if(compName == 'MY ADDRESS BOOK'){
-            setTab(AddressBook);
-        }
-        if(compName == 'STORED PAYMENT CARDS'){
-            setTab(CardStored);
-        }
-        if(compName == 'MY ORDERS'){
-            setTab(MyOrders);
-        }
-        if(compName == 'MY REVIEWS'){
-            setTab(MyReviews);
-        }
-    };
     
         // Submit form if email and password fields are valid
         if (oldPasswordError == '' && newPasswordError == '' && newConfPasswordError == '') {
@@ -63,12 +40,16 @@ export default function Home() {
           try{    
             setOldPasswordError('')
             setNewPasswordError('')
-            const currentNewConfirmPassword = document.getElementById('confirmNewPassword').value;
-            await updatePassword(currentNewConfirmPassword)
+
+            // reauthenticate 
+            await reautentication(oldPassword.current.value)
+
+            // changes password
+            await updatepassword(newPassword.current.value)
             setShowPasswordModal(false) 
-             
           }
           catch (e) {
+            // TODO: Treat error in this part
             console.log(e)  
           }
             
@@ -77,42 +58,41 @@ export default function Home() {
             setNewPasswordError("New Password is required")
             setNewConfPasswordError("Confirm New Password is required")
         }  
-      };
+    };
 
     //Handle  old password change
-  const handleOldPasswordChange = async(e) => {
-    const isOldPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
-    if (!isOldPasswordValid) {
-        setOldPasswordError('wrong password');
-    } else {
-        setOldPasswordError('');
-    }
-  };
+    const handleOldPasswordChange = async(e) => {
+        const isOldPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
+        if (!isOldPasswordValid) {
+            setOldPasswordError('wrong password');
+        } else {
+            setOldPasswordError('');
+        }
+    };
 
    //Handle  new password change
-   const handleNewPasswordChange = (e) => {
-    const isNewPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
-    // Validate password pattern (at least 8 characters and must contain one special character)
-    if (!isNewPasswordValid) {
-        setNewPasswordError('Password must be at least 8 characters long and contain one specal character');
-    } else {
-        setNewPasswordError('');
-    }
-  };
+    const handleNewPasswordChange = (e) => {
+        const isNewPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
+        // Validate password pattern (at least 8 characters and must contain one special character)
+        if (!isNewPasswordValid) {
+            setNewPasswordError('Password must be at least 8 characters long and contain one specal character');
+        } else {
+            setNewPasswordError('');
+        }
+    };
 
   //Handle  new confirm password change
-  const handleNewConfirmPasswordChange = (e) => {
-    const currentNewPassword = document.getElementById('newPassword').value;
-    const currentNewConfirmPassword = document.getElementById('confirmNewPassword').value;
-    // Validate password pattern (at least 8 characters and must contain one special character)
-    const isNewConfPasswordValid = currentNewConfirmPassword === currentNewPassword;
-    if (!isNewConfPasswordValid) {
-        setNewConfPasswordError('Confirm password does not match the new password');
-    } else {
-        setNewConfPasswordError('');
-    }
-  };
-
+    const handleNewConfirmPasswordChange = (e) => {
+        const currentNewPassword = document.getElementById('newPassword').value;
+        const currentNewConfirmPassword = document.getElementById('confirmNewPassword').value;
+        // Validate password pattern (at least 8 characters and must contain one special character)
+        const isNewConfPasswordValid = currentNewConfirmPassword === currentNewPassword;
+        if (!isNewConfPasswordValid) {
+            setNewConfPasswordError('Confirm password does not match the new password');
+        } else {
+            setNewConfPasswordError('');
+        }
+    };
 
     const handleChange = (e) => {
         setUserDetails({
@@ -124,55 +104,60 @@ export default function Home() {
     const openEditDetailsModal = (details) => {
         setDetails(details);
         setShowModal(true);
-  };
+    };
     
     const handleEditButtonClick = () => {
         setEditButtonClicked(true);
         setSaveButtonClicked(false)
         setInputFieldActive(true)
         // Additional logic if needed
-      };
+    };
 
     const handleSaveButtonClick = () => {
         setSaveButtonClicked(true);
         setEditButtonClicked(false);
         setInputFieldActive(false)
         // Additional logic if needed
-      };
+    };
       // Function that handle confirm button click on personal details changes dialog
-      const handleConfirmButtonClick = ()=> {   //THERE IS AN ISSUE WITH THIS BLOCK ON CODE
-            // Create a new details object from the form data
-            const newDetails = {
-                firstName: userDetails.firstName,
-                lastName: userDetails.lastName
-            };
-            const userId = currentUser.id;
-            if (!userId) {
-                console.log("No current user logged in");
-                return;
-            }
-            const detailsRef = ref(database, 'User/'+ userDetails);
-            // Use the update method to update the details
-            update(detailsRef, newDetails)
-                .then(() => {
-                    console.log("Details updated successfully");
-                    setShowModal(false);
-                    setSaveButtonClicked(true);
-                    setEditButtonClicked(false);
-                    setInputFieldActive(false)
-                })
-                .catch((error) => {
-                    console.error("Error updating details:", error);
-                });
+    const handleConfirmButtonClick = ()=> {   //THERE IS AN ISSUE WITH THIS BLOCK ON CODE
         
-      }
+        // Create a new details object from the form data
+        const newDetails = {
+            firstName: userDetails.firstName,
+            lastName: userDetails.lastName
+        };
+
+        const userId = currentUser.uid;
+
+        if (!userId) {
+            console.log("No current user logged in");
+            return;
+        }
+
+        const detailsRef = ref(database, 'User/'+ userId);
+
+        // Use the update method to update the details
+        update(detailsRef, newDetails)
+            .then(() => {
+                console.log("Details updated successfully");
+                setShowModal(false);
+                setSaveButtonClicked(true);
+                setEditButtonClicked(false);
+                setInputFieldActive(false)
+            })
+            .catch((error) => {
+                console.error("Error updating details:", error);
+            });
+    }
       
       // Function that handle confirm button click on delete account dialog
-      const handleDeleteAccountButtonClick = () => {
+    const handleDeleteAccountButtonClick = () => {
         // Write to Firebase the changes here
         setShowDeleteModal(false);
-      }
+     }
 
+    // retrieves user data
     useEffect(() => {
         const fetchData = async () => {
             const userId = currentUser.uid;
@@ -187,10 +172,10 @@ export default function Home() {
         try {
             const snapshot = ((await get(userRef)));
             if (snapshot.exists()) {
-            const userDetails = snapshot.val();
-            // Extract required fields (first name, last name, email)
-            const { firstName, lastName, email } = userDetails;
-            setUserDetails({ firstName, lastName, email });
+                const userDetails = snapshot.val();
+                // Extract required fields (first name, last name, email)
+                const { firstName, lastName, email } = userDetails;
+                setUserDetails({ firstName, lastName, email });
             } else {
             console.log("No data available");
             }
@@ -213,7 +198,7 @@ export default function Home() {
                     {userDetails && (
                     <div className='grid grid-rows-1 flex-wrap m-s ml-10 mr-10'>
                         <Card className=" flex h-auto w-full bg-transparent border-white">
-                            <form >
+                            <form>
                                 <div className='grid grid-cols-2 items-center mb-2 flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center'}}>    
                                     <h2 id="first_name" className="flex dark:text-white text-white font-mono ">FIRST NAME:</h2>
                                     <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -234,7 +219,6 @@ export default function Home() {
                                 <h2 id="empty_content" className="flex dark:text-white text-white font-mono "></h2>
 
                                     <Button
-                                        type="submit"
                                         className="w-40 visible justify-self-end mr-24" color='success'
                                         onClick={()=> openEditDetailsModal(userDetails)}
                                         disabled={!editButtonClicked || saveButtonClicked}>
@@ -249,14 +233,12 @@ export default function Home() {
                     )}
                     <div className='flex justify-evenly mt-10'>
                         <Button
-                            type="submit"
                             className="w-52 " color='red'
                             onClick={()=> setShowPasswordModal(true)}
                             disabled={showPasswordModal}>
                             CHANGE PASSWORD
                         </Button>
                         <Button
-                            type="submit"
                             className="w-52" color='success'
                             onClick={handleEditButtonClick}
                             disabled= {editButtonClicked}>
@@ -275,24 +257,25 @@ export default function Home() {
                             DELETE ACCOUNT
                         </Button>
                     </div>
-
-            </div>
+                </div>
             </div> 
+
             {/*Personal details modal */}
             <Modal isVisible={showModal} details = {details} onClose ={()=> setShowModal(false)}>
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>PERSONAL DETAILS CHANGES</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to save the changes?</h3>
                 <div className='flex justify-evenly mt-10'>
-                    <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</Button>
-                    <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmButtonClick(details)}>CONFIRM</Button>
+                    <Button className="w-52" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</Button>
+                    <Button className="w-52" color="gray" onClick={()=>handleConfirmButtonClick(details)}>CONFIRM</Button>
                 </div>
             </Modal>
+
             {/*Change password modal */}
             <Modal isVisible={showPasswordModal} onClose ={()=> setShowPasswordModal(false)}>
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHANGE YOUR PASSWORD</h3>
                 <h3 className='flex self-center font-semibold text-white mb-5'>Fill out the form below</h3>
                 <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
+                    <form className="text-white font-mono" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor="password" className='text-white'>Old Password</label>
                             <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -313,20 +296,20 @@ export default function Home() {
                             type="password" id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword}/>
                             {newConfPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{newConfPasswordError}</span>}
                         </div>
-                        <div className='flex justify-evenly mt-10'>
+                        <div className='flex justify-evenly my-10'>
                             <Button type="submit"className="w-52 mr-2" color="gray" onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
                             <Button type="submit" className="w-52 ml-2" color="gray">CONFIRM</Button>
                         </div>
                     </form>
                 </div>
-                
             </Modal>
+
             {/*Delete account modal */}          
             <Modal isVisible={showDeletedModal} onClose ={()=> setShowDeleteModal(false)}>
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE ACCOUNT</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete yur acount?</h3>
-                <div className='flex justify-evenly mt-10'>
-                    <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</Button>
+                <div className='flex justify-evenly mt-10 mb-10'>
+                    <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</Button>
                     <Button type="submit" className="w-52" color="gray" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</Button>
                 </div>
             </Modal>
