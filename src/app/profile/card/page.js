@@ -6,6 +6,7 @@ import { useEffect, useState} from 'react';
 import { database } from '../../firebaseConfig';
 import SubNavbar from '../subNavbar'
 import Modal from '@/components/modal.js';
+import { useAuth } from '@/app/context/AuthContext.js';
 
 export default function CardStored() {
  
@@ -21,6 +22,9 @@ export default function CardStored() {
         securityCode: '',
         cardName: ''
     });
+
+    // Get the currently signed-in user
+    const { currentUser } = useAuth()
 
     
     const handleChange = (e) => {
@@ -42,12 +46,17 @@ export default function CardStored() {
             cardName: formData.cardName,
             billAddress: formData.billAddress
         };
+        const userId = currentUser.uid;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
 
         // Generate a unique key for the new card
-        const newCardKey = push(ref(database, 'User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card')).key;
+        const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
 
         // Set the new card object at the specified path in the database
-        set(ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card/${newCardKey}`), newCard)
+        set(ref(database, 'User/' + userId + '/card/' + newCardKey), newCard)
             .then(() => {
                 console.log('New card added successfully');
                 setCardDetails(prevCardDetails => [...prevCardDetails, { id: newCardKey, ...newCard }]);
@@ -79,7 +88,12 @@ export default function CardStored() {
 
     // Function that handle confirm button click on edit card dialog
     const handleConfirmEditCardClick = (card) => {
-        const cardRef = ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card/${card.id}`);
+        const userId = currentUser.uid;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
+        const cardRef = ref(database, 'User/' + userId + '/card/'+ card.id);
         // Use the update method to update the address
         update(cardRef, card)
             .then(() => {
@@ -104,7 +118,12 @@ export default function CardStored() {
     }
     // Function that handle confirm button click on delete card dialog
     const handleConfirmDeleteCardClick = (card) => {
-        const cardRef = ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/card/${card.id}`);
+        const userId = currentUser.uid;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
+        const cardRef = ref(database, 'User/' + userId + '/card/'+ card.id);
         // Use the update method to update the address
         remove(cardRef, card)
             .then(() => {
@@ -119,10 +138,15 @@ export default function CardStored() {
     }
 
     useEffect(() => {
+        const userId = currentUser.uid;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
         const cardRef = ref(database, "User");
         get(cardRef).then((snapshot) => {
             if (snapshot.exists()) {
-                const cardArray = Object.entries(snapshot.child('w1FJVaOVCsSlsog2b7mUIuG8Xgd2').child('card').val()).map(([id, data]) => ({
+                const cardArray = Object.entries(snapshot.child(userId).child('card').val()).map(([id, data]) => ({
                     id,
                     ...data,
                 }));

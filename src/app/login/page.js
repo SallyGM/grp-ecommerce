@@ -43,7 +43,7 @@ export default function Home() {
     }  
   };
     
-  // Handle password change
+  // Handle email change
   const handleEmailChange = (e) => {
     
     // Validate email pattern

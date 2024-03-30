@@ -6,6 +6,7 @@ import { useEffect, useState} from 'react';
 import { ref , get, update ,push, set, remove} from "firebase/database";
 import { database } from '@/app/firebaseConfig.js';
 import Modal from '@/components/modal.js';
+import { useAuth } from '@/app/context/AuthContext.js';
 
 
 export default function AddressBook() {
@@ -21,6 +22,10 @@ export default function AddressBook() {
         city: '',
         country: ''
     });
+
+    // Get the currently signed-in user
+    const { currentUser } = useAuth()
+
     // Function to open delete address modal and set card
     const openDeleteAddressModal = (address) => {
         setAddress(address);
@@ -45,12 +50,17 @@ export default function AddressBook() {
             city: formData.city,
             country: formData.country
         };
+        const userId = currentUser.uid;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
 
         // Generate a unique key for the new address
-        const newAddressKey = push(ref(database, 'User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/address')).key;
+        const newAddressKey = push(ref(database, 'User/' + userId +'/address')).key;
 
         // Set the new address object at the specified path in the database
-        set(ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/address/${newAddressKey}`), newAddress)
+        set(ref(database, 'User/' + userId +'/address/' + newAddressKey), newAddress)
             .then(() => {
                 console.log('New address added successfully');
                 setFormData({
@@ -70,7 +80,12 @@ export default function AddressBook() {
     
     // Function that handle confirm button click on edit address dialog
     const handleConfirmEditAddressClick = (address) => {
-        const addressRef = ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/address/${address.id}`);
+        const userId = currentUser.uid;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
+        const addressRef = ref(database, 'User/'+ userId + '/address/'+ address.id);
         // Use the update method to update the address
         update(addressRef, address)
             .then(() => {
@@ -95,7 +110,12 @@ export default function AddressBook() {
     }
     // Function that handle confirm button click on delete address dialog
     const handleConfirmDeleteAddressClick = (address) => {
-        const AddressRef = ref(database, `User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2/address/${address.id}`);
+        const userId = currentUser.uid;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
+        const AddressRef = ref(database, 'User/'+ userId + 'address/${address.id}');
         // Use the update method to update the address
         remove(AddressRef, address)
             .then(() => {
@@ -115,10 +135,15 @@ export default function AddressBook() {
   };
 
     useEffect(() => {
+        const userId = currentUser.uid;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
         const addressRef = ref(database, "User");
         get(addressRef).then((snapshot) => {
             if (snapshot.exists()) {
-                const addressArray = Object.entries(snapshot.child('w1FJVaOVCsSlsog2b7mUIuG8Xgd2').child('address').val()).map(([id, data]) => ({
+                const addressArray = Object.entries(snapshot.child(userId).child('address').val()).map(([id, data]) => ({
                     id,
                     ...data,
                 }));

@@ -1,11 +1,13 @@
 "use client"; 
 import { Card, Button } from 'flowbite-react';
-import { Fragment, useEffect, useState} from 'react';
+import { Fragment, useEffect, useState, useRef} from 'react';
 import { ref , get, update } from "firebase/database";
 import { database } from '../firebaseConfig.js';
 import React from 'react';
 import SubNavbar from './subNavbar.js'
 import Modal from '@/components/modal.js';
+import { useAuth } from '../context/AuthContext.js'
+
 
 export default function Home() {
 
@@ -18,6 +20,75 @@ export default function Home() {
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showDeletedModal, setShowDeleteModal] = useState(false);
     const [details, setDetails] = useState('');
+    const [oldPasswordError, setOldPasswordError] = useState('');     //Create old password error
+    const [newPasswordError, setNewPasswordError] = useState('');     //Create new password error
+    const [newConfPasswordError, setNewConfPasswordError] = useState('');     //Create new confirm password error
+    const oldPassword = useRef();
+    const newPassword = useRef();
+    const newConfPassword = useRef();
+    const { updatePassword } = useAuth()
+    // Get the currently signed-in user
+    const { currentUser } = useAuth();
+   
+    async function handleSubmit(e){
+        e.preventDefault();
+    
+        // Submit form if email and password fields are valid
+        if (oldPasswordError == '' && newPasswordError == '' && newConfPasswordError == '') {
+    
+          try{    
+            setOldPasswordError('')
+            setNewPasswordError('')
+            const currentNewConfirmPassword = document.getElementById('confirmNewPassword').value;
+            await updatePassword(currentNewConfirmPassword)
+            setShowPasswordModal(false) 
+             
+          }
+          catch (e) {
+            console.log(e)  
+          }
+            
+        } else {
+            setOldPasswordError("Old Password required")
+            setNewPasswordError("New Password is required")
+            setNewConfPasswordError("Confirm New Password is required")
+        }  
+      };
+
+    //Handle  old password change
+  const handleOldPasswordChange = async(e) => {
+    const isOldPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
+    if (!isOldPasswordValid) {
+        setOldPasswordError('wrong password');
+    } else {
+        setOldPasswordError('');
+    }
+  };
+
+   //Handle  new password change
+   const handleNewPasswordChange = (e) => {
+    const isNewPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
+    // Validate password pattern (at least 8 characters and must contain one special character)
+    if (!isNewPasswordValid) {
+        setNewPasswordError('Password must be at least 8 characters long and contain one specal character');
+    } else {
+        setNewPasswordError('');
+    }
+  };
+
+  //Handle  new confirm password change
+  const handleNewConfirmPasswordChange = (e) => {
+    const currentNewPassword = document.getElementById('newPassword').value;
+    const currentNewConfirmPassword = document.getElementById('confirmNewPassword').value;
+    // Validate password pattern (at least 8 characters and must contain one special character)
+    const isNewConfPasswordValid = currentNewConfirmPassword === currentNewPassword;
+    if (!isNewConfPasswordValid) {
+        setNewConfPasswordError('Confirm password does not match the new password');
+    } else {
+        setNewConfPasswordError('');
+    }
+  };
+
 
     const handleChange = (e) => {
         setUserDetails({
@@ -51,7 +122,12 @@ export default function Home() {
                 firstName: userDetails.firstName,
                 lastName: userDetails.lastName
             };
-            const detailsRef = ref(database, 'User/w1FJVaOVCsSlsog2b7mUIuG8Xgd2');
+            const userId = currentUser.id;
+            if (!userId) {
+                console.log("No current user logged in");
+                return;
+            }
+            const detailsRef = ref(database, 'User/'+ userDetails);
             // Use the update method to update the details
             update(detailsRef, newDetails)
                 .then(() => {
@@ -66,11 +142,7 @@ export default function Home() {
                 });
         
       }
-      // Function that handle confirm button click on reset password changes dialog
-      const handleConfirmPasswordButtonClick = () => {
-        // Write to Firebase the changes here
-        setShowPasswordModal(false);
-      }
+      
       // Function that handle confirm button click on delete account dialog
       const handleDeleteAccountButtonClick = () => {
         // Write to Firebase the changes here
@@ -79,11 +151,17 @@ export default function Home() {
 
     useEffect(() => {
         const fetchData = async () => {
+            const userId = currentUser.uid;
+            if (!userId) {
+                console.log(currentUser);
+                return;
+            }
         
-        const userRef = ref(database, 'User');
+        const userRef = ref(database, 'User/' + userId);
+        
         
         try {
-            const snapshot = (await get(userRef)).child('w1FJVaOVCsSlsog2b7mUIuG8Xgd2');
+            const snapshot = ((await get(userRef)));
             if (snapshot.exists()) {
             const userDetails = snapshot.val();
             // Extract required fields (first name, last name, email)
@@ -189,30 +267,34 @@ export default function Home() {
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHANGE YOUR PASSWORD</h3>
             <h3 className='flex self-center font-semibold text-white mb-5'>Fill out the form below</h3>
             <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6 text-white font-mono" action="#" method="POST onSubmit={handleSubmit}">
-                <div>
-                <label htmlFor="email" className='text-white'>Old Password</label>
-                <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="password" id="old_password" name="old_password" required/> 
-                </div>
+                <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="password" className='text-white'>Old Password</label>
+                        <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="password" id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword}/> 
+                        {oldPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{oldPasswordError}</span>}
+                    </div>
 
-                <div>
-                <label htmlFor="password" className='text-white'>New Password</label>
-                <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="password" id="new_password" name="new_password" required/>
-                </div>
+                    <div>
+                        <label htmlFor="password" className='text-white'>New Password</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="password" id="newPassword" name="newPassword" required onChange={handleNewPasswordChange} ref={newPassword}/>
+                        {newPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{newPasswordError}</span>}
+                    </div>
 
-                <div>
-                <label htmlFor="password" className='text-white'>Confirm New Password</label>
-                <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="password" id="confirm_new_password" name="confirm_new_password" required/>
-                </div>
+                    <div>
+                        <label htmlFor="password" className='text-white'>Confirm New Password</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="password" id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword}/>
+                        {newConfPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{newConfPasswordError}</span>}
+                    </div>
+                    <div className='flex justify-evenly mt-10'>
+                        <Button type="submit"className="w-52 mr-2" color="gray" onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
+                        <Button type="submit" className="w-52 ml-2" color="gray">CONFIRM</Button>
+                    </div>
                 </form>
             </div>
-            <div className='flex justify-evenly mt-10'>
-                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmPasswordButtonClick()}>CONFIRM</Button>
-            </div>
+            
         </Modal>
         {/*Delete account modal */}          
         <Modal isVisible={showDeletedModal} onClose ={()=> setShowDeleteModal(false)}>
