@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext.js'
 
 
 export default function Home() {
-<<<<<<< Updated upstream
+
 
     // Firebase information retrival function here
     const [userDetails, setUserDetails] = useState(null);
@@ -33,7 +33,7 @@ export default function Home() {
    
     async function handleSubmit(e){
         e.preventDefault();
-=======
+
     //Use the useState Hook to manage side bar clicks
     const [tab, setTab] = useState(Account);
     
@@ -56,7 +56,6 @@ export default function Home() {
             setTab(MyReviews);
         }
     };
->>>>>>> Stashed changes
     
         // Submit form if email and password fields are valid
         if (oldPasswordError == '' && newPasswordError == '' && newConfPasswordError == '') {
@@ -206,142 +205,131 @@ export default function Home() {
 
     return (
         <Fragment>
-        <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
-            <SubNavbar />
-       
-            <Card className=" justify-self-center mx-auto h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
-                <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > ACCOUNT INFORMATION</h5>
-                {userDetails && (
-                <div className='grid grid-rows-1 flex-wrap m-s ml-10 mr-10'>
-                    <Card className=" flex h-auto w-full  bg-transparent border-white">
-                        <form >
-                            <div className='grid grid-cols-2 items-center mb-2 flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center'}}>    
-                                <h2 id="first_name" className="flex dark:text-white text-white font-mono ">FIRST NAME:</h2>
-                                <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                type="first_name" id="first name" name="firstName" value={userDetails.firstName} onChange={handleChange}/>
-                            </div>
-                            <div className='grid grid-cols-2 mt-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                <h2 id="last_name" className="flex dark:text-white text-white font-mono ">LAST NAME:</h2>
-                                <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                type="last_name" id="first name" name="lastName" value={userDetails.lastName} onChange={handleChange}/>
-                            </div>
-                            <div className='grid grid-cols-2 mt-2 mb-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                <h2 id="email_address" className="flex dark:text-white text-white font-mono ">EMAIL ADDRESS:</h2>
-                                <input disabled className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                type="email" defaultValue={userDetails.email} id="first name" name="email"/>
-                            </div>
+            <div className='grid grid-rows-1 grid-cols-4 gap-x-5 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
+                <SubNavbar />
+                
+                <Card className=" justify-self-center mx-auto h-auto w-full my-5 mr-20 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+                    <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > ACCOUNT INFORMATION</h5>
+                    {userDetails && (
+                    <div className='grid grid-rows-1 flex-wrap m-s ml-10 mr-10'>
+                        <Card className=" flex h-auto w-full bg-transparent border-white">
+                            <form >
+                                <div className='grid grid-cols-2 items-center mb-2 flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center'}}>    
+                                    <h2 id="first_name" className="flex dark:text-white text-white font-mono ">FIRST NAME:</h2>
+                                    <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    type="first_name" id="first name" name="firstName" value={userDetails.firstName} onChange={handleChange}/>
+                                </div>
+                                <div className='grid grid-cols-2 mt-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
+                                    <h2 id="last_name" className="flex dark:text-white text-white font-mono ">LAST NAME:</h2>
+                                    <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    type="last_name" id="first name" name="lastName" value={userDetails.lastName} onChange={handleChange}/>
+                                </div>
+                                <div className='grid grid-cols-2 mt-2 mb-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
+                                    <h2 id="email_address" className="flex dark:text-white text-white font-mono ">EMAIL ADDRESS:</h2>
+                                    <input disabled className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    type="email" defaultValue={userDetails.email} id="first name" name="email"/>
+                                </div>
+                                
+                                <div className='grid grid-cols-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
+                                <h2 id="empty_content" className="flex dark:text-white text-white font-mono "></h2>
+
+                                    <Button
+                                        type="submit"
+                                        className="w-40 visible justify-self-end mr-24" color='success'
+                                        onClick={()=> openEditDetailsModal(userDetails)}
+                                        disabled={!editButtonClicked || saveButtonClicked}>
+                                        SAVE
+                                    </Button>
+                                </div>
+                            </form>
                             
-                            <div className='grid grid-cols-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                            <h2 id="empty_content" className="flex dark:text-white text-white font-mono "></h2>
-
-                                <Button
-                                    type="submit"
-                                    className="w-40 visible justify-self-end mr-24" color='success'
-                                    onClick={()=> openEditDetailsModal(userDetails)}
-                                    disabled={!editButtonClicked || saveButtonClicked}>
-                                    SAVE
-                                </Button>
-                            </div>
-                        </form>
+                        </Card>
                         
-                    </Card>
-                    
-                </div>
-                )}
-                <div className='flex justify-evenly mt-10'>
-                    <Button
-                        type="submit"
-                        className="w-52 " color='red'
-                        onClick={()=> setShowPasswordModal(true)}
-                        disabled={showPasswordModal}>
-                        CHANGE PASSWORD
-                    </Button>
-                    <Button
-                        type="submit"
-                        className="w-52" color='success'
-                        onClick={handleEditButtonClick}
-                        disabled= {editButtonClicked}>
-                        EDIT INFORMATION
-                    </Button>
-                </div>
-            </Card>
-<<<<<<< Updated upstream
-
-            <div className='flex place-content-center h-auto row-start-2 row-end-2 col-span-4 mb-6'>
-                <div>
-                    <Button
-                        type="submit"
-                        className="w-96 text-white"
-                        onClick={()=> setShowDeleteModal(true)}
-                        disabled={showDeletedModal}>
-                        DELETE ACCOUNT
-                    </Button>
-                </div>
-=======
-            {tab}
-       
-        <div className='flex place-content-center h-auto row-start-2 row-end-2 col-span-4 mb-6'>
-            <div>
-                <Button
-                    type="submit"
-                    className="w-96 text-white">
-                    DELETE ACCOUNT
-                </Button>
->>>>>>> Stashed changes
-            </div>
-        </div>   
-        {/*Personal details modal */}
-        <Modal isVisible={showModal} details = {details} onClose ={()=> setShowModal(false)}>
-            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>PERSONAL DETAILS CHANGES</h3>
-            <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to save the changes?</h3>
-            <div className='flex justify-evenly mt-10'>
-                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmButtonClick(details)}>CONFIRM</Button>
-            </div>
-        </Modal>
-        {/*Change password modal */}
-        <Modal isVisible={showPasswordModal} onClose ={()=> setShowPasswordModal(false)}>
-            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHANGE YOUR PASSWORD</h3>
-            <h3 className='flex self-center font-semibold text-white mb-5'>Fill out the form below</h3>
-            <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="password" className='text-white'>Old Password</label>
-                        <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        type="password" id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword}/> 
-                        {oldPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{oldPasswordError}</span>}
                     </div>
-
-                    <div>
-                        <label htmlFor="password" className='text-white'>New Password</label>
-                        <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        type="password" id="newPassword" name="newPassword" required onChange={handleNewPasswordChange} ref={newPassword}/>
-                        {newPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{newPasswordError}</span>}
-                    </div>
-
-                    <div>
-                        <label htmlFor="password" className='text-white'>Confirm New Password</label>
-                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        type="password" id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword}/>
-                        {newConfPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{newConfPasswordError}</span>}
-                    </div>
+                    )}
                     <div className='flex justify-evenly mt-10'>
-                        <Button type="submit"className="w-52 mr-2" color="gray" onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
-                        <Button type="submit" className="w-52 ml-2" color="gray">CONFIRM</Button>
+                        <Button
+                            type="submit"
+                            className="w-52 " color='red'
+                            onClick={()=> setShowPasswordModal(true)}
+                            disabled={showPasswordModal}>
+                            CHANGE PASSWORD
+                        </Button>
+                        <Button
+                            type="submit"
+                            className="w-52" color='success'
+                            onClick={handleEditButtonClick}
+                            disabled= {editButtonClicked}>
+                            EDIT INFORMATION
+                        </Button>
                     </div>
-                </form>
+                </Card>
+
+                <div className='flex place-content-center h-auto row-start-2 row-end-2 col-span-4 mb-6'>
+                    <div>
+                        <Button
+                            type="submit"
+                            className="w-96 text-white"
+                            onClick={()=> setShowDeleteModal(true)}
+                            disabled={showDeletedModal}>
+                            DELETE ACCOUNT
+                        </Button>
+                    </div>
+
             </div>
-            
-        </Modal>
-        {/*Delete account modal */}          
-        <Modal isVisible={showDeletedModal} onClose ={()=> setShowDeleteModal(false)}>
-            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE ACCOUNT</h3>
-            <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete yur acount?</h3>
-            <div className='flex justify-evenly mt-10'>
-                <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</Button>
-            </div>
-        </Modal>
+            </div> 
+            {/*Personal details modal */}
+            <Modal isVisible={showModal} details = {details} onClose ={()=> setShowModal(false)}>
+                <h3 className='text-xl flex self-center font-semibold text-white mb-5'>PERSONAL DETAILS CHANGES</h3>
+                <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to save the changes?</h3>
+                <div className='flex justify-evenly mt-10'>
+                    <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</Button>
+                    <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmButtonClick(details)}>CONFIRM</Button>
+                </div>
+            </Modal>
+            {/*Change password modal */}
+            <Modal isVisible={showPasswordModal} onClose ={()=> setShowPasswordModal(false)}>
+                <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHANGE YOUR PASSWORD</h3>
+                <h3 className='flex self-center font-semibold text-white mb-5'>Fill out the form below</h3>
+                <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
+                    <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor="password" className='text-white'>Old Password</label>
+                            <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            type="password" id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword}/> 
+                            {oldPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{oldPasswordError}</span>}
+                        </div>
+
+                        <div>
+                            <label htmlFor="password" className='text-white'>New Password</label>
+                            <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            type="password" id="newPassword" name="newPassword" required onChange={handleNewPasswordChange} ref={newPassword}/>
+                            {newPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{newPasswordError}</span>}
+                        </div>
+
+                        <div>
+                            <label htmlFor="password" className='text-white'>Confirm New Password</label>
+                            <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            type="password" id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword}/>
+                            {newConfPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{newConfPasswordError}</span>}
+                        </div>
+                        <div className='flex justify-evenly mt-10'>
+                            <Button type="submit"className="w-52 mr-2" color="gray" onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
+                            <Button type="submit" className="w-52 ml-2" color="gray">CONFIRM</Button>
+                        </div>
+                    </form>
+                </div>
+                
+            </Modal>
+            {/*Delete account modal */}          
+            <Modal isVisible={showDeletedModal} onClose ={()=> setShowDeleteModal(false)}>
+                <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE ACCOUNT</h3>
+                <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete yur acount?</h3>
+                <div className='flex justify-evenly mt-10'>
+                    <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</Button>
+                    <Button type="submit" className="w-52" color="gray" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</Button>
+                </div>
+            </Modal>
         </Fragment>
     );
 }

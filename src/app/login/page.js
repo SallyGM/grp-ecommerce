@@ -120,13 +120,13 @@ export default function Home() {
 
       <Card className=" justify-self-start h-auto  w-2/3 my-6 bg-blue-900 border-blue-900" >
         <h1 className="self-center text-4xl font-bold text-white font-mono">REGISTER</h1>
-        <p className="text-white text-center font-mono my-8">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMUNITY</p>
+        <p className="text-white text-center font-mono my-8">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMMUNITY</p>
         <div className="inline-flex mt-6 place-content-evenly">
           <svg className="text-white mr-6 bi bi-tags" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white"viewBox="0 0 16 16">
             <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z"/>
             <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z"/>
           </svg>
-          <a className="font-mono text-white">RECEIVE DISCOUNT AND BENEFIT</a>
+          <a className="font-mono text-white">RECEIVE DISCOUNT AND BENEFITs</a>
         </div> 
         <div className="inline-flex mt-9 place-content-evenly">
           <svg className="text-white mr-6 bi bi-globe" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" viewBox="0 0 16 16">
