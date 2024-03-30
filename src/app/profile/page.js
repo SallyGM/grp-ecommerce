@@ -10,6 +10,7 @@ import { useAuth } from '../context/AuthContext.js'
 
 
 export default function Home() {
+<<<<<<< Updated upstream
 
     // Firebase information retrival function here
     const [userDetails, setUserDetails] = useState(null);
@@ -32,6 +33,30 @@ export default function Home() {
    
     async function handleSubmit(e){
         e.preventDefault();
+=======
+    //Use the useState Hook to manage side bar clicks
+    const [tab, setTab] = useState(Account);
+    
+
+    //Function that retrive card information base on the menu tab selected
+    const handleMenuClick= (compName) => (e) => {
+        if(compName == 'MY ACCOUNT'){
+            setTab(Account);
+        }
+        if(compName == 'MY ADDRESS BOOK'){
+            setTab(AddressBook);
+        }
+        if(compName == 'STORED PAYMENT CARDS'){
+            setTab(CardStored);
+        }
+        if(compName == 'MY ORDERS'){
+            setTab(MyOrders);
+        }
+        if(compName == 'MY REVIEWS'){
+            setTab(MyReviews);
+        }
+    };
+>>>>>>> Stashed changes
     
         // Submit form if email and password fields are valid
         if (oldPasswordError == '' && newPasswordError == '' && newConfPasswordError == '') {
@@ -240,6 +265,7 @@ export default function Home() {
                     </Button>
                 </div>
             </Card>
+<<<<<<< Updated upstream
 
             <div className='flex place-content-center h-auto row-start-2 row-end-2 col-span-4 mb-6'>
                 <div>
@@ -251,6 +277,17 @@ export default function Home() {
                         DELETE ACCOUNT
                     </Button>
                 </div>
+=======
+            {tab}
+       
+        <div className='flex place-content-center h-auto row-start-2 row-end-2 col-span-4 mb-6'>
+            <div>
+                <Button
+                    type="submit"
+                    className="w-96 text-white">
+                    DELETE ACCOUNT
+                </Button>
+>>>>>>> Stashed changes
             </div>
         </div>   
         {/*Personal details modal */}
