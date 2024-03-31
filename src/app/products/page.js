@@ -89,6 +89,7 @@ export default function Product() {
       } else {
         setShowProducts(product.filter((item) => item.console.toLowerCase().includes(value.data.toString().toLowerCase())))
       }
+      console.log(showProduct)
     }
   }
 
@@ -123,7 +124,7 @@ export default function Product() {
   }
   
   return (
-    <div className=''>
+    <div className='mb-20'>
       <div className='grid grid-cols-4 mx-3 mt-3 mb-5 gap-4 text-sm'>
         <div className='mt-2 text-right'>
           Platform:
@@ -153,10 +154,9 @@ export default function Product() {
             <br/><br/><br/><br/><br/><br/><br/>
           </div>
         ) : (
-          <div className='grid grid-cols-5 mx-3 mt-3 mb-5 gap-4 text-sm'>
+          <div className='flex flex-rpw flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 text-sm justify-center'>
             {showProduct.map((p) => (
-              <Card key={p.id} className="max-w-sm mx-3" renderImage={() => 
-    
+              <Card key={p.id} className="max-w-sm mx-3 my-3 w-72" renderImage={() => 
                 <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" />}>             
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {p.name}
