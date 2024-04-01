@@ -136,7 +136,7 @@ export default function Home() {
         </div>
 
         <Button disabled={loading} type="submit" className=" self-center w-72 mt-6 " color='success'>
-          <Link href="/register">REGISTER</Link>
+          <Link href="/register1">REGISTER</Link>
         </Button>
 
       </Card>
