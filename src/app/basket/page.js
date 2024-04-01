@@ -1,12 +1,16 @@
 "use client"; 
 import React, { useState } from 'react';
 import { Card, Button } from 'flowbite-react';
+import { useRouter } from 'next/navigation';
+
 
 
 export default function Home() {
 
   const [quantity,setQuantity] = useState(1);
   const[isVisible, setIsVisible] =  useState(true);
+  const router = useRouter();
+
   
  
   const handleDecrement = () => {
@@ -21,6 +25,14 @@ export default function Home() {
   const handleDelete = () => {
     setIsVisible(false);
   };
+
+
+  //const { basketItems } = router.query;
+
+  // Check if basketItems is defined and parse it from string to array if needed
+ // const parsedBasketItems = basketItems ? JSON.parse(basketItems) : [];
+
+  //console.log('Basket Items:', parsedBasketItems);
   
 
   return (
@@ -54,7 +66,7 @@ export default function Home() {
                   </button>
               </div>
             </form>        
-            <h2 id="sub_total" className="flex  text-2xl dark:text-white text-white font-mono ">££££</h2>
+            <h2 id="sub_total" className="flex  text-2xl dark:text-white text-white font-mono ">parsedBasketItems.name</h2>
             <img class="first-line:h-10  w-10 flex-wrap" src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt="image description" onClick={handleDelete}/>
 
           </div>

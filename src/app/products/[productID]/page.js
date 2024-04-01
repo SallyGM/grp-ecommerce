@@ -1,8 +1,10 @@
 "use client"; 
 import { Button, Tabs} from "flowbite-react";
 import {database} from '../../firebaseConfig';
-import { ref, get } from "firebase/database";
+import { ref, get, query } from "firebase/database";
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 /*Product Page*/
 
@@ -16,7 +18,10 @@ export default function Page({ params }) {
     const [product, setProduct] = useState(false);
 
     const prodRef = ref(database, "Product");
-    
+
+    const router = useRouter();
+
+
     useEffect(() => {    
         get(prodRef).then((snapshot) => {
             if (snapshot.exists()) {
@@ -32,6 +37,21 @@ export default function Page({ params }) {
             setProduct(false);
         });
     }, []);
+
+    const [basketItems, setBasketItems] = useState([]);
+
+    function addToBasket(productID) {
+        // Add the product to the basket items array
+        setBasketItems([basketItems, productID]);
+    }
+
+    //Not working yet
+    function handleAddToCart(productID, e) {
+        addToBasket(productID);
+        router.push(`/basket`);
+
+    }
+    
 
     return (
         <div>
@@ -132,7 +152,7 @@ export default function Page({ params }) {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd'>
+                                    <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd' onClick={(e) => handleAddToCart(product.id, e)}>
                                     ADD TO CART
                                     </button>
                                 </div>
