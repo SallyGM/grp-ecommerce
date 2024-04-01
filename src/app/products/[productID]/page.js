@@ -1,8 +1,10 @@
 "use client"; 
 import { Button, Tabs} from "flowbite-react";
 import {database} from '../../firebaseConfig';
-import { ref, get } from "firebase/database";
+import { ref, get, query } from "firebase/database";
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 /*Product Page*/
 
@@ -16,7 +18,10 @@ export default function Page({ params }) {
     const [product, setProduct] = useState(false);
 
     const prodRef = ref(database, "Product");
-    
+
+    const router = useRouter();
+
+
     useEffect(() => {    
         get(prodRef).then((snapshot) => {
             if (snapshot.exists()) {
@@ -33,6 +38,21 @@ export default function Page({ params }) {
         });
     }, []);
 
+    const [basketItems, setBasketItems] = useState([]);
+
+    function addToBasket(productID) {
+        // Add the product to the basket items array
+        setBasketItems([basketItems, productID]);
+    }
+
+    //Not working yet
+    function handleAddToCart(productID, e) {
+        addToBasket(productID);
+        router.push(`/basket`);
+
+    }
+    
+
     return (
         <div>
             {product ? (
@@ -45,7 +65,7 @@ export default function Page({ params }) {
                             <div>
                                 <div className="card grid grid-rows-2 flex-wrap mt-16" style={{ gridTemplateRows: '1fr 3fr'}} >
                                         <div className="banner-game pt-5 pb-5">
-                                            <p className="text-center text-lg dark:text-white self-center text-white font-mono m-auto" >PLAYSTATION VERSION</p>
+                                            <p className="text-center text-lg dark:text-white self-center text-white font-mono m-auto" >{product.console} VERSION</p>
                                         </div>
                                         <div className="prod-img ">
                                             <img src={product.images[0]} alt="Image" className=" object-contain rounded-lg" />
@@ -132,7 +152,7 @@ export default function Page({ params }) {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd'>
+                                    <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd' onClick={(e) => handleAddToCart(product.id, e)}>
                                     ADD TO CART
                                     </button>
                                 </div>
