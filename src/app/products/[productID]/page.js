@@ -65,7 +65,7 @@ export default function Page({ params }) {
                             <div>
                                 <div className="card grid grid-rows-2 flex-wrap mt-16" style={{ gridTemplateRows: '1fr 3fr'}} >
                                         <div className="banner-game pt-5 pb-5">
-                                            <p className="text-center text-lg dark:text-white self-center text-white font-mono m-auto" >PLAYSTATION VERSION</p>
+                                            <p className="text-center text-lg dark:text-white self-center text-white font-mono m-auto" >{product.console} VERSION</p>
                                         </div>
                                         <div className="prod-img ">
                                             <img src={product.images[0]} alt="Image" className=" object-contain rounded-lg" />
