@@ -78,7 +78,7 @@ export default function Home() {
         const isNewPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
         // Validate password pattern (at least 8 characters and must contain one special character)
         if (!isNewPasswordValid) {
-            setNewPasswordError('Password must be at least 8 characters long and contain one specal character');
+            setNewPasswordError('Password must be at least 8 characters long and contain one special character');
         } else {
             setNewPasswordError('');
         }
