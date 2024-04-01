@@ -101,7 +101,7 @@ export default function Header() {
                                 <Link href="/login" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
                                         Login
                                 </Link>
-                                <Link href="/register" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
+                                <Link href="/register1" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
                                         Register
                                  </Link>
                             </>                   
