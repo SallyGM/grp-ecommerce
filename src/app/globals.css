@@ -202,3 +202,7 @@ p {
   background-color: salmon;
   color: white;
 }
+/* components/ProgressTracker.module.css */
+.progressBar {
+  transition: width 0.3s ease-in-out; /* Example CSS module style */
+}
