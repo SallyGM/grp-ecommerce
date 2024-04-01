@@ -196,10 +196,10 @@ export default function Home() {
 
     return (
         <Fragment>
-            <div className='grid grid-rows-1 grid-cols-4 gap-x-5 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
+            <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
                 <SubNavbar />
                 
-                <Card className=" justify-self-center mx-auto h-auto w-full my-5 mr-20 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+                <Card className="justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5" >
                     <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > ACCOUNT INFORMATION</h5>
                     {userDetails && (
                     <div className='grid grid-rows-1 flex-wrap m-s ml-10 mr-10'>
