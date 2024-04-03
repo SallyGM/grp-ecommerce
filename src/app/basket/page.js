@@ -9,7 +9,6 @@ export default function Home() {
 
   const [quantity,setQuantity] = useState(1);
   const[isVisible, setIsVisible] =  useState(true);
-  const router = useRouter();
 
   
  
@@ -27,12 +26,7 @@ export default function Home() {
   };
 
 
-  //const { basketItems } = router.query;
-
-  // Check if basketItems is defined and parse it from string to array if needed
- // const parsedBasketItems = basketItems ? JSON.parse(basketItems) : [];
-
-  //console.log('Basket Items:', parsedBasketItems);
+  
   
 
   return (
