@@ -1,8 +1,24 @@
 import React from 'react';
 import { Button } from 'flowbite-react';
+import { styled, css } from '@mui/system';
+import { Paper } from '@mui/material/Paper';
+
+//import { makeStyles } from '@mui/material/styles';
+
+
+const useStyles = styled((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      boxShadow: theme.shadows[15], // Setting the elevation (box shadow)
+
+    }
+  }));
 
 
 const Modal = ({isVisible, onClose, children}) => {
+    //const classes = useStyles();
     
     if(!isVisible) return null;
 

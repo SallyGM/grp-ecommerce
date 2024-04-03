@@ -3,13 +3,14 @@ import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
 import { database } from '../firebaseConfig.js';
 import { useAuth } from '../context/AuthContext.js'
-import { ref , get, update } from "firebase/database";
-import { Fragment, useEffect, useState, useRef} from 'react';
+import { ref , set, push } from "firebase/database";
+import { Fragment, useState, useRef} from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-
-
-
+import Modal from '@/components/modal.js';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import { Divider } from '@nextui-org/react';
 
 
 export default function Home() {
@@ -21,14 +22,40 @@ export default function Home() {
   const [passwordError, setPasswordError] = useState('');             //Create password error
   const [confPasswordError, setConfPasswordError] = useState('');     //Create confirm password error
   const [loading, setLoading] = useState(false);                      // keep track of the registration
+  const [showAddCardModal, setShowAddCardModal] = useState(false);
   const password = useRef();
   const confirmPassword = useRef();
   const email = useRef();
   const confirmEmail = useRef();
   const fName = useRef();
   const lName = useRef();
+  const { signup} = useAuth()
+  const [formData, setFormData] = useState({
+    cardNumber: '',
+    sortCode: '',
+    expDate: '',
+    securityCode: '',
+    cardName: '',
+    expDate: '',
+    billAddress: ''
+});
 
-  const { signup } = useAuth()
+// Create a new card object from the form data
+const newCard = {
+  cardNumber: formData.cardNumber,
+  sortCode: formData.securityCode,
+  expDate: formData.expDate,
+  securityCode: formData.securityCode,
+  cardName: formData.cardName,
+  billAddress: formData.billAddress
+};
+
+const handleChange = (e) => {
+  setFormData({
+      ...formData,
+      [e.target.name] : e.target.value
+  });
+};
 
 //Handle first name change
 const handleFirstNameChange = (e) => {
@@ -100,6 +127,7 @@ const handleConfirmEmailChange = (e) => {
     setConfirmEmailError('');
   }
 };
+
 //Handle submit function of the form
 async function handleSubmit(e){
   e.preventDefault();
@@ -108,24 +136,63 @@ async function handleSubmit(e){
   if (emailError == '' && confEmailError == '' && passwordError == '' && confPasswordError == '' && firstNameError == '' && lastNameError == '') {
 
     try{    
-      setEmailError('')
-      setConfirmEmailError('')
-      setFirstNameError('')
-      setLastNameError('')
-      setPasswordError('')
-      setConfPasswordError('')
+        setEmailError('')
+        setConfirmEmailError('')
+        setFirstNameError('')
+        setLastNameError('')
+        setPasswordError('')
+        setConfPasswordError('')
+        setLoading(true);       // disable register button 
 
-      setLoading(true);       // disable login button 
-
-        await signup(email.current.value, password.current.value);
+        const userCredential = await signup(email.current.value, password.current.value);
         console.log(email.current.value,password.current.value);
-        // SEND EMAIL VERIFICATION HERE
-        // WRITE TO DATABASE
 
-        setLoading(false);    // enable login button    
+        // SEND EMAIL VERIFICATION HERE
+        
+  
+       // Access the user's UID from the UserCredential object
+        const userId = userCredential.user.uid;
+        // Set the new user in the database
+        await set(ref(database, 'User/' + userId), {
+          email: email.current.value,
+          firstName: fName.current.value,
+          lastName: lName.current.value
+        })
+            .then(() => {
+                toast.success('New user added');
+                console.log('New user added');
+            })
+            .catch((error) => {
+                toast.error('Error adding new user:', error);
+                console.error('Error adding new user:', error);
+            });      
+        // Generate a unique key for the new card
+        const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
+        
+        // Set the new card object at the specified path in the database
+        set(ref(database, 'User/' + userId + '/card/' + newCardKey), newCard)
+            .then(() => {
+                toast.success('New card added successfully');
+                console.log('New card added successfully');
+                setFormData({
+                    cardNumber: '',
+                    sortCode: '',
+                    expDate: '',
+                    securityCode: '',
+                    cardName:'',
+                    billAddress:''
+                });
+                setShowAddCardModal(false);
+            })
+            .catch((error) => {
+                toast.error('Error adding new card:', error);
+                console.error('Error adding new card:', error);
+            });
+
+        setLoading(false);    // enable register button    
 
       // Display confirm toast message
-      toast.success("Step 1 Registration Successfull!");
+      toast.success("Registration Successfull!");
 
     }
     catch (e) {
@@ -147,131 +214,146 @@ async function handleSubmit(e){
     
 
   return (
+    <Fragment>
 
-    <div className='grid grid-rows-1 grid-cols-1 p-8 flex justify-content-center bg-dark-night'>
+      <div className='grid grid-rows-1 grid-cols-1 p-8  flex justify-content-center bg-dark-night'>
 
-      {/*Status bar */}
-      <div className="justify-self-center w-full py-6">
-        <div className="flex">
-          <div className="w-1/4">
-            <div className="relative mb-2">
-              <div className="w-10 h-10 mx-auto bg-green-500 rounded-full text-lg text-white flex items-center">
-                <span className="text-center text-white w-full">
-                  <svg className="w-full fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                  </svg>
-                </span>
-              </div>
+        {/*Sign in information card*/}
+        <Card className="justify-self-center w-auto h-auto my-6 bg-blue-900 border-blue-900">
+          
+          <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
+          <br/>
+
+          <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
+
+            <div>
+              <label for="firstName">First Name</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
+              {firstNameError && <span style={{ color: 'red', fontSize: '14px' }}>{firstNameError}</span>}
+            </div>
+            
+            <div>
+              <label for="lastName">Last Name</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleFirstNameChange} ref={lName}></input>
+              {lastNameError && <span style={{ color: 'red', fontSize: '14px' }}>{handleLastNameChange}</span>}
             </div>
 
-            <div className="text-xs text-white font-mono text-center md:text-base">Personal Information</div>
-          </div>
-
-          <div className="w-1/4">
-            <div className="relative mb-2">
-              <div className="absolute flex align-center items-center align-middle content-center" style={{ width: 'calc(100% - 2.5rem - 1rem)', top: '50%', transform: 'translate(-50%, -50%)' }}>
-                <div className="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
-                  <div className="w-0  py-1 bg-green-300 rounded" style={{ width: '50%' }}></div>{/*bg-green-300 */}
-                </div>
-              </div>
-
-              <div className="w-10 h-10 mx-auto bg-white rounded-full text-lg text-white flex items-center">{/*bg-green-300 */}
-                <span className="text-center text-gray-600 w-full">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-full" width="24" height="24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                </svg>
-
-                </span>
-              </div>
+            <div>
+              <label for="email">Email</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
+              {emailError && <span style={{ color: 'red', fontSize: '14px' }}>{emailError}</span>}
             </div>
 
-            <div className="text-xs text-white font-mono text-center md:text-base">Address Details</div>
-          </div>
+            <div>
+              <label for="confirmEmail">Confirm Email</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}></input>
+              {confEmailError && <span style={{ color: 'red', fontSize: '14px' }}>{confEmailError}</span>}
+            </div>
 
-          <div className="w-1/4">
-            <div className="relative mb-2">
-              <div className="absolute flex align-center items-center align-middle content-center" style={{ width: 'calc(100% - 2.5rem - 1rem)', top: '50%', transform: 'translate(-50%, -50%)' }}>
-                <div className="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
-                  <div className="w-0 py-1  rounded" style={{width: '33%'}}></div>{/*bg-green-300  */}
-                </div>
-              </div>
+            <div>
+              <label for="password">Password</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="password" id="password" name="password" required onChange={handlePasswordChange} ref={password}></input>
+              {passwordError && <span style={{ color: 'red', fontSize: '14px' }}>{passwordError}</span>}
 
-          <div className="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center">
-            <span className="text-center text-gray-600 w-full">
-              <svg className="w-full fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-                <path className="heroicon-ui" d="M14 3a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1h12zM2 2a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H2z"/>
-                <path className="heroicon-ui" d="M2 5.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-2a.5.5 0 01-.5-.5v-1zm0 3a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zm0 2a.5.5 0 01.5-.5h1a.5.5 0 010 1h-1a.5.5 0 01-.5-.5zm3 0a.5.5 0 01.5-.5h1a.5.5 0 010 1h-1a.5.5 0 01-.5-.5zm3 0a.5.5 0 01.5-.5h1a.5.5 0 010 1h-1a.5.5 0 01-.5-.5zm3 0a.5.5 0 01.5-.5h1a.5.5 0 010 1h-1a.5.5 0 01-.5-.5z" />
-              </svg>
-            </span>
-          </div>
-        </div>
+            </div>          
 
-        <div className="text-xs text-white font-mono text-center md:text-base">Card Details</div>
-      </div>
-    </div>
-    </div>
+            <div>
+              <label for="confirmPassword">Confirm Password</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="password" id="confirmPassword" name="confirmPassword" required onChange={handleConfirmPasswordChange} ref={confirmPassword}></input>            
+              {confPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{confPasswordError}</span>}
 
-      
-      {/*Sign in information card*/}
-      <Card className="justify-self-center h-auto w-4/5 my-6 bg-blue-900 border-blue-900">
-        
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
-        <br/>
-
-        <form className="grid grid-rows-3 grid-cols-2 gap-6 display: flex text-white font-mono" onSubmit={handleSubmit}>
-
-          <div>
-            <label for="firstName">First Name</label>
-            <input className="block w-full rounded-md py-1.5 px-1.5 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
-            {firstNameError && <span style={{ color: 'red', fontSize: '14px' }}>{firstNameError}</span>}
+            </div>
+            <div className='inline-flex items-center col-span-2 mt-6' onClick={()=> setShowAddCardModal(true)}>
+              <Fab color="primary" size="small" aria-label="add" disabled={showAddCardModal}>
+                <AddIcon />
+              </Fab>
+              <a className=" text-sm  font-semibold text-indigo-600 ml-3 text-white">Add Card Details (Optional)</a>
+            </div>
+            <Button className="w-72 col-span-2 place-self-end mt-2" color='success' type="submit">
+              REGISTER
+            </Button>
+          </form>
+          {/*Divider between login options*/} 
+          <div className="inline-flex mt-6">
+            <Divider className="self-center  w-96 m-3"></Divider>
+              <a className="justify-self-center text-white m-3">OR</a>
+            <Divider className="self-center w-96 m-3"></Divider>
           </div>
           
-          <div>
-            <label for="lastName">Last Name</label>
-            <input className="block w-full rounded-md py-1.5 px-1.5 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleFirstNameChange} ref={lName}></input>
-            {lastNameError && <span style={{ color: 'red', fontSize: '14px' }}>{handleLastNameChange}</span>}
+          {/*Facebook sign in button*/}
+          <div className='inline-flex place-content-center'>
+            <Button className="inline-flex bg-blue-600 text-white w-72 mr-4 self-center" color='blue'>
+              <svg className="w-6 h-6 mr-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+              </svg>
+              Sign up with Facebook
+            </Button>
+
+            {/*Google sign in button*/}
+            <Button className="inline-flex text-white w-72 ml-4 self-center bg-red-400" color='red'>
+              <svg className="w-6 h-6 mr-3" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
+              </svg>
+              Sign up with Google
+            </Button> 
           </div>
+        </Card>
+      </div>
+      {/*Add card modal */}
+      <Modal isVisible={showAddCardModal} onClose ={()=> setShowAddCardModal(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW CARD</h3>
+            <h3 className='flex self-center font-semibold text-white mb-5'>Add card by filling the details below</h3>
+            <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
+                <form className="space-y-6 text-white font-mono">
+                    <div>
+                        <label htmlFor="number" className='text-white'>Card Number</label>
+                        <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="tel" inputmode="numeric" id="cardNumber" name="cardNumber" maxLength={16} placeholder='4625 2563 2356 8514' required value={formData.cardNumber} onChange={handleChange}/> 
+                    </div>
 
-          <div>
-            <label for="email">Email</label>
-            <input className="block w-full rounded-md py-1.5 px-1.5 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
-            {emailError && <span style={{ color: 'red', fontSize: '14px' }}>{emailError}</span>}
-          </div>
+                    <div>
+                        <label htmlFor="number" className='text-white'>Sort Code</label>
+                        <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        type="tel" inputmode="numeric" id="sortCode" name="sortCode" maxLength={6} placeholder='26-02-54' required value={formData.sortCode} onChange={handleChange}/> 
+                    </div>
 
-          <div>
-            <label for="confirmEmail">Confirm email</label>
-            <input className="block w-full rounded-md py-1.5 px-1.5 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}></input>
-            {confEmailError && <span style={{ color: 'red', fontSize: '14px' }}>{confEmailError}</span>}
-          </div>
+                    <div className='inline-flex justify-evenly'>
+                        <div className='mr-5'>
+                            <label htmlFor="number" className='text-white'>Exp.Date</label>
+                            <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            type="month/year" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
+                        </div> 
+                        <div className='ml-5'>
+                            <label htmlFor="number" className='text-white'>CVV</label>
+                            <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            type="password" id="securityCode" name="securityCode" maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
+                        </div>
+                    </div>
 
-          <div>
-            <label for="password">Password</label>
-            <input className="block w-full rounded-md py-1.5 px-1.5 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            type="password" id="password" name="password" required onChange={handlePasswordChange} ref={password}></input>
-            {passwordError && <span style={{ color: 'red', fontSize: '14px' }}>{passwordError}</span>}
+                    <div>
+                        <label htmlFor="text" className='text-white'>Card Holder</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChange}/>
+                    </div>
+                    <div>
+                        <label htmlFor="text" className='text-white'>Billing Address</label>
+                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    type="text" id="billAddress" name="billAddress" placeholder='3 Admaston road' required value={formData.billAddress} onChange={handleChange}/>
+                    </div>
+                    <div className='flex justify-evenly mt-10'>
+                        <Button className="w-52 mr-1" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
+                        <Button type="submit" className="w-52 ml-1" color="gray">CONFIRM</Button>
+                    </div>
+                </form>
+            </div>
+            
+        </Modal>
 
-          </div>          
-
-          <div>
-            <label for="confirmPassword">Confirm Password</label>
-            <input className="block w-full rounded-md py-1.5 px-1.5 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            type="password" id="confirmPassword" name="confirmPassword" required onChange={handleConfirmPasswordChange} ref={confirmPassword}></input>            
-            {confPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{confPasswordError}</span>}
-
-          </div>
-
-          <Button className="w-4/12 inline-flex col-span-2 justify-self-center mt-6" color='success' type="submit">
-          <Link href="/register2">NEXT</Link>
-          </Button>
-
-          <Button href='/register2'>NEXT(temp)</Button>
-        </form>
-      </Card>
-
-    </div>
+    </Fragment>
   )}

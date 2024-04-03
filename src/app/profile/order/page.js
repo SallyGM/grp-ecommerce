@@ -35,14 +35,14 @@ export default function MyOrders() {
         <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
             <SubNavbar />
             <Card className=" justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
-                <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > MY ORDER HISTORY</h5>
+                <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > MY ORDER KEYS</h5>
 
                 <div className='top_bar_basket grid grid-cols-5 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
-                    <h3 className=' ext-4xl font-bold tracking-tight dark:text-white  text-white'>Order Date</h3>
-                    <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Order Address</h3>
-                    <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Order Amount</h3>
+                    <h3 className=' ext-4xl font-bold tracking-tight dark:text-white  text-white'>Game Name</h3>
+                    <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Price</h3>
+                    <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Date</h3>
                     <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Status</h3>
-                    <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'></h3>
+                    <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Key</h3>
                 </div>
                 {/*This is the card that can be used as a component nested in addressBook component */}
                 <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
