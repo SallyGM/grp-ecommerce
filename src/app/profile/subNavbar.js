@@ -40,14 +40,6 @@ export default function Header() {
                     </Link>     
                 </li>
                 <li>
-                    <Link href="/profile/address" className="flex items-center p-2 text-white rounded hover:bg-gray-100 dark:hover:bg-gray-700 group ">
-                        <svg className="w-6 h-6 text-white transition duration-75  dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1000 1000">
-                            <path d="M426 50c13.333 0 20 6.667 20 20v860c0 13.333-6.667 20-20 20h-46c-13.333 0-20-6.667-20-20V490H184c-10.667 0-20-2-28-6-8-1.333-16.667-5.333-26-12L10 390c-6.667-4-10-9.333-10-16s3.333-12 10-16l120-82c9.333-6.667 18-10.667 26-12 5.333-2.667 14.667-4 28-4h176V70c0-13.333 6.667-20 20-20h46m564 208c6.667 4 10 9.333 10 16s-3.333 12-10 16l-118 82c-14.667 8-23.333 12-26 12-9.333 4-18.667 6-28 6H516l-40-230h342c12 0 21.333 1.333 28 4 6.667 2.667 15.333 6.667 26 12l118 82"/>
-                        </svg>
-                        <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">MY ADDRESS BOOK</span>
-                    </Link>
-                </li>
-                <li>
                     <Link href="/profile/card" className="flex items-center p-2 text-white rounded hover:bg-gray-100 dark:hover:bg-gray-700 group ">
                         <svg className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1024 1024">
                             <path d="M928 160H96c-17.7 0-32 14.3-32 32v160h896V192c0-17.7-14.3-32-32-32zM64 832c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V440H64v392zm579-184c0-4.4 3.6-8 8-8h165c4.4 0 8 3.6 8 8v72c0 4.4-3.6 8-8 8H651c-4.4 0-8-3.6-8-8v-72z"/>

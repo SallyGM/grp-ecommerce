@@ -13,12 +13,13 @@ import AddIcon from '@mui/icons-material/Add';
 import { Divider } from '@nextui-org/react';
 
 
+
 export default function Home() {
 
   const [lastNameError, setLastNameError] = useState('');             //Create last name error
   const [firstNameError, setFirstNameError] = useState('');           //Create first error
   const [emailError, setEmailError] = useState('');                   //Create email error
-  const [confEmailError, setConfirmEmailError] = useState('');                   //Create email error
+  const [confEmailError, setConfirmEmailError] = useState('');        //Create email error
   const [passwordError, setPasswordError] = useState('');             //Create password error
   const [confPasswordError, setConfPasswordError] = useState('');     //Create confirm password error
   const [loading, setLoading] = useState(false);                      // keep track of the registration
@@ -29,6 +30,7 @@ export default function Home() {
   const confirmEmail = useRef();
   const fName = useRef();
   const lName = useRef();
+  const router = useRouter();
   const { signup} = useAuth()
   const [formData, setFormData] = useState({
     cardNumber: '',
@@ -40,15 +42,22 @@ export default function Home() {
     billAddress: ''
 });
 
-// Create a new card object from the form data
-const newCard = {
-  cardNumber: formData.cardNumber,
-  sortCode: formData.securityCode,
-  expDate: formData.expDate,
-  securityCode: formData.securityCode,
-  cardName: formData.cardName,
-  billAddress: formData.billAddress
-};
+const setCardData = () =>{
+  // Create a new card object from the form data
+  const newCard = {
+    cardNumber: formData.cardNumber,
+    sortCode: formData.securityCode,
+    expDate: formData.expDate,
+    securityCode: formData.securityCode,
+    cardName: formData.cardName,
+    billAddress: formData.billAddress
+  };
+  setFormData(newCard)
+  setShowAddCardModal(false)
+
+}
+
+
 
 const handleChange = (e) => {
   setFormData({
@@ -84,7 +93,7 @@ const handlePasswordChange = (e) => {
   const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
   // Validate password pattern (at least 8 characters and must contain one special character)
   if (!isPasswordValid) {
-    setPasswordError('Password must be at least 8 characters long and contain one special character');
+    setPasswordError('Weak password');
   } else {
     setPasswordError('');
   }
@@ -165,35 +174,29 @@ async function handleSubmit(e){
             .catch((error) => {
                 toast.error('Error adding new user:', error);
                 console.error('Error adding new user:', error);
-            });      
-        // Generate a unique key for the new card
-        const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
-        
-        // Set the new card object at the specified path in the database
-        set(ref(database, 'User/' + userId + '/card/' + newCardKey), newCard)
-            .then(() => {
-                toast.success('New card added successfully');
-                console.log('New card added successfully');
-                setFormData({
-                    cardNumber: '',
-                    sortCode: '',
-                    expDate: '',
-                    securityCode: '',
-                    cardName:'',
-                    billAddress:''
+            });  
+        if(formData.cardName !== "" && formData.cardNumber !== "" && formData.sortCode !== "" && formData.securityCode !== "" && formData.expDate !== "" && formData.billAddress !== ""){   
+            // Generate a unique key for the new card
+            const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
+                
+            // Set the new card object at the specified path in the database
+            set(ref(database, 'User/' + userId + '/card/' + newCardKey), formData)
+                .then(() => {
+                    toast.success('New card added successfully');
+                    console.log('New card added successfully');
+                    setShowAddCardModal(false);
+                })
+                .catch((error) => {
+                    toast.error('Error adding new card:', error);
+                    console.error('Error adding new card:', error);
                 });
-                setShowAddCardModal(false);
-            })
-            .catch((error) => {
-                toast.error('Error adding new card:', error);
-                console.error('Error adding new card:', error);
-            });
+        } 
 
         setLoading(false);    // enable register button    
 
       // Display confirm toast message
       toast.success("Registration Successfull!");
-
+      router.push('/login');
     }
     catch (e) {
       toast.error(e.message);
@@ -348,7 +351,7 @@ async function handleSubmit(e){
                     </div>
                     <div className='flex justify-evenly mt-10'>
                         <Button className="w-52 mr-1" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                        <Button type="submit" className="w-52 ml-1" color="gray">CONFIRM</Button>
+                        <Button type="submit" className="w-52 ml-1" color="gray" onClick={setCardData}>CONFIRM</Button>
                     </div>
                 </form>
             </div>

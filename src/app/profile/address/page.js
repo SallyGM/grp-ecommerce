@@ -76,8 +76,8 @@ export default function AddressBook() {
                 setShowAddAddressModal(false);
             })
             .catch((error) => {
-                toast.error('Error adding new address:', error);
-                console.error('Error adding new address:', error);
+                toast.error('Error adding new address:', error.message);
+                console.error('Error adding new address:', error.message);
             });
     };
     
@@ -109,8 +109,8 @@ export default function AddressBook() {
                 setShowEditAddress(false);
             })
             .catch((error) => {
-                toast.error("Error updating address:", error);
-                console.error("Error updating address:", error);
+                toast.error("Error updating address:", error.message);
+                console.error("Error updating address:", error.message);
             });
     }
     // Function that handle confirm button click on delete address dialog
@@ -131,8 +131,8 @@ export default function AddressBook() {
                 setShowDeleteAddress(false);
             })
             .catch((error) => {
-                toast.error("Error deleting address:", error);
-                console.error("Error deleting address:", error);
+                toast.error("Error deleting address:", error.message);
+                console.error("Error deleting address:", error.message);
             });
     }
     // Function to open edit address modal and set address
@@ -160,8 +160,8 @@ export default function AddressBook() {
                 console.log("No data found")
             }
         }).catch((error) => {
-            toast.error(error);
-            console.error(error);
+            toast.error(error.message);
+            console.error(error.message);
         });
     }, []); // Removed card from the dependency array
 

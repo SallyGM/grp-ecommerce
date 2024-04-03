@@ -22,7 +22,7 @@ export default function CardStored() {
         expDate: '',
         securityCode: '',
         cardName: '',
-        billAddress: formData.billAddress
+        billAddress:''
     });
 
     // Get the currently signed-in user
