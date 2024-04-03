@@ -3,7 +3,8 @@ import { Button, Tabs} from "flowbite-react";
 import {database} from '../../firebaseConfig';
 import { ref, get, query } from "firebase/database";
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useBasketContext } from "../../context/BasketContext";
+
 
 
 /*Product Page*/
@@ -19,7 +20,9 @@ export default function Page({ params }) {
 
     const prodRef = ref(database, "Product");
 
-    const router = useRouter();
+//Need to wrap the app first
+    //const { addToBasket } = useBasketContext(); 
+
 
 
     useEffect(() => {    
@@ -40,17 +43,14 @@ export default function Page({ params }) {
 
     const [basketItems, setBasketItems] = useState([]);
 
-    function addToBasket(productID) {
-        // Add the product to the basket items array
-        setBasketItems([basketItems, productID]);
-    }
+   
 
-    //Not working yet
+    //Not working yet, need to app the wrap first
+    /*
     function handleAddToCart(productID, e) {
         addToBasket(productID);
-        router.push(`/basket`);
 
-    }
+    }*/
     
 
     return (
