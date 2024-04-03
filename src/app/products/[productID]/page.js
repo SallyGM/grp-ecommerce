@@ -7,6 +7,7 @@ import { useBasketContext } from "../../context/BasketContext";
 
 
 
+
 /*Product Page*/
 
 export default function Page({ params }) {
@@ -55,6 +56,8 @@ export default function Page({ params }) {
 
     return (
         <div>
+
+
             {product ? (
                     
                 <div>
@@ -73,13 +76,13 @@ export default function Page({ params }) {
                                 </div>
                             </div>
                             <div className="flex-1" style={{ flex: 'wrap', alignItems:"right"}}>
-                                <h1 className="text-center text-2xl dark:text-white self-center text-white font-mono">{product.name}</h1>
+                                <h1 className="text-center  bebas-neue-regular ">{product.name}</h1>
                                 <h2 className="text-left text-xl font-bold dark:text-white self-center text-white font-mono" > £{product.price} </h2>
                                 <div className="relative overflow-x-auto">
-                                    <table className="game-table dark:text-white self-center text-white font-mono" style={{border:"10px"}}>
+                                    <table className="game-table dark:text-white self-center text-white" >
                                         <tbody>
                                             <tr>
-                                                <th id="release_date" scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
+                                                <th scope="row" className="px-6 py-3 roboto-light">
                                                     Release Date
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -87,7 +90,7 @@ export default function Page({ params }) {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
+                                                <th scope="row" className="px-6 py-3 roboto-light">
                                                     Developer
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -95,7 +98,7 @@ export default function Page({ params }) {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
+                                                <th scope="row" className="px-6 py-3 roboto-light">
                                                     Publisher
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -103,7 +106,7 @@ export default function Page({ params }) {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap">
+                                                <th scope="row" className="px-6 py-3 roboto-light">
                                                     Delivery
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -111,7 +114,7 @@ export default function Page({ params }) {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                                <th scope="row" className="px-6 py-3 ">
                                                     Platform
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -119,7 +122,7 @@ export default function Page({ params }) {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                                <th scope="row" className="px-6 py-3 ">
                                                     Console
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -127,7 +130,7 @@ export default function Page({ params }) {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                                <th scope="row" className="px-6 py-3 f">
                                                     Language
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -135,7 +138,7 @@ export default function Page({ params }) {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                                <th scope="row" className="px-6 py-3 ">
                                                     PG
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -143,7 +146,7 @@ export default function Page({ params }) {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" className="px-6 py-3 font-medium text-white-900 whitespace-nowrap dark:text-white">
+                                                <th scope="row" className="px-6 py-3 ">
                                                     Genre
                                                 </th>
                                                 <td className="px-6 py-3">
@@ -152,7 +155,7 @@ export default function Page({ params }) {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd' onClick={(e) => handleAddToCart(product.id, e)}>
+                                    <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd'>
                                     ADD TO CART
                                     </button>
                                 </div>
