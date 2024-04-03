@@ -52,7 +52,7 @@ export default function Header() {
                         <svg className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1024 1024">
                             <path d="M928 160H96c-17.7 0-32 14.3-32 32v160h896V192c0-17.7-14.3-32-32-32zM64 832c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V440H64v392zm579-184c0-4.4 3.6-8 8-8h165c4.4 0 8 3.6 8 8v72c0 4.4-3.6 8-8 8H651c-4.4 0-8-3.6-8-8v-72z"/>
                         </svg>
-                        <span className="flex-1 ms-3 whitespace-nowrap">STORED PAYMENT CARDS</span>
+                        <span className="flex-1 ms-3 whitespace-nowrap">PAYMENT METHODS</span>
                     </Link>
                 </li>
                 <li>
@@ -60,7 +60,7 @@ export default function Header() {
                         <svg className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                             <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"/>
                         </svg>
-                        <span className="flex-1 ms-3 whitespace-nowrap">MY ORDERS</span>
+                        <span className="flex-1 ms-3 whitespace-nowrap">MY ORDER KEYS</span>
                     </Link>
                 </li>
                 <li>
