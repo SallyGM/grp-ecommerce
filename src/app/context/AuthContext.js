@@ -15,9 +15,9 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   function signup(email, password) {
-    //TODO: add other data to the table
     return createUserWithEmailAndPassword(auth, email, password)
   }
+  
 
   function signin(email, password) {
     return signInWithEmailAndPassword(auth, email, password)
@@ -69,7 +69,7 @@ export function AuthProvider({ children }) {
     updateemail,
     reautentication,
     updatepassword
-  } 
+    } 
 
   return (
     <AuthContext.Provider value={value}>

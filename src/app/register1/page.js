@@ -10,7 +10,8 @@ import { useRouter } from 'next/navigation';
 import Modal from '@/components/modal.js';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import { Divider } from '@nextui-org/react';
+import { Divider, user } from '@nextui-org/react';
+import { sendEmailVerification } from 'firebase/auth';
 
 
 
@@ -156,11 +157,14 @@ async function handleSubmit(e){
         const userCredential = await signup(email.current.value, password.current.value);
         console.log(email.current.value,password.current.value);
 
-        // SEND EMAIL VERIFICATION HERE
-        
-  
        // Access the user's UID from the UserCredential object
         const userId = userCredential.user.uid;
+
+        // Send email verification
+        //const user = userCredential.user;
+        //await user.sendEmailVerification();
+        
+
         // Set the new user in the database
         await set(ref(database, 'User/' + userId), {
           email: email.current.value,
@@ -212,9 +216,6 @@ async function handleSubmit(e){
       setLastNameError("Last Name is required")
   }  
 };
-
-
-    
 
   return (
     <Fragment>
@@ -330,12 +331,12 @@ async function handleSubmit(e){
                         <div className='mr-5'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="month/year" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
+                            type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
                         </div> 
                         <div className='ml-5'>
                             <label htmlFor="number" className='text-white'>CVV</label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="password" id="securityCode" name="securityCode" maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
+                            type="text" id="securityCode" name="securityCode" maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
                         </div>
                     </div>
 

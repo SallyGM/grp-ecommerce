@@ -242,12 +242,12 @@ export default function CardStored() {
                         <div className='mr-5'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="month/year" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
+                            type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
                         </div> 
                         <div className='ml-5'>
                             <label htmlFor="number" className='text-white'>CVV</label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="password" id="securityCode" name="securityCode" maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
+                            type="text" id="securityCode" name="securityCode" maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
                         </div>
                     </div>
 
@@ -291,12 +291,12 @@ export default function CardStored() {
                         <div className='mr-3'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="month/year" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
+                            type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
                         </div> 
                         <div className='ml-3'>
                             <label htmlFor="number" className='text-white'>CVV</label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="password" id="cvv" name="cvv" maxLength={3} placeholder='342' required value={card.securityCode} onChange={(e) => setCard({ ...card, securityCode: e.target.value })}/>
+                            type="text" id="cvv" name="cvv" maxLength={3} placeholder='342' required value={card.securityCode} onChange={(e) => setCard({ ...card, securityCode: e.target.value })}/>
                         </div>
                     </div>
 
