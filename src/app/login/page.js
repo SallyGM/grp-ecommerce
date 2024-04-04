@@ -7,7 +7,6 @@ import React, { useState, useRef, Fragment } from "react";
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast';
 import Modal from '@/components/modal.js';
-import { fetchSignInMethodsForEmail } from 'firebase/auth';
 
 
 export default function Home() {
@@ -17,13 +16,18 @@ export default function Home() {
   const email = useRef();
   const emailModal = useRef();
   const password = useRef();
-  const [emailError, setEmailError] = useState('');           //Create email error
-  const [passwordError, setPasswordError] = useState('');     //Create password error
-  const [loading, setLoading] = useState(false);              // keep track of the login
+  const [emailError, setEmailError] = useState('');             //Create email error
+  const [passwordError, setPasswordError] = useState('');       //Create password error
+  const [loading, setLoading] = useState(false);                // keep track of the login
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [emailModalError, setEmailModalError] = useState('');           //Create email error
+  const [emailModalError, setEmailModalError] = useState('');    //Create email error
+  const [showCheckEmail, setShowCheckEmail] = useState(false);
 
-  
+  // Function that hanle the Check email modal click
+  const handleConfirmCheckEmailClick = () => {
+    setShowCheckEmail(false);
+    router.push('/login');
+  };
 
 
   async function handleSubmit(e){
@@ -99,31 +103,19 @@ export default function Home() {
       setEmailModalError('');
     }
   };
-
-  // Handle email verification and password reset function
   async function handleSendEmailVerification(e) {
     e.preventDefault();
-  
     // Check if the email is valid
     if (emailModalError === '') {
       try {
-        // Retrieve user information based on the provided email
-        const userExists = await fetchSignInMethodsForEmail(emailModal.current.value);
-  
-        // If user exists, proceed with password reset
-        if (userExists.length>0) {
-          await resetPassword(emailModal.current.value);
-          console.log('User exists. Proceed with password reset.');
-          toast.success("Password reset email sent successfully.");
-        } else {
-          // If user doesn't exist, show error message
-          console.log('User does not exist.');
-          toast.error("Email is not registered. Please check and try again.");
-        }
-  
-        // Reset the email error state
-        setEmailModalError('');
+        await resetPassword(emailModal.current.value);
+        console.log('Password reset email sent successfully.');
+        toast.success("Password reset email sent successfully.");
+        setShowForgotPassword(false);
+        setShowCheckEmail(true);
+        
       } catch (error) {
+        // Log and display error message if an error occurs
         console.error('Error:', error.message);
         toast.error("An error occurred while processing your request.");
       }
@@ -131,7 +123,7 @@ export default function Home() {
       // Show error if email is not valid
       setEmailModalError("Invalid email address");
     }
-  }
+}
   
 
   return (
@@ -155,7 +147,6 @@ export default function Home() {
                 onChange={handlePasswordChange} type='password' ref={password}/>
                   {passwordError && <span style={{ color: 'red', fontSize: '14px' }}>{passwordError}</span>}
               </div>
-
               <a className="text-sm font-semibold text-indigo-600  hover:text-indigo-500 text-white" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
               <Button className="justify-self-center w-full mt-7 bg-green-400" type='submit' color='success' >LOGIN</Button>
             </form>
@@ -203,7 +194,7 @@ export default function Home() {
           <a className="text-white font-mono">BE PART OF A COMMUNITY</a>
         </div>
         <Button disabled={loading} type="submit" className=" self-center w-72 mt-6 " color='success'>
-          <Link href="/register1">REGISTER</Link>
+          <Link href="/register">REGISTER</Link>
         </Button>
       </Card>
     </div>
@@ -223,6 +214,14 @@ export default function Home() {
                   <Button type='submit' className="w-52 ml-2" color="gray">CONFIRM</Button>
               </div>
             </form>
+        </Modal>
+        {/*Check Email modal */}
+        <Modal isVisible={showCheckEmail} onClose ={()=> setShowCheckEmail(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
+            <h3 className='flex self-center font-semibold text-white  mb-5'>We have sent you an email with the reset password link</h3>
+            <div className='flex justify-end mt-10'>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
+            </div>
         </Modal>
   </Fragment>
   );
