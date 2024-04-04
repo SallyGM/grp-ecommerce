@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { useAuth } from './context/AuthContext'
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
-//import { useRouter } from 'next/router'
+import { useBasketContext } from '../app/context/BasketContext.js'
+import { user } from '@nextui-org/react';
 
 export default function Header() {
 
@@ -17,6 +18,23 @@ export default function Header() {
     const [valid, setValid] = useState(false);
     const router = useRouter();
     const search = useRef();
+    const { userBasket } = useBasketContext();
+    const [basketSize, setBasketSize] = useState(0)
+
+    // updates basket size
+    useEffect(() => {
+        let total = 0; 
+
+        if(Object.keys(userBasket).length > 0){
+
+            Object.keys(userBasket).map((key) => ( 
+                total += userBasket[key].quantity
+              ));
+    
+            setBasketSize(total)
+        }
+        
+      }, [userBasket]);
 
     // function that logout the user
     async function signOut(e){
@@ -81,11 +99,14 @@ export default function Header() {
                     )}
 
                     <div className="flex items-center space-x-6 rtl:space-x-reverse">
+                        <Link href="/basket" className="relative text-sm dark:text-blue-500 hover:underline">
+                            <ShoppingCartIcon className="h-6 w-6 text-black-500" />
+                            <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -right-4 dark:border-gray-900">
+                                {basketSize}
+                            </div>
+                        </Link>
                         { currentUser != null ? (
                             <>
-                                <Link href="/basket" className="text-sm dark:text-blue-500 hover:underline">
-                                    <ShoppingCartIcon className="h-6 w-6 text-black-500" />
-                                </Link>
                                 <Link href="/profile" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
                                     Profile
                                 </Link>
@@ -95,9 +116,6 @@ export default function Header() {
                             </>
                         ) : (
                             <>
-                                <Link href="/basket" className="text-sm dark:text-blue-500 hover:underline">
-                                    <ShoppingCartIcon className="h-6 w-6 text-black-500" />
-                                </Link>
                                 <Link href="/login" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
                                         Login
                                 </Link>

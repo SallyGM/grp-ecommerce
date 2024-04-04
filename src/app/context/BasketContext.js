@@ -1,17 +1,25 @@
-import { createContext, useContext, useMemo } from "react";
+"use client"
+import React, { useContext, useState, useEffect, useMemo } from "react" 
 import { database } from '../firebaseConfig';
-import { ref, set, remove } from "firebase/database";
+import { ref, set, get, push, remove } from "firebase/database";
+import { useAuth } from '../context/AuthContext.js'
 
 //Attempt at creating the Basket Context
 //Not sure I am accessing the database correctly tho
 
-const BasketContext = createContext();
-export function BasketWrapper({ children, userID }) {
+const BasketContext = React.createContext();
+
+export function BasketProvider({ children}) {
+
+   const { currentUser } = useAuth()
+
    const [userBasket, setUserBasket] = useState([]);
+   const [loading, setLoading] = useState(true);
+   const [onCheckOut, setOnCheckOut] = useState(false);
 
    useEffect(() => {
-      if (userID) {
-         const userBasketRef = ref(database, `Basket/${userID}`);
+      if (currentUser) {
+         const userBasketRef = ref(database, "Basket/" + currentUser.uid);
          get(userBasketRef).then((snapshot) => {
             if (snapshot.exists()) {
                setUserBasket(snapshot.val());
@@ -20,12 +28,12 @@ export function BasketWrapper({ children, userID }) {
             console.error('Error fetching user basket:', error);
          });
       }
-   }, [userID]);
+   }, [currentUser]);
 
    const addToBasket = async (productID, quantity, price, discount) => {
-      if (userID) {
+      if (currentUser) {
          try {
-            const userBasketRef = ref(database, `Basket/${userID}`);
+            const userBasketRef = ref(database, "Basket/" + currentUser.uid);
             const newItemRef = push(userBasketRef);
             await set(newItemRef, {
                productID,
@@ -41,9 +49,21 @@ export function BasketWrapper({ children, userID }) {
    };
 
    const removeFromBasket = async (itemKey) => {
-      if (userID) {
+      if (currentUser) {
          try {
-            const userBasketRef = ref(database, `Basket/${userID}/${itemKey}`);
+            const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" +  itemKey);
+            await set(userBasketRef, null);
+            setUserBasket(userBasket.filter(key => key !== itemKey));
+         } catch (error) {
+            console.error('Error removing from basket:', error);
+         }
+      }
+   };
+
+   const clearBasket = async () => {
+      if (currentUser) {
+         try {
+            const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" + itemKey);
             await set(userBasketRef, null);
             setUserBasket(userBasket.filter(key => key !== itemKey));
          } catch (error) {
@@ -57,8 +77,10 @@ export function BasketWrapper({ children, userID }) {
          userBasket,
          addToBasket,
          removeFromBasket,
+         clearBasket,
+         onCheckOut
       };
-   }, [userBasket, userID]);
+   }, [userBasket, currentUser]);
 
    return (
       <BasketContext.Provider value={contextValue}>
@@ -70,3 +92,5 @@ export function BasketWrapper({ children, userID }) {
 export function useBasketContext() {
    return useContext(BasketContext);
 }
+
+//export default BasketContext;

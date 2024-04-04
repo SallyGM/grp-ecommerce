@@ -13,7 +13,7 @@
     "@emotion/styled": "^11.11.5",
     "@heroicons/react": "^2.1.1",
     "@mui/icons-material": "^5.15.14",
-    "@mui/material": "^5.15.14",
+    "@mui/material": "^5.15.15",
     "@next/font": "^14.1.4",
     "@nextui-org/react": "^2.2.10",
     "firebase": "^10.9.0",
