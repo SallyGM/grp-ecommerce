@@ -22,7 +22,6 @@ export default function Home() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [emailModalError, setEmailModalError] = useState('');    //Create email error
   const [showCheckEmail, setShowCheckEmail] = useState(false);
-
   // Function that hanle the Check email modal click
   const handleConfirmCheckEmailClick = () => {
     setShowCheckEmail(false);
@@ -122,7 +121,7 @@ export default function Home() {
     } else {
       // Show error if email is not valid
       setEmailModalError("Invalid email address");
-    }
+    }  
 }
   
 
