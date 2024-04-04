@@ -14,6 +14,7 @@ export function BasketProvider({ children}) {
    const { currentUser } = useAuth()
 
    const [userBasket, setUserBasket] = useState([]);
+   const [guestBasket, setGuestBasket] = useState([]);
    const [loading, setLoading] = useState(true);
    const [onCheckOut, setOnCheckOut] = useState(false);
 
@@ -31,20 +32,33 @@ export function BasketProvider({ children}) {
    }, [currentUser]);
 
    const addToBasket = async (productID, quantity, price, discount) => {
+
+      const data = { "quantity": quantity, "price": price, "discount": discount }
+      let basket = userBasket;
+      basket[productID] = data
+
       if (currentUser) {
          try {
-            const userBasketRef = ref(database, "Basket/" + currentUser.uid);
-            const newItemRef = push(userBasketRef);
-            await set(newItemRef, {
-               productID,
-               quantity,
-               price,
-               discount
-            });
-            setUserBasket([...userBasket, newItemRef.key]);
+
+            const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" + productID);
+            await set(userBasketRef, data);
+
+            setUserBasket(basket);
          } catch (error) {
             console.error('Error adding to basket:', error);
          }
+      } else {
+         let basket = guestBasket;
+
+         // if the items is not in the basket
+         if (!basket.includes(productID)){
+            basket[productID] = data
+            setGuestBasket[basket]
+         } else {
+            basket[productID] =  { "quantity": basket[productID].quantity + quantity, "price": price, "discount": discount }
+         }
+
+         setGuestBasket[basket]
       }
    };
 
@@ -57,6 +71,9 @@ export function BasketProvider({ children}) {
          } catch (error) {
             console.error('Error removing from basket:', error);
          }
+      } else {
+         let basket = userBasket;
+         basket.remove(itemKey)
       }
    };
 
@@ -65,10 +82,13 @@ export function BasketProvider({ children}) {
          try {
             const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" + itemKey);
             await set(userBasketRef, null);
-            setUserBasket(userBasket.filter(key => key !== itemKey));
+            setUserBasket([]);
          } catch (error) {
             console.error('Error removing from basket:', error);
          }
+      }
+      else {
+         setGuestBasket([])
       }
    };
 
@@ -78,7 +98,8 @@ export function BasketProvider({ children}) {
          addToBasket,
          removeFromBasket,
          clearBasket,
-         onCheckOut
+         onCheckOut,
+         guestBasket
       };
    }, [userBasket, currentUser]);
 

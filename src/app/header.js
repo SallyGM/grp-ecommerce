@@ -23,18 +23,19 @@ export default function Header() {
 
     // updates basket size
     useEffect(() => {
+        
         let total = 0; 
 
         if(Object.keys(userBasket).length > 0){
-
+            console.log(userBasket)
             Object.keys(userBasket).map((key) => ( 
-                total += userBasket[key].quantity
+                total += userBasket[key]
               ));
     
             setBasketSize(total)
         }
         
-      }, [userBasket]);
+      }, [userBasket], [currentUser]);
 
     // function that logout the user
     async function signOut(e){

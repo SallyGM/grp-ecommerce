@@ -1,17 +1,16 @@
 "use client"; 
 import React, { useState } from 'react';
 import { Card, Button } from 'flowbite-react';
-import { useRouter } from 'next/navigation';
-
-
+import { useBasketContext } from '../context/BasketContext'
+import { useAuth } from '../context/AuthContext'
 
 export default function Home() {
 
   const [quantity,setQuantity] = useState(1);
-  const[isVisible, setIsVisible] =  useState(true);
+  const [isVisible, setIsVisible] =  useState(true);
+  const { userBasket, guestUserBasket } = useBasketContext();
+  const { currentUser } = useAuth()
 
-  
- 
   const handleDecrement = () => {
     if(quantity >1){
       setQuantity(quantity -1);
@@ -25,23 +24,19 @@ export default function Home() {
     setIsVisible(false);
   };
 
-
-  
-  
-
   return (
     <div className='pt-5 bg-blue-800 pb-20'>
       <div>
       <h1 className="text-center mb-5 text-3xl dark:text-white self-center text-white font-mono">MY CART</h1>
       </div>
       <div className='top_bar_basket grid grid-cols-4 flex-wrap ml-20 mr-20 p-5' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
-        <h3 className=' ext-4xl  font-bold tracking-tight dark:text-white text-white'>Product</h3>
-        <h3 className=' ext-4xl font-bold tracking-tight dark:text-white  text-white'>Quantity</h3>
-        <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Subtotal</h3>
+        <h3 className='text-4xl  font-bold tracking-tight dark:text-white text-white'>Product</h3>
+        <h3 className='text-4xl font-bold tracking-tight dark:text-white  text-white'>Quantity</h3>
+        <h3 className='text-4xl font-bold tracking-tight  dark:text-white text-white'>Subtotal</h3>
       </div>
      
       <div className='grid grid-rows-3 flex-wrap m-s ml-20 mr-20 mt-5'>
-      {isVisible &&(
+      {isVisible && ( 
         <Card className=" flex h-auto  w-full my-6 bg-transparent border-white" >
           <div className='grid grid-cols-4 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr',justifyItems: 'center' }}>
             <img class="first-line:h-40   w-40 " src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="image description"/>
@@ -87,7 +82,7 @@ export default function Home() {
 
         <div className='flex justify-center mt-10'>
           <Button className='basket_btn  bg-green-400 '>
-                    CHECKOUT
+            CHECKOUT
           </Button>
         </div>
      
