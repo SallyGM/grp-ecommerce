@@ -14,7 +14,6 @@ import { Divider, user } from '@nextui-org/react';
 import { sendEmailVerification } from 'firebase/auth';
 
 
-
 export default function Home() {
 
   const [lastNameError, setLastNameError] = useState('');             //Create last name error
@@ -25,6 +24,7 @@ export default function Home() {
   const [confPasswordError, setConfPasswordError] = useState('');     //Create confirm password error
   const [loading, setLoading] = useState(false);                      // keep track of the registration
   const [showAddCardModal, setShowAddCardModal] = useState(false);
+  const [showCheckEmail, setShowCheckEmail] = useState(false);
   const password = useRef();
   const confirmPassword = useRef();
   const email = useRef();
@@ -138,84 +138,103 @@ const handleConfirmEmailChange = (e) => {
   }
 };
 
-//Handle submit function of the form
-async function handleSubmit(e){
+// Function that hanle the Check email modal click
+const handleConfirmCheckEmailClick = () => {
+  setShowCheckEmail(false);
+  router.push('/login');
+};
+
+// Handle submit function of the form
+async function handleSubmit(e) {
   e.preventDefault();
 
   // Submit form if all input fields are valid
-  if (emailError == '' && confEmailError == '' && passwordError == '' && confPasswordError == '' && firstNameError == '' && lastNameError == '') {
+  if (
+    emailError == '' &&
+    confEmailError == '' &&
+    passwordError == '' &&
+    confPasswordError == '' &&
+    firstNameError == '' &&
+    lastNameError == ''
+  ) {
+    try {
+      setEmailError('');
+      setConfirmEmailError('');
+      setFirstNameError('');
+      setLastNameError('');
+      setPasswordError('');
+      setConfPasswordError('');
+      setLoading(true); // disable register button
 
-    try{    
-        setEmailError('')
-        setConfirmEmailError('')
-        setFirstNameError('')
-        setLastNameError('')
-        setPasswordError('')
-        setConfPasswordError('')
-        setLoading(true);       // disable register button 
-
-        const userCredential = await signup(email.current.value, password.current.value);
-        console.log(email.current.value,password.current.value);
-
-       // Access the user's UID from the UserCredential object
-        const userId = userCredential.user.uid;
-
-        // Send email verification
-        //const user = userCredential.user;
-        //await user.sendEmailVerification();
-        
-
-        // Set the new user in the database
-        await set(ref(database, 'User/' + userId), {
-          email: email.current.value,
-          firstName: fName.current.value,
-          lastName: lName.current.value
-        })
-            .then(() => {
+      console.log('Email:', email.current?.value);
+      console.log('Password:', password.current?.value);
+      const userCredential = await signup(email.current.value, password.current.value)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          // User created
+          return sendEmailVerification(user).then(() => {
+            console.log('Email verification sent');
+            // Access the user's UID from the User object inside userCredential
+            const userId = userCredential.user.uid;
+            // Set the new user in the database
+            return set(ref(database, 'User/' + userId), {
+              email: email.current.value,
+              firstName: fName.current.value,
+              lastName: lName.current.value,
+            })
+              .then(() => {
                 toast.success('New user added');
                 console.log('New user added');
-            })
-            .catch((error) => {
+                if (
+                  formData.cardName !== '' &&
+                  formData.cardNumber !== '' &&
+                  formData.sortCode !== '' &&
+                  formData.securityCode !== '' &&
+                  formData.expDate !== '' &&
+                  formData.billAddress !== ''
+                ) {
+                  // Generate a unique key for the new card
+                  const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
+
+                  // Set the new card object at the specified path in the database
+                  return set(ref(database, 'User/' + userId + '/card/' + newCardKey), formData)
+                    .then(() => {
+                      toast.success('New card added successfully');
+                      console.log('New card added successfully');
+                      setShowAddCardModal(false);
+                    })
+                    .catch((error) => {
+                      toast.error('Error adding new card:', error);
+                      console.error('Error adding new card:', error);
+                    });
+                }
+              })
+              .catch((error) => {
                 toast.error('Error adding new user:', error);
                 console.error('Error adding new user:', error);
-            });  
-        if(formData.cardName !== "" && formData.cardNumber !== "" && formData.sortCode !== "" && formData.securityCode !== "" && formData.expDate !== "" && formData.billAddress !== ""){   
-            // Generate a unique key for the new card
-            const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
-                
-            // Set the new card object at the specified path in the database
-            set(ref(database, 'User/' + userId + '/card/' + newCardKey), formData)
-                .then(() => {
-                    toast.success('New card added successfully');
-                    console.log('New card added successfully');
-                    setShowAddCardModal(false);
-                })
-                .catch((error) => {
-                    toast.error('Error adding new card:', error);
-                    console.error('Error adding new card:', error);
-                });
-        } 
-
-        setLoading(false);    // enable register button    
-
-      // Display confirm toast message
-      toast.success("Registration Successfull!");
-      router.push('/login');
-    }
-    catch (e) {
+              });
+          });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+      setLoading(false); // enable register button
+      toast.success('Registration Successfull!');
+      setShowCheckEmail(true)
+    } catch (e) {
       toast.error(e.message);
       console.log(e);
     }
-      
   } else {
-      setEmailError("Email is required")
-      setConfirmEmailError("Confirm Email is required")
-      setConfPasswordError("Confirm Password is required")
-      setPasswordError("Password is required")
-      setFirstNameError("First Name is required")
-      setLastNameError("Last Name is required")
-  }  
-};
+    setEmailError('Email is required');
+    setConfirmEmailError('Confirm Email is required');
+    setConfPasswordError('Confirm Password is required');
+    setPasswordError('Password is required');
+    setFirstNameError('First Name is required');
+    setLastNameError('Last Name is required');
+  }
+}
+
 
   return (
     <Fragment>
@@ -279,7 +298,7 @@ async function handleSubmit(e){
               </Fab>
               <a className=" text-sm  font-semibold text-indigo-600 ml-3 text-white">Add Card Details (Optional)</a>
             </div>
-            <Button className="w-72 col-span-2 place-self-end mt-2" color='success' type="submit">
+            <Button className="w-72 col-span-2 place-self-end mt-2" color='success' type="submit" disabled={showCheckEmail}>
               REGISTER
             </Button>
           </form>
@@ -356,7 +375,14 @@ async function handleSubmit(e){
                     </div>
                 </form>
             </div>
-            
+        </Modal>
+        {/*Check Email modal */}
+        <Modal isVisible={showCheckEmail} onClose ={()=> setShowCheckEmail(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
+            <h3 className='flex self-center font-semibold text-white  mb-5'>Verify your email before login into your account</h3>
+            <div className='flex justify-end mt-10'>
+                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
+            </div>
         </Modal>
 
     </Fragment>

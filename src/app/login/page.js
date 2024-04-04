@@ -3,18 +3,28 @@ import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
 import { Divider } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Fragment } from "react";
 import { useAuth } from '../context/AuthContext'
+import toast from 'react-hot-toast';
+import Modal from '@/components/modal.js';
+import { fetchSignInMethodsForEmail } from 'firebase/auth';
+
 
 export default function Home() {
   //Use the useState Hook to keep track of each inputs value
-  const { signin } = useAuth()
+  const { signin, signout, resetPassword} = useAuth()
   const router = useRouter();
   const email = useRef();
+  const emailModal = useRef();
   const password = useRef();
   const [emailError, setEmailError] = useState('');           //Create email error
   const [passwordError, setPasswordError] = useState('');     //Create password error
-  const [loading, setLoading] = useState(false); // keep track of the login
+  const [loading, setLoading] = useState(false);              // keep track of the login
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [emailModalError, setEmailModalError] = useState('');           //Create email error
+
+  
+
 
   async function handleSubmit(e){
     e.preventDefault();
@@ -23,20 +33,32 @@ export default function Home() {
     if (emailError === '' && passwordError === '') {
 
       try{    
-
         setEmailError('')
         setPasswordError('')
         setLoading(true) // disable login button 
 
-        await signin(email.current.value, password.current.value)
-
+        const userCredential =await signin(email.current.value, password.current.value)
+        // Check if email is verified
+        if (userCredential.user.emailVerified) {
+          // Email is verified, proceed with login
+          console.log('Login successful');
+          toast.success("Login successful")
+          router.push('/');
+        } else {
+          // Email is not verified
+          await signout();
+          router.push('/login');
+          console.log('Email is not verified');
+          toast.error("Email is not verified")
+        }
         setLoading(false) // enable login button     
       }
       catch (e) {
-        console.log(e)  
+        console.log(e)
+        toast.error("Error in login process")  
       }
 
-      router.push('/');
+      
     } else {
       setEmailError("Email is required")
       setPasswordError("Password is required")
@@ -66,8 +88,54 @@ export default function Home() {
       setPasswordError('');
     }
   };
+  // Handle email forgot password change
+  const handleForgotPasswordEmailChange = (e) => {
+    
+    // Validate email pattern
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+    if (!isEmailValid) {
+      setEmailModalError('Invalid email address');
+    }else {
+      setEmailModalError('');
+    }
+  };
+
+  // Handle email verification and password reset function
+  async function handleSendEmailVerification(e) {
+    e.preventDefault();
+  
+    // Check if the email is valid
+    if (emailModalError === '') {
+      try {
+        // Retrieve user information based on the provided email
+        const userExists = await fetchSignInMethodsForEmail(emailModal.current.value);
+  
+        // If user exists, proceed with password reset
+        if (userExists.length>0) {
+          await resetPassword(emailModal.current.value);
+          console.log('User exists. Proceed with password reset.');
+          toast.success("Password reset email sent successfully.");
+        } else {
+          // If user doesn't exist, show error message
+          console.log('User does not exist.');
+          toast.error("Email is not registered. Please check and try again.");
+        }
+  
+        // Reset the email error state
+        setEmailModalError('');
+      } catch (error) {
+        console.error('Error:', error.message);
+        toast.error("An error occurred while processing your request.");
+      }
+    } else {
+      // Show error if email is not valid
+      setEmailModalError("Invalid email address");
+    }
+  }
+  
 
   return (
+    <Fragment>
       <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-dark-night'> 
         <Card className="justify-self-end h-auto w-2/3 my-6 bg-blue-900 border-blue-900">
           <h1 className="self-center text-4xl font-bold text-white font-mono">LOGIN</h1>
@@ -88,7 +156,7 @@ export default function Home() {
                   {passwordError && <span style={{ color: 'red', fontSize: '14px' }}>{passwordError}</span>}
               </div>
 
-              <a href="#" className="text-sm font-semibold text-indigo-600  hover:text-indigo-500 text-white">Forgot password?</a>
+              <a className="text-sm font-semibold text-indigo-600  hover:text-indigo-500 text-white" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
               <Button className="justify-self-center w-full mt-7 bg-green-400" type='submit' color='success' >LOGIN</Button>
             </form>
             
@@ -134,15 +202,29 @@ export default function Home() {
           </svg>
           <a className="text-white font-mono">BE PART OF A COMMUNITY</a>
         </div>
-
         <Button disabled={loading} type="submit" className=" self-center w-72 mt-6 " color='success'>
           <Link href="/register1">REGISTER</Link>
         </Button>
-
       </Card>
-
     </div>
-    
+    {/*Forgot password modal */}
+    <Modal isVisible={showForgotPassword}  onClose ={()=> setShowForgotPassword(false)}>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>FORGOT YOUR PASSWORD</h3>
+            <h3 className='flex self-center font-semibold text-white  mb-5'>Insert your email to reset your password</h3>
+            <form className="space-y-6 text-white self-center font-mono" onSubmit={handleSendEmailVerification}>
+              <div className=' mt-2 mb-2  flex-wrap'>  
+              <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS:</h2>  
+                  <input className="block w-full rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  type="email" id="first name" name="email" onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
+                  {emailModalError && <span style={{ color: 'red', fontSize: '14px' }}>{emailModalError}</span>}  
+              </div>
+              <div className='flex justify-evenly mt-10'>
+                  <Button className="w-52 mr-2" color="gray" onClick ={()=>setShowForgotPassword(false)}> DISMISS</Button>
+                  <Button type='submit' className="w-52 ml-2" color="gray">CONFIRM</Button>
+              </div>
+            </form>
+        </Modal>
+  </Fragment>
   );
 }
 

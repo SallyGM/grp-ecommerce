@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
     return updatePassword(currentUser, newPassword)
   }
 
-  // reauthenticates user
+  // reauthenticates user with password
   function reautentication(password){  
     console.log(currentUser)
     const credential = EmailAuthProvider.credential(
@@ -50,6 +50,8 @@ export function AuthProvider({ children }) {
     )
     return reauthenticateWithCredential(currentUser, credential)
   }
+  
+  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
