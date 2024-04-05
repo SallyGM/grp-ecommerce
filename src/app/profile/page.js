@@ -220,27 +220,28 @@ export default function Home() {
 
     return (
         <Fragment>
-            <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
+            <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
                 <SubNavbar />
                 
-                <Card className="justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5" >
-                    <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > ACCOUNT INFORMATION</h5>
+                <div  className="self-center h-auto w-full my-6 mr-12 row-start-1 row-end-1 col-start-2 col-end-5" >
                     {userDetails && (
-                    <div className='grid grid-rows-1 flex-wrap m-s ml-10 mr-10'>
-                        <Card className=" flex h-auto w-full bg-transparent border-white">
+                    <div className='grid grid-rows-1 mr-12'>
+                     <h5 className="justify-self-center  text-4xl font-bold tracking-tight text-white font-mono" > ACCOUNT INFORMATION</h5>
+
+                        <div style={{ backgroundColor: 'transparent' }} className="flex justify-center mt-24 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
                             <form>
-                                <div className='grid grid-cols-2 items-center mb-2 flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center'}}>    
-                                    <h2 id="first_name" className="flex dark:text-white text-white font-mono ">FIRST NAME:</h2>
+                                <div className='grid grid-cols-2  mb-3 flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center'}}>    
+                                    <h2 id="first_name" className="flex dark:text-white  text-white text-2xl font-mono ">FIRST NAME:</h2>
                                     <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     type="first_name" id="first name" name="firstName" value={userDetails.firstName} onChange={handleChange}/>
                                 </div>
-                                <div className='grid grid-cols-2 mt-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                    <h2 id="last_name" className="flex dark:text-white text-white font-mono ">LAST NAME:</h2>
+                                <div className='grid grid-cols-2 mt-3 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
+                                    <h2 id="last_name" className="flex dark:text-white text-white text-2xl font-mono ">LAST NAME:</h2>
                                     <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     type="last_name" id="first name" name="lastName" value={userDetails.lastName} onChange={handleChange}/>
                                 </div>
-                                <div className='grid grid-cols-2 mt-2 mb-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                    <h2 id="email_address" className="flex dark:text-white text-white font-mono ">EMAIL ADDRESS:</h2>
+                                <div className='grid grid-cols-2 mt-3 mb-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
+                                    <h2 id="email_address" className="flex dark:text-white text-white text-2xl font-mono ">EMAIL ADDRESS:</h2>
                                     <input disabled className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     type="email" defaultValue={userDetails.email} id="first name" name="email"/>
                                 </div>
@@ -249,7 +250,7 @@ export default function Home() {
                                 <h2 id="empty_content" className="flex dark:text-white text-white font-mono "></h2>
 
                                     <Button
-                                        className="w-40 visible justify-self-end mr-24" color='success'
+                                        className="w-40 visible justify-self-end  mt-6 mb-20 mr-3 self-end" color='success'
                                         onClick={()=> openEditDetailsModal(userDetails)}
                                         disabled={!editButtonClicked || saveButtonClicked}>
                                         SAVE
@@ -257,7 +258,7 @@ export default function Home() {
                                 </div>
                             </form>
                             
-                        </Card>
+                        </div>
                         
                     </div>
                     )}
@@ -275,13 +276,13 @@ export default function Home() {
                             EDIT INFORMATION
                         </Button>
                     </div>
-                </Card>
+                </div>
 
-                <div className='flex place-content-center h-auto row-start-2 row-end-2 col-span-4 mb-6'>
+                <div className='flex place-content-start h-auto row-start-2 row-end-2 col-span-1 mb-6'>
                     <div>
                         <Button
                             type="submit"
-                            className="w-96 text-white"
+                            className="w-auto text-white"
                             onClick={()=> setShowDeleteModal(true)}
                             disabled={showDeletedModal}>
                             DELETE ACCOUNT
@@ -306,7 +307,7 @@ export default function Home() {
                 <h3 className='flex self-center font-semibold text-white mb-5'>Fill out the form below</h3>
                 <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
                     <form className="text-white font-mono" onSubmit={handleSubmit}>
-                        <div>
+                        <div >
                             <label htmlFor="password" className='text-white'>Old Password</label>
                             <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             type="password" id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword}/> 

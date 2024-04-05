@@ -171,24 +171,24 @@ export default function CardStored() {
 
     return(
         <Fragment>
-            <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night'> 
+            <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
                 <SubNavbar />
 
-                <Card className=" justify-self-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
-                    <h5 className="self-center text-4xl font-bold tracking-tight text-white font-mono" > MY PAYMENT METHODS</h5>
+                <div style={{ backgroundColor: 'transparent' }} className=" content-center h-auto w-full my-6 mr-12 mt-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+                    <h5 className="justify-self-center text-center mb-6 text-4xl font-bold tracking-tight text-white font-mono" > MY PAYMENT METHODS</h5>
 
-                    <div className='top_bar_basket grid grid-cols-6 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
-                        <h3 className=' ext-4xl font-bold tracking-tight dark:text-white  text-white'>Card Type</h3>
-                        <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Name on Card</h3>
-                        <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Card Ending</h3>
-                        <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'>Billing Address</h3>
-                        <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'></h3>
-                        <h3 className=' ext-4xl font-bold tracking-tight  dark:text-white text-white'></h3>
+                    <div className='rounded-none border-0 border-b-2 border-white grid grid-cols-6 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
+                        <h3 className='  font-bold tracking-tight dark:text-white  text-white'>Card Type</h3>
+                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Name on Card</h3>
+                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Card Ending</h3>
+                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Billing Address</h3>
+                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
+                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
                     </div>
                     {/*This is the card that can be used as a component nested in cardStored component */}
                     <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
                     {cardDetails.map((c) => (
-                        <Card key={c.id} className=" flex h-auto w-full bg-transparent border-white mt-2">
+                        <Card style={{ backgroundColor: 'transparent' }} key={c.id} className=" flex h-auto w-full rounded-none border-0 border-b-2 border-white mt-6">
                             <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
 
                                 <img id = "card_type" class="first-line:h-8 w-8 flex-wrap justify-self-center" src="https://www.iconbolt.com/iconsets/payment-method/american-card-express-method-payment.svg" alt="card"/>
@@ -204,7 +204,7 @@ export default function CardStored() {
                     ))}
 
                     </div>  
-                    <div className='flex justify-self-start mt-10 ml-10'>
+                    <div className='flex justify-self-start mt-10 ml-10 '>
                         <Button
                             type="submit"
                             className="w-60 inline-flex text-white self-center " color='blue'
@@ -218,7 +218,7 @@ export default function CardStored() {
                         </Button>
                     </div>
                     
-                </Card>
+                </div>
             </div>
         {/*Add card modal */}
         <Modal isVisible={showAddCardModal} onClose ={()=> setShowAddCardModal(false)}>
@@ -262,8 +262,8 @@ export default function CardStored() {
                     type="text" id="billAddress" name="billAddress" placeholder='3 Admaston road' required value={formData.billAddress} onChange={handleChange}/>
                     </div>
                     <div className='flex justify-evenly mt-10'>
-                        <Button className="w-52 mr-1" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                        <Button type="submit" className="w-52 ml-1" color="gray">CONFIRM</Button>
+                        <Button className="w-52 mr-1 mb-2" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
+                        <Button type="submit" className="w-52 ml-1 mb-2" color="gray">CONFIRM</Button>
                     </div>
                 </form>
             </div>
@@ -312,7 +312,7 @@ export default function CardStored() {
                     </div>
                 </form>
             </div>
-            <div className='flex justify-evenly mt-10'>
+            <div className='flex justify-evenly mt-10 mb-2'>
                 <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowEditCard(false)}> DISMISS</Button>
                 <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</Button>
             </div>
@@ -321,7 +321,7 @@ export default function CardStored() {
         <Modal isVisible={showDeleteCard} card = {card} onClose ={()=> setShowDeleteCard(false)}>
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE CARD</h3>
             <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this card?</h3>
-            <div className='flex justify-evenly mt-10'>
+            <div className='flex justify-evenly mt-10 mb-2'>
                 <Button type="submit"className="w-52" color="gray" onClick ={()=>showDeleteCard(false)}> DISMISS</Button>
                 <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmDeleteCardClick(card)}>CONFIRM</Button>
             </div>
