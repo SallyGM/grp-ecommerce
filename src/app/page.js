@@ -90,11 +90,11 @@ export default function Home() {
                 {p.name}
               </h5>
               <p className="font-normal text-gray-700 dark:text-gray-400">
-                £{p.price}
+                £{(p.discount > 0 ? parseFloat(p.price - p.price * p.discount).toFixed(2): p.price)}
               </p>
 
               <Button.Group className='items-center'>
-              <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>
+                <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                   </svg>
