@@ -1,11 +1,8 @@
 "use client"
 import React, { useContext, useState, useEffect, useMemo } from "react" 
 import { database } from '../firebaseConfig';
-import { ref, set, get, push, remove } from "firebase/database";
+import { ref, set, get } from "firebase/database";
 import { useAuth } from '../context/AuthContext.js'
-
-//Attempt at creating the Basket Context
-//Not sure I am accessing the database correctly tho
 
 const BasketContext = React.createContext();
 
@@ -15,7 +12,6 @@ export function BasketProvider({ children}) {
 
    const [userBasket, setUserBasket] = useState([]);
    const [guestBasket, setGuestBasket] = useState([]);
-   const [loading, setLoading] = useState(true);
    const [onCheckOut, setOnCheckOut] = useState(false);
 
    useEffect(() => {
@@ -33,32 +29,52 @@ export function BasketProvider({ children}) {
 
    const addToBasket = async (productID, quantity) => {
 
-      const data = {[productID]: quantity}
-      let basket = { ...userBasket }
-      basket[productID] = quantity
-
       if (currentUser) {
-         try {
+         let basket = { ...userBasket }
+         basket[productID] = quantity
 
+         try {
             const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" + productID);
-            await set(userBasketRef, quantity);
+            let data = 0
+
+            // fetch to see if there is any data already stored
+            await get(userBasketRef).then((snapshot) => {
+               if (snapshot.exists()) {
+                  data = snapshot.val();
+               }
+            }).catch((error) => {
+               console.error('Error fetching user basket:', error);
+            });
+         
+            if((data + quantity) <= 10){
+               basket[productID] = quantity + data;
+               await set(userBasketRef, quantity + data);
+            } else {
+               basket[productID] = 10
+               await set(userBasketRef, 10);
+            }
 
             setUserBasket(basket);
          } catch (error) {
             console.error('Error adding to basket:', error);
          }
       } else {
-         let basket = guestBasket;
+         let gbasket = guestBasket;
 
          // if the items is not in the basket
-         if (!basket.includes(productID)){
-            basket[productID] = quantity
-            setGuestBasket[basket]
+         if (!gbasket.includes(productID)){
+            gbasket[productID] = quantity
+            setGuestBasket[gbasket]
          } else {
-            basket[productID] = basket[productID] + quantity
+            if(gbasket[productID] + quantity <= 10){
+               gbasket[productID] = gbasket[productID] + quantity
+            }
+            else{
+               gbasket[productID] = 10
+            }
          }
 
-         setGuestBasket[basket]
+         setGuestBasket[gbasket]
       }
    };
 
@@ -94,6 +110,10 @@ export function BasketProvider({ children}) {
       }
    };
 
+   const activateCheckOut = () => {
+      setOnCheckOut(true)
+   };
+
    const contextValue = useMemo(() => {
       return {
          userBasket,
@@ -101,7 +121,8 @@ export function BasketProvider({ children}) {
          removeFromBasket,
          clearBasket,
          onCheckOut,
-         guestBasket
+         guestBasket,
+         activateCheckOut
       };
    }, [userBasket, currentUser]);
 

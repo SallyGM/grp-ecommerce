@@ -8,7 +8,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
 import { useBasketContext } from '../app/context/BasketContext.js'
-import { user } from '@nextui-org/react';
 
 export default function Header() {
 
@@ -23,23 +22,19 @@ export default function Header() {
 
     // updates basket size
     useEffect(() => {
-        
         let total = 0; 
-
         if(Object.keys(userBasket).length > 0){
-            console.log(userBasket)
             Object.keys(userBasket).map((key) => ( 
                 total += userBasket[key]
-              ));
-    
+                ));
+
             setBasketSize(total)
         }
         
-      }, [userBasket], [currentUser]);
+        }, [userBasket], [currentUser]);
 
     // function that logout the user
     async function signOut(e){
-
         try{
             await signout()    
             setError(false)
@@ -55,15 +50,12 @@ export default function Header() {
     }
 
     function handleSubmit(e){
-    
         if(valid){
             router.push(`/products?search=${search.current.value.toString().toLowerCase()}&type=search`);
         }
     }
 
     function handleChange(e){
-
-        //TODO ADD A REDIRECT TO THE SEARCH PAGE
         if(search.current.value.toString().length > 0){
             setValid(true);
         }
@@ -102,7 +94,7 @@ export default function Header() {
                     <div className="flex items-center space-x-6 rtl:space-x-reverse">
                         <Link href="/basket" className="relative text-sm dark:text-blue-500 hover:underline">
                             <ShoppingCartIcon className="h-6 w-6 text-black-500" />
-                            <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -right-4 dark:border-gray-900">
+                            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -right-4 dark:border-gray-900">
                                 {basketSize}
                             </div>
                         </Link>
@@ -118,11 +110,11 @@ export default function Header() {
                         ) : (
                             <>
                                 <Link href="/login" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
-                                        Login
+                                    Login
                                 </Link>
                                 <Link href="/register" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
-                                        Register
-                                 </Link>
+                                    Register
+                                    </Link>
                             </>                   
                         )}
                 </div>
@@ -158,12 +150,12 @@ export default function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/products/bestsellers" className='text-gray-900 dark:text-white hover:underline'>
+                                <Link href={{ pathname: '/products', query: {search: "", type: "bestsellers"} }} className='text-gray-900 dark:text-white hover:underline'>
                                     Best Sellers
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/products/sales" className='text-gray-900 dark:text-white hover:underline'> 
+                                <Link href={{ pathname: '/products', query: {search: "", type: "sales"} }} className='text-gray-900 dark:text-white hover:underline'> 
                                     SALES
                                 </Link>
                             </li>
@@ -174,4 +166,4 @@ export default function Header() {
         </div> 
     </motion.div>
     );
-  }
+    }
