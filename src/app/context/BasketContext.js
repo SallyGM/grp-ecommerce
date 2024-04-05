@@ -67,7 +67,9 @@ export function BasketProvider({ children}) {
          try {
             const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" +  itemKey);
             await set(userBasketRef, null);
-            setUserBasket(userBasket.filter(key => key !== itemKey));
+            let basket = { ...userBasket } 
+            delete basket[itemKey];
+            setUserBasket(basket);
          } catch (error) {
             console.error('Error removing from basket:', error);
          }
