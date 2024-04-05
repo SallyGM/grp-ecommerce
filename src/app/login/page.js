@@ -71,7 +71,6 @@ export default function Login() {
         console.log(e)
         toast.error("Error in login process")  
       }
-
       
     } else {
       setEmailError("Email is required")
@@ -79,9 +78,9 @@ export default function Login() {
     }  
   };
     
+
   // Handle email change
   const handleEmailChange = (e) => {
-    
     // Validate email pattern
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
     if (!isEmailValid && e.target.value.length > 0) {
@@ -91,9 +90,9 @@ export default function Login() {
     }
   };
 
+
   //Handle password change
   const handlePasswordChange = (e) => {
-    
     // Validate password pattern (at least 8 characters and must contain one special character)
     const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
     if (!isPasswordValid && e.target.value.length > 0) {
@@ -102,9 +101,10 @@ export default function Login() {
       setPasswordError('');
     }
   };
+
+
   // Handle email forgot password change
   const handleForgotPasswordEmailChange = (e) => {
-    
     // Validate email pattern
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
     if (!isEmailValid) {
@@ -113,6 +113,8 @@ export default function Login() {
       setEmailModalError('');
     }
   };
+
+
   async function handleSendEmailVerification(e) {
     e.preventDefault();
     // Check if the email is valid
