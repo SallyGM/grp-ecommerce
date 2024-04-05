@@ -17,9 +17,9 @@ import { sendEmailVerification } from 'firebase/auth';
 export default function Home() {
 
   const [lastNameError, setLastNameError] = useState('');             //Create last name error
-  const [firstNameError, setFirstNameError] = useState('');           //Create first error
+  const [firstNameError, setFirstNameError] = useState('');           //Create first name error
   const [emailError, setEmailError] = useState('');                   //Create email error
-  const [confEmailError, setConfirmEmailError] = useState('');        //Create email error
+  const [confEmailError, setConfirmEmailError] = useState('');        //Create confirm email error
   const [passwordError, setPasswordError] = useState('');             //Create password error
   const [confPasswordError, setConfPasswordError] = useState('');     //Create confirm password error
   const [loading, setLoading] = useState(false);                      // keep track of the registration
@@ -67,22 +67,22 @@ const handleChange = (e) => {
 
 //Handle first name change
 const handleFirstNameChange = (e) => {
-  // Validate password pattern (at least 8 characters and must contain one special character)
-  const isFirstNameValid = /^[a-z ,.'-]+$/i.test(e.target.value) && e.target.value.length <= 40;
+  // Validate first name with first capital letter, all capital or all lowercase
+  const isFirstNameValid = /^([A-Z][a-z]*|[a-z]+)$/i.test(e.target.value) && e.target.value.length <= 40;
   
-  if (!isFirstNameValid) {
+  if (!isFirstNameValid && e.target.value.length > 0) {
     setFirstNameError('First name cannot contain special characters or numbers');
   } else {
-    setEmailError('');
+    setFirstNameError('');
   }
 }; 
 
 //Handle last name change
 const handleLastNameChange = (e) => {
-  // Validate password pattern (at least 8 characters and must contain one special character)
-  const isLastNameValid = /^[a-z ,.'-]+$/i.test(e.target.value) && e.target.value.length <= 40;
+  // Validate last name with first capital letter, all capital or all lowercase
+  const isLastNameValid = /^([A-Z][a-z]*|[a-z]+)$/i.test(e.target.value) && e.target.value.length <= 40;
   
-  if (!isLastNameValid) {
+  if (!isLastNameValid && e.target.value.length > 0) {
     setLastNameError('Last name cannot contain special characters or numbers');
   } else {
     setLastNameError('');
@@ -105,10 +105,10 @@ const handlePasswordChange = (e) => {
 const handleConfirmPasswordChange = (e) => {
   const currentPassword = document.getElementById('password').value;
   const currentConfirmPassword = document.getElementById('confirmPassword').value;
-  // Validate password pattern (at least 8 characters and must contain one special character)
+  // Validate if confirm password and password are identical
   const isConfPasswordValid = currentConfirmPassword === currentPassword;
   if (!isConfPasswordValid) {
-    setConfPasswordError('Confirm password does not match the password');
+    setConfPasswordError('The passwords do not match');
   } else {
     setConfPasswordError('');
   }
@@ -133,7 +133,7 @@ const handleConfirmEmailChange = (e) => {
   // Validate password pattern (at least 8 characters and must contain one special character)
   const isConfEmailValid = currentConfirmEmail === currentEmail;
   if (!isConfEmailValid) {
-    setConfirmEmailError('Confirm email does not match the the email');
+    setConfirmEmailError('The emails do not match');
   } else {
     setConfirmEmailError('');
   }
@@ -260,8 +260,8 @@ async function handleSubmit(e) {
             <div>
               <label for="lastName">Last Name</label>
               <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleFirstNameChange} ref={lName}></input>
-              {lastNameError && <span style={{ color: 'red', fontSize: '14px' }}>{handleLastNameChange}</span>}
+              type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
+              {lastNameError && <span style={{ color: 'red', fontSize: '14px' }}>{lastNameError}</span>}
             </div>
 
             <div>
@@ -303,6 +303,7 @@ async function handleSubmit(e) {
               REGISTER
             </Button>
           </form>
+
           {/*Divider between login options*/} 
           <div className="inline-flex mt-6">
             <Divider className="self-center  w-96 m-3"></Divider>
@@ -310,8 +311,8 @@ async function handleSubmit(e) {
             <Divider className="self-center w-96 m-3"></Divider>
           </div>
           
-          {/*Facebook sign in button*/}
           <div className='inline-flex place-content-center'>
+            {/*Facebook sign in button*/}
             <Button className="inline-flex bg-blue-600 text-white w-72 mr-4 self-center" color='blue'>
               <svg className="w-6 h-6 mr-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
@@ -329,6 +330,7 @@ async function handleSubmit(e) {
           </div>
         </Card>
       </div>
+
       {/*Add card modal */}
       <Modal isVisible={showAddCardModal} onClose ={()=> setShowAddCardModal(false)}>
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW CARD</h3>
