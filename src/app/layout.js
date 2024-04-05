@@ -9,7 +9,7 @@ import { BasketProvider } from "./context/BasketContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Buster Games",
+  title: "Game Busters",
   description: "E-commerce Group Research Project",
 };
 
