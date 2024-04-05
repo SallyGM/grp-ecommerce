@@ -29,19 +29,19 @@ export function BasketProvider({ children}) {
             console.error('Error fetching user basket:', error);
          });
       }
-   }, [currentUser]);
+   }, [currentUser], [userBasket]);
 
-   const addToBasket = async (productID, quantity, price, discount) => {
+   const addToBasket = async (productID, quantity) => {
 
-      const data = { "quantity": quantity, "price": price, "discount": discount }
-      let basket = userBasket;
-      basket[productID] = data
+      const data = {[productID]: quantity}
+      let basket = { ...userBasket }
+      basket[productID] = quantity
 
       if (currentUser) {
          try {
 
             const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" + productID);
-            await set(userBasketRef, data);
+            await set(userBasketRef, quantity);
 
             setUserBasket(basket);
          } catch (error) {
@@ -52,10 +52,10 @@ export function BasketProvider({ children}) {
 
          // if the items is not in the basket
          if (!basket.includes(productID)){
-            basket[productID] = data
+            basket[productID] = quantity
             setGuestBasket[basket]
          } else {
-            basket[productID] =  { "quantity": basket[productID].quantity + quantity, "price": price, "discount": discount }
+            basket[productID] = basket[productID] + quantity
          }
 
          setGuestBasket[basket]

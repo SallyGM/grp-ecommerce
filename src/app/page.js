@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from 'next/navigation';
 import { useBasketContext } from '../app/context/BasketContext.js'
+import { Group } from '@mui/icons-material';
 
 export default function Home() {
 
@@ -16,7 +17,7 @@ export default function Home() {
   const [product, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { userBasket, addToBasket } = useBasketContext();
+  const { addToBasket } = useBasketContext();
 
   // settings for the slider
   var settings = {
@@ -33,9 +34,11 @@ export default function Home() {
   
     get(prodRef).then((snapshot) => {
       if(snapshot.exists()){
+        const amount = 0
         const prodArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-          id, 
+          id, amount,
           ...data,
+
         }));
         setProducts(prodArray);
         setLoading(false);
@@ -51,8 +54,22 @@ export default function Home() {
     router.push(`/products/${productID}`);
   }
 
-  function handleClickAddToCart(productID, price, e){
-    addToBasket(productID, 1, price, 0)
+  function handleClickAddToCart(productID, amount, e){
+    addToBasket(productID, amount)
+  }
+
+  function handleClickChangeQuantity(p, op){
+    let prod = [...product]
+    let i = prod.indexOf(p)
+
+    if(op == "+" && prod[i].amount <= 10){
+      prod[i].amount += 1
+    } else {
+      if(prod[i].amount != 0){
+        prod[i].amount -= 1
+      }
+    }
+    setProducts(prod)
   }
 
   return (
@@ -93,9 +110,25 @@ export default function Home() {
                 £{p.price}
               </p>
 
+              <Button.Group>
+                <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"+", e)} >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                </Button>
+                <Button color="gray" className='cursor-auto hover:bg-slate-50'>
+                  {p.amount}
+                </Button>
+                <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                  </svg>
+                </Button>
+              </Button.Group>
+
               <Button color="gray" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</Button>
               
-              <Button color="gray" onClick={(e) => handleClickAddToCart(p.id, p.price, e)}>
+              <Button color="gray" onClick={(e) => handleClickAddToCart(p.id, p.amount, e)}>
                 Add to Cart
                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                   <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd"/>
