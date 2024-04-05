@@ -8,7 +8,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
 import { useBasketContext } from '../app/context/BasketContext.js'
-import { user } from '@nextui-org/react';
 
 export default function Header() {
 
@@ -23,23 +22,19 @@ export default function Header() {
 
     // updates basket size
     useEffect(() => {
-        
         let total = 0; 
-
         if(Object.keys(userBasket).length > 0){
-            console.log(userBasket)
             Object.keys(userBasket).map((key) => ( 
                 total += userBasket[key]
-              ));
-    
+                ));
+
             setBasketSize(total)
         }
         
-      }, [userBasket], [currentUser]);
+        }, [userBasket], [currentUser]);
 
     // function that logout the user
     async function signOut(e){
-
         try{
             await signout()    
             setError(false)
@@ -55,15 +50,12 @@ export default function Header() {
     }
 
     function handleSubmit(e){
-    
         if(valid){
             router.push(`/products?search=${search.current.value.toString().toLowerCase()}&type=search`);
         }
     }
 
     function handleChange(e){
-
-        //TODO ADD A REDIRECT TO THE SEARCH PAGE
         if(search.current.value.toString().length > 0){
             setValid(true);
         }
@@ -118,11 +110,11 @@ export default function Header() {
                         ) : (
                             <>
                                 <Link href="/login" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
-                                        Login
+                                    Login
                                 </Link>
                                 <Link href="/register" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
-                                        Register
-                                 </Link>
+                                    Register
+                                    </Link>
                             </>                   
                         )}
                 </div>
@@ -174,4 +166,4 @@ export default function Header() {
         </div> 
     </motion.div>
     );
-  }
+    }
