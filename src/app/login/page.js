@@ -22,6 +22,8 @@ export default function Home() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [emailModalError, setEmailModalError] = useState('');    //Create email error
   const [showCheckEmail, setShowCheckEmail] = useState(false);
+  const [showAlertBanner, setShowAlertBanner] = useState(false);
+
   // Function that hanle the Check email modal click
   const handleConfirmCheckEmailClick = () => {
     setShowCheckEmail(false);
@@ -123,10 +125,34 @@ export default function Home() {
       setEmailModalError("Invalid email address");
     }  
 }
+    useEffect(() => {
+      // Check if email is not verified when the component mounts
+      if (!isEmailVerified()) {
+        setShowAlertBanner(true);
+      }
+    }, []);
+
+    const handleCloseAlert = () => {
+      setShowAlertBanner(false);
+    };
   
 
   return (
     <Fragment>
+
+      {/*Alert banner */}
+      <div isVisible={showAlertBanner}  class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-2 py-2 shadow-md" role="alert">
+        <div class="flex">
+          <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+          <div>
+            <p class="font-bold">Email verification</p>
+            <p class="text-sm">If you didn't received the verification email please <a>click here.</a> </p>
+          </div>
+        </div>
+      </div>
+
+
+
       <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-dark-night'> 
         <Card className="justify-self-end h-auto w-2/3 my-6 bg-blue-900 border-blue-900">
           <h1 className="self-center text-4xl font-bold text-white font-mono">LOGIN</h1>
