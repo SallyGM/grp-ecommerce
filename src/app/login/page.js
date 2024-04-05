@@ -8,7 +8,6 @@ import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast';
 import Modal from '@/components/modal.js';
 import { sendEmailVerification} from 'firebase/auth';
-import { getUserByEmail } from 'firebase/auth';
 
 
 

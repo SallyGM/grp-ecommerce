@@ -1,13 +1,16 @@
 "use client"; 
 import { Card, Button } from 'flowbite-react';
 import { Fragment, useEffect, useState, useRef} from 'react';
-import { ref , get, update } from "firebase/database";
+import { ref , get, update, remove } from "firebase/database";
 import { database } from '../firebaseConfig.js';
 import React from 'react';
 import SubNavbar from './subNavbar.js'
 import Modal from '@/components/modal.js';
 import { useAuth } from '../context/AuthContext.js'
 import toast from 'react-hot-toast';
+import { deleteUser } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+
 
 
 export default function Home() {
@@ -16,6 +19,7 @@ export default function Home() {
     // Firebase information retrival function here
     const [userDetails, setUserDetails] = useState(null);
     const [user, setUser] = useState()
+    const router = useRouter();
     const [editButtonClicked, setEditButtonClicked] = useState(false);
     const [saveButtonClicked, setSaveButtonClicked] = useState(false);
     const [activateInputfields, setInputFieldActive] = useState(false);
@@ -26,6 +30,7 @@ export default function Home() {
     const [oldPasswordError, setOldPasswordError] = useState('');     //Create old password error
     const [newPasswordError, setNewPasswordError] = useState('');     //Create new password error
     const [newConfPasswordError, setNewConfPasswordError] = useState('');     //Create new confirm password error
+    const [loading, setLoading] = useState(false);
     const oldPassword = useRef();
     const newPassword = useRef();
     const newConfPassword = useRef();
@@ -157,11 +162,29 @@ export default function Home() {
             });
     }
       
-      // Function that handle confirm button click on delete account dialog
-    const handleDeleteAccountButtonClick = () => {
-        // Write to Firebase the changes here
-        setShowDeleteModal(false);
-     }
+    const handleDeleteAccountButtonClick = async () => {
+        try {
+            const userId = currentUser.uid;
+            if (!userId) {
+                console.log(currentUser);
+                return;
+            }
+            setLoading(true);
+            // Delete the currently authenticated user's account
+            await deleteUser(currentUser);
+            // Remove user data from the Realtime Database
+            await remove(ref(database, `/User/` + userId));
+            console.log('User account deleted successfully.');
+            toast.success('Account deleted permanently');
+            setShowDeleteModal(false); // Close the delete modal
+            router.push('/'); // Redirect to the home page
+        } catch (error) {
+            console.error('Error deleting user account:', error.message);
+            toast.error('Error deleting user account:', error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // retrieves user data
     useEffect(() => {
