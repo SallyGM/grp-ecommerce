@@ -84,7 +84,7 @@ export default function Login() {
     
     // Validate email pattern
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
-    if (!isEmailValid) {
+    if (!isEmailValid && e.target.value.length > 0) {
       setEmailError('Invalid email address');
     }else {
       setEmailError('');
@@ -96,7 +96,7 @@ export default function Login() {
     
     // Validate password pattern (at least 8 characters and must contain one special character)
     const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
-    if (!isPasswordValid) {
+    if (!isPasswordValid && e.target.value.length > 0) {
       setPasswordError('Password must be at least 8 characters long and contain one specal character');
     } else {
       setPasswordError('');
