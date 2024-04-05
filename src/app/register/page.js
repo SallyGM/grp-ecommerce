@@ -32,7 +32,7 @@ export default function Home() {
   const fName = useRef();
   const lName = useRef();
   const router = useRouter();
-  const { signup} = useAuth()
+  const {signup} = useAuth()
   const [formData, setFormData] = useState({
     cardNumber: '',
     sortCode: '',
@@ -55,9 +55,7 @@ const setCardData = () =>{
   };
   setFormData(newCard)
   setShowAddCardModal(false)
-
 }
-
 
 
 const handleChange = (e) => {
@@ -69,8 +67,9 @@ const handleChange = (e) => {
 
 //Handle first name change
 const handleFirstNameChange = (e) => {
-  const isFirstNameValid = /^[a-z ,.'-]+$/i.test(e.target.value) && e.target.value.length <= 40;
   // Validate password pattern (at least 8 characters and must contain one special character)
+  const isFirstNameValid = /^[a-z ,.'-]+$/i.test(e.target.value) && e.target.value.length <= 40;
+  
   if (!isFirstNameValid) {
     setFirstNameError('First name cannot contain special characters or numbers');
   } else {
@@ -80,8 +79,9 @@ const handleFirstNameChange = (e) => {
 
 //Handle last name change
 const handleLastNameChange = (e) => {
-  const isLastNameValid = /^[a-z ,.'-]+$/i.test(e.target.value) && e.target.value.length <= 40;
   // Validate password pattern (at least 8 characters and must contain one special character)
+  const isLastNameValid = /^[a-z ,.'-]+$/i.test(e.target.value) && e.target.value.length <= 40;
+  
   if (!isLastNameValid) {
     setLastNameError('Last name cannot contain special characters or numbers');
   } else {
@@ -91,8 +91,9 @@ const handleLastNameChange = (e) => {
 
 //Handle password change
 const handlePasswordChange = (e) => {
-  const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
   // Validate password pattern (at least 8 characters and must contain one special character)
+  const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
+  
   if (!isPasswordValid) {
     setPasswordError('Weak password');
   } else {
