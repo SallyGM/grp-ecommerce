@@ -3,13 +3,18 @@ import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
 import { Divider } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef, Fragment, useEffect } from "react";
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast';
 import Modal from '@/components/modal.js';
+import { sendEmailVerification} from 'firebase/auth';
+import { getUserByEmail } from 'firebase/auth';
 
 
-export default function Home() {
+
+
+
+export default function Login() {
   //Use the useState Hook to keep track of each inputs value
   const { signin, signout, resetPassword} = useAuth()
   const router = useRouter();
@@ -23,6 +28,8 @@ export default function Home() {
   const [emailModalError, setEmailModalError] = useState('');    //Create email error
   const [showCheckEmail, setShowCheckEmail] = useState(false);
   const [showAlertBanner, setShowAlertBanner] = useState(false);
+  const [user, setUser] = useState(false);
+
 
   // Function that hanle the Check email modal click
   const handleConfirmCheckEmailClick = () => {
@@ -46,11 +53,14 @@ export default function Home() {
         // Check if email is verified
         if (userCredential.user.emailVerified) {
           // Email is verified, proceed with login
+          setShowAlertBanner(false)
           console.log('Login successful');
           toast.success("Login successful")
           router.push('/');
         } else {
           // Email is not verified
+          setShowAlertBanner(true)
+          setUser(userCredential);
           await signout();
           router.push('/login');
           console.log('Email is not verified');
@@ -125,32 +135,43 @@ export default function Home() {
       setEmailModalError("Invalid email address");
     }  
 }
-    useEffect(() => {
-      // Check if email is not verified when the component mounts
-      if (!isEmailVerified()) {
-        setShowAlertBanner(true);
-      }
-    }, []);
+  useEffect(() => {
+    setShowAlertBanner(false);
 
-    const handleCloseAlert = () => {
-      setShowAlertBanner(false);
-    };
+  }, []);
+
   
+  // Send email verification again function
+const SendVerificationEmail = async (userCredential) => {
+  try {
+
+    // Send email verification
+    await sendEmailVerification(userCredential.user);
+
+    console.log('Email verification sent again');
+    toast.success("Email verification sent to your inbox");
+    setShowAlertBanner(false);
+  } catch (error) {
+    console.error('Error sending email verification:', error.message);
+    toast.error("Failed to send email verification: " + error.message);
+  }
+};
 
   return (
     <Fragment>
 
       {/*Alert banner */}
-      <div isVisible={showAlertBanner}  class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-2 py-2 shadow-md" role="alert">
+      {showAlertBanner && (
+      <div user = {user}  class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-2 py-2 shadow-md" role="alert">
         <div class="flex">
           <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
           <div>
             <p class="font-bold">Email verification</p>
-            <p class="text-sm">If you didn't received the verification email please <a>click here.</a> </p>
+            <p class="text-sm">If you didn't received the verification email please <a style={{ textDecoration: 'underline' }} onClick={()=>SendVerificationEmail(user)}>click here</a> </p>
           </div>
         </div>
       </div>
-
+      )}
 
 
       <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-dark-night'> 

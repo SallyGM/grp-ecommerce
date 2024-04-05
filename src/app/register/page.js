@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import Modal from '@/components/modal.js';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import { Divider, user } from '@nextui-org/react';
+import { Divider } from '@nextui-org/react';
 import { sendEmailVerification } from 'firebase/auth';
 
 
@@ -138,7 +138,7 @@ const handleConfirmEmailChange = (e) => {
   }
 };
 
-// Function that hanle the Check email modal click
+// Function that handle the Check email modal click
 const handleConfirmCheckEmailClick = () => {
   setShowCheckEmail(false);
   router.push('/login');

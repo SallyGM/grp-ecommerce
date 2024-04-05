@@ -30,7 +30,7 @@ export default function Home() {
     const newPassword = useRef();
     const newConfPassword = useRef();
 
-    const { currentUser, updatepassword, updateemail, reautentication } = useAuth()
+    const { currentUser, updatepassword, reautentication } = useAuth()
    
     async function handleSubmit(e){
         e.preventDefault();
