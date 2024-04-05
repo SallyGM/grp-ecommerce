@@ -38,7 +38,7 @@ export function ProductProvider({ children }) {
     }).catch((error) => {
       setError(true)
     });
-  }, [sales])
+  }, [])
 
   useEffect(() => {
     const prodRef = ref(database, "Product");
@@ -83,7 +83,7 @@ export function ProductProvider({ children }) {
 
   const getProductsOnSale = () => {
     let result = products.filter(p => p.discount > 0);
-    return result;
+    return result;  
   }
 
   const contextValue = useMemo(() => {

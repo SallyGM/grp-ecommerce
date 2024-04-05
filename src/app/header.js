@@ -94,7 +94,7 @@ export default function Header() {
                     <div className="flex items-center space-x-6 rtl:space-x-reverse">
                         <Link href="/basket" className="relative text-sm dark:text-blue-500 hover:underline">
                             <ShoppingCartIcon className="h-6 w-6 text-black-500" />
-                            <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -right-4 dark:border-gray-900">
+                            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -right-4 dark:border-gray-900">
                                 {basketSize}
                             </div>
                         </Link>
@@ -150,12 +150,12 @@ export default function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/products/bestsellers" className='text-gray-900 dark:text-white hover:underline'>
+                                <Link href={{ pathname: '/products', query: {search: "", type: "bestsellers"} }} className='text-gray-900 dark:text-white hover:underline'>
                                     Best Sellers
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/products/sales" className='text-gray-900 dark:text-white hover:underline'> 
+                                <Link href={{ pathname: '/products', query: {search: "", type: "sales"} }} className='text-gray-900 dark:text-white hover:underline'> 
                                     SALES
                                 </Link>
                             </li>

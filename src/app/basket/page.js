@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Button } from 'flowbite-react';
 import { useBasketContext } from '../context/BasketContext'
 import { useAuth } from '../context/AuthContext'
+import { useProductContext } from '../context/ProductContext';
 
 export default function Home() {
 
@@ -11,6 +12,7 @@ export default function Home() {
   const [isVisible, setIsVisible] =  useState(true);
   const { userBasket, guestUserBasket, removeFromBasket, activateCheckOut } = useBasketContext();
   const { currentUser } = useAuth() // to verify which basket to use
+  const { products } = useProductContext
 
   useEffect(() => {
         
