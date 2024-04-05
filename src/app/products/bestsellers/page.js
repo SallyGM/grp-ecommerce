@@ -1,21 +1,20 @@
 'use client'
 import { Select } from 'flowbite-react';
-import { database } from '../../firebaseConfig'
-import { ref, get } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { Card, Button } from 'flowbite-react';
 import { FaceFrownIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
+import { useProductContext } from '../../context/ProductContext';
 
 export default function BestSellers() {
 
-  const [product, setProducts] = useState([]);
-  const [showProduct, setShowProducts] = useState([]);
-  const [error, setError] = useState(false);
+  const [product, setProduct] = useState([]);
+  const [ogProduct, setOgProduct] = useState([]);
   const [size, setSize] = useState(0);
   const [pSelected, setPSelected] = useState(0)
   const [sSelected, setSSelected] = useState(0)
   const router = useRouter();
+  const { products, getBestSellers } = useProductContext()
 
   var platform = [
     {value: 0, data: "--"},
@@ -36,48 +35,30 @@ export default function BestSellers() {
 
   // load products 
   useEffect(() => {
-    const prodRef = ref(database, "Product");
-    get(prodRef).then((snapshot) => {
-      if(snapshot.exists()){
-        const prodArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-          id, 
-          ...data,
-        }));
-
-        setError(false);
-        setProducts(prodArray.sort((a, b) => a.sold < b.sold ? 1 : -1).slice(0,10));
-        setShowProducts(prodArray.sort((a, b) => a.sold < b.sold ? 1 : -1).slice(0,10))
-        setPSelected(0)   
-            
-      } else{
-        setError(true)
-      }
-    }).catch((error) => {
-      setError(true)
-    });
-  }, []); 
+    let result = getBestSellers()
+    setProduct(result.slice(0,10))
+    setOgProduct(result.slice(0,10))
+  }, [products]);
 
   // verify when the products have been added, and setSize 
   // to determine if the search found results 
   useEffect(() => {
-    if(showProduct.length > 0){
-      setSize(showProduct.length)
+    if(product.length > 0){
+      setSize(product.length)
     }
-    
-  }, [showProduct]);
+  }, [product]);
   
   // handles platform options changing
   function changePlatformOptionOnclick(event){
     const value = platform[event.target.value];
     setPSelected(value.value);
     if(value.value != 0){
-      const temp = showProduct.filter((item) => item.console.toLowerCase().includes(value.data.toString().toLowerCase()))
+      const temp = [...product].filter((item) => item.console.toLowerCase().includes(value.data.toString().toLowerCase()))
       if(value.data === "Any"){
-        setShowProducts(product)
+        setProduct(ogProduct)
       } else {
-        setShowProducts(temp)
+        setProduct(temp)
       }
-      console.log(temp)
     }
   }
 
@@ -87,21 +68,21 @@ export default function BestSellers() {
     setSSelected(value.value);
     if(value.value != 0){
       if(value.data === "Newest"){
-        const currentValue = [...showProduct].sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime())
-        setShowProducts(currentValue)
+        const currentValue = [...product].sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime())
+        setProduct(currentValue)
       } else if(value.data === "Oldest") {
-        const currentValue = [...showProduct].sort((a, b) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime())
-        setShowProducts(currentValue)
+        const currentValue = [...product].sort((a, b) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime())
+        setProduct(currentValue)
       }  else if(value.data === "Lowest Price"){
-        const currentValue = [...showProduct].sort((a, b) => {
+        const currentValue = [...product].sort((a, b) => {
           return a.price - b.price;
         })
-        setShowProducts(currentValue)
+        setProduct(currentValue)
       } else {
-        const currentValue = [...showProduct].sort((a, b) => {
+        const currentValue = [...product].sort((a, b) => {
           return b.price - a.price
         })
-        setShowProducts(currentValue)
+        setProduct(currentValue)
       }
     }
   }
@@ -142,7 +123,7 @@ export default function BestSellers() {
           </div>
         ) : (
           <div className='flex flex-rpw flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 text-sm justify-center'>
-            {showProduct.map((p) => (
+            {product.map((p) => (
               <Card key={p.id} className="max-w-sm mx-3 my-3 w-72" renderImage={() => 
                 <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" />}>             
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

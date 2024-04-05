@@ -1,25 +1,24 @@
 'use client'
 import { Select } from 'flowbite-react';
-import { database } from '../firebaseConfig.js'
-import { ref, get } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card, Button} from 'flowbite-react';
 import { FaceFrownIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
+import { useProductContext } from '../context/ProductContext';
 
 export default function Product() {
 
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
   const type = searchParams.get('type');
-  const [product, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
   const [showProduct, setShowProducts] = useState([]);
-  const [error, setError] = useState(false);
   const [size, setSize] = useState(0);
   const [pSelected, setPSelected] = useState(0)
   const [sSelected, setSSelected] = useState(0)
   const router = useRouter();
+  const { loading, products } = useProductContext()
 
   var platform = [
     {value: 0, data: "--"},
@@ -40,35 +39,21 @@ export default function Product() {
 
   // load products 
   useEffect(() => {
-    const prodRef = ref(database, "Product");
-    get(prodRef).then((snapshot) => {
-      if(snapshot.exists()){
-        const prodArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-          id, 
-          ...data,
-        }));
+    
+    setProduct(products);
 
-        setError(false);
-        setProducts(prodArray);
+    //TODO: not the best way to approach
+    if(type === "search"){
+      setShowProducts(products.filter((item) => item.name.toLowerCase().includes(search.toString())))
+      setPSelected(0)   
+    }
+    else{
+      setShowProducts(products.filter((item) => item.console.toLowerCase().includes(search)))
+      setPSelected(platform.find((item) => item.data.toLowerCase() === search.toLowerCase() ? item.value : 0))
+    }
+    setSSelected(0)
 
-        //TODO: not the best way to approach
-        if(type === "search"){
-          setShowProducts(prodArray.filter((item) => item.name.toLowerCase().includes(search.toString())))
-          setPSelected(0)   
-            
-        }
-        else{
-          setShowProducts(prodArray.filter((item) => item.console.toLowerCase().includes(search)))
-          setPSelected(platform.find((item) => item.data.toLowerCase() === search.toLowerCase() ? item.value : 0))
-        }
-        setSSelected(0)
-      } else{
-        setError(true)
-      }
-    }).catch((error) => {
-      setError(true)
-    });
-  }, [search, type]); 
+  }, [search, type, products]); 
 
   // verify when the products have been added, and setSize 
   // to determine if the search found results 
@@ -149,16 +134,16 @@ export default function Product() {
       </div>
       { size === 0 ? (
           <div className='mt-5 mb-7 content-center py-5 items-center text-center w-full'>
-              No results found...  <span class="inline-block"><FaceFrownIcon className="h-6 w-6 text-black-500" />
+              No results found...  <span className="inline-block"><FaceFrownIcon className="h-6 w-6 text-black-500" />
             </span>
             <br/><br/><br/><br/><br/><br/><br/>
           </div>
         ) : (
           <div className='flex flex-rpw flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 text-sm justify-center'>
-            {showProduct.map((p) => (
-              <Card key={p.id} className="max-w-sm mx-3 my-3 w-72" renderImage={() => 
+            {showProduct.map((p, i) => (
+              <Card key={i} className="max-w-sm mx-3 my-3 w-72" renderImage={() => 
                 <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" />}>             
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h5 key={i} className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {p.name}
                 </h5>
                 <p className="font-normal text-gray-700 dark:text-gray-400">

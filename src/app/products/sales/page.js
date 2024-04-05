@@ -6,17 +6,19 @@ import { useEffect, useState } from 'react';
 import { Card, Button } from 'flowbite-react';
 import { FaceFrownIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
+import { useProductContext } from '../../context/ProductContext';
 
 export default function Sales() {
 
-  const [product, setProducts] = useState([]);
-  const [showProduct, setShowProducts] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [ogProduct, setOgProduct] = useState([]);
   const [sales, setSales] = useState([])
   const [error, setError] = useState(false);
   const [size, setSize] = useState(0);
   const [pSelected, setPSelected] = useState(0)
   const [sSelected, setSSelected] = useState(0)
   const router = useRouter();
+  const { loading, products, getProductsOnSale} = useProductContext()
 
   var platform = [
     {value: 0, data: "--"},
@@ -37,79 +39,30 @@ export default function Sales() {
 
   // load products 
   useEffect(() => {
-    const prodRef = ref(database, "Product");
-    console.log(sales)
-    get(prodRef).then((snapshot) => {
-      if(snapshot.exists()){
-        const prodArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-          id, 
-          ...data,
-        }));
-
-        setError(false);
-        setProducts(prodArray.filter((p) => sales.items[p.id] !== undefined));
-        setShowProducts(prodArray.filter((p) => sales.items[p.id] !== undefined))
-        setPSelected(0)   
-            
-      } else{
-        setError(true)
-      }
-    }).catch((error) => {
-      setError(true)
-    });
-  }, [sales]); 
-
-  // load products 
-  useEffect(() => {
-    const salesRef = ref(database, "Sales");
-    get(salesRef).then((snapshot) => {
-      if(snapshot.exists()){
-        let salesArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-          id, 
-          ...data,
-        }));
-
-        // filter by date
-        salesArray = salesArray.filter((s) => new Date(s.endDate).getTime() >= new Date().getTime())
-
-        setError(false);
-        if(salesArray.length != 0){
-          setSales(salesArray[0])         
-        } else {
-          setSales([]) 
-        }
-
-        setPSelected(0) 
-            
-      } else{
-        setError(true)
-      }
-    }).catch((error) => {
-      setError(true)
-    });
-  }, []); 
+    let result = getProductsOnSale()
+    setProduct(result)
+    setOgProduct(result)
+  }, [products]); 
 
   // verify when the products have been added, and setSize 
   // to determine if the search found results 
   useEffect(() => {
-    if(showProduct.length > 0){
-      setSize(showProduct.length)
+    if(product.length > 0){
+      setSize(product.length)
     }
-    
-  }, [showProduct]);
+  }, [product]);
   
   // handles platform options changing
   function changePlatformOptionOnclick(event){
     const value = platform[event.target.value];
     setPSelected(value.value);
     if(value.value != 0){
-      const temp = showProduct.filter((item) => item.console.toLowerCase().includes(value.data.toString().toLowerCase()))
+      const result = ogProduct.filter((item) => item.console.toLowerCase().includes(value.data.toString().toLowerCase()))
       if(value.data === "Any"){
-        setShowProducts(product)
+        setProduct(ogProduct)
       } else {
-        setShowProducts(temp)
+        setProduct(result)
       }
-      console.log(temp)
     }
   }
 
@@ -119,21 +72,21 @@ export default function Sales() {
     setSSelected(value.value);
     if(value.value != 0){
       if(value.data === "Newest"){
-        const currentValue = [...showProduct].sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime())
-        setShowProducts(currentValue)
+        const currentValue = [...product].sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime())
+        setProduct(currentValue)
       } else if(value.data === "Oldest") {
-        const currentValue = [...showProduct].sort((a, b) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime())
-        setShowProducts(currentValue)
+        const currentValue = [...product].sort((a, b) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime())
+        setProduct(currentValue)
       }  else if(value.data === "Lowest Price"){
-        const currentValue = [...showProduct].sort((a, b) => {
+        const currentValue = [...product].sort((a, b) => {
           return a.price - b.price;
         })
-        setShowProducts(currentValue)
+        setProduct(currentValue)
       } else {
-        const currentValue = [...showProduct].sort((a, b) => {
+        const currentValue = [...product].sort((a, b) => {
           return b.price - a.price
         })
-        setShowProducts(currentValue)
+        setProduct(currentValue)
       }
     }
   }
@@ -168,13 +121,13 @@ export default function Sales() {
       </div>
       { size === 0 ? (
           <div className='mt-5 mb-7 content-center py-5 items-center text-center w-full'>
-              No results found...  <span class="inline-block"><FaceFrownIcon className="h-6 w-6 text-black-500" />
+              No results found... Nothing on Sale currently <span className="inline-block"><FaceFrownIcon className="h-6 w-6 text-black-500" />
             </span>
             <br/><br/><br/><br/><br/><br/><br/>
           </div>
         ) : (
           <div className='flex flex-rpw flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 text-sm justify-center'>
-            {showProduct.map((p) => (
+            {product.map((p) => (
               <Card key={p.id} className="max-w-sm mx-3 my-3 w-72" renderImage={() => 
                 <img className="w-full h-full object-cover rounded-lg" src={p.images[1]} alt="image 1" />}>             
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
