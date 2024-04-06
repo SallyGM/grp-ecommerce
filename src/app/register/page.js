@@ -243,91 +243,91 @@ async function handleSubmit(e) {
       <div className='grid grid-rows-1 grid-cols-1 p-8  flex justify-content-center bg-dark-night'>
 
         {/*Sign in information card*/}
-        <Card className="justify-self-center w-auto h-auto my-6 bg-blue-900 border-blue-900">
+        <Card className="justify-self-center w-auto h-auto  my-6 bg-blue-900 border-blue-900">
           
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
-          <br/>
+          
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
+            <br/>
+            <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
 
-          <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
+              <div >
+                <label for="firstName">First Name</label>
+                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
+                {firstNameError && <span style={{ color: 'red', fontSize: '12px' }}>{firstNameError}</span>}
+              </div>
+              
+              <div>
+                <label for="lastName">Last Name</label>
+                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
+                {lastNameError && <span style={{ color: 'red', fontSize: '12px' }}>{lastNameError}</span>}
+              </div>
 
-            <div>
-              <label for="firstName">First Name</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
-              {firstNameError && <span style={{ color: 'red', fontSize: '14px' }}>{firstNameError}</span>}
+              <div>
+                <label for="email">Email</label>
+                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
+                {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}
+              </div>
+
+              <div>
+                <label for="confirmEmail">Confirm Email</label>
+                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}></input>
+                {confEmailError && <span style={{ color: 'red', fontSize: '12px' }}>{confEmailError}</span>}
+              </div>
+
+              <div>
+                <label for="password">Password</label>
+                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="password" id="password" name="password" required onChange={handlePasswordChange} ref={password}></input>
+                {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
+
+              </div>          
+
+              <div>
+                <label for="confirmPassword">Confirm Password</label>
+                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="password" id="confirmPassword" name="confirmPassword" required onChange={handleConfirmPasswordChange} ref={confirmPassword}></input>            
+                {confPasswordError && <span style={{ color: 'red', fontSize: '12px' }}>{confPasswordError}</span>}
+
+              </div>
+              <div className='inline-flex items-center col-span-2 mt-6' onClick={()=> setShowAddCardModal(true)}>
+                <Fab color="primary" size="small" aria-label="add" disabled={showAddCardModal}>
+                  <AddIcon />
+                </Fab>
+                <a className=" text-sm  font-semibold text-indigo-600 ml-3 text-white">Add Card Details (Optional)</a>
+              </div>
+              <Button className="w-72 col-span-2 place-self-end mt-2" color='success' type="submit" disabled={showCheckEmail}>
+                REGISTER
+              </Button>
+            </form>
+
+            {/*Divider between login options*/} 
+            <div className="inline-flex mt-6">
+              <Divider className="self-center  w-96 m-3"></Divider>
+                <a className="justify-self-center text-white m-3">OR</a>
+              <Divider className="self-center w-96 m-3"></Divider>
             </div>
             
-            <div>
-              <label for="lastName">Last Name</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
-              {lastNameError && <span style={{ color: 'red', fontSize: '14px' }}>{lastNameError}</span>}
+            <div className='inline-flex place-content-center'>
+              {/*Facebook sign in button*/}
+              <Button className="inline-flex bg-blue-600 text-white w-72 mr-4 self-center" color='blue'>
+                <svg className="w-6 h-6 mr-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+                </svg>
+                Sign up with Facebook
+              </Button>
+
+              {/*Google sign in button*/}
+              <Button className="inline-flex text-white w-72 ml-4 self-center bg-red-400" color='red'>
+                <svg className="w-6 h-6 mr-3" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
+                </svg>
+                Sign up with Google
+              </Button> 
             </div>
-
-            <div>
-              <label for="email">Email</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
-              {emailError && <span style={{ color: 'red', fontSize: '14px' }}>{emailError}</span>}
-            </div>
-
-            <div>
-              <label for="confirmEmail">Confirm Email</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}></input>
-              {confEmailError && <span style={{ color: 'red', fontSize: '14px' }}>{confEmailError}</span>}
-            </div>
-
-            <div>
-              <label for="password">Password</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="password" id="password" name="password" required onChange={handlePasswordChange} ref={password}></input>
-              {passwordError && <span style={{ color: 'red', fontSize: '14px' }}>{passwordError}</span>}
-
-            </div>          
-
-            <div>
-              <label for="confirmPassword">Confirm Password</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="password" id="confirmPassword" name="confirmPassword" required onChange={handleConfirmPasswordChange} ref={confirmPassword}></input>            
-              {confPasswordError && <span style={{ color: 'red', fontSize: '14px' }}>{confPasswordError}</span>}
-
-            </div>
-            <div className='inline-flex items-center col-span-2 mt-6' onClick={()=> setShowAddCardModal(true)}>
-              <Fab color="primary" size="small" aria-label="add" disabled={showAddCardModal}>
-                <AddIcon />
-              </Fab>
-              <a className=" text-sm  font-semibold text-indigo-600 ml-3 text-white">Add Card Details (Optional)</a>
-            </div>
-            <Button className="w-72 col-span-2 place-self-end mt-2" color='success' type="submit" disabled={showCheckEmail}>
-              REGISTER
-            </Button>
-          </form>
-
-          {/*Divider between login options*/} 
-          <div className="inline-flex mt-6">
-            <Divider className="self-center  w-96 m-3"></Divider>
-              <a className="justify-self-center text-white m-3">OR</a>
-            <Divider className="self-center w-96 m-3"></Divider>
-          </div>
-          
-          <div className='inline-flex place-content-center'>
-            {/*Facebook sign in button*/}
-            <Button className="inline-flex bg-blue-600 text-white w-72 mr-4 self-center" color='blue'>
-              <svg className="w-6 h-6 mr-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
-              </svg>
-              Sign up with Facebook
-            </Button>
-
-            {/*Google sign in button*/}
-            <Button className="inline-flex text-white w-72 ml-4 self-center bg-red-400" color='red'>
-              <svg className="w-6 h-6 mr-3" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
-              </svg>
-              Sign up with Google
-            </Button> 
-          </div>
         </Card>
       </div>
 

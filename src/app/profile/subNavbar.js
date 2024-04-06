@@ -9,14 +9,15 @@ import { useRouter } from 'next/navigation'
 
 export default function Header() {
 
-    const { currentUser , signout } = useAuth();
+    const { signout } = useAuth();
     const [error, setError] = useState(false);
     const router = useRouter();
     const [activeTab, setActiveTab] = useState(0); // Initialize activeTab state variable
 
-    const handleTabClick = (index) => {             // Update activeTab state variable when a tab is clicked
-        setActiveTab(index);    
-    }                   
+    const handleTabClick = (index) => {
+        setActiveTab(index);
+       
+    }              
 
     // function that logout the user
     async function signOut(e){
@@ -38,7 +39,7 @@ export default function Header() {
     <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2 border-r-4 border-teal-500"style={{ backgroundColor: 'transparent' }} >
         <div className="py-10 overflow-y-auto mr-3">
             <ul className="space-y-10 font-medium">
-                <li className={activeTab === 0 ? 'active-tab' : ''}>
+                <li className={activeTab === 0 ? 'activeTab' : ''}>
                     <Link href="/profile" onClick={() => handleTabClick(0)} className="flex items-center p-2 text-white  group ">
                         <svg  className="w-6 h-6 text-white transition duration-75 text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 100-6 3 3 0 000 6z"/>
@@ -46,7 +47,7 @@ export default function Header() {
                         <span  className="ms-3 text-white group-hover:text-white">MY ACCOUNT</span>
                     </Link>     
                 </li>
-                <li className={activeTab === 1 ? 'active-tab' : ''}>
+                <li className={activeTab === 1 ? 'activeTab' : ''}>
                     <Link href="/profile/card" onClick={() => handleTabClick(1)} className="flex items-center p-2 text-white group ">
                         <svg  className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1024 1024">
                             <path d="M928 160H96c-17.7 0-32 14.3-32 32v160h896V192c0-17.7-14.3-32-32-32zM64 832c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V440H64v392zm579-184c0-4.4 3.6-8 8-8h165c4.4 0 8 3.6 8 8v72c0 4.4-3.6 8-8 8H651c-4.4 0-8-3.6-8-8v-72z"/>
@@ -54,7 +55,7 @@ export default function Header() {
                         <span  className="flex-1 ms-3 whitespace-nowrap">PAYMENT METHODS</span>
                     </Link>
                 </li>
-                <li className={activeTab === 2 ? 'active-tab' : ''}>
+                <li className={activeTab === 2 ? 'activeTab' : ''}>
                     <Link href="/profile/order" onClick={() => handleTabClick(2)}  className="flex items-center p-2 text-white  group ">
                         <svg  className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                             <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"/>
@@ -62,7 +63,7 @@ export default function Header() {
                         <span  className="flex-1 ms-3 whitespace-nowrap">MY ORDER KEYS</span>
                     </Link>
                 </li>
-                <li className={activeTab === 3 ? 'active-tab' : ''}>
+                <li className={activeTab === 3 ? 'activeTab' : ''}>
                     <Link href="/profile/reviews" onClick={() => handleTabClick(3)}  className="flex items-center p-2 text-white  group ">
                         <svg  className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"/>

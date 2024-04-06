@@ -239,7 +239,7 @@ p {
 }
 
 /*Tabs subNavbar profile page*/
-.active-tab {
+.activeTab {
   background-color: teal; /* Change to your desired color */
   color: white;
   border-radius: 2px;

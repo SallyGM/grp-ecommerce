@@ -71,6 +71,7 @@ export default function Login() {
         console.log(e)
         toast.error("Error in login process")  
       }
+
       
     } else {
       setEmailError("Email is required")
@@ -78,33 +79,32 @@ export default function Login() {
     }  
   };
     
-
   // Handle email change
   const handleEmailChange = (e) => {
+    
     // Validate email pattern
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
-    if (!isEmailValid && e.target.value.length > 0) {
+    if (!isEmailValid) {
       setEmailError('Invalid email address');
     }else {
       setEmailError('');
     }
   };
 
-
   //Handle password change
   const handlePasswordChange = (e) => {
+    
     // Validate password pattern (at least 8 characters and must contain one special character)
     const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
-    if (!isPasswordValid && e.target.value.length > 0) {
+    if (!isPasswordValid) {
       setPasswordError('Password must be at least 8 characters long and contain one specal character');
     } else {
       setPasswordError('');
     }
   };
-
-
   // Handle email forgot password change
   const handleForgotPasswordEmailChange = (e) => {
+    
     // Validate email pattern
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
     if (!isEmailValid) {
@@ -113,8 +113,6 @@ export default function Login() {
       setEmailModalError('');
     }
   };
-
-
   async function handleSendEmailVerification(e) {
     e.preventDefault();
     // Check if the email is valid
@@ -143,20 +141,20 @@ export default function Login() {
 
   
   // Send email verification again function
-const SendVerificationEmail = async (userCredential) => {
-  try {
+  const SendVerificationEmail = async (userCredential) => {
+    try {
 
-    // Send email verification
-    await sendEmailVerification(userCredential.user);
+      // Send email verification
+      await sendEmailVerification(userCredential.user);
 
-    console.log('Email verification sent again');
-    toast.success("Email verification sent to your inbox");
-    setShowAlertBanner(false);
-  } catch (error) {
-    console.error('Error sending email verification:', error.message);
-    toast.error("Failed to send email verification: " + error.message);
-  }
-};
+      console.log('Email verification sent again');
+      toast.success("Email verification sent to your inbox");
+      setShowAlertBanner(false);
+    } catch (error) {
+      console.error('Error sending email verification:', error.message);
+      toast.error("Failed to send email verification: " + error.message);
+    }
+  };
 
   return (
     <Fragment>
@@ -185,14 +183,15 @@ const SendVerificationEmail = async (userCredential) => {
                 <label htmlFor="email">Email address</label>
                 <input className="block w-full mt-2 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 onChange={handleEmailChange} ref={email}/>
-                  {emailError && <span style={{ color: 'red', fontSize: '14px' }}>{emailError}</span>}  
+                  {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}  
               </div>
 
               <div>
                 <label htmlFor="password">Password</label>
                 <input className="block w-full mt-2 my-2.5 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 onChange={handlePasswordChange} type='password' ref={password}/>
-                  {passwordError && <span style={{ color: 'red', fontSize: '14px' }}>{passwordError}</span>}
+                <i class="bi bi-eye-slash" id="togglePassword"></i>
+                  {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
               </div>
               <a className="text-sm font-semibold text-indigo-600  hover:text-indigo-500 text-white" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
               <Button className="justify-self-center w-full mt-7 bg-green-400" type='submit' color='success' >LOGIN</Button>
@@ -254,7 +253,7 @@ const SendVerificationEmail = async (userCredential) => {
               <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS:</h2>  
                   <input className="block w-full rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   type="email" id="first name" name="email" onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
-                  {emailModalError && <span style={{ color: 'red', fontSize: '14px' }}>{emailModalError}</span>}  
+                  {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
               </div>
               <div className='flex justify-evenly mt-10'>
                   <Button className="w-52 mr-2" color="gray" onClick ={()=>setShowForgotPassword(false)}> DISMISS</Button>
