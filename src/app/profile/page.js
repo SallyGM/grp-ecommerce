@@ -226,7 +226,7 @@ export default function Home() {
                 <div  className="self-center h-auto w-full my-6 mr-12 row-start-1 row-end-1 col-start-2 col-end-5" >
                     {userDetails && (
                     <div className='grid grid-rows-1 mr-12'>
-                     <h5 className="justify-self-center  text-4xl font-bold tracking-tight text-white font-mono" > ACCOUNT INFORMATION</h5>
+                     <h5 className="justify-self-center  text-4xl font-bold tracking-tight mt-12 text-white font-mono" > ACCOUNT INFORMATION</h5>
 
                         <div style={{ backgroundColor: 'transparent' }} className="flex justify-center mt-24 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
                             <form>

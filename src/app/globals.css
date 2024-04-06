@@ -237,3 +237,11 @@ p {
 .progressBar {
   transition: width 0.3s ease-in-out; /* Example CSS module style */
 }
+
+/*Tabs subNavbar profile page*/
+.active-tab {
+  background-color: teal; /* Change to your desired color */
+  color: white;
+  border-radius: 2px;
+  
+}
