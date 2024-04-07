@@ -110,8 +110,9 @@ export function BasketProvider({ children}) {
       }
    };
 
-   const activateCheckOut = () => {
-      setOnCheckOut(true)
+   const activateCheckOut = async () => {
+      let update = !onCheckOut;
+      setOnCheckOut(update);
    };
 
    const contextValue = useMemo(() => {
@@ -121,8 +122,9 @@ export function BasketProvider({ children}) {
          removeFromBasket,
          clearBasket,
          onCheckOut,
+         setOnCheckOut,
          guestBasket,
-         activateCheckOut
+         activateCheckOut,
       };
    }, [userBasket, currentUser]);
 

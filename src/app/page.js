@@ -82,9 +82,9 @@ export default function Home() {
           <span className="sr-only">Loading...</span>
         </div>
       ) : (
-        <Slider className='my-3 mx-10' {...settings}>
+        <Slider className='my-3 mx-10' {...settings} >
           {product.slice(0, 7).map((p) => (
-            <Card key={p.id} className="mx-3 my-3" renderImage={() =>
+            <Card key={p.id}  className="mx-3 my-3" renderImage={() =>
               <img className="w-full h-full object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
               <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {p.name}
