@@ -67,6 +67,7 @@ const handleChange = (e) => {
   });
 };
 
+
 //Handle first name change
 const handleFirstNameChange = (e) => {
   // Validate first name with first capital letter, all capital or all lowercase
@@ -78,6 +79,7 @@ const handleFirstNameChange = (e) => {
     setFirstNameError('');
   }
 }; 
+
 
 //Handle last name change
 const handleLastNameChange = (e) => {
@@ -92,8 +94,57 @@ const handleLastNameChange = (e) => {
 };
 
 
+// Handle email change
+const handleEmailChange = (e) => {
+  //data needed to fix the bug error remaining in confirm field (temporary)
+  const currentEmail = document.getElementById('email').value;
+  const currentConfirmEmail = document.getElementById('confirmEmail').value;
+  // Validate email pattern
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+  // CHECK IF EMAIL INSERTED IS ALREADY IN USED HERE
+  if (!isEmailValid && e.target.value.length > 0) {
+    setEmailError('Invalid email address');
+  }else {
+    setEmailError('');
+  }
+
+  //temporary solution to fix bug of error not disappearing from confirm field
+  const isConfEmailValid = currentConfirmEmail === currentEmail;
+  if (!isConfEmailValid && e.target.value.length > 0) {
+    setConfirmEmailError('The emails do not match');
+  } else {
+    setConfirmEmailError('');
+  }
+};
+
+
+//Handle confirm email change
+const handleConfirmEmailChange = (e) => {
+  //data needed to fix the bug error remaining in confirm field (temporary)
+  const currentEmail = document.getElementById('email').value;
+  const currentConfirmEmail = document.getElementById('confirmEmail').value;
+  // Validate password pattern (at least 8 characters and must contain one special character)
+  const isConfEmailValid = currentConfirmEmail === currentEmail;
+  if (!isConfEmailValid && e.target.value.length > 0) {
+    setConfirmEmailError('The emails do not match');
+  } else {
+    setConfirmEmailError('');
+  }
+};
+
+
+// Function that handle the Check email modal click
+const handleConfirmCheckEmailClick = () => {
+  setShowCheckEmail(false);
+  router.push('/login');
+};
+
+
 //Handle password change
 const handlePasswordChange = (e) => {
+  //data needed to fix the bug error remaining in confirm field (temporary)
+  const currentPassword = document.getElementById('password').value;
+  const currentConfirmPassword = document.getElementById('confirmPassword').value;
   // Validate password pattern (at least 8 characters and must contain one special character)
   const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
   
@@ -102,7 +153,16 @@ const handlePasswordChange = (e) => {
   } else {
     setPasswordError('');
   }
+
+  //temporary solution to fix bug of error not disappearing from confirm field
+  const isConfPasswordValid = currentConfirmPassword === currentPassword;
+  if (!isConfPasswordValid && e.target.value.length > 0) {
+    setConfPasswordError('The passwords do not match');
+  } else {
+    setConfPasswordError('');
+  }
 };
+
 
 //Handle confirm password change
 const handleConfirmPasswordChange = (e) => {
@@ -117,36 +177,6 @@ const handleConfirmPasswordChange = (e) => {
   }
 };
 
-// Handle email change
-const handleEmailChange = (e) => {
-  // Validate email pattern
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
-  // CHECK IF EMAIL INSERTED IS ALREADY IN USED HERE
-  if (!isEmailValid && e.target.value.length > 0) {
-    setEmailError('Invalid email address');
-  }else {
-    setEmailError('');
-  }
-};
-
-//Handle confirm email change
-const handleConfirmEmailChange = (e) => {
-  const currentEmail = document.getElementById('email').value;
-  const currentConfirmEmail = document.getElementById('confirmEmail').value;
-  // Validate password pattern (at least 8 characters and must contain one special character)
-  const isConfEmailValid = currentConfirmEmail === currentEmail;
-  if (!isConfEmailValid && e.target.value.length > 0) {
-    setConfirmEmailError('The emails do not match');
-  } else {
-    setConfirmEmailError('');
-  }
-};
-
-// Function that handle the Check email modal click
-const handleConfirmCheckEmailClick = () => {
-  setShowCheckEmail(false);
-  router.push('/login');
-};
 
 // Handle submit function of the form
 async function handleSubmit(e) {
@@ -423,15 +453,15 @@ async function handleSubmit(e) {
             </form>
 
             {/*Divider between login options*/} 
-            <div className="inline-flex mt-6">
-              <Divider className="self-center  w-96 m-3"></Divider>
-                <a className="justify-self-center text-white m-3">OR</a>
-              <Divider className="self-center w-96 m-3"></Divider>
+            <div className="inline-flex mt-6 self-center">
+              <Divider className="self-center w-96 "></Divider>
+                <a className="justify-self-center text-white m-3"> OR </a>
+              <Divider className="self-center w-96 "></Divider>
             </div>
             
             <div className='inline-flex place-content-center'>
               {/*Facebook sign in button*/}
-              <Button className="inline-flex bg-blue-600 text-white w-72 mr-4 self-center" color='blue'>
+              <Button className="inline-flex bg-blue-600 text-white w-2/6 mr-4" color='blue'>
                 <svg className="w-6 h-6 mr-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
                 </svg>
@@ -439,7 +469,7 @@ async function handleSubmit(e) {
               </Button>
 
               {/*Google sign in button*/}
-              <Button className="inline-flex text-white w-72 ml-4 self-center bg-red-400" color='red'>
+              <Button className="inline-flex bg-red-400 text-white w-2/6 ml-4" color='red'>
                 <svg className="w-6 h-6 mr-3" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
                 </svg>
