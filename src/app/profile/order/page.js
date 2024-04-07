@@ -47,7 +47,7 @@ export default function MyOrders() {
     return(
         <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
             <SubNavbar />
-            <div style={{ backgroundColor: 'transparent' }} className=" justify-items-center h-auto w-full my-6 mr-12 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+            <div style={{ backgroundColor: 'transparent' }} className=" justify-items-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
                 <h5 className="justify-self-center text-center text-4xl mb-6 font-bold tracking-tight text-white font-mono" > MY ORDER KEYS</h5>
 
                 <div className='rounded-none border-0 border-b-2 border-white grid grid-cols-5 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>

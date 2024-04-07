@@ -305,7 +305,7 @@ export default function Login() {
     </div>
     {/*Forgot password modal */}
     <Modal isVisible={showForgotPassword}  onClose ={()=> setShowForgotPassword(false)}>
-            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>FORGOT YOUR PASSWORD</h3>
+            <h3 className='text-xl flex self-center font-semibold text-white mb-5'>RESET YOUR PASSWORD</h3>
             <h3 className='flex self-center font-semibold text-white  mb-5'>Insert your email to reset your password</h3>
             <form className="space-y-6 text-white self-center font-mono" onSubmit={handleSendEmailVerification}>
               <div className=' mt-2 mb-2  flex-wrap'>  

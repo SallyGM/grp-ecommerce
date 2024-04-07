@@ -238,11 +238,3 @@ p {
   transition: width 0.3s ease-in-out; /* Example CSS module style */
 }
 
-/*Tabs subNavbar profile page*/
-.activeTab {
-  background-color: teal; /* Change to your desired color */
-  color: white;
-  border-radius: 2px;
-  
-}
-
