@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast';
 import Modal from '@/components/modal.js';
 import { sendEmailVerification} from 'firebase/auth';
-
+import { Tooltip } from 'flowbite-react';
 
 
 
@@ -28,6 +28,7 @@ export default function Login() {
   const [showCheckEmail, setShowCheckEmail] = useState(false);
   const [showAlertBanner, setShowAlertBanner] = useState(false);
   const [user, setUser] = useState(false);
+  const [showPassword,setShowPassword] = useState(false)
 
 
   // Function that hanle the Check email modal click
@@ -174,7 +175,7 @@ export default function Login() {
 
 
       <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-dark-night'> 
-        <Card className="justify-self-end h-auto w-2/3 my-6 bg-blue-900 border-blue-900">
+        <Card className="justify-self-end h-auto w-2/3 my-6" style={{background: '#00052d', border : '#00052d'}}>
           <h1 className="self-center text-4xl font-bold text-white font-mono">LOGIN</h1>
           <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
@@ -187,14 +188,72 @@ export default function Login() {
               </div>
 
               <div>
-                <label htmlFor="password">Password</label>
-                <input className="block w-full mt-2 my-2.5 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={handlePasswordChange} type='password' ref={password}/>
-                <i class="bi bi-eye-slash" id="togglePassword"></i>
-                  {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
+                  <label className='inline-flex'  htmlFor="password">Password
+                    <Tooltip content="Password must contain more then 8 characters mixed with at least one special character">
+                      <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
+                        <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                    </Tooltip>
+                  </label>
+                  <div className="relative">
+                        <input
+                        className="block w-full mt-2 my-2.5 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        onChange={handlePasswordChange} ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
+                                  <button
+                                    type="button"
+                                    aria-label={
+                                      showPassword ? "Password Visible" : "Password Invisible."
+                                    }
+                                    className="text-black dark:text-white"
+                                    onClick={() => {
+                                      setShowPassword((prev) => !prev);
+                                    }}
+                                  >
+                                    {showPassword ? (
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="#00052d"
+                                        className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
+                                        tabindex="-1"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                        ></path>
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                        ></path>
+                                      </svg>
+                                    ) : (
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="#00052d"
+                                        className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                                        ></path>
+                                      </svg>
+                                    )}
+                                  </button>
+                                  {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
+                </div>
               </div>
               <a className="text-sm font-semibold text-indigo-600  hover:text-indigo-500 text-white" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
-              <Button className="justify-self-center w-full mt-7 bg-green-400" type='submit' color='success' >LOGIN</Button>
+              <Button className="justify-self-center bold text-white w-full mt-7 bg-green-400" type='submit' color='success' >LOGIN</Button>
             </form>
             
           </div>
@@ -223,15 +282,15 @@ export default function Login() {
           </Button>   
       </Card>
 
-      <Card className=" justify-self-start h-auto  w-2/3 my-6 bg-blue-900 border-blue-900" >
-        <h1 className="self-center text-4xl font-bold text-white font-mono">REGISTER</h1>
-        <p className="text-white text-center font-mono my-8">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMMUNITY</p>
+      <Card className=" justify-self-start h-auto  w-2/3 my-6" style={{background: '#00052d', border : '#00052d'}} >
+        <h1 className="self-center text-4xl font-bold text-white font-mono ">REGISTER</h1>
+        <p className="text-white text-center font-mono my-8  mt-12 mb-12">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMMUNITY</p>
         <div className="inline-flex mt-6 place-content-evenly">
           <svg className="text-white mr-6 bi bi-tags" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white"viewBox="0 0 16 16">
             <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z"/>
             <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z"/>
           </svg>
-          <a className="font-mono text-white">RECEIVE DISCOUNT AND BENEFITs</a>
+          <a className="font-mono text-white">RECEIVE DISCOUNT AND BENEFITS</a>
         </div> 
         <div className="inline-flex mt-9 place-content-evenly">
           <svg className="text-white mr-6 bi bi-globe" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" viewBox="0 0 16 16">
@@ -239,7 +298,7 @@ export default function Login() {
           </svg>
           <a className="text-white font-mono">BE PART OF A COMMUNITY</a>
         </div>
-        <Button disabled={loading} type="submit" className=" self-center w-72 mt-6 " color='success'>
+        <Button disabled={loading} type="submit" className=" self-center w-72 mt-24 bold text-white " color='success'>
           <Link href="/register">REGISTER</Link>
         </Button>
       </Card>
@@ -250,9 +309,9 @@ export default function Login() {
             <h3 className='flex self-center font-semibold text-white  mb-5'>Insert your email to reset your password</h3>
             <form className="space-y-6 text-white self-center font-mono" onSubmit={handleSendEmailVerification}>
               <div className=' mt-2 mb-2  flex-wrap'>  
-              <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS:</h2>  
+              <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
                   <input className="block w-full rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  type="email" id="first name" name="email" onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
+                  type="email" id="first name" name="email" required onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
                   {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
               </div>
               <div className='flex justify-evenly mt-10'>

@@ -7,6 +7,7 @@ import { useEffect, useState} from 'react';
 import { database } from '@/app/firebaseConfig.js';
 import { useAuth } from '@/app/context/AuthContext.js';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import { Tooltip } from 'flowbite-react';
 
 
 export default function MyOrders() {
@@ -65,7 +66,9 @@ export default function MyOrders() {
                             <h2 id="order_address" className="flex text-center dark:text-white text-white font-mono ">{'£ '+ o.price}</h2>
                             <h2 id="order_amount" className="flex dark:text-white text-white font-mono ">{o.date}</h2>
                             <h2 id="order_status" className="flex dark:text-white text-white font-mono ">{o.status}</h2>
+                            <Tooltip content = 'See your game key'>
                             <VpnKeyIcon class="first-line:h-7 w-7 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }}></VpnKeyIcon>
+                            </Tooltip>
                         </div>
                     </Card>
                 ))}
