@@ -89,12 +89,13 @@ const handleLastNameChange = (e) => {
   }
 };
 
+
 //Handle password change
 const handlePasswordChange = (e) => {
   // Validate password pattern (at least 8 characters and must contain one special character)
   const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
   
-  if (!isPasswordValid) {
+  if (!isPasswordValid && e.target.value.length > 0) {
     setPasswordError('Weak password');
   } else {
     setPasswordError('');
@@ -107,7 +108,7 @@ const handleConfirmPasswordChange = (e) => {
   const currentConfirmPassword = document.getElementById('confirmPassword').value;
   // Validate if confirm password and password are identical
   const isConfPasswordValid = currentConfirmPassword === currentPassword;
-  if (!isConfPasswordValid) {
+  if (!isConfPasswordValid && e.target.value.length > 0) {
     setConfPasswordError('The passwords do not match');
   } else {
     setConfPasswordError('');
@@ -119,7 +120,7 @@ const handleEmailChange = (e) => {
   // Validate email pattern
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
   // CHECK IF EMAIL INSERTED IS ALREADY IN USED HERE
-  if (!isEmailValid) {
+  if (!isEmailValid && e.target.value.length > 0) {
     setEmailError('Invalid email address');
   }else {
     setEmailError('');
@@ -132,7 +133,7 @@ const handleConfirmEmailChange = (e) => {
   const currentConfirmEmail = document.getElementById('confirmEmail').value;
   // Validate password pattern (at least 8 characters and must contain one special character)
   const isConfEmailValid = currentConfirmEmail === currentEmail;
-  if (!isConfEmailValid) {
+  if (!isConfEmailValid && e.target.value.length > 0) {
     setConfirmEmailError('The emails do not match');
   } else {
     setConfirmEmailError('');
