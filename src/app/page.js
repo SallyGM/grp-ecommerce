@@ -59,11 +59,11 @@ export default function Home() {
     <div className='bg-dark-night'>
       {/*Insert costumised banner over here*/}
       <Carousel slide={true} className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-        <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-        <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
-        <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
-        <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
-        <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.jpg?alt=media&token=29b19f5f-5f95-4491-ba60-bae96c55ed2d" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fskyrim_banner.png?alt=media&token=b784b4ad-ab9f-46eb-9e67-102955178540" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fbalders_gate_banner.png?alt=media&token=93280034-98c5-41b6-bcdf-e3a72b3dffa0" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Big%2FGTA%20V.png?alt=media&token=97623a2d-b4b9-448a-8753-bbe0509aaad3" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fzelda_tears_of_the_kingdom.jpg?alt=media&token=42cd1386-b6ef-4e7f-9831-536b30d56190" alt="..." />
       </Carousel>
 
       <div className='grid grid-rows-1 grid-cols-5'>
