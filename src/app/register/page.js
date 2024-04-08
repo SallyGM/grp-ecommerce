@@ -157,7 +157,7 @@ const handlePasswordChange = (e) => {
 
   //temporary solution to fix bug of error not disappearing from confirm field
   const isConfPasswordValid = currentConfirmPassword === currentPassword;
-  if (!isConfPasswordValid && e.target.value.length > 0) {
+  if (!isConfPasswordValid && e.target.value.length > 0 && currentConfirmPassword.length > 0 ) {
     setConfPasswordError('The passwords do not match');
   } else {
     setConfPasswordError('');
@@ -271,112 +271,109 @@ async function handleSubmit(e) {
 }
 
 
-  return (
-    <Fragment>
+return (
+  <Fragment>
 
-      <div className='grid grid-rows-1 grid-cols-1 p-8  flex justify-content-center bg-dark-night'>
+    <div className='grid grid-rows-1 grid-cols-1 p-8  flex justify-content-center bg-dark-night'>
 
-        {/*Sign in information card*/}
-        <Card className="justify-self-center w-auto h-auto  my-6" style={{background: '#00052d', border : '#00052d'}} >
-    
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
-            <br/>
-            <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
+      {/*Sign in information card*/}
+      <Card className="justify-self-center w-auto h-auto  my-6" style={{background: '#00052d', border : '#00052d'}} >
+  
+          <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
+          <br/>
+          <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
 
-              <div >
-                <label for="firstName">First Name*</label>
+            <div>
+              <label for="firstName">First Name*</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
+              {firstNameError && <span style={{ color: 'red', fontSize: '12px' }}>{firstNameError}</span>}
+            </div>
+            
+            <div>
+              <label for="lastName">Last Name*</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
+              {lastNameError && <span style={{ color: 'red', fontSize: '12px' }}>{lastNameError}</span>}
+            </div>
+
+            <div>
+              <label for="email">Email*</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="text" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
+              {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}
+            </div>
+
+            <div>
+              <label for="confirmEmail">Confirm Email*</label>
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="text" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}  autocomplete="off"></input>
+              {confEmailError && <span style={{ color: 'red', fontSize: '12px' }}>{confEmailError}</span>}
+            </div>
+
+            <div>
+              <label className='inline-flex' for="password">Password*
+                <Tooltip content="Password must contain more then 8 characters mixed with at least one special character">
+                    <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
+                      <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </Tooltip>
+              </label>
+              <div className="relative">
                 <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
-                {firstNameError && <span style={{ color: 'red', fontSize: '12px' }}>{firstNameError}</span>}
-              </div>
-              
-              <div>
-                <label for="lastName">Last Name*</label>
-                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
-                {lastNameError && <span style={{ color: 'red', fontSize: '12px' }}>{lastNameError}</span>}
-              </div>
-
-              <div>
-                <label for="email">Email*</label>
-                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
-                {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}
-              </div>
-
-              <div>
-                <label for="confirmEmail">Confirm Email*</label>
-                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}></input>
-                {confEmailError && <span style={{ color: 'red', fontSize: '12px' }}>{confEmailError}</span>}
-              </div>
-
-              <div>
-                <label className='inline-flex' for="password">Password*
-                  <Tooltip content="Password must contain more then 8 characters mixed with at least one special character">
-                      <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
-                        <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                onChange={handlePasswordChange} required ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
+                  <button
+                    type="button"
+                    aria-label={
+                      showPassword ? "Password Visible" : "Password Invisible."
+                    }
+                    className="text-black dark:text-white"
+                    onClick={() => {
+                      setShowPassword((prev) => !prev);
+                    }}>
+                    {showPassword ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#00052d"
+                        className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
+                        tabindex="-1"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        ></path>
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        ></path>
                       </svg>
-                  </Tooltip>
-                </label>
-                <div className="relative">
-                        <input
-                        className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        onChange={handlePasswordChange} required ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
-                                  <button
-                                    type="button"
-                                    aria-label={
-                                      showPassword ? "Password Visible" : "Password Invisible."
-                                    }
-                                    className="text-black dark:text-white"
-                                    onClick={() => {
-                                      setShowPassword((prev) => !prev);
-                                    }}
-                                  >
-                                    {showPassword ? (
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="#00052d"
-                                        className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
-                                        tabindex="-1"
-                                      >
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                        ></path>
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        ></path>
-                                      </svg>
-                                    ) : (
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="#00052d"
-                                        className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
-                                      >
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                                        ></path>
-                                      </svg>
-                                    )}
-                                  </button>
-                                  {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
-                                </div>
-              </div>          
-
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#00052d"
+                        className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                        ></path>
+                      </svg>
+                    )}
+                  </button>
+                  {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
+                </div>
+              </div>    
               <div>
                 <label className='inline-flex' for="confirmPassword">Confirm Password*
                 <Tooltip content="Password must match the password">
@@ -388,58 +385,57 @@ async function handleSubmit(e) {
                   </Tooltip>
                 </label>
                 <div className="relative">
-                        <input
-                        className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         onChange={handleConfirmPasswordChange} ref={confirmPassword} id="confirmPassword" name="confirmPassword" required type={showConfirmPassword ? "text" : "password"}/>
-                                  <button
-                                    type="button"
-                                    aria-label={
-                                      showConfirmPassword ? "Password Visible" : "Password Invisible."
-                                    }
-                                    className="text-black dark:text-white"
-                                    onClick={() => {
-                                      setShowConfirmPassword((prev) => !prev);
-                                    }}
-                                  >
-                                    {showConfirmPassword ? (
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="#00052d"
-                                        className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
-                                        tabindex="-1"
-                                      >
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                        ></path>
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        ></path>
-                                      </svg>
-                                    ) : (
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="#00052d"
-                                        className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
-                                      >
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                                        ></path>
-                                      </svg>
-                                    )}
-                                  </button>
-                                  {confPasswordError && <span style={{ color: 'red', fontSize: '12px' }}>{confPasswordError}</span>}
+                    <button
+                      type="button"
+                      aria-label={
+                        showConfirmPassword ? "Password Visible" : "Password Invisible."
+                      }
+                      className="text-black dark:text-white"
+                      onClick={() => {
+                        setShowConfirmPassword((prev) => !prev);
+                      }}
+                    >
+                      {showConfirmPassword ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#00052d"
+                          className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
+                          tabindex="-1"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                          ></path>
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          ></path>
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#00052d"
+                          className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                          ></path>
+                        </svg>
+                      )}
+                    </button>
+                    {confPasswordError && <span style={{ color: 'red', fontSize: '12px' }}>{confPasswordError}</span>}
                 </div>            
               </div>
               <div className='inline-flex items-center col-span-2 mt-6' onClick={()=> setShowAddCardModal(true)}>
