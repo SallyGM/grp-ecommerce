@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Divider } from '@nextui-org/react';
 import { sendEmailVerification } from 'firebase/auth';
 import { Tooltip } from 'flowbite-react';
+import { FormatUnderlined } from '@mui/icons-material';
 
 
 export default function Home() {
@@ -42,8 +43,7 @@ export default function Home() {
     expDate: '',
     securityCode: '',
     cardName: '',
-    expDate: '',
-    billAddress: ''
+    expDate: ''
 });
 
 const setCardData = () =>{
@@ -53,13 +53,11 @@ const setCardData = () =>{
     sortCode: formData.securityCode,
     expDate: formData.expDate,
     securityCode: formData.securityCode,
-    cardName: formData.cardName,
-    billAddress: formData.billAddress
+    cardName: formData.cardName
   };
   setFormData(newCard)
   setShowAddCardModal(false)
 }
-
 
 const handleChange = (e) => {
   setFormData({
@@ -69,7 +67,7 @@ const handleChange = (e) => {
 };
 
 
-//Handle first name change
+// HANDLE FIRST NAME CHANGE
 const handleFirstNameChange = (e) => {
   // Validate first name with first capital letter, all capital or all lowercase
   const isFirstNameValid = /^([A-Z][a-z]*|[a-z]+)$/i.test(e.target.value) && e.target.value.length <= 40;
@@ -82,7 +80,7 @@ const handleFirstNameChange = (e) => {
 }; 
 
 
-//Handle last name change
+// HANDLE LAST NAME CHANGE
 const handleLastNameChange = (e) => {
   // Validate last name with first capital letter, all capital or all lowercase
   const isLastNameValid = /^([A-Z][a-z]*|[a-z]+)$/i.test(e.target.value) && e.target.value.length <= 40;
@@ -95,7 +93,7 @@ const handleLastNameChange = (e) => {
 };
 
 
-// Handle email change
+// HANDLE EMAIL CHANGE
 const handleEmailChange = (e) => {
   //data needed to fix the bug error remaining in confirm field (temporary)
   const currentEmail = document.getElementById('email').value;
@@ -119,14 +117,14 @@ const handleEmailChange = (e) => {
 };
 
 
-//Handle confirm email change
+// HANDLE CONFIRM EMAIL CHANGE
 const handleConfirmEmailChange = (e) => {
   //data needed to fix the bug error remaining in confirm field (temporary)
   const currentEmail = document.getElementById('email').value;
   const currentConfirmEmail = document.getElementById('confirmEmail').value;
   // Validate password pattern (at least 8 characters and must contain one special character)
   const isConfEmailValid = currentConfirmEmail === currentEmail;
-  if (!isConfEmailValid && e.target.value.length > 0) {
+  if (!isConfEmailValid && e.target.value.length > 0 && currentConfirmEmail.length > 0) {
     setConfirmEmailError('The emails do not match');
   } else {
     setConfirmEmailError('');
@@ -141,7 +139,7 @@ const handleConfirmCheckEmailClick = () => {
 };
 
 
-//Handle password change
+// HANDLE PASSWORD CHANGE
 const handlePasswordChange = (e) => {
   //data needed to fix the bug error remaining in confirm field (temporary)
   const currentPassword = document.getElementById('password').value;
@@ -157,7 +155,7 @@ const handlePasswordChange = (e) => {
 
   //temporary solution to fix bug of error not disappearing from confirm field
   const isConfPasswordValid = currentConfirmPassword === currentPassword;
-  if (!isConfPasswordValid && e.target.value.length > 0 && currentConfirmPassword.length > 0 ) {
+  if (!isConfPasswordValid && e.target.value.length > 0 && currentConfirmPassword.length > 0) {
     setConfPasswordError('The passwords do not match');
   } else {
     setConfPasswordError('');
@@ -165,7 +163,7 @@ const handlePasswordChange = (e) => {
 };
 
 
-//Handle confirm password change
+// HANDLE CONFIRM PASSWORD CHANGE
 const handleConfirmPasswordChange = (e) => {
   const currentPassword = document.getElementById('password').value;
   const currentConfirmPassword = document.getElementById('confirmPassword').value;
@@ -179,7 +177,7 @@ const handleConfirmPasswordChange = (e) => {
 };
 
 
-// Handle submit function of the form
+// FORM SUBMIT FUNCTION
 async function handleSubmit(e) {
   e.preventDefault();
 
@@ -225,8 +223,7 @@ async function handleSubmit(e) {
                   formData.cardNumber !== '' &&
                   formData.sortCode !== '' &&
                   formData.securityCode !== '' &&
-                  formData.expDate !== '' &&
-                  formData.billAddress !== ''
+                  formData.expDate !== ''
                 ) {
                   // Generate a unique key for the new card
                   const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
@@ -300,14 +297,14 @@ return (
             <div>
               <label for="email">Email*</label>
               <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="text" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
+              type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
               {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}
             </div>
 
             <div>
               <label for="confirmEmail">Confirm Email*</label>
               <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="text" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}  autocomplete="off"></input>
+              type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}  autocomplete="off"></input>
               {confEmailError && <span style={{ color: 'red', fontSize: '12px' }}>{confEmailError}</span>}
             </div>
 
@@ -476,7 +473,7 @@ return (
         </Card>
       </div>
 
-      {/*Add card modal */}
+      {/*MODAL FOR ADD CARD */}
       <Modal isVisible={showAddCardModal} onClose ={()=> setShowAddCardModal(false)}>
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW CARD</h3>
             <h3 className='flex self-center font-semibold text-white mb-5'>Add card by filling the details below</h3>
@@ -485,13 +482,13 @@ return (
                     <div>
                         <label htmlFor="number" className='text-white'>Card Number</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        type="tel" inputmode="numeric" id="cardNumber" name="cardNumber" maxLength={16} placeholder='4625 2563 2356 8514' required value={formData.cardNumber} onChange={handleChange}/> 
+                        type="number" inputmode="numeric" id="cardNumber" name="cardNumber" minLength={16} maxLength={16} placeholder='4625 2563 2356 8514' required value={formData.cardNumber} onChange={handleChange}/> 
                     </div>
 
                     <div>
                         <label htmlFor="number" className='text-white'>Sort Code</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        type="tel" inputmode="numeric" id="sortCode" name="sortCode" maxLength={6} placeholder='26-02-54' required value={formData.sortCode} onChange={handleChange}/> 
+                        type="number" inputmode="numeric" id="sortCode" name="sortCode" minLength={6} maxLength={6} placeholder='26-02-54' required value={formData.sortCode} onChange={handleChange}/> 
                     </div>
 
                     <div className='inline-flex justify-evenly'>
@@ -511,7 +508,7 @@ return (
                             </Tooltip>
                             </label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="text" id="securityCode" name="securityCode" maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
+                            type="number" id="securityCode" name="securityCode" minLength={3} maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
                         </div>
                     </div>
 
@@ -520,11 +517,7 @@ return (
                         <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChange}/>
                     </div>
-                    <div>
-                        <label htmlFor="text" className='text-white'>Billing Address</label>
-                        <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="text" id="billAddress" name="billAddress" placeholder='3 Admaston road' required value={formData.billAddress} onChange={handleChange}/>
-                    </div>
+
                     <div className='flex justify-evenly mt-10'>
                         <Button className="w-52 mr-1 mb-2" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
                         <Button type="submit" className="w-52 ml-1 mb-2"  style={{background: '#00052d', border : '#00052d'}} onClick={setCardData}>CONFIRM</Button>
