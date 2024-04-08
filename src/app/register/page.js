@@ -27,6 +27,7 @@ export default function Home() {
   const [showAddCardModal, setShowAddCardModal] = useState(false);
   const [showCheckEmail, setShowCheckEmail] = useState(false);
   const [showPassword,setShowPassword] = useState(false)
+  const [showConfirmPassword,setShowConfirmPassword] = useState(false)
   const password = useRef();
   const confirmPassword = useRef();
   const email = useRef();
@@ -389,18 +390,18 @@ async function handleSubmit(e) {
                 <div className="relative">
                         <input
                         className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        onChange={handleConfirmPasswordChange} ref={confirmPassword} id="confirmPassword" name="confirmPassword" required type={showPassword ? "text" : "password"}/>
+                        onChange={handleConfirmPasswordChange} ref={confirmPassword} id="confirmPassword" name="confirmPassword" required type={showConfirmPassword ? "text" : "password"}/>
                                   <button
                                     type="button"
                                     aria-label={
-                                      showPassword ? "Password Visible" : "Password Invisible."
+                                      showConfirmPassword ? "Password Visible" : "Password Invisible."
                                     }
                                     className="text-black dark:text-white"
                                     onClick={() => {
-                                      setShowPassword((prev) => !prev);
+                                      setShowConfirmPassword((prev) => !prev);
                                     }}
                                   >
-                                    {showPassword ? (
+                                    {showConfirmPassword ? (
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -530,7 +531,7 @@ async function handleSubmit(e) {
                     </div>
                     <div className='flex justify-evenly mt-10'>
                         <Button className="w-52 mr-1 mb-2" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                        <Button type="submit" className="w-52 ml-1 mb-2" color="gray" onClick={setCardData}>CONFIRM</Button>
+                        <Button type="submit" className="w-52 ml-1 mb-2"  style={{background: '#00052d', border : '#00052d'}} onClick={setCardData}>CONFIRM</Button>
                     </div>
                 </form>
             </div>
@@ -540,7 +541,7 @@ async function handleSubmit(e) {
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
             <h3 className='flex self-center font-semibold text-white  mb-5'>Verify your email before login into your account</h3>
             <div className='flex justify-end mt-10'>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
+                <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
             </div>
         </Modal>
 

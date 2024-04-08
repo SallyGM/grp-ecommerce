@@ -275,7 +275,7 @@ export default function CardStored() {
                     </div>
                     <div className='flex justify-evenly mt-10'>
                         <Button className="w-52 mr-1 mb-2" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                        <Button type="submit" className="w-52 ml-1 mb-2" color="gray">CONFIRM</Button>
+                        <Button type="submit" className="w-52 ml-1 mb-2"  style={{background: '#00052d', border : '#00052d'}}>CONFIRM</Button>
                     </div>
                 </form>
             </div>
@@ -302,7 +302,7 @@ export default function CardStored() {
                     <div className='inline-flex justify-evenly'>
                         <div className='mr-3'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
-                            <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            <input className="block w-full mt-2 my-3.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
                         </div> 
                         <div className='ml-3'>
@@ -315,7 +315,7 @@ export default function CardStored() {
                                 </svg>
                             </Tooltip>
                             </label>
-                            <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            <input className="block w-full mt-2 my-3.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             type="text" id="cvv" name="cvv" maxLength={3} placeholder='342' required value={card.securityCode} onChange={(e) => setCard({ ...card, securityCode: e.target.value })}/>
                         </div>
                     </div>
@@ -334,7 +334,7 @@ export default function CardStored() {
             </div>
             <div className='flex justify-evenly mt-10 mb-2'>
                 <Button type="submit"className="w-52" color="gray" onClick ={()=>setShowEditCard(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</Button>
+                <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</Button>
             </div>
         </Modal>
         {/*Delete card modal */}
@@ -343,7 +343,7 @@ export default function CardStored() {
             <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this card?</h3>
             <div className='flex justify-evenly mt-10 mb-2'>
                 <Button type="submit"className="w-52" color="gray" onClick ={()=>showDeleteCard(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmDeleteCardClick(card)}>CONFIRM</Button>
+                <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmDeleteCardClick(card)}>CONFIRM</Button>
             </div>
         </Modal>
         </Fragment>

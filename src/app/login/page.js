@@ -298,7 +298,7 @@ export default function Login() {
           </svg>
           <a className="text-white font-mono">BE PART OF A COMMUNITY</a>
         </div>
-        <Button disabled={loading} type="submit" className=" self-center w-72 mt-24 bold text-white " color='success'>
+        <Button disabled={loading}  className=" self-center w-72 mt-24 bold text-white " color='success'>
           <Link href="/register">REGISTER</Link>
         </Button>
       </Card>
@@ -316,7 +316,7 @@ export default function Login() {
               </div>
               <div className='flex justify-evenly mt-10'>
                   <Button className="w-52 mr-2" color="gray" onClick ={()=>setShowForgotPassword(false)}> DISMISS</Button>
-                  <Button type='submit' className="w-52 ml-2" color="gray">CONFIRM</Button>
+                  <Button type='submit' className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}}>CONFIRM</Button>
               </div>
             </form>
         </Modal>
@@ -325,7 +325,7 @@ export default function Login() {
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
             <h3 className='flex self-center font-semibold text-white  mb-5'>We have sent you an email with the reset password link</h3>
             <div className='flex justify-end mt-10'>
-                <Button type="submit" className="w-52" color="gray" onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
+                <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
             </div>
         </Modal>
   </Fragment>

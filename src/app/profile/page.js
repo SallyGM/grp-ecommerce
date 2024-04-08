@@ -34,7 +34,9 @@ export default function Account() {
     const oldPassword = useRef();
     const newPassword = useRef();
     const newConfPassword = useRef();
-    const [showPassword,setShowPassword] = useState(false)
+    const [showOldPassword,setShowOldPassword] = useState(false);
+    const [showPassword,setShowPassword] = useState(false);
+    const [showConfirmPassword,setShowConfirmPassword] = useState(false);
 
 
     const { currentUser, updatepassword, reautentication } = useAuth()
@@ -299,7 +301,7 @@ export default function Account() {
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to save the changes?</h3>
                 <div className='flex justify-evenly mt-10'>
                     <Button className="w-52" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</Button>
-                    <Button className="w-52" color="gray" onClick={()=>handleConfirmButtonClick(details)}>CONFIRM</Button>
+                    <Button className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmButtonClick(details)}>CONFIRM</Button>
                 </div>
             </Modal>
 
@@ -313,18 +315,18 @@ export default function Account() {
                             <label htmlFor="password" className='text-white'>Old Password</label>
                             <div className="relative">
                                     <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword} type={showPassword ? "text" : "password"}/>
+                                    id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword} type={showOldPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
                                                 aria-label={
-                                                showPassword ? "Password Visible" : "Password Invisible."
+                                                showOldPassword ? "Password Visible" : "Password Invisible."
                                                 }
                                                 className="text-black dark:text-white"
                                                 onClick={() => {
-                                                setShowPassword((prev) => !prev);
+                                                setShowOldPassword((prev) => !prev);
                                                 }}
                                             >
-                                                {showPassword ? (
+                                                {showOldPassword ? (
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
@@ -427,18 +429,18 @@ export default function Account() {
                             <label htmlFor="password" className='text-white'>Confirm New Password</label>
                             <div className="relative">
                                     <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword} type={showPassword ? "text" : "password"}/>
+                                    id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword} type={showConfirmPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
                                                 aria-label={
-                                                showPassword ? "Password Visible" : "Password Invisible."
+                                                showConfirmPassword ? "Password Visible" : "Password Invisible."
                                                 }
                                                 className="text-black dark:text-white"
                                                 onClick={() => {
-                                                setShowPassword((prev) => !prev);
+                                                setShowConfirmPassword((prev) => !prev);
                                                 }}
                                             >
-                                                {showPassword ? (
+                                                {showConfirmPassword ? (
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
@@ -480,8 +482,8 @@ export default function Account() {
                             </div> 
                         </div>
                         <div className='flex justify-evenly my-10'>
-                            <Button type="submit"className="w-52 mr-2" color="gray" onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
-                            <Button type="submit" className="w-52 ml-2" color="gray">CONFIRM</Button>
+                            <Button type="submit"className="w-52 mr-2 text-white" color='gray' onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
+                            <Button type="submit" className="w-52 ml-2" style={{background: '#00052d', border : '#00052d'}}>CONFIRM</Button>
                         </div>
                     </form>
                 </div>
@@ -493,7 +495,7 @@ export default function Account() {
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete yur acount?</h3>
                 <div className='flex justify-evenly mt-10 mb-10'>
                     <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</Button>
-                    <Button type="submit" className="w-52" color="gray" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</Button>
+                    <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</Button>
                 </div>
             </Modal>
         </Fragment>
