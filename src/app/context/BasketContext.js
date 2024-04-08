@@ -1,7 +1,7 @@
 "use client"
 import React, { useContext, useState, useEffect, useMemo } from "react" 
 import { database } from '../firebaseConfig';
-import { ref, set, get } from "firebase/database";
+import { ref, set, get, push } from "firebase/database";
 import { useAuth } from '../context/AuthContext.js'
 
 const BasketContext = React.createContext();
@@ -98,7 +98,7 @@ export function BasketProvider({ children}) {
    const clearBasket = async () => {
       if (currentUser) {
          try {
-            const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" + itemKey);
+            const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" );
             await set(userBasketRef, null);
             setUserBasket([]);
          } catch (error) {
@@ -115,6 +115,35 @@ export function BasketProvider({ children}) {
       setOnCheckOut(update);
    };
 
+   const createOrder = async (orderDate, discount, price, userID, fullName, cardNumber, cvv, expirationDate) => {
+      if (currentUser) {
+
+         let data = {
+            "date": orderDate,
+            "card": { 
+               "fullName": fullName,
+               "cardNumber": cardNumber,
+               "cvv": cvv,
+               "expirationDate": expirationDate
+            },
+            "lastUpdate": orderDate,
+            "items": userBasket,
+            "price": price,
+            "discount": discount,
+            "notes":"",
+            "userID": userID,
+            "status": "pending"
+         }
+
+         try {
+            const userBasketRef = ref(database, "Order/");
+            await push(userBasketRef, data);
+         } catch (error) {
+            console.error('Error creating order:', error);
+         }
+      }
+   }
+
    const contextValue = useMemo(() => {
       return {
          userBasket,
@@ -123,6 +152,7 @@ export function BasketProvider({ children}) {
          clearBasket,
          onCheckOut,
          setOnCheckOut,
+         createOrder,
          guestBasket,
          activateCheckOut,
       };
