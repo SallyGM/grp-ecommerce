@@ -177,6 +177,28 @@ const handleConfirmPasswordChange = (e) => {
 };
 
 
+// HANDLE MAX LENGTH IN CARD NUMBER
+//partial ref: https://www.youtube.com/watch?v=DDUdZNCuwtU
+const checkLengthCardNum = (e) => {
+  if (e.target.value.length > 16)
+   e.target.value = e.target.value.slice(0, 16);
+}
+
+//HANDLE MAX LENGTH SORT CODE
+const checkLengthSortCode = (e) => {
+  if (e.target.value.length > 6)
+   e.target.value = e.target.value.slice(0, 6);
+}
+
+//HANDLE MAX LENGTH CVV
+const checkLengthCVV = (e) => {
+  if (e.target.value.length > 3)
+   e.target.value = e.target.value.slice(0, 3);
+}
+
+
+
+
 // FORM SUBMIT FUNCTION
 async function handleSubmit(e) {
   e.preventDefault();
@@ -474,21 +496,23 @@ return (
       </div>
 
       {/*MODAL FOR ADD CARD */}
-      <Modal isVisible={showAddCardModal} onClose ={()=> setShowAddCardModal(false)}>
+      <Modal  isVisible={showAddCardModal} onClose ={()=> setShowAddCardModal(false)}>
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW CARD</h3>
             <h3 className='flex self-center font-semibold text-white mb-5'>Add card by filling the details below</h3>
             <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
                 <form className="space-y-6 text-white font-mono">
-                    <div>
+                    <div class="noIncrementer"> {/*noIncrementer is a CSS class*/}
                         <label htmlFor="number" className='text-white'>Card Number</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        type="number" inputmode="numeric" id="cardNumber" name="cardNumber" minLength={16} maxLength={16} placeholder='4625 2563 2356 8514' required value={formData.cardNumber} onChange={handleChange}/> 
+                        type="number" inputmode='numeric' id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
+                        onInput={checkLengthCardNum} onChange={handleChange}/> 
                     </div>
 
-                    <div>
+                    <div class="noIncrementer">
                         <label htmlFor="number" className='text-white'>Sort Code</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        type="number" inputmode="numeric" id="sortCode" name="sortCode" minLength={6} maxLength={6} placeholder='26-02-54' required value={formData.sortCode} onChange={handleChange}/> 
+                        type="number" inputmode="numeric" id="sortCode" name="sortCode" placeholder='26-02-54' required value={formData.sortCode} 
+                        onInput={checkLengthSortCode} onChange={handleChange}/> 
                     </div>
 
                     <div className='inline-flex justify-evenly'>
@@ -497,7 +521,7 @@ return (
                             <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
                         </div> 
-                        <div className='ml-5'>
+                        <div className='ml-5' class="noIncrementer">
                             <label htmlFor="number" className='inline-flex text-white'>CVV
                             <Tooltip content="Three digit code on the back of your card">
                                 <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
@@ -508,7 +532,8 @@ return (
                             </Tooltip>
                             </label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            type="number" id="securityCode" name="securityCode" minLength={3} maxLength={3} placeholder='342' required value={formData.securityCode} onChange={handleChange}/>
+                            type="number" inputmode="numeric" id="securityCode" name="securityCode" placeholder='342' required value={formData.securityCode} 
+                            onInput={checkLengthCVV} onChange={handleChange}/>
                         </div>
                     </div>
 
@@ -525,6 +550,7 @@ return (
                 </form>
             </div>
         </Modal>
+        
         {/*Check Email modal */}
         <Modal isVisible={showCheckEmail} onClose ={()=> setShowCheckEmail(false)}>
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
