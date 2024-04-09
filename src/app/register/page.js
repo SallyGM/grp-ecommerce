@@ -177,23 +177,13 @@ const handleConfirmPasswordChange = (e) => {
 };
 
 
-// HANDLE MAX LENGTH IN CARD NUMBER
+// HANDLE MAX LENGTH IN CARD NUMBER, SORT CODE AND CVV
 //partial ref: https://www.youtube.com/watch?v=DDUdZNCuwtU
-const checkLengthCardNum = (e) => {
-  if (e.target.value.length > 16)
-   e.target.value = e.target.value.slice(0, 16);
-}
-
-//HANDLE MAX LENGTH SORT CODE
-const checkLengthSortCode = (e) => {
-  if (e.target.value.length > 6)
-   e.target.value = e.target.value.slice(0, 6);
-}
-
-//HANDLE MAX LENGTH CVV
-const checkLengthCVV = (e) => {
-  if (e.target.value.length > 3)
-   e.target.value = e.target.value.slice(0, 3);
+const checkLength = (maxLength) => {
+  return function (e) {
+    if (e.target.value.length > maxLength)
+       e.target.value = e.target.value.slice(0, maxLength);
+  } 
 }
 
 
@@ -505,14 +495,14 @@ return (
                         <label htmlFor="number" className='text-white'>Card Number</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         type="number" inputmode='numeric' id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
-                        onInput={checkLengthCardNum} onChange={handleChange}/> 
+                        onInput={checkLength(16)} onChange={handleChange}/> 
                     </div>
 
                     <div class="noIncrementer">
                         <label htmlFor="number" className='text-white'>Sort Code</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         type="number" inputmode="numeric" id="sortCode" name="sortCode" placeholder='26-02-54' required value={formData.sortCode} 
-                        onInput={checkLengthSortCode} onChange={handleChange}/> 
+                        onInput={checkLength(6)} onChange={handleChange}/> 
                     </div>
 
                     <div className='inline-flex justify-evenly'>
@@ -533,7 +523,7 @@ return (
                             </label>
                             <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             type="number" inputmode="numeric" id="securityCode" name="securityCode" placeholder='342' required value={formData.securityCode} 
-                            onInput={checkLengthCVV} onChange={handleChange}/>
+                            onInput={checkLength(3)} onChange={handleChange}/>
                         </div>
                     </div>
 
