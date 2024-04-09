@@ -17,21 +17,13 @@ export default function Header() {
     const [valid, setValid] = useState(false);
     const router = useRouter();
     const search = useRef();
-    const { userBasket } = useBasketContext();
-    const [basketSize, setBasketSize] = useState(0)
+    const { basketSize } = useBasketContext();
+    const [sizeOfBasket, setSizeOfBasket] = useState(0)
 
     // updates basket size
     useEffect(() => {
-        let total = 0; 
-        if(Object.keys(userBasket).length > 0){
-            Object.keys(userBasket).map((key) => ( 
-                total += userBasket[key]
-                ));
-
-            setBasketSize(total)
-        }
-        
-        }, [userBasket], [currentUser]);
+        setSizeOfBasket(basketSize)
+    }, [basketSize]);
 
     // function that logout the user
     async function signOut(e){
@@ -95,7 +87,7 @@ export default function Header() {
                         <Link href="/basket" className="relative text-sm dark:text-blue-500 hover:underline">
                             <ShoppingCartIcon className="h-6 w-6 text-black-500" />
                             <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -right-4 dark:border-gray-900">
-                                {basketSize}
+                                {sizeOfBasket}
                             </div>
                         </Link>
                         { currentUser != null ? (

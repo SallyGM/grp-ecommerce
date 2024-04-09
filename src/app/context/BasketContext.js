@@ -6,30 +6,49 @@ import { useAuth } from '../context/AuthContext.js'
 
 const BasketContext = React.createContext();
 
-export function BasketProvider({ children}) {
+export function BasketProvider({children}) {
 
-   const { currentUser } = useAuth()
+   const { currentUser } = useAuth();
 
    const [userBasket, setUserBasket] = useState([]);
    const [guestBasket, setGuestBasket] = useState([]);
-   const [onCheckOut, setOnCheckOut] = useState(false);
+   const [basketSize, setBasketSize] = useState(0);
 
    useEffect(() => {
+      console.log(guestBasket);
       if (currentUser) {
+         // get basket value from the database
          const userBasketRef = ref(database, "Basket/" + currentUser.uid);
          get(userBasketRef).then((snapshot) => {
             if (snapshot.exists()) {
                setUserBasket(snapshot.val());
+
+               // updates the size of the basket
+               let total = 0;
+               let b = snapshot.val();
+               Object.keys(b).forEach((key) => {
+                  total += b[key];
+               });
+
+               setBasketSize(total);
             }
          }).catch((error) => {
             console.error('Error fetching user basket:', error);
          });
+      } else {
+         // set the size of the guest basket
+         let total = 0;
+         Object.keys(guestBasket).forEach((key) => {
+           total += guestBasket[key];
+         });
+         setBasketSize(total);
       }
-   }, [currentUser], [userBasket]);
+   }, [currentUser, userBasket, guestBasket]);
 
    const addToBasket = async (productID, quantity) => {
 
-      if (currentUser) {
+      // authenticated user
+      if (currentUser && quantity > 0) {
          let basket = { ...userBasket }
          basket[productID] = quantity
 
@@ -46,9 +65,11 @@ export function BasketProvider({ children}) {
                console.error('Error fetching user basket:', error);
             });
          
+            // updates the value if already exists
             if((data + quantity) <= 10){
                basket[productID] = quantity + data;
                await set(userBasketRef, quantity + data);
+            // adds to the basket 10 (maximum)
             } else {
                basket[productID] = 10
                await set(userBasketRef, 10);
@@ -58,27 +79,27 @@ export function BasketProvider({ children}) {
          } catch (error) {
             console.error('Error adding to basket:', error);
          }
-      } else {
-         let gbasket = guestBasket;
+      // guest user part
+      } else if(quantity > 0){
+         // add to the basket quantity bigger than 0
+         let gbasket = { ...guestBasket }; 
 
-         // if the items is not in the basket
-         if (!gbasket.includes(productID)){
-            gbasket[productID] = quantity
-            setGuestBasket[gbasket]
+         if (!gbasket.hasOwnProperty(productID)) {
+            gbasket[productID] = quantity;
          } else {
-            if(gbasket[productID] + quantity <= 10){
-               gbasket[productID] = gbasket[productID] + quantity
-            }
-            else{
-               gbasket[productID] = 10
+            if (gbasket[productID] + quantity <= 10) {
+               gbasket[productID] += quantity;
+            } else {
+               gbasket[productID] = 10;
             }
          }
 
-         setGuestBasket[gbasket]
+         setGuestBasket(gbasket)
       }
    };
 
    const removeFromBasket = async (itemKey) => {
+      //  authenticated user
       if (currentUser) {
          try {
             const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" +  itemKey);
@@ -89,13 +110,17 @@ export function BasketProvider({ children}) {
          } catch (error) {
             console.error('Error removing from basket:', error);
          }
+      // guest user
       } else {
-         let basket = userBasket;
-         basket.remove(itemKey)
+         let basket = {...guestBasket};
+         delete basket[itemKey];
+         //basket.remove(itemKey)
+         setGuestBasket(basket)
       }
    };
 
    const clearBasket = async () => {
+      // authenticated user
       if (currentUser) {
          try {
             const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" );
@@ -104,18 +129,16 @@ export function BasketProvider({ children}) {
          } catch (error) {
             console.error('Error removing from basket:', error);
          }
-      }
-      else {
+      // guest user   
+      } else {
          setGuestBasket([])
       }
    };
 
-   const activateCheckOut = async () => {
-      let update = !onCheckOut;
-      setOnCheckOut(update);
-   };
 
-   const createOrder = async (orderDate, discount, price, userID, fullName, cardNumber, cvv, expirationDate) => {
+   // this function creates an order
+   // and clear the basket
+   const createOrder = async (orderDate, discount, price, userID, fullName, cardNumber, cvv, expirationDate, sortCode) => {
       if (currentUser) {
 
          let data = {
@@ -124,7 +147,8 @@ export function BasketProvider({ children}) {
                "fullName": fullName,
                "cardNumber": cardNumber,
                "cvv": cvv,
-               "expirationDate": expirationDate
+               "expirationDate": expirationDate,
+               "sortCode": sortCode
             },
             "lastUpdate": orderDate,
             "items": userBasket,
@@ -144,19 +168,15 @@ export function BasketProvider({ children}) {
       }
    }
 
-   const contextValue = useMemo(() => {
-      return {
-         userBasket,
-         addToBasket,
-         removeFromBasket,
-         clearBasket,
-         onCheckOut,
-         setOnCheckOut,
-         createOrder,
-         guestBasket,
-         activateCheckOut,
-      };
-   }, [userBasket, currentUser]);
+   const contextValue = {
+      userBasket,
+      guestBasket,
+      basketSize,
+      addToBasket,
+      removeFromBasket,
+      clearBasket,
+      createOrder
+   }
 
    return (
       <BasketContext.Provider value={contextValue}>
@@ -165,8 +185,12 @@ export function BasketProvider({ children}) {
    );
 }
 
-export function useBasketContext() {
-   return useContext(BasketContext);
-}
+const useBasketContext = () => {
+   const context = React.useContext(BasketContext);
+   if (!context) {
+     throw new Error('useBasketContext must be used within a BasketProvider');
+   }
+   return context;
+ };
 
-//export default BasketContext;
+ export {useBasketContext};

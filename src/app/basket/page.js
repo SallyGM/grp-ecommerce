@@ -10,23 +10,25 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
 
   const [ allProducts, setAllProducts] = useState([]);
-  const [ basketSize, setBasketSize] = useState(0);
+  //const [ basketSize, setBasketSize] = useState(0);
   const [ basketPrice, setBasketPrice] = useState(0);
   const [ basketDiscount, setBasketDiscount] = useState(0);
   const [ checkOut, setCheckOut ] = useState(false)
   const [ basket, setBasket] = useState([]);
-  const { userBasket, onCheckOut, guestUserBasket, removeFromBasket, createOrder, activateCheckOut, clearBasket } = useBasketContext();
+  const { userBasket, basketSize, onCheckOut, guestBasket, removeFromBasket, createOrder, clearBasket } = useBasketContext();
   const { currentUser } = useAuth() // to verify which basket to use
   const { products } = useProductContext();
   const [ showCVV, setShowCVV] = useState(false) 
   const [ fullNameError, setFullNameError] = useState(false)
   const [ cardNumberError, setCardNumberError] = useState(false)  
+  const [ sortCodeError, setSortCodeError] = useState(false)  
   const [ cvvError, setCVVError] = useState(false)  
   const [ expirationDateError, setExpirationDateError] = useState(false)               
-  const fullName = useRef()
-  const cardNumber = useRef()
-  const cvv = useRef()
-  const expirationDate = useRef()
+  const fullName = useRef();
+  const cardNumber = useRef();
+  const cvv = useRef();
+  const sortCode = useRef();
+  const expirationDate = useRef();
   const router = useRouter();
 
   useEffect(() => {
@@ -36,8 +38,9 @@ export default function Home() {
   },[products])
 
   useEffect(() => {
-    if(currentUser && allProducts.length > 0){
-      const newBasket = Object.entries(userBasket).map(([id, quantity]) => {
+    const b = (currentUser ? userBasket : guestBasket)
+    if(allProducts.length > 0){
+      const newBasket = Object.entries(b).map(([id, quantity]) => {
         let prod = products;
         let i = prod.findIndex(p => p.id === id);
         if(i !== -1 ){
@@ -52,20 +55,15 @@ export default function Home() {
         } else {
           return { id, quantity }
         }
-        
       });
       setBasket(newBasket)
-    } else {
-      setBasket(guestUserBasket)
-    }
-  }, [userBasket, currentUser]);
+    } 
+  }, [basketSize, allProducts, currentUser]);
 
   useEffect(() => {
     if(basket){
       if(Object.keys(basket).length > 0){
 
-        setBasketSize(Object.keys(basket).length)
-  
         // Get the price
         let total = 0;
         let discount = 0;
@@ -83,9 +81,7 @@ export default function Home() {
   
         setBasketDiscount(discount)
         setBasketPrice(total)
-      } else {
-        setBasketSize(0)
-      } 
+      }
     }
   }, [basket])
 
@@ -123,6 +119,16 @@ export default function Home() {
     }
   };
 
+  const handleSortCode = (e) => {
+    const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 8;
+    
+    if (!isValid) {
+      setSortCodeError('Sort code should be 6 digits long');
+    } else { 
+      setSortCodeError('');
+    }
+  };
+
   const handleExpirationDate = (e) => {
     const isValid = /^([0-9/]+)$/i.test(e.target.value) && e.target.value.length === 7;
     
@@ -144,7 +150,7 @@ export default function Home() {
   // handles on the page maybe on Checkout 
   // we can check the basket and see if it has been altered
   function handleClickChangeQuantity(object, op){
-    let b = basket
+    let b = {...basket}
     let index = basket.indexOf(object)
     if(op == "+" && b[index].quantity < 10){
       b[index].quantity += 1
@@ -153,12 +159,11 @@ export default function Home() {
         b[index].quantity -= 1
       }
     }
-    setBasket(b)
+    setBasket(Object.values(b))
   };
 
   const handleCheckOutPage = () => {
     if(currentUser){
-      activateCheckOut();
       setCheckOut(true)
     } else {
       router.push(`/register`);
@@ -170,7 +175,7 @@ export default function Home() {
     if(cardNumberError === "" && fullNameError === "" && expirationDateError === "" && cvvError === ""){
       try{
         await createOrder(new Date(), basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
-        cardNumber.current.value, cvv.current.value, expirationDate.current.value);
+        cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
 
         await clearBasket();
         router.push(`/`);
@@ -191,8 +196,8 @@ export default function Home() {
           <h1 className="text-center my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white font-mono">CheckOut</h1>
         </div>
         <div className='flex flex-row'>
-          <Card className='w-1/2 m-5 p-2'>
-            <h2 className='text-center font-bold'>Summary</h2>
+          <div className='flex flex-col bg-white rounded-md justify-center gap-4 p-6 w-1/2 m-5 p-2'>
+            <h2 className='-mt-16 text-center font-bold'>Summary</h2>
             <table className="table-auto">
               <thead>
                 <tr>
@@ -219,12 +224,12 @@ export default function Home() {
             <hr/>
             <p className='text-right'>£{(basketDiscount > 0 ? basketDiscount : 0.00)}</p>
             <p className='text-right'>£{basketPrice}</p>
-          </Card>
+          </div>
           <Card className='w-1/2 m-5 p-2'>
           <h2 className='text-center font-bold'>Card details</h2>
             <form className="max-w-md mx-auto" onSubmit={handleCheckOutSubmission}>
               <div className="relative z-0 w-full mb-5 group">
-                <label>Name on the card</label>
+                <label>Full Name</label>
                 <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
                 {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
               </div>
@@ -232,6 +237,11 @@ export default function Home() {
                 <label>Card Number</label>
                 <InputMask ref={cardNumber} onChange={handleCardNumber} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" mask="9999 9999 9999 9999" maskChar="" placeholder='Card Number...' required/>  
                 {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
+              </div>
+              <div className="relative z-0 w-full mb-5 group">
+                <label>Sort Code</label>
+                <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
+                {sortCodeError && <span style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>}
               </div>
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-5 group">
@@ -331,7 +341,7 @@ export default function Home() {
                         </button>
                     </div>
                   </form>        
-                  <h2 id="sub_total" className="flex  text-2xl dark:text-white text-white font-mono ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): b.price)}</h2>
+                  <h2 id="sub_total" className="flex  text-2xl dark:text-white text-white font-mono ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price).toFixed(2))}</h2>
                   <Button onClick={(e) => handleDelete(b.id)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -346,25 +356,30 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <div className=' total_box grid grid-rows-4 flex-wrap ml-20 mr-20 mt-20 pb-20'>
-          <div className='flex justify-between p-5'>
-            <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white font-mono ">TOTAL SAVED</h2>
-            <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white font-mono">£{parseFloat(basketDiscount).toFixed(2)}</h2>
-          </div>
-          <div className='pl-10 pr-10 ml-20 mr-20'>
-            <hr className="h-px my-8 bg-white border-5 dark:bg-white"/>
-          </div>
-          <div className='flex justify-between pl-5 pr-5'>
-            <h2 id="total_saved" className="text-left ml-20 text-2xl dark:text-white self-center text-white font-mono ">ORDER TOTAL</h2>
-            <h2 id="amount_saved "className="text-right  mr-20 text-2xl dark:text-white self-center text-white font-mono">£{basketPrice}</h2>
-          </div>
+        {(basketSize > 0 ? ( 
+          <div className=' total_box grid grid-rows-4 flex-wrap ml-20 mr-20 mt-20 pb-20'>
+            <div className='flex justify-between p-5'>
+              <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white font-mono ">TOTAL SAVED</h2>
+              <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white font-mono">£{parseFloat(basketDiscount).toFixed(2)}</h2>
+            </div>
+            <div className='pl-10 pr-10 ml-20 mr-20'>
+              <hr className="h-px my-8 bg-white border-5 dark:bg-white"/>
+            </div>
+            <div className='flex justify-between pl-5 pr-5'>
+              <h2 id="total_saved" className="text-left ml-20 text-2xl dark:text-white self-center text-white font-mono ">ORDER TOTAL</h2>
+              <h2 id="amount_saved "className="text-right  mr-20 text-2xl dark:text-white self-center text-white font-mono">£{basketPrice}</h2>
+            </div>
 
-          <div className='flex justify-center mt-10'>
-            <Button className='basket_btn bg-green-400' onClick={handleCheckOutPage}>
-              CHECKOUT
-            </Button>
+            <div className='flex justify-center mt-10'>
+              <Button className='basket_btn bg-green-400' onClick={handleCheckOutPage}>
+                CHECKOUT
+              </Button>
+            </div>
           </div>
-        </div>
+          ) : (
+            <></>
+          ))}
+        
       </div>
     ))
   );
