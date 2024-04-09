@@ -4,7 +4,7 @@ import { Card, Button } from 'flowbite-react';
 import { database } from '../firebaseConfig.js';
 import { useAuth } from '../context/AuthContext.js'
 import { ref , set, push } from "firebase/database";
-import { Fragment, useState, useRef} from 'react';
+import { Fragment, useState, useRef, useEffect} from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import Modal from '@/components/modal.js';
@@ -36,7 +36,7 @@ export default function Home() {
   const fName = useRef();
   const lName = useRef();
   const router = useRouter();
-  const {signup} = useAuth()
+  const {currentUser, signup} = useAuth();
   const [formData, setFormData] = useState({
     cardNumber: '',
     sortCode: '',
@@ -45,6 +45,12 @@ export default function Home() {
     cardName: '',
     expDate: ''
 });
+
+//function to redirect the user to the home page if already logged in
+useEffect (() => {
+  if (currentUser) router.push('/')
+});
+
 
 const setCardData = () =>{
   // Create a new card object from the form data
