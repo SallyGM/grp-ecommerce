@@ -83,7 +83,7 @@ export default function Account() {
         }
     };
 
-   //Handle  new password change
+   //Handle new password change
     const handleNewPasswordChange = (e) => {
         const isNewPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
         // Validate password pattern (at least 8 characters and must contain one special character)
@@ -94,7 +94,7 @@ export default function Account() {
         }
     };
 
-  //Handle  new confirm password change
+  //Handle new confirm password change
     const handleNewConfirmPasswordChange = (e) => {
         const currentNewPassword = document.getElementById('newPassword').value;
         const currentNewConfirmPassword = document.getElementById('confirmNewPassword').value;
