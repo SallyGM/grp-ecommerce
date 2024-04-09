@@ -45,6 +45,26 @@ export function BasketProvider({children}) {
       }
    }, [currentUser, userBasket, guestBasket]);
 
+   // register basket of the new user
+   // TODO: might not be working 
+   const registerBasket = async () => {
+     
+      // authenticated user
+      if (currentUser) {
+         let basket = { ...guestBasket }
+
+         try {
+            const userBasketRef = ref(database, "Basket/" + currentUser.uid);
+          
+            // push to the basket
+            await push(userBasketRef, basket);
+            setUserBasket(basket);
+         } catch (error) {
+            console.error('Error creating basket:', error);
+         }
+      } 
+   };
+
    const addToBasket = async (productID, quantity) => {
 
       // authenticated user
@@ -104,7 +124,7 @@ export function BasketProvider({children}) {
          try {
             const userBasketRef = ref(database, "Basket/" + currentUser.uid + "/" +  itemKey);
             await set(userBasketRef, null);
-            let basket = { ...userBasket } 
+            let basket = { ... userBasket} 
             delete basket[itemKey];
             setUserBasket(basket);
          } catch (error) {
@@ -113,8 +133,7 @@ export function BasketProvider({children}) {
       // guest user
       } else {
          let basket = {...guestBasket};
-         delete basket[itemKey];
-         //basket.remove(itemKey)
+         delete basket[itemKey]; 
          setGuestBasket(basket)
       }
    };
@@ -134,7 +153,6 @@ export function BasketProvider({children}) {
          setGuestBasket([])
       }
    };
-
 
    // this function creates an order
    // and clear the basket
@@ -175,6 +193,7 @@ export function BasketProvider({children}) {
       addToBasket,
       removeFromBasket,
       clearBasket,
+      registerBasket,
       createOrder
    }
 
