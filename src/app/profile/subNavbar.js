@@ -12,6 +12,9 @@ import { useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { AccountCircle, Payment, VpnKey, RateReview, ExitToApp } from '@mui/icons-material'; // Import icons
 
+const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   
@@ -89,6 +92,7 @@ export default function VerticalTabs() {
     };
   }, [theme]);
 
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -113,12 +117,25 @@ export default function VerticalTabs() {
         break;
     }
   };
-  // function that logout the user
+
+
+  // function that logs the user out
   async function signOut(e){
 
     try{
-        await signout()    
-        setError(false)
+
+      {/*logout modal */}          
+      <Modal isVisible={showLogoutModal} onClose ={()=> setShowLogoutModal(false)}>
+        <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
+        <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to log out?</h3>
+        <div className='flex justify-evenly mt-10 mb-10'>
+            <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
+            <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>signout()}>YES</Button>
+        </div>
+      </Modal>
+
+      await signout()    
+      setError(false)
     } catch(e){
         setError(true)
         console.log(e)
