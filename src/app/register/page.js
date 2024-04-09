@@ -46,6 +46,7 @@ export default function Home() {
     expDate: ''
 });
 
+
 //function to redirect the user to the home page if already logged in
 useEffect (() => {
   if (currentUser) router.push('/')
