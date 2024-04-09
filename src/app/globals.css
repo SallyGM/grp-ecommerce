@@ -26,11 +26,20 @@
     -webkit-appearance: none;
     margin: 0;
   }
-
   /* Firefox */
   input[type=number] {
     -moz-appearance: textfield;
   }
+}
+
+
+.cardButton {
+  background: '#00052d';
+  border: '#00052d'
+}
+
+.cardButton:hover {
+  background-color: #6c0979;
 }
 
 body {
