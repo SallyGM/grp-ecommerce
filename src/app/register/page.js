@@ -540,7 +540,7 @@ return (
                     </div>
 
                     <div className='flex justify-evenly mt-10'>
-                        <Button className="w-52 mr-1 mb-2" color="gray" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
+                        <Button className="w-52 mr-1 mb-2" class="cardButton" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
                         <Button type="submit" className="w-52 ml-1 mb-2"  style={{background: '#00052d', border : '#00052d'}} onClick={setCardData}>CONFIRM</Button>
                     </div>
                 </form>
