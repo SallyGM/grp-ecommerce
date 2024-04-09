@@ -26,7 +26,6 @@ export default function Home() {
   const [confPasswordError, setConfPasswordError] = useState('');     //Create confirm password error
   const [loading, setLoading] = useState(false);                      // keep track of the registration
   const [showAddCardModal, setShowAddCardModal] = useState(false);
-  const [cardNumError, setCardNumError] = useState('');
   const [showCheckEmail, setShowCheckEmail] = useState(false);
   const [showPassword,setShowPassword] = useState(false)
   const [showConfirmPassword,setShowConfirmPassword] = useState(false)
@@ -185,13 +184,6 @@ const checkLength = (maxLength) => {
     if (e.target.value.length > maxLength)
        e.target.value = e.target.value.slice(0, maxLength);
   } 
-}
-
-
-// HANDLE CARD NUMBER ERROR
-const checkCardNumLength = (e) => {
-  if (e.target.value.length > 0 && e.target.value.length < 16) setCardNumError('The card number must be 16 digits long')
-  else setCardNumError('')
 }
 
 
@@ -501,15 +493,15 @@ return (
                         <label htmlFor="number" className='text-white'>Card Number</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         type="number" inputmode='numeric' id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
-                        onInput={checkLength(16)} onChange={handleChange} onChangeCapture={checkCardNumLength} />
-                        {cardNumError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumError}</span>}
+                        onInput={checkLength(16)} onChange={handleChange}/>
+
                     </div>
 
                     <div class="noIncrementer">
                         <label htmlFor="number" className='text-white'>Sort Code</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         type="number" inputmode="numeric" id="sortCode" name="sortCode" placeholder='26-02-54' required value={formData.sortCode} 
-                        onInput={checkLength(6)} onChange={handleChange}/> 
+                        onInput={checkLength(6)} onChange={handleChange}/>
                     </div>
 
                     <div className='inline-flex justify-evenly'>
