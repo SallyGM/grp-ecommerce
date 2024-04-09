@@ -158,19 +158,18 @@ export default function VerticalTabs() {
                 <Tab icon={<VpnKey />} label="ORDERED KEYS" {...a11yProps(2)} onClick={()=>handleTabClick(2)}/>
                 <Tab icon={<RateReview />} label="MY REVIEWS" {...a11yProps(3)} onClick={()=>handleTabClick(3)}/>
                 <Tab icon={<ExitToApp />} label="LOGOUT" {...a11yProps(4)} onClick={()=>setShowLogoutModal(true)} />
-            </Tabs>
+        </Tabs>
 
         {/*logout modal */}          
-        <Modal isVisible={showLogoutModal} onClose ={()=> setShowLogoutModal(false)}>
+        {/* <Modal isVisible={showLogoutModal} onClose ={()=> setShowLogoutModal(false)}>
           <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
           <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to log out?</h3>
-          <div className='flex justify-evenly mt-10 mb-10'>
-              <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
-              <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=> signOut()}>YES</Button>
+          <div className='flex justify-evenly m-2'>
+              <Button type="submit" className="w-2/5" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
+              <Button type="submit" className="w-2/5"  style={{background: '#00052d', border : '#00052d'}} onClick={()=> signOut()}>YES</Button>
           </div>
-        </Modal>
+        </Modal> */}
         
-
         </Box>
     </div>
   );
