@@ -1,3 +1,4 @@
+"use client"; 
 import { Card, Button } from 'flowbite-react';
 import { Fragment, useEffect, useState, useRef} from 'react';
 import { ref , get, update, remove } from "firebase/database";
@@ -500,3 +501,4 @@ export default function Account() {
         </Fragment>
     );
 }
+

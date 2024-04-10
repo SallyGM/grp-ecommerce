@@ -30,12 +30,10 @@ export default function Login() {
   const [user, setUser] = useState(false);
   const [showPassword,setShowPassword] = useState(false)
 
-
-//function to redirect the user to the home page if already logged in
-useEffect (() => {
-  if (currentUser) router.push('/')
-});
-
+  useEffect(() => {
+    if (currentUser) router.push('/')
+  }, [currentUser]);                  
+  
 
 // Function that hanle the Check email modal click
 const handleConfirmCheckEmailClick = () => {
@@ -44,47 +42,57 @@ const handleConfirmCheckEmailClick = () => {
 };
 
 
-async function handleSubmit(e){
+
+async function handleSubmit(e) {
   e.preventDefault();
 
   // Submit form if email and password are valid
   if (emailError === '' && passwordError === '') {
+    try {
+      setEmailError('');
+      setPasswordError('');
+      setLoading(true); // disable login button
 
-    try{    
-      setEmailError('')
-      setPasswordError('')
-      setLoading(true) // disable login button 
+      // Sign in user with email and password
+      const emailValue = email.current.value;
+      const passwordValue = password.current.value;
+      await signin(emailValue, passwordValue);
+      setUser(currentUser)
 
-      const userCredential =await signin(email.current.value, password.current.value)
-      // Check if email is verified
-      if (userCredential.user.emailVerified) {
+      // Check if currentUser is not null
+      
+      if (currentUser && currentUser.user.emailVerified) {
         // Email is verified, proceed with login
-        setShowAlertBanner(false)
+        setShowAlertBanner(false);
         console.log('Login successful');
-        toast.success("Login successful")
-        router.push('/');
+        toast.success("Login successful");
+        router.push('/')
       } else {
-        // Email is not verified
-        setShowAlertBanner(true)
-        setUser(userCredential);
+        // Email is not verified or user does not exist
+        setShowAlertBanner(true);
+        console.log('Email is not verified or user does not exist');
+        toast.error("Email is not verified or user does not exist. Please try again.");
+        // Sign out the user since they cannot log in without verifying their email
         await signout();
-        router.push('/login');
-        console.log('Email is not verified');
-        toast.error("Email is not verified")
       }
-      setLoading(false) // enable login button     
-    }
-    catch (e) {
-      console.log(e)
-      toast.error("Error in login process")  
-    }
 
-    
+      setLoading(false); // enable login button
+    } catch (error) {
+      console.error('Error in login process:', error.message);
+      toast.error("Error in login process: " + error.message);
+      setLoading(false); // enable login button even if error occurs
+    }
   } else {
-    setEmailError("Email is required")
-    setPasswordError("Password is required")
-  }  
-};
+    setEmailError("Email is required");
+    setPasswordError("Password is required");
+  }
+}
+
+
+
+
+
+
   
 // Handle email change
 const handleEmailChange = (e) => {
@@ -120,7 +128,7 @@ const handleForgotPasswordEmailChange = (e) => {
     setEmailModalError('');
   }
 };
-async function handleSendEmailVerification(e) {
+async function handleSendResetPasswordVerification(e) {
   e.preventDefault();
   // Check if the email is valid
   if (emailModalError === '') {
@@ -143,16 +151,14 @@ async function handleSendEmailVerification(e) {
 }
 useEffect(() => {
   setShowAlertBanner(false);
-
 }, []);
 
 
 // Send email verification again function
-const SendVerificationEmail = async (userCredential) => {
+const SendVerificationEmail = async (user) => {
   try {
-
-    // Send email verification
-    await sendEmailVerification(userCredential.user);
+    // Send email verification using the obtained ID token
+    sendEmailVerification(user);
 
     console.log('Email verification sent again');
     toast.success("Email verification sent to your inbox");
@@ -162,6 +168,8 @@ const SendVerificationEmail = async (userCredential) => {
     toast.error("Failed to send email verification: " + error.message);
   }
 };
+
+
 
 return (
   <Fragment>
@@ -313,7 +321,7 @@ return (
   <Modal isVisible={showForgotPassword}  onClose ={()=> setShowForgotPassword(false)}>
           <h3 className='text-xl flex self-center font-semibold text-white mb-5'>RESET YOUR PASSWORD</h3>
           <h3 className='flex self-center font-semibold text-white  mb-5'>Insert your email to reset your password</h3>
-          <form className="space-y-6 text-white self-center font-mono" onSubmit={handleSendEmailVerification}>
+          <form className="space-y-6 text-white self-center font-mono" onSubmit={handleSendResetPasswordVerification}>
             <div className=' mt-2 mb-2  flex-wrap'>  
             <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
                 <input className="block w-full rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

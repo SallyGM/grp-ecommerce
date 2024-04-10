@@ -35,7 +35,7 @@ export default function CardStored() {
             [e.target.name] : e.target.value
         });
     };
-    
+    // Function that handles the submit on add new card modal
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -236,7 +236,7 @@ const checkLength = (maxLength) => {
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW CARD</h3>
             <h3 className='flex self-center font-semibold text-white mb-5'>Add card by filling the details below</h3>
             <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6 text-white font-mono">
+                <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
                     <div class="noIncrementer"> {/*noIncrementer is a CSS class*/}
                         <label htmlFor="number" className='text-white'>Card Number</label>
                         <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -282,7 +282,7 @@ const checkLength = (maxLength) => {
 
                     <div className='flex justify-evenly mt-10'>
                         <Button className="w-52 mr-1 mb-2" color='gray' onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                        <Button type="submit" className="w-52 ml-1 mb-2"  style={{background: '#00052d', border : '#00052d'}} onClick={CardStored}>CONFIRM</Button>
+                        <Button type="submit" className="w-52 ml-1 mb-2"  style={{background: '#00052d', border : '#00052d'}} >CONFIRM</Button>
                     </div>
                 </form>
             </div>

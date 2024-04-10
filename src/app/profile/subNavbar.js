@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext.js'
 import { useRouter } from 'next/navigation'
-
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -11,10 +10,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
-import Modal from '@/components/modal.js';
 import { AccountCircle, Payment, VpnKey, RateReview, ExitToApp } from '@mui/icons-material'; // Import icons
+import Modal from '@/components/modal.js';
 import { Button } from 'flowbite-react';
-
 
 
 
@@ -54,12 +52,12 @@ function a11yProps(index) {
 }
 
 export default function VerticalTabs() {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = React.useState(0);
   const router = useRouter();
   const { signout } = useAuth();
   const [error, setError] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false); 
   const theme = useTheme();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -100,9 +98,7 @@ export default function VerticalTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const handleTabClick = (index) => {
-    setValue(index); // Update the state with the clicked tab index
     switch (index) {
       case 0:
         router.push('/profile');
@@ -126,17 +122,19 @@ export default function VerticalTabs() {
 
 
   // function that logs the user out
-  async function signOut(){
-
+  async function signOut(e){
     try{
-      setShowLogoutModal(true)
       await signout()    
       setError(false)
-      router.push('/login'); // Navigate to the main page
+      setShowLogoutModal(false)
     } catch(e){
         setError(true)
         console.log(e)
     }
+
+    if(!error){ // if signout is successful it goes back to the login page
+        router.push('/login'); // Navigate to the main page
+    }   
 }
 
   
@@ -157,31 +155,19 @@ export default function VerticalTabs() {
                 <Tab icon={<Payment />} label="STORED CARDS" {...a11yProps(1)} onClick={()=>handleTabClick(1)} />
                 <Tab icon={<VpnKey />} label="ORDERED KEYS" {...a11yProps(2)} onClick={()=>handleTabClick(2)}/>
                 <Tab icon={<RateReview />} label="MY REVIEWS" {...a11yProps(3)} onClick={()=>handleTabClick(3)}/>
-                <Tab icon={<ExitToApp />} label="LOGOUT" {...a11yProps(4)} onClick={() => setShowLogoutModal(true)} />
                 <Tab icon={<ExitToApp />} label="LOGOUT" {...a11yProps(4)} onClick={()=>setShowLogoutModal(true)} />
-        </Tabs>
-
-        {/*logout modal */}          
-        {/* <Modal isVisible={showLogoutModal} onClose ={()=> setShowLogoutModal(false)}>
-          <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
-          <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to log out?</h3>
-          <div className='flex justify-evenly m-2'>
-              <Button type="submit" className="w-2/5" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
-              <Button type="submit" className="w-2/5"  style={{background: '#00052d', border : '#00052d'}} onClick={()=> signOut()}>YES</Button>
-          </div>
-        </Modal> */}
-        
-
+            </Tabs>
         </Box>
         {/*logout modal */}          
-      <Modal isVisible={showLogoutModal} onClose ={()=> setShowLogoutModal(false)}>
-        <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
-        <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to log out?</h3>
-        <div className='flex justify-evenly mt-10 mb-10'>
-            <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
-            <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>signOut()}>YES</Button>
-        </div>
-      </Modal>
+    <Modal isVisible={showLogoutModal} onClose ={()=> setShowLogoutModal(false)}>
+    <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
+    <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to log out?</h3>
+    <div className='flex justify-evenly mt-10 mb-10'>
+        <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
+        <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>signOut()}>YES</Button>
     </div>
+  </Modal>
+    </div>
+    
   );
 }

@@ -36,7 +36,7 @@ export default function Home() {
   const lName = useRef();
   const router = useRouter();
   const [registration, setRegistration] = useState(true)
-  const {currentUser, signup, signin} = useAuth();
+  const {currentUser, signup, signin, signout} = useAuth();
   const [formData, setFormData] = useState({
     cardNumber: '',
     sortCode: '',
@@ -50,7 +50,7 @@ export default function Home() {
 //function to redirect the user to the home page if already logged in
 useEffect (() => {
   if (currentUser && !registration){
-    router.push('/')
+    router.push('/login')
   } else if (currentUser && registration){
     if(currentUser){
       
@@ -271,6 +271,8 @@ async function handleSubmit(e) {
       await signin(email.current.value, password.current.value)
 
       setRegistration(true)
+
+      await signout()
 
     } catch (e) {
       toast.error(e.message);
