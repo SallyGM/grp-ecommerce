@@ -58,7 +58,7 @@ export default function Home() {
       });
       setBasket(newBasket)
     } 
-  }, [basketSize, allProducts, currentUser]);
+  }, [basketSize, userBasket, allProducts, currentUser]);
 
   useEffect(() => {
     if(basket){

@@ -15,7 +15,6 @@ import { sendEmailVerification } from 'firebase/auth';
 import { Tooltip } from 'flowbite-react';
 import { FormatUnderlined } from '@mui/icons-material';
 
-
 export default function Home() {
 
   const [lastNameError, setLastNameError] = useState('');             //Create last name error
@@ -36,7 +35,8 @@ export default function Home() {
   const fName = useRef();
   const lName = useRef();
   const router = useRouter();
-  const {currentUser, signup} = useAuth();
+  const [registration, setRegistration] = useState(true)
+  const {currentUser, signup, signin} = useAuth();
   const [formData, setFormData] = useState({
     cardNumber: '',
     sortCode: '',
@@ -49,8 +49,54 @@ export default function Home() {
 
 //function to redirect the user to the home page if already logged in
 useEffect (() => {
-  if (currentUser) router.push('/')
-});
+  if (currentUser && !registration){
+    router.push('/')
+  } else if (currentUser && registration){
+    if(currentUser){
+      
+      const data = {
+        "firstName": fName.current.value,
+        "lastName": lName.current.value
+      }
+
+      const userRef = ref(database, 'User/' + currentUser.uid);
+      set(userRef, data).then(() => {
+        toast.success('New user added');
+        console.log('New user added');
+        if (
+          formData.cardName !== '' &&
+          formData.cardNumber !== '' &&
+          formData.sortCode !== '' &&
+          formData.securityCode !== '' &&
+          formData.expDate !== ''
+        ) {
+          // Generate a unique key for the new card
+          const newCardKey = push(ref(database, 'User/' + currentUser.uid + '/card')).key;
+
+          // Set the new card object at the specified path in the database
+          return set(ref(database, 'User/' + currentUser.uid + '/card/' + newCardKey), formData)
+            .then(() => {
+              toast.success('New card added successfully');
+              console.log('New card added successfully');
+              setShowAddCardModal(false);
+            })
+            .catch((error) => {
+              toast.error('Error adding new card:', error);
+              console.error('Error adding new card:', error);
+            });
+        }
+      })
+      .catch((error) => {
+        toast.error('Error adding new user:', error);
+        console.error('Error adding new user:', error);
+      });
+
+      setLoading(false); // enable register button
+      toast.success('Registration Successfull!');
+      setShowCheckEmail(true)
+    }
+  }
+}, [currentUser, registration]);
 
 
 const setCardData = () =>{
@@ -218,58 +264,14 @@ async function handleSubmit(e) {
 
       console.log('Email:', email.current?.value);
       console.log('Password:', password.current?.value);
-      const userCredential = await signup(email.current.value, password.current.value)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          // User created
-          return sendEmailVerification(user).then(() => {
-            console.log('Email verification sent');
-            // Access the user's UID from the User object inside userCredential
-            const userId = userCredential.user.uid;
-            // Set the new user in the database
-            return set(ref(database, 'User/' + userId), {
-              email: email.current.value,
-              firstName: fName.current.value,
-              lastName: lName.current.value,
-            })
-              .then(() => {
-                toast.success('New user added');
-                console.log('New user added');
-                if (
-                  formData.cardName !== '' &&
-                  formData.cardNumber !== '' &&
-                  formData.sortCode !== '' &&
-                  formData.securityCode !== '' &&
-                  formData.expDate !== ''
-                ) {
-                  // Generate a unique key for the new card
-                  const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
 
-                  // Set the new card object at the specified path in the database
-                  return set(ref(database, 'User/' + userId + '/card/' + newCardKey), formData)
-                    .then(() => {
-                      toast.success('New card added successfully');
-                      console.log('New card added successfully');
-                      setShowAddCardModal(false);
-                    })
-                    .catch((error) => {
-                      toast.error('Error adding new card:', error);
-                      console.error('Error adding new card:', error);
-                    });
-                }
-              })
-              .catch((error) => {
-                toast.error('Error adding new user:', error);
-                console.error('Error adding new user:', error);
-              });
-          });
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-      setLoading(false); // enable register button
-      toast.success('Registration Successfull!');
-      setShowCheckEmail(true)
+      // create acc
+      await signup(email.current.value, password.current.value)
+      // login
+      await signin(email.current.value, password.current.value)
+
+      setRegistration(true)
+
     } catch (e) {
       toast.error(e.message);
       console.log(e);
