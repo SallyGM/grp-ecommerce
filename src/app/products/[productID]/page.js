@@ -18,8 +18,9 @@ export default function Page({ params }) {
 
     const prodRef = ref(database, "Product");
 
-    //Need to wrap the app first
-    //const { addToBasket } = useBasketContext(); 
+    const { addToBasket } = useBasketContext();
+
+
 
     useEffect(() => {    
         get(prodRef).then((snapshot) => {
@@ -37,14 +38,12 @@ export default function Page({ params }) {
         });
     }, []);
 
-    const [basketItems, setBasketItems] = useState([]);
 
-    //Not working yet, need to app the wrap first
-    /*
-    function handleAddToCart(productID, e) {
-        addToBasket(productID);
-
-    }*/
+    function handleClickAddToCart(productID, e){
+        addToBasket(productID, 1)
+      }
+      
+   
     
     return (
         <div>
@@ -142,7 +141,7 @@ export default function Page({ params }) {
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd'>
+                                <button className='prod_btn w-52 rounded-lg' hoverClassName='c50edd' onClick={(e) => handleClickAddToCart(product.id, product.amount, e)}>
                                 ADD TO CART
                                 </button>
                             </div>
