@@ -46,17 +46,19 @@ export function BasketProvider({children}) {
 
    // register basket of the new user
    // TODO: might not be working 
-   const registerBasket = async () => {
+   const registerBasket = async (user) => {
      
       // authenticated user
-      if (currentUser) {
+      if (user && Object.keys(guestBasket).length > 0) {
          let basket = { ...guestBasket }
 
          try {
-            const userBasketRef = ref(database, "Basket/" + currentUser.uid);
+            const userBasketRef = ref(database, "Basket/" + user.uid);
           
             // push to the basket
-            await push(userBasketRef, basket);
+            await set(userBasketRef, basket);
+            // clear basket once it is added to the user
+            setGuestBasket([])
             setUserBasket(basket);
          } catch (error) {
             console.error('Error creating basket:', error);

@@ -232,7 +232,7 @@ return (
                                       strokeWidth="1.5"
                                       stroke="#00052d"
                                       className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
-                                      tabindex="-1"
+                                      tabIndex="-1"
                                     >
                                       <path
                                         strokeLinecap="round"

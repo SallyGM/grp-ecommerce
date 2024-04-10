@@ -15,10 +15,15 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   async function signup(email, password) {
+    let user = [];
     await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      user = userCredential.user;
+
       // send a verification email.
       sendEmailVerification(userCredential.user);
     })
+
+    return user; 
   }
 
    function signin(email, password) {
