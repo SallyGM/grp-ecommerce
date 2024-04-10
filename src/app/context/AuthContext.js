@@ -14,16 +14,15 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
 
-  function signup(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password)
-
-  }
-
-  async function signin(email, password) {
-    await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+  async function signup(email, password) {
+    await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
       // send a verification email.
       sendEmailVerification(userCredential.user);
     })
+  }
+
+   function signin(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
   }
 
   function signout() {

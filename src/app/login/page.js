@@ -31,7 +31,13 @@ export default function Login() {
   const [showPassword,setShowPassword] = useState(false)
 
   useEffect(() => {
-    if (currentUser) router.push('/')
+    if (currentUser){
+      // making sure user exist before verifying email
+      if(currentUser.emailVerified){
+        // redirect to the main page
+        router.push('/')
+      } 
+    } 
   }, [currentUser]);                  
   
 
@@ -40,8 +46,6 @@ const handleConfirmCheckEmailClick = () => {
   setShowCheckEmail(false);
   router.push('/login');
 };
-
-
 
 async function handleSubmit(e) {
   e.preventDefault();
@@ -56,12 +60,13 @@ async function handleSubmit(e) {
       // Sign in user with email and password
       const emailValue = email.current.value;
       const passwordValue = password.current.value;
-      await signin(emailValue, passwordValue);
-      setUser(currentUser)
+      const credential = await signin(emailValue, passwordValue);
+      
+      setUser(credential.user)
 
       // Check if currentUser is not null
       
-      if (currentUser && currentUser.user.emailVerified) {
+      if (credential && credential.user.emailVerified) {
         // Email is verified, proceed with login
         setShowAlertBanner(false);
         console.log('Login successful');
@@ -70,7 +75,7 @@ async function handleSubmit(e) {
       } else {
         // Email is not verified or user does not exist
         setShowAlertBanner(true);
-        console.log('Email is not verified or user does not exist');
+        //console.log('Email is not verified or user does not exist');
         toast.error("Email is not verified or user does not exist. Please try again.");
         // Sign out the user since they cannot log in without verifying their email
         await signout();
@@ -78,7 +83,7 @@ async function handleSubmit(e) {
 
       setLoading(false); // enable login button
     } catch (error) {
-      console.error('Error in login process:', error.message);
+      //console.error('Error in login process:', error.message);
       toast.error("Error in login process: " + error.message);
       setLoading(false); // enable login button even if error occurs
     }
@@ -88,12 +93,6 @@ async function handleSubmit(e) {
   }
 }
 
-
-
-
-
-
-  
 // Handle email change
 const handleEmailChange = (e) => {
   
@@ -176,12 +175,12 @@ return (
 
     {/*Alert banner */}
     {showAlertBanner && (
-    <div user = {user}  class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-2 py-2 shadow-md" role="alert">
-      <div class="flex">
-        <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+    <div user = {user}  className="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-2 py-2 shadow-md" role="alert">
+      <div className="flex">
+        <div className="py-1"><svg className="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
         <div>
-          <p class="font-bold">Email verification</p>
-          <p class="text-sm">If you didn't received the verification email please <a style={{ textDecoration: 'underline' }} onClick={()=>SendVerificationEmail(user)}>click here</a> </p>
+          <p className="font-bold">Email verification</p>
+          <p className="text-sm">If you didn't received the verification email please <a style={{ textDecoration: 'underline' }} onClick={()=>SendVerificationEmail(user)}>click here</a> </p>
         </div>
       </div>
     </div>
@@ -204,10 +203,10 @@ return (
             <div>
                 <label className='inline-flex'  htmlFor="password">Password
                   <Tooltip content="Password must contain more then 8 characters mixed with at least one special character">
-                    <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
-                      <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <svg  className = 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
+                      <path d="M12 11.5V16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                      <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     </svg>
                   </Tooltip>
                 </label>
@@ -230,19 +229,19 @@ return (
                                       xmlns="http://www.w3.org/2000/svg"
                                       fill="none"
                                       viewBox="0 0 24 24"
-                                      stroke-width="1.5"
+                                      strokeWidth="1.5"
                                       stroke="#00052d"
                                       className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
                                       tabindex="-1"
                                     >
                                       <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
                                       ></path>
                                       <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                       ></path>
                                     </svg>
@@ -251,13 +250,13 @@ return (
                                       xmlns="http://www.w3.org/2000/svg"
                                       fill="none"
                                       viewBox="0 0 24 24"
-                                      stroke-width="1.5"
+                                      strokeWidth="1.5"
                                       stroke="#00052d"
                                       className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                                     >
                                       <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
                                       ></path>
                                     </svg>

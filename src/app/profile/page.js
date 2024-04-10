@@ -11,10 +11,7 @@ import toast from 'react-hot-toast';
 import { deleteUser } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 
-
-
 export default function Account() {
-
 
     // Firebase information retrival function here
     const [userDetails, setUserDetails] = useState(null);
@@ -38,7 +35,6 @@ export default function Account() {
     const [showPassword,setShowPassword] = useState(false);
     const [showConfirmPassword,setShowConfirmPassword] = useState(false);
 
-
     const { currentUser, updatepassword, reautentication } = useAuth()
    
     async function handleSubmit(e){
@@ -54,7 +50,6 @@ export default function Account() {
             // reauthenticate 
             await reautentication(oldPassword.current.value)
             
-
             // changes password
             await updatepassword(newPassword.current.value)
             setShowPasswordModal(false) 
@@ -65,7 +60,6 @@ export default function Account() {
             toast.error(e)
             console.log(e)  
           }
-            
         } else {
             setOldPasswordError("Old Password required")
             setNewPasswordError("New Password is required")
@@ -247,7 +241,7 @@ export default function Account() {
                                 <div className='grid grid-cols-2 mt-3 mb-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
                                     <h2 id="email_address" className="flex dark:text-white text-white text-2xl font-mono ">EMAIL ADDRESS:</h2>
                                     <input disabled className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    type="email" defaultValue={currentUser.email} id="first name" name="email"/>
+                                    type="email" defaultValue={(currentUser ? currentUser.email : "")} id="first name" name="email"/>
                                 </div>
                                 
                                 <div className='grid grid-cols-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    

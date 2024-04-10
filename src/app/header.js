@@ -27,18 +27,16 @@ export default function Header() {
 
     // function that logout the user
     async function signOut(e){
+        e.preventDefault()
+
         try{
-            await signout()    
+            await signout()   
+            router.push('/login'); 
             setError(false)
         } catch(e){
             setError(true)
             console.log(e)
         }
-
-        if(!error){ // if signout is successful it goes back to the login page
-            e.preventDefault()
-            router.push('/login'); // Navigate to the main page
-        }   
     }
 
     function handleSubmit(e){
