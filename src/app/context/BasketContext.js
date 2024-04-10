@@ -15,7 +15,6 @@ export function BasketProvider({children}) {
    const [basketSize, setBasketSize] = useState(0);
 
    useEffect(() => {
-      console.log(guestBasket);
       if (currentUser) {
          // get basket value from the database
          const userBasketRef = ref(database, "Basket/" + currentUser.uid);

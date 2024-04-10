@@ -1,6 +1,6 @@
 "use client"; 
 import React, { useContext, useState, useEffect } from "react"
-import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail,
+import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail,
 updatePassword, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { auth } from "../firebaseConfig"
 
@@ -16,11 +16,14 @@ export function AuthProvider({ children }) {
 
   function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password)
-  }
-  
 
-  function signin(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+  }
+
+  async function signin(email, password) {
+    await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      // send a verification email.
+      sendEmailVerification(userCredential.user);
+    })
   }
 
   function signout() {

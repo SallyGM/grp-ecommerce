@@ -206,8 +206,8 @@ export default function Account() {
             if (snapshot.exists()) {
                 const userDetails = snapshot.val();
                 // Extract required fields (first name, last name, email)
-                const { firstName, lastName, email } = userDetails;
-                setUserDetails({ firstName, lastName, email });
+                const { firstName, lastName } = userDetails;
+                setUserDetails({ firstName, lastName });
             } else {
                 console.log("No data available");
             }
@@ -246,7 +246,7 @@ export default function Account() {
                                 <div className='grid grid-cols-2 mt-3 mb-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
                                     <h2 id="email_address" className="flex dark:text-white text-white text-2xl font-mono ">EMAIL ADDRESS:</h2>
                                     <input disabled className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    type="email" defaultValue={userDetails.email} id="first name" name="email"/>
+                                    type="email" defaultValue={currentUser.email} id="first name" name="email"/>
                                 </div>
                                 
                                 <div className='grid grid-cols-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
