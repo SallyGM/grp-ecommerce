@@ -190,6 +190,8 @@ export default function Home() {
     } 
   }
 
+
+
   // FORM SUBMIT FUNCTION
   async function handleSubmit(e) {
     e.preventDefault();
@@ -288,28 +290,28 @@ export default function Home() {
           <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="firstName">First Name*</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
               type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
               {firstNameError && <span style={{ color: 'red', fontSize: '12px' }}>{firstNameError}</span>}
             </div>
             
             <div>
               <label htmlFor="lastName">Last Name*</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
               type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
               {lastNameError && <span style={{ color: 'red', fontSize: '12px' }}>{lastNameError}</span>}
             </div>
 
             <div>
               <label htmlFor="email">Email*</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
               type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
               {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}
             </div>
 
             <div>
               <label htmlFor="confirmEmail">Confirm Email*</label>
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
               type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}  autoComplete="nope"></input>
               {confEmailError && <span style={{ color: 'red', fontSize: '12px' }}>{confEmailError}</span>}
             </div>
@@ -325,7 +327,7 @@ export default function Home() {
                 </Tooltip>
               </label>
               <div className="relative">
-                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
                 onChange={handlePasswordChange} required ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
                   <button
                     type="button"
@@ -388,7 +390,7 @@ export default function Home() {
                   </Tooltip>
                 </label>
                   <div className="relative">
-                    <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
                           onChange={handleConfirmPasswordChange} ref={confirmPassword} id="confirmPassword" name="confirmPassword" required type={showConfirmPassword ? "text" : "password"}/>
                       <button
                         type="button"
@@ -482,17 +484,24 @@ export default function Home() {
           <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW CARD</h3>
           <h3 className='flex self-center font-semibold text-white mb-5'>Add card by filling the details below</h3>
           <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
+            
             <form className="space-y-6 text-white font-mono">
+              <div>
+                <label htmlhtmlFor="text" className='text-white'>Cardholder Name</label>
+                <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChange}/>
+              </div>
+
               <div className="noIncrementer"> {/*noIncrementer is a CSS class*/}
                 <label htmlhtmlFor="number" className='text-white'>Card Number</label>
-                <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                <input className="block w-full mb-4 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                 type="number" inputmode='numeric' id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
                 onInput={checkLength(16)} onChange={handleChange}/>
-
               </div>
+
               <div className="noIncrementer">
                 <label htmlhtmlFor="number" className='text-white'>Sort Code</label>
-                <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                <input className="block w-full rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                   type="number" inputmode="numeric" id="sortCode" name="sortCode" placeholder='26-02-54' required value={formData.sortCode} 
                   onInput={checkLength(6)} onChange={handleChange}/>
               </div>
@@ -500,7 +509,7 @@ export default function Home() {
               <div className='inline-flex justify-evenly'>
                 <div className='mr-5'>
                     <label htmlhtmlFor="number" className='text-white'>Exp.Date</label>
-                    <input className="block w-52 mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    <input className="block w-44 my-2.5 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                     type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
                 </div> 
                 <div className="ml-5 noIncrementer">
@@ -513,21 +522,15 @@ export default function Home() {
                       </svg>
                     </Tooltip>
                   </label>
-                  <input className="block w-full mt-2 my-2.5 rounded-md border-0 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                   type="number" inputmode="numeric" id="securityCode" name="securityCode" placeholder='342' required value={formData.securityCode} 
                   onInput={checkLength(3)} onChange={handleChange}/>
                 </div>
               </div>
 
-              <div>
-                <label htmlhtmlFor="text" className='text-white'>Card Holder</label>
-                <input className="block w-full mt-2 my-2.5 rounded-md border-1 border-black py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChange}/>
-              </div>
-
-              <div className='flex justify-evenly mt-10'>
-                <Button className="w-52 mr-1 mb-2 cardButton" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                <Button type="submit" className="w-52 ml-1 mb-2"  style={{background: '#00052d', border : '#00052d'}} onClick={setCardData}>CONFIRM</Button>
+              <div className='flex justify-evenly'>
+                <Button className="w-52 mr-3 mb-4 mt-4" onClick ={()=>setShowAddCardModal(false)}>DISMISS</Button>
+                <Button type="submit" className="w-52 ml-3 mb-4 mt-4"  style={{background: '#00052d', border : '#00052d'}} onClick={setCardData}>CONFIRM</Button>
               </div>
             </form>
           </div>
