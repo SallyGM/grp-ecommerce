@@ -101,7 +101,6 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
 }
 
 
-
 .game-table {
   width: 100%;
   text-align: center; /* Center-align text */
@@ -112,11 +111,11 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
 
 }
 
-
 .game-table tr {
   padding: 5px; /* Padding inside table cells */
   border-bottom: 1px solid rgb(133, 133, 133); ;
 }
+
 
 .prod_btn{
   width: 100%;
@@ -128,10 +127,10 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
 
 }
 
-
 .prod_btn:hover{
   background: #c50edd;
 }
+
 
 .banner-game{
   background-color: #020a4f;
@@ -149,15 +148,17 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
 }
 
 
-
 * {
   box-sizing: border-box;
 }
+
 
 p {
   margin-top: 20px;
   line-height: 1.5;
 }
+
+
 .tabs {
   display: flex;
   flex-wrap: wrap;
@@ -165,10 +166,14 @@ p {
   background: rgb(30 64 175 / var(--tw-bg-opacity));
   box-shadow: 0 48px 80px -32px rgba(0,0,0,0.3);
 }
+
+
 .input {
   position: absolute;
   opacity: 0;
 }
+
+
 .label {
   width: 100%;
   margin-right: 10px;
@@ -223,8 +228,6 @@ p {
 }
 
 
-
-
 /*CSS BASKET*/
 .top_bar_basket{
   background-color:#020a4f;
@@ -261,5 +264,21 @@ p {
 /* components/ProgressTracker.module.css */
 .progressBar {
   transition: width 0.3s ease-in-out; /* Example CSS module style */
+}
+
+.cardModalX {
+  height: 1.5rem;
+  width: 1.5rem;
+  place-self: end;
+  text-align: end;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 100%;
+}
+
+.cardModalX:hover {
+  box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.8);
+  transition: 0.3s;
+  display: flex;
 }
 
