@@ -272,10 +272,10 @@ return (
         </div>
 
         {/*Divider between login options*/} 
-        <div className="inline-flex mt-6">
-          <Divider className="self-center  w-40 m-3"></Divider>
-            <a className="justify-self-center text-white m-3">OR</a>
-          <Divider className="self-center w-40 m-3"></Divider>
+        <div className="inline-flex mt-6 self-center">
+          <Divider className="self-center w-48 m-3"></Divider>
+            <a className="justify-self-center text-white m-3"> OR </a>
+          <Divider className="self-center w-48 m-3"></Divider>
         </div>
         
         {/*Facebook sign in button*/}
