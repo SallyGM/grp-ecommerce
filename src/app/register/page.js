@@ -482,7 +482,7 @@ export default function Home() {
         {/*MODAL FOR ADD CARD */}
         <Modal isVisible={showAddCardModal} onClose ={()=> setShowAddCardModal(false)}>
           <h3 className='text-xl flex self-center font-semibold text-white mb-5'>ADD NEW CARD</h3>
-          <h3 className='flex self-center font-semibold text-white mb-5'>Add card by filling the details below</h3>
+          <h3 className='flex self-center font-semibold text-white mb-6'>Add card by filling the details below</h3>
           <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
             
             <form className="space-y-6 text-white font-mono">
@@ -529,8 +529,8 @@ export default function Home() {
               </div>
 
               <div className='flex justify-evenly'>
-                <Button className="w-52 mr-3 mb-4 mt-4" onClick ={()=>setShowAddCardModal(false)}>DISMISS</Button>
-                <Button type="submit" className="w-52 ml-3 mb-4 mt-4"  style={{background: '#00052d', border : '#00052d'}} onClick={setCardData}>CONFIRM</Button>
+                <Button className="w-2/4 mr-3 mb-4 mt-4" onClick ={()=>setShowAddCardModal(false)}>DISMISS</Button>
+                <Button type="submit" className="w-2/4 ml-3 mb-4 mt-4"  style={{background: '#00052d', border : '#00052d'}} onClick={setCardData}>CONFIRM</Button>
               </div>
             </form>
           </div>
