@@ -29,6 +29,7 @@ export default function Home() {
   const [showCheckEmail, setShowCheckEmail] = useState(false);
   const [showPassword,setShowPassword] = useState(false)
   const [showConfirmPassword,setShowConfirmPassword] = useState(false)
+  const [checkDateError, setCheckDateError] = useState('');
   const password = useRef();
   const confirmPassword = useRef();
   const email = useRef();
@@ -188,6 +189,17 @@ export default function Home() {
       if (e.target.value.length > maxLength)
         e.target.value = e.target.value.slice(0, maxLength);
     } 
+  }
+
+  // CHECKS IF EXPIRY DATE IS VALID
+  const checkDate = (e) => {
+    const currentDate = new Date;
+    const expireDate = new Date(e.target.value);
+    if (currentDate > expireDate) {
+      setCheckDateError('Invalid Date')
+    } else {
+      setCheckDateError('')
+    }
   }
 
 
@@ -488,20 +500,20 @@ export default function Home() {
             <form className="space-y-6 text-white font-mono">
               <div>
                 <label htmlhtmlFor="text" className='text-white'>Cardholder Name</label>
-                <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                <input className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                 type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChange}/>
               </div>
 
               <div className="noIncrementer"> {/*noIncrementer is a CSS class*/}
                 <label htmlhtmlFor="number" className='text-white'>Card Number</label>
-                <input className="block w-full mb-4 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                <input className="block w-full my-1 mb-4 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                 type="number" inputmode='numeric' id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
                 onInput={checkLength(16)} onChange={handleChange}/>
               </div>
 
               <div className="noIncrementer">
                 <label htmlhtmlFor="number" className='text-white'>Sort Code</label>
-                <input className="block w-full rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                <input className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                   type="number" inputmode="numeric" id="sortCode" name="sortCode" placeholder='26-02-54' required value={formData.sortCode} 
                   onInput={checkLength(6)} onChange={handleChange}/>
               </div>
@@ -509,8 +521,10 @@ export default function Home() {
               <div className='inline-flex justify-evenly'>
                 <div className='mr-5'>
                     <label htmlhtmlFor="number" className='text-white'>Exp.Date</label>
-                    <input className="block w-44 my-2.5 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
-                    type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
+                    <input className="block w-44 my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                    type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} 
+                    onInput={checkDate} onChange={handleChange}/>
+                    {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
                 </div> 
                 <div className="ml-5 noIncrementer">
                   <label htmlhtmlFor="number" className='inline-flex text-white'>CVV
@@ -522,7 +536,7 @@ export default function Home() {
                       </svg>
                     </Tooltip>
                   </label>
-                  <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                  <input className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                   type="number" inputmode="numeric" id="securityCode" name="securityCode" placeholder='342' required value={formData.securityCode} 
                   onInput={checkLength(3)} onChange={handleChange}/>
                 </div>
