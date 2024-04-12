@@ -6,6 +6,8 @@ import { useAuth } from '../context/AuthContext'
 import { useProductContext } from '../context/ProductContext';
 import InputMask from 'react-input-mask'
 import { useRouter } from 'next/navigation';
+import { database } from '../firebaseConfig';
+import { ref, update } from 'firebase/database';
 
 export default function Home() {
 
@@ -30,6 +32,33 @@ export default function Home() {
   const sortCode = useRef();
   const expirationDate = useRef();
   const router = useRouter();
+
+  /* Work in progress to handle Pay function and update database
+  // Function to handle the "Pay" button click
+  const handlePay = async () => {
+    // Update product quantity and sold count in Firebase
+    const updates = {};
+    basket.forEach((item) => {
+      const productId = item.id;
+      const quantity = item.quantity;
+      const sold = item.quantity; //sold var to use to increase 'Sold' node in Firebase
+
+      // Update product quantity in Firebase
+      updates[`Products/${productId}/quantity`] = quantity;
+
+      // Increase sold count in Firebase
+      updates[`Products/${productId}/sold`] = (products.find(product => product.id === productId).sold || 0) + sold;
+    });
+
+    try {
+      await update(ref(database), updates);
+      await clearBasket(); // Clear the basket after successful payment
+      router.push(`src\app\page.js`); // Redirect to home page (temporary)
+    } catch (error) {
+      console.error('Error processing payment:', error);
+    }
+  }; */
+
 
   useEffect(() => {
     if(products.length > 0){
