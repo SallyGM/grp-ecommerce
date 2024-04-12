@@ -283,7 +283,8 @@ export default function Home() {
   // CHECKS IF EXPIRY DATE IS VALID
   const checkDate = (e) => {
     const currentDate = new Date;
-    if (currentDate > formData.expDate) {
+    const expireDate = new Date(e.target.value);
+    if (currentDate > expireDate) {
       setCheckDateError('Invalid Date')
     } else {
       setCheckDateError('')

@@ -104,8 +104,8 @@ export default function CardStored() {
     // CHECKS IF EXPIRY DATE IS VALID ADD CARD MODAL
     const checkAddModalDate = (e) => {
         const currentDate = new Date;
-        //const expireDate = new Date(e.target.value);
-        if (currentDate > formData.expDate) {
+        const expireDate = new Date(e.target.value);
+        if (currentDate > expireDate) {
           setCheckDateError('Invalid Date')
         } else {
           setCheckDateError('')
@@ -114,8 +114,8 @@ export default function CardStored() {
     // CHECKS IF EXPIRY DATE IS VALID EDIT CARD MODAL
     const checkEditModalDate = (e) => {
         const currentDate = new Date;
-        //const expireDate = new Date(e.target.value);
-        if (currentDate > card.expDate) {
+        const expireDate = new Date(e.target.value);
+        if (currentDate > expireDate) {
           setCheckDateError('Invalid Date')
         } else {
           setCheckDateError('')
