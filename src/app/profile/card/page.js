@@ -17,6 +17,7 @@ export default function CardStored() {
     const [showEditCard, setShowEditCard] = useState(false);
     const [showDeleteCard, setShowDeleteCard] = useState(false);
     const [card, setCard] = useState('');
+    const [checkDateError, setCheckDateError] = useState('');
     const [formData, setFormData] = useState({
         cardNumber: '',
         sortCode: '',
@@ -90,13 +91,24 @@ export default function CardStored() {
 
 
     // HANDLE MAX LENGTH IN CARD NUMBER, SORT CODE AND CVV
-//partial ref: https://www.youtube.com/watch?v=DDUdZNCuwtU
-const checkLength = (maxLength) => {
-    return function (e) {
-      if (e.target.value.length > maxLength)
-         e.target.value = e.target.value.slice(0, maxLength);
-    } 
-  }
+    //partial ref: https://www.youtube.com/watch?v=DDUdZNCuwtU
+    const checkLength = (maxLength) => {
+        return function (e) {
+            if (e.target.value.length > maxLength)
+                e.target.value = e.target.value.slice(0, maxLength);
+        }
+    }
+
+    // CHECKS IF EXPIRY DATE IS VALID
+    const checkDate = (e) => {
+        const currentDate = new Date;
+        const expireDate = new Date(e.target.value);
+        if (currentDate > expireDate) {
+          setCheckDateError('Invalid Date')
+        } else {
+          setCheckDateError('')
+        }
+    }
 
 
     // Function that handle confirm button click on edit card dialog
@@ -263,7 +275,10 @@ const checkLength = (maxLength) => {
                         <div className='mr-5'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-52 my-2.5 rounded-md p-1.5 text-gray-900 "
-                            type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} onChange={handleChange}/>
+                            type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate}
+                            onInput={checkDate} onChange={handleChange}/>
+                            {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
+                            {/* checkDateError doesn't work here */}
                         </div>
                     
                         <div className='ml-5 noIncrementer'>
@@ -322,7 +337,10 @@ const checkLength = (maxLength) => {
                         <div className='mr-3'>
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-full my-3.5 rounded-md p-1.5 text-gray-900 "
-                            type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
+                            type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate}
+                            onInput={checkDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
+                            {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
+                            {/* checkDateError doesn't work here */}
                         </div>
 
                         <div className='ml-3' class="noIncrementer">
