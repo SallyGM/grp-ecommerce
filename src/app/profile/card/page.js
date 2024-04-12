@@ -290,7 +290,6 @@ export default function CardStored() {
                             type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate}
                             onInput={checkAddModalDate} onChange={handleChange}/>
                             {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
-                            {/* checkDateError doesn't work here */}
                         </div>
                     
                         <div className='ml-5 noIncrementer'>
@@ -352,7 +351,6 @@ export default function CardStored() {
                             type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate}
                             onInput={checkEditModalDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
                             {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
-                            {/* checkDateError doesn't work here */}
                         </div>
 
                         <div className='ml-3' class="noIncrementer">
