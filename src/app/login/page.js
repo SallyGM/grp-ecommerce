@@ -15,6 +15,7 @@ import { auth } from '../firebaseConfig';
 
 
 
+
 export default function Login() {
   //Use the useState Hook to keep track of each inputs value
   const { currentUser, signin, signout, resetPassword} = useAuth()
@@ -38,6 +39,8 @@ export default function Login() {
     signInWithPopup(auth, provider)
     .then((result)=>{
         console.log(result);
+        // The signed-in user info.
+        //const user = result.user;
   })
   .catch((error) =>{
     console.log(error.message);
