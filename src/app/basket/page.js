@@ -33,31 +33,8 @@ export default function Home() {
   const expirationDate = useRef();
   const router = useRouter();
 
-  /* Work in progress to handle Pay function and update database
-  // Function to handle the "Pay" button click
-  const handlePay = async () => {
-    // Update product quantity and sold count in Firebase
-    const updates = {};
-    basket.forEach((item) => {
-      const productId = item.id;
-      const quantity = item.quantity;
-      const sold = item.quantity; //sold var to use to increase 'Sold' node in Firebase
 
-      // Update product quantity in Firebase
-      updates[`Products/${productId}/quantity`] = quantity;
 
-      // Increase sold count in Firebase
-      updates[`Products/${productId}/sold`] = (products.find(product => product.id === productId).sold || 0) + sold;
-    });
-
-    try {
-      await update(ref(database), updates);
-      await clearBasket(); // Clear the basket after successful payment
-      router.push(`src\app\page.js`); // Redirect to home page (temporary)
-    } catch (error) {
-      console.error('Error processing payment:', error);
-    }
-  }; */
 
 
   useEffect(() => {
@@ -218,6 +195,24 @@ export default function Home() {
     removeFromBasket(productID)
   };
 
+//Function to place the order and update the stock/sold values
+/*const handlePay = async () => {
+  try {
+    // Call payForBasket function
+    await createOrder();
+    
+    // Clear the basket after successful payment
+    await clearBasket();
+    
+    // Redirect or perform any other action after successful payment
+    // For example:
+    router.push(`/success`);
+  } catch (error) {
+    console.error('Error processing payment:', error);
+    // Handle errors, display a message, etc.
+  }
+};*/
+
   return (
     (checkOut === true ? (
       <div className='pt-5 bg-blue-800 pb-20'>
@@ -330,7 +325,7 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Pay</button>
+              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Pay</button>
             </form>
           </Card>
         </div>
