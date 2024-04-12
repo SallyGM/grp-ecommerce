@@ -15,10 +15,6 @@ import { database } from '../firebaseConfig.js';
 import { ref , set, get } from "firebase/database";
 import { useBasketContext } from '../context/BasketContext.js';
 
-
-
-
-
 export default function Login() {
   //Use the useState Hook to keep track of each inputs value
   const { currentUser, signin, signout, resetPassword} = useAuth()
@@ -36,52 +32,11 @@ export default function Login() {
   const [user, setUser] = useState(false);
   const [showPassword,setShowPassword] = useState(false)
   const { guestBasket, registerBasket } = useBasketContext();
-
   
   // Sign in with Facebook
   const signInWithFacebook = async () => {
     const provider = new FacebookAuthProvider();
     try {
-        const result = await signInWithPopup(auth, provider);
-        console.log('Sign-in successful:', result);
-        
-        // The signed-in user info.
-        const user = result.user;
-        const name = user.displayName;
-        const userId = user.uid;
-        const data = {
-            "firstName": name
-        }
-        console.log(data,userId);
-
-        // Check if the user already exists in the database
-        const userRef = ref(database, 'User/' + userId);
-        const userSnapshot = await get(userRef);
-        if (userSnapshot.exists()) {
-  
-            // if user exist redirect to the main page
-            toast.success("Login Successfull")
-            router.push('/');
-            if(Object.keys(guestBasket).length > 0){
-              await registerBasket(result)
-              toast.success('Basket Registered Successfull!');
-            }
-            return; // Exit the function if user already exists
-        }
-        // if user does not exist redirect to the register page
-        signout();
-        toast.error("User does not exist, Please register")
-        router.push('/register');
-    } catch (error) {
-        signout();
-        console.error('Error signing in with Facebook', error);
-        toast.error('Error signing in or writing to database');
-    }
-};
-// Sign in with Google
-const signInWithGoogle = async () => {
-  const provider = new GoogleAuthProvider();
-  try {
       const result = await signInWithPopup(auth, provider);
       console.log('Sign-in successful:', result);
       
@@ -90,184 +45,216 @@ const signInWithGoogle = async () => {
       const name = user.displayName;
       const userId = user.uid;
       const data = {
-          "firstName": name
+          "firstName": name,
+          "lastName": ""
       }
-      console.log(data,userId);
+        
+      // Check if the user already exists in the database
+      const userRef = ref(database, 'User/' + userId);
+      await set(userRef, data).then(async () => {
+        if(Object.keys(guestBasket).length > 0){
+          await registerBasket(result.user)
+          toast.success('Basket Registered Successfull!');
+        }
+      }).catch((error) => {
+        toast.error('Error registering basket');
+      });
+
+      // login
+      toast.success("Login Successfull")
+      router.push('/');
+    } catch (error) {
+        signout();
+        console.error('Error signing in with Facebook');
+        toast.error('Error signing in or writing to database');
+    }
+  };
+
+  // Sign in with Google
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log('Sign-in successful:', result);
+      
+      // The signed-in user info.
+      const user = result.user;
+      const name = user.displayName;
+      const userId = user.uid;
+      const data = {
+          "firstName": name,
+          "lastName":""
+      }
 
       // Check if the user already exists in the database
       const userRef = ref(database, 'User/' + userId);
-      const userSnapshot = await get(userRef);
-      if (userSnapshot.exists()) {
-
-          // if user exist redirect to the main page
-          toast.success("Login Successfull")
-          router.push('/');
-          if(Object.keys(guestBasket).length > 0){
-            await registerBasket(result)
-            toast.success('Basket Registered Successfull!');
-          }
-          return; // Exit the function if user already exists
-      }
-      // if user does not exist redirect to the register page
-      signout();
-      toast.error("User does not exist, Please register")
-      router.push('/register');
-  } catch (error) {
-      signout();
-      console.error('Error signing in with Facebook', error);
-      toast.error('Error signing in or writing to database');
-  }
-};
-
-
-
-
-  useEffect(() => {
-    if (currentUser){
-      // making sure user exist before verifying email
-      if(currentUser.emailVerified){
-        // redirect to the main page
-        router.push('/')
-      } 
-    } 
-  }, [currentUser]);                  
-  
-
-// Function that hanle the Check email modal click
-const handleConfirmCheckEmailClick = () => {
-  setShowCheckEmail(false);
-  router.push('/login');
-};
-
-async function handleSubmit(e) {
-  e.preventDefault();
-
-  // Submit form if email and password are valid
-  if (emailError === '' && passwordError === '') {
-    try {
-      setEmailError('');
-      setPasswordError('');
-      setLoading(true); // disable login button
-
-      // Sign in user with email and password
-      const emailValue = email.current.value;
-      const passwordValue = password.current.value;
-      const credential = await signin(emailValue, passwordValue);
-      
-      setUser(credential.user)
-
-      // Check if currentUser is not null
-      
-      if (credential && credential.user.emailVerified) {
-        // Email is verified, proceed with login
-        setShowAlertBanner(false);
-        console.log('Login successful');
-        toast.success("Login successful");
+      await set(userRef, data).then(async () => {
         if(Object.keys(guestBasket).length > 0){
-          await registerBasket(newUser)
+          await registerBasket(result.user)
           toast.success('Basket Registered Successfull!');
         }
-        router.push('/')
-      } else {
-        // Email is not verified or user does not exist
-        setShowAlertBanner(true);
-        //console.log('Email is not verified or user does not exist');
-        toast.error("Email is not verified or user does not exist. Please try again.");
-        // Sign out the user since they cannot log in without verifying their email
-        await signout();
+      }).catch((error) => {
+        toast.error('Error registering basket ' + error);
+      });
+
+      // login
+      toast.success("Login Successfull")
+      router.push('/');
+
+    } catch (error) {
+        signout();
+        console.error('Error signing in with Google', error);
+        toast.error('Error registering user');
+    }
+  };
+
+    useEffect(() => {
+      if (currentUser){
+        // making sure user exist before verifying email
+        if(currentUser.emailVerified){
+          // redirect to the main page
+          router.push('/')
+        } 
+      } 
+    }, [currentUser]);                  
+    
+
+  // Function that hanle the Check email modal click
+  const handleConfirmCheckEmailClick = () => {
+    setShowCheckEmail(false);
+    router.push('/login');
+  };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    // Submit form if email and password are valid
+    if (emailError === '' && passwordError === '') {
+      try {
+        setEmailError('');
+        setPasswordError('');
+        setLoading(true); // disable login button
+
+        // Sign in user with email and password
+        const emailValue = email.current.value;
+        const passwordValue = password.current.value;
+        const credential = await signin(emailValue, passwordValue);
+        
+        setUser(credential.user)
+
+        // Check if currentUser is not null
+        
+        if (credential && credential.user.emailVerified) {
+          // Email is verified, proceed with login
+          setShowAlertBanner(false);
+          console.log('Login successful');
+          toast.success("Login successful");
+          if(Object.keys(guestBasket).length > 0){
+            await registerBasket(newUser)
+            toast.success('Basket Registered Successfull!');
+          }
+          router.push('/')
+        } else {
+          // Email is not verified or user does not exist
+          setShowAlertBanner(true);
+          //console.log('Email is not verified or user does not exist');
+          toast.error("Email is not verified or user does not exist. Please try again.");
+          // Sign out the user since they cannot log in without verifying their email
+          await signout();
+        }
+
+        setLoading(false); // enable login button
+      } catch (error) {
+        //console.error('Error in login process:', error.message);
+        toast.error("Error in login process: " + error.message);
+        setLoading(false); // enable login button even if error occurs
       }
-
-      setLoading(false); // enable login button
-    } catch (error) {
-      //console.error('Error in login process:', error.message);
-      toast.error("Error in login process: " + error.message);
-      setLoading(false); // enable login button even if error occurs
+    } else {
+      setEmailError("Email is required");
+      setPasswordError("Password is required");
     }
-  } else {
-    setEmailError("Email is required");
-    setPasswordError("Password is required");
   }
-}
 
-// Handle email change
-const handleEmailChange = (e) => {
-  
-  // Validate email pattern
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
-  if (!isEmailValid) {
-    setEmailError('Invalid email address');
-  }else {
-    setEmailError('');
-  }
-};
-
-//Handle password change
-const handlePasswordChange = (e) => {
-  
-  // Validate password pattern (at least 8 characters and must contain one special character)
-  const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
-  if (!isPasswordValid) {
-    setPasswordError('Password must be at least 8 characters long and contain one specal character');
-  } else {
-    setPasswordError('');
-  }
-};
-// Handle email forgot password change
-const handleForgotPasswordEmailChange = (e) => {
-  
-  // Validate email pattern
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
-  if (!isEmailValid) {
-    setEmailModalError('Invalid email address');
-  }else {
-    setEmailModalError('');
-  }
-};
-async function handleSendResetPasswordVerification(e) {
-  e.preventDefault();
-  // Check if the email is valid
-  if (emailModalError === '') {
-    try {
-      await resetPassword(emailModal.current.value);
-      console.log('Password reset email sent successfully.');
-      toast.success("Password reset email sent successfully.");
-      setShowForgotPassword(false);
-      setShowCheckEmail(true);
-      
-    } catch (error) {
-      // Log and display error message if an error occurs
-      console.error('Error:', error.message);
-      toast.error("An error occurred while processing your request.");
+  // Handle email change
+  const handleEmailChange = (e) => {
+    
+    // Validate email pattern
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+    if (!isEmailValid) {
+      setEmailError('Invalid email address');
+    }else {
+      setEmailError('');
     }
-  } else {
-    // Show error if email is not valid
-    setEmailModalError("Invalid email address");
-  }  
-}
-useEffect(() => {
-  setShowAlertBanner(false);
-}, []);
+  };
 
+  //Handle password change
+  const handlePasswordChange = (e) => {
+    
+    // Validate password pattern (at least 8 characters and must contain one special character)
+    const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
+    if (!isPasswordValid) {
+      setPasswordError('Password must be at least 8 characters long and contain one specal character');
+    } else {
+      setPasswordError('');
+    }
+  };
 
-// Send email verification again function
-const SendVerificationEmail = async (user) => {
-  try {
-    // Send email verification using the obtained ID token
-    sendEmailVerification(user);
+  // Handle email forgot password change
+  const handleForgotPasswordEmailChange = (e) => {
+    
+    // Validate email pattern
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+    if (!isEmailValid) {
+      setEmailModalError('Invalid email address');
+    }else {
+      setEmailModalError('');
+    }
+  };
 
-    console.log('Email verification sent again');
-    toast.success("Email verification sent to your inbox");
+  async function handleSendResetPasswordVerification(e) {
+    e.preventDefault();
+    // Check if the email is valid
+    if (emailModalError === '') {
+      try {
+        await resetPassword(emailModal.current.value);
+        console.log('Password reset email sent successfully.');
+        toast.success("Password reset email sent successfully.");
+        setShowForgotPassword(false);
+        setShowCheckEmail(true);
+        
+      } catch (error) {
+        // Log and display error message if an error occurs
+        console.error('Error:', error.message);
+        toast.error("An error occurred while processing your request.");
+      }
+    } else {
+      // Show error if email is not valid
+      setEmailModalError("Invalid email address");
+    }  
+  }
+
+  useEffect(() => {
     setShowAlertBanner(false);
-  } catch (error) {
-    console.error('Error sending email verification:', error.message);
-    toast.error("Failed to send email verification: " + error.message);
-  }
-};
+  }, []);
 
 
+  // Send email verification again function
+  const SendVerificationEmail = async (user) => {
+    try {
+      // Send email verification using the obtained ID token
+      sendEmailVerification(user);
 
-return (
-  <Fragment>
+      console.log('Email verification sent again');
+      toast.success("Email verification sent to your inbox");
+      setShowAlertBanner(false);
+    } catch (error) {
+      console.error('Error sending email verification:', error.message);
+      toast.error("Failed to send email verification: " + error.message);
+    }
+  };
+
+  return (
+    <Fragment>
 
     {/*Alert banner */}
     {showAlertBanner && (
@@ -307,58 +294,58 @@ return (
                   </Tooltip>
                 </label>
                 <div className="relative">
-                      <input
+                    <input
                       className="block w-full mt-2 my-2.5 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       onChange={handlePasswordChange} ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
-                                <button
-                                  type="button"
-                                  aria-label={
-                                    showPassword ? "Password Visible" : "Password Invisible."
-                                  }
-                                  className="text-black dark:text-white"
-                                  onClick={() => {
-                                    setShowPassword((prev) => !prev);
-                                  }}
-                                >
-                                  {showPassword ? (
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      strokeWidth="1.5"
-                                      stroke="#00052d"
-                                      className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
-                                      tabIndex="-1"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                      ></path>
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                      ></path>
-                                    </svg>
-                                  ) : (
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      strokeWidth="1.5"
-                                      stroke="#00052d"
-                                      className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                                      ></path>
-                                    </svg>
-                                  )}
-                                </button>
-                                {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
+                        <button
+                          type="button"
+                          aria-label={
+                            showPassword ? "Password Visible" : "Password Invisible."
+                          }
+                          className="text-black dark:text-white"
+                          onClick={() => {
+                            setShowPassword((prev) => !prev);
+                          }}
+                        >
+                          {showPassword ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="#00052d"
+                              className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
+                              tabIndex="-1"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                              ></path>
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                              ></path>
+                            </svg>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="#00052d"
+                              className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                              ></path>
+                            </svg>
+                          )}
+                    </button>
+                  {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
               </div>
             </div>
             <a className="text-sm font-semibold text-indigo-600  hover:text-indigo-500 text-white" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
@@ -412,31 +399,31 @@ return (
       </Button>
     </Card>
   </div>
-  {/*Forgot password modal */}
-  <Modal isVisible={showForgotPassword}  onClose ={()=> setShowForgotPassword(false)}>
-          <h3 className='text-xl flex self-center font-semibold text-white mb-5'>RESET YOUR PASSWORD</h3>
-          <h3 className='flex self-center font-semibold text-white  mb-5'>Insert your email to reset your password</h3>
-          <form className="space-y-6 text-white self-center font-mono" onSubmit={handleSendResetPasswordVerification}>
-            <div className=' mt-2 mb-2  flex-wrap'>  
-            <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
-                <input className="block w-full rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="email" id="first name" name="email" required onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
-                {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
-            </div>
-            <div className='flex justify-evenly mt-10'>
-                <Button className="w-52 mr-2" color="gray" onClick ={()=>setShowForgotPassword(false)}> DISMISS</Button>
-                <Button type='submit' className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}}>CONFIRM</Button>
-            </div>
-          </form>
-      </Modal>
-      {/*Check Email modal */}
-      <Modal isVisible={showCheckEmail} onClose ={()=> setShowCheckEmail(false)}>
-          <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
-          <h3 className='flex self-center font-semibold text-white  mb-5'>We have sent you an email with the reset password link</h3>
-          <div className='flex justify-end mt-10'>
-              <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
-          </div>
-      </Modal>
-</Fragment>
+    {/*Forgot password modal */}
+    <Modal isVisible={showForgotPassword}  onClose ={()=> setShowForgotPassword(false)}>
+      <h3 className='text-xl flex self-center font-semibold text-white mb-5'>RESET YOUR PASSWORD</h3>
+      <h3 className='flex self-center font-semibold text-white  mb-5'>Insert your email to reset your password</h3>
+      <form className="space-y-6 text-white self-center font-mono" onSubmit={handleSendResetPasswordVerification}>
+        <div className=' mt-2 mb-2  flex-wrap'>  
+        <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
+            <input className="block w-full rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            type="email" id="first name" name="email" required onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
+            {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
+        </div>
+        <div className='flex justify-evenly mt-10'>
+            <Button className="w-52 mr-2" color="gray" onClick ={()=>setShowForgotPassword(false)}> DISMISS</Button>
+            <Button type='submit' className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}}>CONFIRM</Button>
+        </div>
+      </form>
+    </Modal>
+    {/*Check Email modal */}
+    <Modal isVisible={showCheckEmail} onClose ={()=> setShowCheckEmail(false)}>
+      <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
+      <h3 className='flex self-center font-semibold text-white  mb-5'>We have sent you an email with the reset password link</h3>
+      <div className='flex justify-end mt-10'>
+          <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
+      </div>
+    </Modal>
+  </Fragment>
   );
 }
