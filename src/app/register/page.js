@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Card, Button } from 'flowbite-react';
 import { database } from '../firebaseConfig.js';
 import { useAuth } from '../context/AuthContext.js'
-import { ref , set, push } from "firebase/database";
+import { ref , set, push, get } from "firebase/database";
 import { Fragment, useState, useRef, useEffect} from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,8 @@ import { sendEmailVerification } from 'firebase/auth';
 import { Tooltip } from 'flowbite-react';
 import { FormatUnderlined } from '@mui/icons-material';
 import { useBasketContext } from '../context/BasketContext.js';
+import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
 
 export default function Home() {
 
@@ -38,7 +40,6 @@ export default function Home() {
   const lName = useRef();
   const router = useRouter();
   const { guestBasket, registerBasket } = useBasketContext();
-  //const [newUser, setNewUser] = useState(true)
   const [registration, setRegistration] = useState(true)
   const {currentUser, signup, signin, signout} = useAuth();
   const [formData, setFormData] = useState({
@@ -49,6 +50,92 @@ export default function Home() {
     cardName: '',
     expDate: ''
   });
+
+  // Sign in with Facebook
+  const signInWithFacebook = async () => {
+    const provider = new FacebookAuthProvider();
+    try {
+        const result = await signInWithPopup(auth, provider);
+        console.log('Sign-in successful:', result);
+        
+        // The signed-in user info.
+        const user = result.user;
+        const name = user.displayName;
+        const userId = user.uid;
+        const data = {
+            "firstName": name
+        }
+        console.log(data,userId);
+
+        // Check if the user already exists in the database
+        const userRef = ref(database, 'User/' + userId);
+        const userSnapshot = await get(userRef);
+        if (userSnapshot.exists()) {
+            // if user already exist redirect to login page
+            router.push('/login');
+            signout();
+            return; // Exit the function if user already exists
+        }
+
+        // if user does not exist add the user to the database
+        await set(userRef, data);
+        toast.success('Registration suggessfull');
+        //Creates the basket if there is any 
+        if(Object.keys(guestBasket).length > 0){
+          await registerBasket(result)
+          toast.success('Basket Registered Successfull!');
+        }
+        // Redirect to the main page
+        router.push('/');
+    } catch (error) {
+        signout();
+        console.error('Error signing in with Facebook or writing to database:', error);
+        toast.error('Error signing in or writing to database');
+    }
+};
+
+ // Sign in with Google
+ const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+      const result = await signInWithPopup(auth, provider);
+      console.log('Sign-in successful:', result);
+      
+      // The signed-in user info.
+      const user = result.user;
+      const name = user.displayName;
+      const userId = user.uid;
+      const data = {
+          "firstName": name
+      }
+      console.log(data,userId);
+
+      // Check if the user already exists in the database
+      const userRef = ref(database, 'User/' + userId);
+      const userSnapshot = await get(userRef);
+      if (userSnapshot.exists()) {
+          // if user already exist redirect to login page
+          router.push('/login');
+          signout();
+          return; // Exit the function if user already exists
+      }
+
+      // if user does not exist add the user to the database
+      await set(userRef, data);
+      toast.success('Registration suggessfull');
+      //Creates the basket if there is any 
+      if(Object.keys(guestBasket).length > 0){
+        await registerBasket(result)
+        toast.success('Basket Registered Successfull!');
+      }
+      // Redirect to the main page
+      router.push('/');
+  } catch (error) {
+      signout();
+      console.error('Error signing in with Facebook or writing to database:', error);
+      toast.error('Error signing in or writing to database');
+  }
+};
 
   //function to redirect the user to the home page if already logged in
   useEffect (() => {
@@ -224,13 +311,9 @@ export default function Home() {
         // create acc
         // and send email verification
         const newUser = await signup(email.current.value, password.current.value)
-        //setNewUser(u)
-        // login
-        //await signin(email.current.value, password.current.value)
 
         setRegistration(true)
 
-        //await signout()
         if (newUser && registration){
 
           const data = {
@@ -473,7 +556,7 @@ export default function Home() {
               
               <div className='inline-flex place-content-center'>
                 {/*Facebook sign in button*/}
-                <Button className="inline-flex bg-blue-600 text-white w-2/6 mr-4" color='blue'>
+                <Button onClick={signInWithFacebook}  className="inline-flex bg-blue-600 text-white w-2/6 mr-4" color='blue'>
                   <svg className="w-6 h-6 mr-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
                   </svg>
@@ -481,7 +564,7 @@ export default function Home() {
                 </Button>
 
                 {/*Google sign in button*/}
-                <Button className="inline-flex bg-red-400 text-white w-2/6 ml-4" color='red'>
+                <Button onClick={signInWithGoogle} className="inline-flex bg-red-400 text-white w-2/6 ml-4" color='red'>
                   <svg className="w-6 h-6 mr-3" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
                   </svg>

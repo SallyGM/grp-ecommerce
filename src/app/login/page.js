@@ -9,8 +9,11 @@ import toast from 'react-hot-toast';
 import Modal from '@/components/modal.js';
 import { sendEmailVerification} from 'firebase/auth';
 import { Tooltip } from 'flowbite-react';
-import { signInWithPopup, FacebookAuthProvider } from 'firebase/auth';
+import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
+import { database } from '../firebaseConfig.js';
+import { ref , set, get } from "firebase/database";
+import { useBasketContext } from '../context/BasketContext.js';
 
 
 
@@ -32,22 +35,92 @@ export default function Login() {
   const [showAlertBanner, setShowAlertBanner] = useState(false);
   const [user, setUser] = useState(false);
   const [showPassword,setShowPassword] = useState(false)
+  const { guestBasket, registerBasket } = useBasketContext();
+
   
-
-  const signInWithFacebook =() =>{
+  // Sign in with Facebook
+  const signInWithFacebook = async () => {
     const provider = new FacebookAuthProvider();
-    signInWithPopup(auth, provider)
-    .then((result)=>{
-        console.log(result);
+    try {
+        const result = await signInWithPopup(auth, provider);
+        console.log('Sign-in successful:', result);
+        
         // The signed-in user info.
-        //const user = result.user;
-  })
-  .catch((error) =>{
-    console.log(error.message);
+        const user = result.user;
+        const name = user.displayName;
+        const userId = user.uid;
+        const data = {
+            "firstName": name
+        }
+        console.log(data,userId);
 
-  })
+        // Check if the user already exists in the database
+        const userRef = ref(database, 'User/' + userId);
+        const userSnapshot = await get(userRef);
+        if (userSnapshot.exists()) {
+  
+            // if user exist redirect to the main page
+            toast.success("Login Successfull")
+            router.push('/');
+            if(Object.keys(guestBasket).length > 0){
+              await registerBasket(result)
+              toast.success('Basket Registered Successfull!');
+            }
+            return; // Exit the function if user already exists
+        }
+        // if user does not exist redirect to the register page
+        signout();
+        toast.error("User does not exist, Please register")
+        router.push('/register');
+    } catch (error) {
+        signout();
+        console.error('Error signing in with Facebook', error);
+        toast.error('Error signing in or writing to database');
+    }
+};
+// Sign in with Google
+const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+      const result = await signInWithPopup(auth, provider);
+      console.log('Sign-in successful:', result);
+      
+      // The signed-in user info.
+      const user = result.user;
+      const name = user.displayName;
+      const userId = user.uid;
+      const data = {
+          "firstName": name
+      }
+      console.log(data,userId);
 
+      // Check if the user already exists in the database
+      const userRef = ref(database, 'User/' + userId);
+      const userSnapshot = await get(userRef);
+      if (userSnapshot.exists()) {
+
+          // if user exist redirect to the main page
+          toast.success("Login Successfull")
+          router.push('/');
+          if(Object.keys(guestBasket).length > 0){
+            await registerBasket(result)
+            toast.success('Basket Registered Successfull!');
+          }
+          return; // Exit the function if user already exists
+      }
+      // if user does not exist redirect to the register page
+      signout();
+      toast.error("User does not exist, Please register")
+      router.push('/register');
+  } catch (error) {
+      signout();
+      console.error('Error signing in with Facebook', error);
+      toast.error('Error signing in or writing to database');
   }
+};
+
+
+
 
   useEffect(() => {
     if (currentUser){
@@ -90,6 +163,10 @@ async function handleSubmit(e) {
         setShowAlertBanner(false);
         console.log('Login successful');
         toast.success("Login successful");
+        if(Object.keys(guestBasket).length > 0){
+          await registerBasket(newUser)
+          toast.success('Basket Registered Successfull!');
+        }
         router.push('/')
       } else {
         // Email is not verified or user does not exist
@@ -306,7 +383,7 @@ return (
         </Button>
 
         {/*Google sign in button*/}
-        <Button className="inline-flex text-white w-72 self-center bg-red-400" color='red'>
+        <Button onClick={signInWithGoogle} className="inline-flex text-white w-72 self-center bg-red-400" color='red'>
           <svg className="w-6 h-6 mr-3" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
           </svg>
