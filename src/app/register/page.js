@@ -17,6 +17,8 @@ import { FormatUnderlined } from '@mui/icons-material';
 import { useBasketContext } from '../context/BasketContext.js';
 import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
+import InputMask from 'react-input-mask'
+
 
 export default function Home() {
 
@@ -281,8 +283,7 @@ export default function Home() {
   // CHECKS IF EXPIRY DATE IS VALID
   const checkDate = (e) => {
     const currentDate = new Date;
-    const expireDate = new Date(e.target.value);
-    if (currentDate > expireDate) {
+    if (currentDate > formData.expDate) {
       setCheckDateError('Invalid Date')
     } else {
       setCheckDateError('')
@@ -589,16 +590,16 @@ export default function Home() {
 
               <div className="noIncrementer"> {/*noIncrementer is a CSS class*/}
                 <label htmlhtmlFor="number" className='text-white'>Card Number</label>
-                <input className="block w-full my-1 mb-4 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
-                type="number" inputmode='numeric' id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
-                onInput={checkLength(16)} onChange={handleChange}/>
+                <InputMask className="block w-full my-1 mb-4 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' mask="9999 9999 9999 9999" maskChar="" required value={formData.cardNumber} 
+                onInput={checkLength(19)} onChange={handleChange}/>
               </div>
 
               <div className="noIncrementer">
                 <label htmlhtmlFor="number" className='text-white'>Sort Code</label>
-                <input className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
-                  type="number" inputmode="numeric" id="sortCode" name="sortCode" placeholder='26-02-54' required value={formData.sortCode} 
-                  onInput={checkLength(6)} onChange={handleChange}/>
+                <InputMask className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                  id="sortCode" name="sortCode" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={formData.sortCode} 
+                  onInput={checkLength(8)} onChange={handleChange}/>
               </div>
 
               <div className='inline-flex justify-evenly'>

@@ -9,6 +9,8 @@ import Modal from '@/components/modal.js';
 import { useAuth } from '@/app/context/AuthContext.js';
 import toast from 'react-hot-toast';
 import { Tooltip } from 'flowbite-react';
+import InputMask from 'react-input-mask'
+
 
 export default function CardStored() {
  
@@ -99,11 +101,21 @@ export default function CardStored() {
         }
     }
 
-    // CHECKS IF EXPIRY DATE IS VALID
-    const checkDate = (e) => {
+    // CHECKS IF EXPIRY DATE IS VALID ADD CARD MODAL
+    const checkAddModalDate = (e) => {
         const currentDate = new Date;
-        const expireDate = new Date(e.target.value);
-        if (currentDate > expireDate) {
+        //const expireDate = new Date(e.target.value);
+        if (currentDate > formData.expDate) {
+          setCheckDateError('Invalid Date')
+        } else {
+          setCheckDateError('')
+        }
+    }
+    // CHECKS IF EXPIRY DATE IS VALID EDIT CARD MODAL
+    const checkEditModalDate = (e) => {
+        const currentDate = new Date;
+        //const expireDate = new Date(e.target.value);
+        if (currentDate > card.expDate) {
           setCheckDateError('Invalid Date')
         } else {
           setCheckDateError('')
@@ -259,16 +271,16 @@ export default function CardStored() {
 
                     <div class="noIncrementer"> {/*noIncrementer is a CSS class*/}
                         <label htmlFor="number" className='text-white'>Card Number</label>
-                        <input className="block w-full rounded-md p-1.5 text-gray-900 "
-                        type="number" inputmode='numeric' id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
-                        onInput={checkLength(16)} onChange={handleChange}/>
+                        <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
+                         id="cardNumber" name="cardNumber" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
+                        onInput={checkLength(19)} onChange={handleChange}/>
                     </div>
 
                     <div className="noIncrementer">
                         <label htmlFor="number" className='text-white'>Sort Code</label>
-                        <input className="block w-full rounded-md p-1.5 text-gray-900 "
-                        type="number" inputmode="numeric" id="sortCode" name="sortCode" placeholder='26-02-54' required value={formData.sortCode} 
-                        onInput={checkLength(6)} onChange={handleChange}/>
+                        <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
+                        id="sortCode" name="sortCode" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={formData.sortCode} 
+                        onInput={checkLength(8)} onChange={handleChange}/>
                     </div>
 
                     <div className='inline-flex justify-evenly'>
@@ -276,7 +288,7 @@ export default function CardStored() {
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-52 my-2.5 rounded-md p-1.5 text-gray-900 "
                             type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate}
-                            onInput={checkDate} onChange={handleChange}/>
+                            onInput={checkAddModalDate} onChange={handleChange}/>
                             {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
                             {/* checkDateError doesn't work here */}
                         </div>
@@ -321,16 +333,16 @@ export default function CardStored() {
 
                     <div class="noIncrementer">
                         <label htmlFor="number" className='text-white'>Card Number</label>
-                        <input className="block w-full rounded-md p-1.5 text-gray-900 "
-                        type="number" inputmode="numeric" id="card_number" name="card_number" placeholder='4625 2563 2356 8514' required value={card.cardNumber} 
-                        onInput={checkLength(16)} onChange={(e) => setCard({ ...card, cardNumber: e.target.value })}/> 
+                        <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
+                        id="card_number" name="card_number" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={card.cardNumber} 
+                        onInput={checkLength(19)} onChange={(e) => setCard({ ...card, cardNumber: e.target.value })}/> 
                     </div>
 
                     <div class="noIncrementer">
                         <label htmlFor="number" className='text-white'>Sort Code</label>
-                        <input className="block w-full rounded-md p-1.5 text-gray-900 "
-                        type="number" inputmode="numeric" id="sort_code" name="sort_code" placeholder='26-02-54' required value={card.sortCode}
-                        onInput={checkLength(6)} onChange={(e) => setCard({ ...card, sortCode: e.target.value })}/> 
+                        <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
+                        id="sort_code" name="sort_code" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={card.sortCode}
+                        onInput={checkLength(8)} onChange={(e) => setCard({ ...card, sortCode: e.target.value })}/> 
                     </div>
 
                     <div className='inline-flex justify-evenly'>
@@ -338,7 +350,7 @@ export default function CardStored() {
                             <label htmlFor="number" className='text-white'>Exp.Date</label>
                             <input className="block w-full my-3.5 rounded-md p-1.5 text-gray-900 "
                             type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate}
-                            onInput={checkDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
+                            onInput={checkEditModalDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
                             {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
                             {/* checkDateError doesn't work here */}
                         </div>
