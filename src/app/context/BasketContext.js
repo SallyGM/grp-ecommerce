@@ -42,10 +42,27 @@ export function BasketProvider({children}) {
          });
          setBasketSize(total);
       }
-   }, [currentUser, userBasket, guestBasket]);
+   }, [currentUser]);
+
+   useEffect(() => {
+      if(currentUser){
+           // set the size of the guest basket
+         let total = 0;
+         Object.keys(userBasket).forEach((key) => {
+           total += userBasket[key];
+         });
+         setBasketSize(total);
+      } else {
+          // set the size of the guest basket
+          let total = 0;
+          Object.keys(guestBasket).forEach((key) => {
+            total += guestBasket[key];
+          });
+          setBasketSize(total);
+      }
+   },[guestBasket, userBasket])
 
    // register basket of the new user
-   // TODO: might not be working 
    const registerBasket = async (user) => {
      
       // authenticated user
@@ -155,18 +172,17 @@ export function BasketProvider({children}) {
       }
    };
 
-
    //pay function 
    //Not working yet 
    const payForBasket = async (userBasket, currentUser) => {
       try {
           const updates = {};
           for (const productId in userBasket) {
-              const quantity = userBasket[productId];
-              const productRef = ref(database, `Products/${productId}`);
+               const quantity = userBasket[productId];
+               const productRef = ref(database, `Products/${productId}`);
   
-              const productSnapshot = await get(productRef);
-              if (productSnapshot.exists()) {
+               const productSnapshot = await get(productRef);
+               if (productSnapshot.exists()) {
                   const productData = productSnapshot.val();
                   const currentQuantity = productData.quantity || 0;
                   const soldCount = productData.sold || 0;
@@ -179,19 +195,17 @@ export function BasketProvider({children}) {
   
                   // Clear the item from user's basket
                   update[`Basket/${currentUser.uid}/${productId}`] = null;
-              }
-          }
+               }
+         }
   
-          await update(ref(database), updates);
+         await update(ref(database), updates);
   
           // Clear user's basket
-          setUserBasket([]);
+         setUserBasket([]);
       } catch (error) {
-          console.error('Error paying for basket:', error);
+         console.error('Error paying for basket:', error);
       }
-  };
-
-
+   };
 
    // this function creates an order
    // and clear the basket
