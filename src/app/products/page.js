@@ -7,6 +7,8 @@ import { FaceFrownIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
 import { useProductContext } from '../context/ProductContext';
 import { useBasketContext } from '../context/BasketContext';
+import toast from 'react-hot-toast';
+
 
 export default function Product() {
 
@@ -124,7 +126,9 @@ export default function Product() {
   }
 
   function handleClickAddToCart(productID, amount, e){
-    addToBasket(productID, amount)
+    addToBasket(productID, amount);
+    toast.success("Product added to basket!");
+    
   }
   
   function handleClickChangeQuantity(p, op){

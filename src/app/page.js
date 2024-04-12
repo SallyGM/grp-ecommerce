@@ -8,6 +8,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from 'next/navigation';
 import { useBasketContext } from '../app/context/BasketContext.js'
 import { useProductContext } from './context/ProductContext.js';
+import toast from 'react-hot-toast';
+
 
 export default function Home() {
 
@@ -37,7 +39,9 @@ export default function Home() {
   }
 
   function handleClickAddToCart(productID, amount, e){
-    addToBasket(productID, amount)
+    addToBasket(productID, amount);
+    toast.success('Product added to basket!');
+
   }
 
   function handleClickChangeQuantity(p, op){

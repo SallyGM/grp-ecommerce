@@ -4,6 +4,8 @@ import {database} from '../../firebaseConfig';
 import { ref, get, query } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { useBasketContext } from "../../context/BasketContext";
+import toast from 'react-hot-toast';
+
 
 /*Product Page*/
 
@@ -40,7 +42,8 @@ export default function Page({ params }) {
 
 
     function handleClickAddToCart(productID, e){
-        addToBasket(productID, 1)
+        addToBasket(productID, 1);
+        toast.success('Product added to basket!');
       }
       
    
