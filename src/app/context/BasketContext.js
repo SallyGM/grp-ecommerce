@@ -1,7 +1,7 @@
 "use client"
 import React, { useContext, useState, useEffect, useMemo } from "react" 
 import { database } from '../firebaseConfig';
-import { ref, set, get, push } from "firebase/database";
+import { ref, set, get, push, update } from "firebase/database";
 import { useAuth } from '../context/AuthContext.js'
 
 const BasketContext = React.createContext();
@@ -42,10 +42,27 @@ export function BasketProvider({children}) {
          });
          setBasketSize(total);
       }
-   }, [currentUser, userBasket, guestBasket]);
+   }, [currentUser]);
+
+   useEffect(() => {
+      if(currentUser){
+           // set the size of the guest basket
+         let total = 0;
+         Object.keys(userBasket).forEach((key) => {
+           total += userBasket[key];
+         });
+         setBasketSize(total);
+      } else {
+          // set the size of the guest basket
+          let total = 0;
+          Object.keys(guestBasket).forEach((key) => {
+            total += guestBasket[key];
+          });
+          setBasketSize(total);
+      }
+   },[guestBasket, userBasket])
 
    // register basket of the new user
-   // TODO: might not be working 
    const registerBasket = async (user) => {
      
       // authenticated user
@@ -155,6 +172,41 @@ export function BasketProvider({children}) {
       }
    };
 
+   //pay function 
+   //Not working yet 
+   const payForBasket = async (userBasket, currentUser) => {
+      try {
+          const updates = {};
+          for (const productId in userBasket) {
+               const quantity = userBasket[productId];
+               const productRef = ref(database, `Products/${productId}`);
+  
+               const productSnapshot = await get(productRef);
+               if (productSnapshot.exists()) {
+                  const productData = productSnapshot.val();
+                  const currentQuantity = productData.quantity || 0;
+                  const soldCount = productData.sold || 0;
+                  const newQuantity = currentQuantity - quantity;
+                  const newSoldCount = soldCount + quantity;
+  
+                  // Update quantity and sold count
+                  update[`Products/${productId}/quantity`] = newQuantity;
+                  update[`Products/${productId}/sold`] = newSoldCount;
+  
+                  // Clear the item from user's basket
+                  update[`Basket/${currentUser.uid}/${productId}`] = null;
+               }
+         }
+  
+         await update(ref(database), updates);
+  
+          // Clear user's basket
+         setUserBasket([]);
+      } catch (error) {
+         console.error('Error paying for basket:', error);
+      }
+   };
+
    // this function creates an order
    // and clear the basket
    const createOrder = async (orderDate, discount, price, userID, fullName, cardNumber, cvv, expirationDate, sortCode) => {
@@ -181,6 +233,8 @@ export function BasketProvider({children}) {
          try {
             const userBasketRef = ref(database, "Order/");
             await push(userBasketRef, data);
+             // Pay for the basket
+            await payForBasket(userBasket, currentUser);
          } catch (error) {
             console.error('Error creating order:', error);
          }
