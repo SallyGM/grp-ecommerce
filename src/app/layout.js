@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import { BasketProvider } from "./context/BasketContext";
 import { ProductProvider } from "./context/ProductContext";
+import { FavouriteProvider } from "./context/FavouriteContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +23,12 @@ export default function RootLayout({ children }) {
         <ProductProvider>
           <AuthProvider>
             <BasketProvider>
-              <Header/>
-              {children}
-              <Toaster position = "bottom-center"/>
-              <Footer/>
+              <FavouriteProvider>
+                <Header/>
+                {children}
+                <Toaster position = "bottom-center"/>
+                <Footer/>
+              </FavouriteProvider>
             </BasketProvider>
           </AuthProvider>
         </ProductProvider>

@@ -60,7 +60,6 @@ export function ProductProvider({ children }) {
             if (sales.items[p.id] !== undefined) {
                 p.discount = sales.items[p.id];
             } 
-
             return p;
           });
         } 

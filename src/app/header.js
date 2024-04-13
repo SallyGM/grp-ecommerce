@@ -60,9 +60,10 @@ export default function Header() {
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
                 <div className="flex flex-wrap justify-between gap-8 columns-3 items-center mx-auto max-w-screen-xl p-4">
                     {/* Logo to be placed here :) */}
-                    <a href="https://flowbite.com" className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <span className="self-center text-2xl font-semibold whitespace-nowrap text-black-500">Logo</span>
-                    </a>
+                    <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap text-black-500">Logo</span>
+                    </Link>
+                    
                     { valid ? (
                         <div className="relative hidden md:block">
                             <button onClick={handleSubmit} className="absolute inset-y-0 end-0 flex items-center pe-3">
