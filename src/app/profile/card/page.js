@@ -131,7 +131,7 @@ export default function CardStored() {
                 return;
             }
         const cardRef = ref(database, 'User/' + userId + '/card/'+ card.id);
-        // Use the update method to update the address
+        // Use the update method to update the card
         update(cardRef, card)
             .then(() => {
                 toast.success("Card updated successfully");
@@ -227,10 +227,10 @@ export default function CardStored() {
                                 <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
                                 <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
                                 <Tooltip content='Edit your card'>
-                                <img class="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
                                 </Tooltip>
                                 <Tooltip content='Delete your card'>
-                                <img class="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
                                 </Tooltip>
 
                             </div>

@@ -29,6 +29,10 @@
   /* Firefox */
   input[type=number] {
     -moz-appearance: textfield;
+    /* Define appearance property with vendor prefixes */
+    -webkit-appearance: none; /* Safari and Chrome */
+    -o-appearance: none; /* Opera */
+    appearance: none; /* Standard */
   }
 }
 
@@ -281,4 +285,12 @@ p {
   transition: 0.3s;
   display: flex;
 }
+/*Rating stars*/
 
+input[type = radio]{
+  display: none;
+}
+
+.star{
+  cursor: pointer;
+}
