@@ -294,3 +294,7 @@ input[type = radio]{
 .star{
   cursor: pointer;
 }
+.overflow-y-auto::-webkit-scrollbar {
+  width: 0; /* Set the width of the scrollbar to 0 to hide it */
+  background: transparent; /* Set the background color of the scrollbar */
+}

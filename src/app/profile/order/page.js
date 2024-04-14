@@ -12,9 +12,7 @@ import {RateReview} from '@mui/icons-material';
 import { useProductContext } from '@/app/context/ProductContext.js';
 import Modal from '@/components/modal.js';
 import {FaStar} from 'react-icons/fa'
-import react from '@heroicons/react';
 import toast from 'react-hot-toast';
-import { comment } from 'postcss';
 
 export default function MyOrders() {
     const { products } = useProductContext();
@@ -29,9 +27,9 @@ export default function MyOrders() {
     const [reviewData, setReviewData] = useState({
         rating: '',
         title: '',
-        comment: ''
+        comment: '',
+        userName: ''
     });
-    
 
     const handleChange = (e) => {
         setReviewData({
@@ -82,8 +80,14 @@ export default function MyOrders() {
         return [];
     };
     // Post review function
-const handleReviewProductButtonClick = async () => {
+    const handleReviewProductButtonClick = async () => {
         setCurrentDate(new Date());
+        const userId = currentUser.uid;
+        console.log("user: ", currentUser);
+        if (!userId) {
+            console.log("No current user logged in");
+            return;
+        }
         // Create a new review object from the form data
         const newReview = {
             rating: rating,
@@ -91,14 +95,9 @@ const handleReviewProductButtonClick = async () => {
             comment: reviewData.comment,
             userID: currentUser.uid,
             productID: review.id,
-            date: currentDate.toLocaleDateString('en-GB')
+            date: currentDate.toLocaleDateString('en-GB'),
+            userName: document.getElementById('anonymousCheckbox').checked ? 'Anonymous' : currentUser.email.substring(0, 8),
         };
-
-        const userId = currentUser.uid;
-        if (!userId) {
-            console.log("No current user logged in");
-            return;
-        }
 
         // Generate a unique key for the new review
         const newReviewKey = push(ref(database, 'Reviews/')).key;
@@ -111,7 +110,8 @@ const handleReviewProductButtonClick = async () => {
             setReviewData({
                 rating: "",
                 title: "",
-                comment: ""
+                comment: "",
+                userName: ""
             });
             setShowReviewModal(false);
         } catch (error) {
@@ -121,11 +121,21 @@ const handleReviewProductButtonClick = async () => {
 };
 
 
-    // Function to open review product modal and set card
+    // Function to open review product modal
     const openReviewProductModal = (product) => {
         console.log(product);
         setReview(product);
         setShowReviewModal(true);
+    };
+    // Function to cloe review product modal
+    const closewModal = () => {
+        setShowReviewModal(false);
+        setReviewData({
+            rating: setRating(0),
+            title: "",
+            comment: "",
+            userName: ""
+        });
     };
     //Function that checks if all filelds are filled before posting the review
     const checkAllFieldsChange = () => {
@@ -140,10 +150,10 @@ const handleReviewProductButtonClick = async () => {
         <Fragment>
             <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
                 <SubNavbar />
-                <div style={{ backgroundColor: 'transparent' }} className=" justify-items-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+                <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
                     <h5 className="justify-self-center text-center text-4xl mb-6 font-bold tracking-tight text-white font-mono" > MY ORDER KEYS</h5>
                         {OrderDetails.map((o) => (
-                            <Card key={o.id} style={{ backgroundColor: 'transparent',overflow: 'auto' }} className="flex h-auto w-full border-2 border-white mt-3">
+                            <Card key={o.id} style={{ backgroundColor: 'transparent' }} className="flex h-auto w-full border-2 border-white mt-3">
                                 <div className=' grid grid-cols-3 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                     <h3 className='font-bold tracking-tight dark:text-white text-white'>Order Number:</h3>
                                     <h3 className='font-bold tracking-tight dark:text-white text-white'>Date Placed:</h3>
@@ -200,30 +210,31 @@ const handleReviewProductButtonClick = async () => {
                         {review && review.images && review.images[0] && (
                             <img className="self-center w-full h-28 object-cover rounded-lg" src={review.images[0]} alt="Product Image"/>
                         )}
-                        <div className=" w-full mt-3 flex dark:text-white text-white font-mono text-center">{review.name}</div>
-                        <div className='inline-flex self-center'>
-                            {[...Array(5)].map((star, index) =>{
-                                const currentRating = index + 1;
-                                return (
-                                    <label>
-                                        <input type='radio' required name='rating' value={currentRating} onClick={() => setRating(currentRating)}></input>
-                                        <FaStar className= 'star ml-6 mt-3' size={50} 
-                                        color={currentRating <= (hover || rating) ? "#ffc107" : "e4e5e9"}
-                                        onMouseEnter={() => setHover(currentRating)}
-                                        onMouseLeave={() => setHover(null)}
-                                        />
-                                    </label>
-                                );
-                            })}
-                        </div>
-                        <p className='ml-6 mb-2 justify-self-center' name= "rating" value={reviewData.rating} onChange={handleChange}>Selected Rating is {rating} out of 5</p>
-                        <div className='justify-self-center mt-2'>
+                        <div className=" w-full mt-3 flex  dark:text-white text-white font-mono justify-center items-center">{review.name}</div>
+                            <div className='inline-flex self-center'>
+                                {[...Array(5)].map((star, index) =>{
+                                    const currentRating = index + 1;
+                                    return (
+                                        <label>
+                                            <input type='radio' required name='rating' value={currentRating} onClick={() => setRating(currentRating)}></input>
+                                            <FaStar className= 'star ml-6 mt-3' size={50} 
+                                            color={currentRating <= (hover || rating) ? "#ffc107" : "e4e5e9"}
+                                            onMouseEnter={() => setHover(currentRating)}
+                                            onMouseLeave={() => setHover(null)}
+                                            />
+                                        </label>
+                                    );
+                                })}
+                            </div>
+                        {/*<p className='mb-2 justify-self-center' name= "rating" value={reviewData.rating} onChange={handleChange}>Selected Rating is {rating} out of 5</p>*/}
+                        <div className='justify-center mt-2'>
                             <label className=' mb-2'>Title</label>
                             <textarea
                                 class="self-center peer h-12 mt-2 min-h-[10px] w-96 resize-none rounded-[7px] border border-blue-gray-200  bg-white px-3 py-2.5 font-sans text-sm font-normal text-gray-900 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
                                 placeholder=" "
                                 required
                                 name= "title"
+                                maxLength={100}
                                 value={reviewData.title} onChange={handleChange}>
                             </textarea>
                         </div>
@@ -234,15 +245,26 @@ const handleReviewProductButtonClick = async () => {
                                 placeholder=" "
                                 name= "comment"
                                 required
+                                maxLength={300}
                                 value={reviewData.comment} onChange={handleChange}>
                             </textarea>
                         </div>
-                        <div className='flex justify-evenly mt-10 mb-10'>
-                            <Button type="submit" className="w-52 mr-2" color="gray" onClick ={()=>setShowReviewModal(false)}> DISMISS</Button>
-                            <Button type="submit" className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}} disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</Button>
+                        <div className='flex items-center mt-4'>
+                            <input
+                                type="checkbox"
+                                id="anonymousCheckbox"
+                                name="anonymousCheckbox"
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <label htmlFor="anonymousCheckbox" className="ml-2 block text-sm text-white">
+                                Post anonymously
+                            </label>
+                        </div>
+                        <div className='flex justify-evenly mt-5 mb-10'>
+                            <Button  className="w-52 mr-2" color="gray" onClick ={()=>closewModal()}> DISMISS</Button>
+                            <Button  className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}} disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</Button>
                         </div>
                     </div>
                 </Modal>
-                
             </Fragment>
  );}

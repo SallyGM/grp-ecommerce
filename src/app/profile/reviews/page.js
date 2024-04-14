@@ -84,7 +84,7 @@ export default function MyReviews() {
             <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'>
                 <SubNavbar/>
             
-                <div style={{ backgroundColor: 'transparent' }} className=" justify-items-center h-auto w-full my-6 mr-12 mt-24  row-start-1 row-end-1 col-start-2 col-end-5 " >
+                <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24  row-start-1 row-end-1 col-start-2 col-end-5 " >
                     <h5 className="justify-self-center text-center text-4xl mb-6 font-bold tracking-tight text-white font-mono"> MY REVIEWS</h5>
                     {reviewDetails.map((review) => (
                         <Card key={review.id} style={{ backgroundColor: 'transparent'}} className="flex h-auto w-full mt-3">
