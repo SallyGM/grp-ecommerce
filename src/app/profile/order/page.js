@@ -14,16 +14,18 @@ import Modal from '@/components/modal.js';
 import {FaStar} from 'react-icons/fa'
 import react from '@heroicons/react';
 import toast from 'react-hot-toast';
+import { comment } from 'postcss';
 
 export default function MyOrders() {
     const { products } = useProductContext();
     const { currentUser } = useAuth();
     const [OrderDetails, setOrderDetails] = useState([]);
     const [showReviewModal, setShowReviewModal] = useState(false);
-    const [rating, setRating] = useState(null);
+    const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [review, setReview] = useState('');
     const [currentDate, setCurrentDate] = useState(new Date());
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [reviewData, setReviewData] = useState({
         rating: '',
         title: '',
@@ -36,6 +38,8 @@ export default function MyOrders() {
             ...reviewData,
             [e.target.name] : e.target.value
         });
+        checkAllFieldsChange();
+        
     };
 
     useEffect(() => {
@@ -79,41 +83,41 @@ export default function MyOrders() {
     };
     // Post review function
 const handleReviewProductButtonClick = async () => {
-    setCurrentDate(new Date());
-    // Create a new review object from the form data
-    const newReview = {
-        rating: rating,
-        title: reviewData.title,
-        comment: reviewData.comment,
-        userID: currentUser.uid,
-        productID: review.id,
-        date: currentDate.toLocaleDateString('en-GB')
-    };
+        setCurrentDate(new Date());
+        // Create a new review object from the form data
+        const newReview = {
+            rating: rating,
+            title: reviewData.title,
+            comment: reviewData.comment,
+            userID: currentUser.uid,
+            productID: review.id,
+            date: currentDate.toLocaleDateString('en-GB')
+        };
 
-    const userId = currentUser.uid;
-    if (!userId) {
-        console.log("No current user logged in");
-        return;
-    }
+        const userId = currentUser.uid;
+        if (!userId) {
+            console.log("No current user logged in");
+            return;
+        }
 
-    // Generate a unique key for the new review
-    const newReviewKey = push(ref(database, 'Reviews/')).key;
+        // Generate a unique key for the new review
+        const newReviewKey = push(ref(database, 'Reviews/')).key;
 
-    try {
-        // Set the new review object at the specified path in the database
-        await set(ref(database, 'Reviews/' + newReviewKey), newReview);
-        toast.success('New Review posted successfully');
-        console.log('New Review posted successfully');
-        setReviewData({
-            rating: "",
-            title: "",
-            comment: ""
-        });
-        setShowReviewModal(false);
-    } catch (error) {
-        toast.error('Error posting new review:', error);
-        console.error('Error posting new review:', error);
-    }
+        try {
+            // Set the new review object at the specified path in the database
+            await set(ref(database, 'Reviews/' + newReviewKey), newReview);
+            toast.success('New Review posted successfully');
+            console.log('New Review posted successfully');
+            setReviewData({
+                rating: "",
+                title: "",
+                comment: ""
+            });
+            setShowReviewModal(false);
+        } catch (error) {
+            toast.error('Error posting new review:', error);
+            console.error('Error posting new review:', error);
+        }
 };
 
 
@@ -122,6 +126,14 @@ const handleReviewProductButtonClick = async () => {
         console.log(product);
         setReview(product);
         setShowReviewModal(true);
+    };
+    //Function that checks if all filelds are filled before posting the review
+    const checkAllFieldsChange = () => {
+        if (reviewData.comment !== '' && reviewData.title !== '' && rating !== 0) {
+            setIsButtonDisabled(false);
+        } else {
+            setIsButtonDisabled(true);
+        }
     };
     
     return (
@@ -184,11 +196,11 @@ const handleReviewProductButtonClick = async () => {
                 {/*Review product modal */}          
                 <Modal isVisible={showReviewModal} onClose ={()=> setShowReviewModal(false)}>
                    <h3 className='text-xl flex self-center font-semibold text-white mb-5'>WRITE A REVIEW</h3>
-                   <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
+                   <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
                         {review && review.images && review.images[0] && (
                             <img className="self-center w-full h-28 object-cover rounded-lg" src={review.images[0]} alt="Product Image"/>
                         )}
-                        <div className="justify-self-center w-full mt-3 flex dark:text-white text-white font-mono ml-6 text-center"style={{ textAlign: 'center' }}>{review.name}</div>
+                        <div className=" w-full mt-3 flex dark:text-white text-white font-mono text-center">{review.name}</div>
                         <div className='inline-flex self-center'>
                             {[...Array(5)].map((star, index) =>{
                                 const currentRating = index + 1;
@@ -204,11 +216,11 @@ const handleReviewProductButtonClick = async () => {
                                 );
                             })}
                         </div>
-                        <p className='ml-6 mb-2 self-center' name= "rating" value={reviewData.rating} onChange={handleChange}>Your Rating is {rating}</p>
+                        <p className='ml-6 mb-2 justify-self-center' name= "rating" value={reviewData.rating} onChange={handleChange}>Selected Rating is {rating} out of 5</p>
                         <div className='justify-self-center mt-2'>
                             <label className=' mb-2'>Title</label>
                             <textarea
-                                class="self-center peer h-12  min-h-[10px] w-96 resize-none rounded-[7px] border border-blue-gray-200  bg-white px-3 py-2.5 font-sans text-sm font-normal text-gray-900 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
+                                class="self-center peer h-12 mt-2 min-h-[10px] w-96 resize-none rounded-[7px] border border-blue-gray-200  bg-white px-3 py-2.5 font-sans text-sm font-normal text-gray-900 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
                                 placeholder=" "
                                 required
                                 name= "title"
@@ -218,7 +230,7 @@ const handleReviewProductButtonClick = async () => {
                         <div className='justify-self-center mt-2'>
                             <label className=' mb-2'>Write your comment</label> 
                             <textarea
-                                class="peer h-full min-h-[150px] w-96 resize-none rounded-[7px] border border-blue-gray-200  bg-white px-3 py-2.5 font-sans text-sm font-normal text-gray-900 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
+                                class="peer h-full min-h-[150px] w-96 mt-2 resize-none rounded-[7px] border border-blue-gray-200  bg-white px-3 py-2.5 font-sans text-sm font-normal text-gray-900 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
                                 placeholder=" "
                                 name= "comment"
                                 required
@@ -227,7 +239,7 @@ const handleReviewProductButtonClick = async () => {
                         </div>
                         <div className='flex justify-evenly mt-10 mb-10'>
                             <Button type="submit" className="w-52 mr-2" color="gray" onClick ={()=>setShowReviewModal(false)}> DISMISS</Button>
-                            <Button type="submit" className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleReviewProductButtonClick()}>POST</Button>
+                            <Button type="submit" className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}} disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</Button>
                         </div>
                     </div>
                 </Modal>
