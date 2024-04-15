@@ -163,7 +163,7 @@ export function BasketProvider({children}) {
           const updates = {};
           for (const productId in userBasket) {
               const quantity = userBasket[productId];
-              const productRef = ref(database, `Products/${productId}`);
+              const productRef = ref(database, `Product/${productId}`);
   
               const productSnapshot = await get(productRef);
               if (productSnapshot.exists()) {
@@ -174,18 +174,14 @@ export function BasketProvider({children}) {
                   const newSoldCount = soldCount + quantity;
   
                   // Update quantity and sold count
-                  update[`Products/${productId}/quantity`] = newQuantity;
-                  update[`Products/${productId}/sold`] = newSoldCount;
+                  await update(`Product/${productId}/quantity`, newQuantity);
+                  await update(`Product/${productId}/sold`, newSoldCount);
   
-                  // Clear the item from user's basket
-                  update[`Basket/${currentUser.uid}/${productId}`] = null;
               }
           }
   
           await update(ref(database), updates);
   
-          // Clear user's basket
-          setUserBasket([]);
       } catch (error) {
           console.error('Error paying for basket:', error);
       }
