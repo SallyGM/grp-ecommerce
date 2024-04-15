@@ -44,25 +44,27 @@ export default function Page({ params }) {
     }, []);
 
 
+    //Retrieves reviews from database
     useEffect(() => {
         const prodRef = ref(database, "Reviews");
         get(prodRef).then((snapshot) => {
             if (snapshot.exists()) {
+                const reviews = [];
                 snapshot.forEach((childSnapshot) => {
                     const reviewData = childSnapshot.val();
                     if (reviewData.productID === params.productID) {
-                        let review = { ...reviewData, id: childSnapshot.key };
-                        setReview(review);
-                        return; 
+                        const review = { ...reviewData, id: childSnapshot.key };
+                        reviews.push(review);
                     }
                 });
+                setReview(reviews);
             } else {
                 console.log("No reviews found.");
-                setReview(false);
+                setReview([]);
             }
         }).catch((error) => {
             console.error(error);
-            setReview(false);
+            setReview([]);
         });
     }, []);
 
@@ -193,20 +195,22 @@ export default function Page({ params }) {
                                 <input className="input" name="tabs" type="radio" id="tab-3"checked={activeTab ==='tab-3'} onChange={() => handleTabChange('tab-3')}/>
                                 <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-3" >REVIEWS</label>
                                 <div className="panel text-lg dark:text-white text-white font-mono" style={{ height: '300px',width:'900px', overflowY: 'auto' }}>
-                                    <Card >
+                                
+                                {/* Map reviews to card, each review it's placed in one card */}
+                                {review.map((review) => (
+                                    <Card className="review-card mb-10 " style={{borderRadius: '2px'}} key={review.id}>
                                         <StarRating rating={review.rating}></StarRating>
-                                        <div className="grid grid-cols-2 flex-wrap ">
+                                        <div className="grid grid-cols-2 flex-wrap">
                                             <p className="text-black flex justify-start">Reviewed by {review.userName}</p>
-                                            <p className=" text-black flex justify-end">Date {review.date}</p>
+                                            <p className="text-black flex justify-end">Date {review.date}</p>
                                         </div>
                                         <hr className="border-t border-black w-full my-auto" />
-                                        <div className="grid grid-rows-2 flex-wrap ">
-                                            <p className="text-black mb-0 "><b>{review.title}</b></p>
-                                            <p className=" text-black flex ">"{review.comment}"</p>
-                                           
+                                        <div className="grid grid-rows-2 flex-wrap">
+                                            <p className="text-black flex-wrap "><b>{review.title}</b></p>
+                                            <p className="text-black mb-0">"{review.comment}"</p>
                                         </div>
-                                        
                                     </Card>
+                                ))}
                                     
                                 </div>
                             </div>
