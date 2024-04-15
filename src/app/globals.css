@@ -38,8 +38,9 @@
 
 
 .cardButton {
-  background: '#00052d';
-  border: '#00052d'
+  background-color: #00052d;
+  background: #00052d;
+  border: #00052d;
 }
 
 .cardButton:hover {
