@@ -14,8 +14,6 @@ import { AccountCircle, Payment, VpnKey, RateReview, ExitToApp } from '@mui/icon
 import Modal from '@/components/modal.js';
 import { Button } from 'flowbite-react';
 
-
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   
@@ -36,7 +34,6 @@ function TabPanel(props) {
     </div>
   );
 }
-
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -94,31 +91,36 @@ export default function VerticalTabs() {
     };
   }, [theme]);
 
-
-  const handleChange = (event, newValue) => {
+  const handleTabChangeValue = (event, newValue) => {
     setValue(newValue);
     console.log(newValue);
   };
+
   const handleTabChange = (index) => {
     switch (index) {
       case 0:
-        router.push('/profile');
+        //router.push('/profile');
+        setValue(0);
         console.log(index);
         break;
       case 1:
-        router.push('/profile/card');
+        //router.push('/profile/card');
+        setValue(1);
         console.log(index);
         break;
       case 2:
-        router.push('/profile/order');
+        //router.push('/profile/order');
         console.log(index);
+        setValue(2);
         break;
       case 3:
-        router.push('/profile/reviews');
+        setValue(3);
+        //router.push('/profile/reviews');
         console.log(index);
         break;
       case 4:
-        setShowLogoutModal(true); 
+        setValue(3);
+        //setShowLogoutModal(true); 
         console.log(index);
         break;
       default:
@@ -139,34 +141,27 @@ export default function VerticalTabs() {
       console.error(e);
     }
   };
+
   return (
     <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2"style={{ backgroundColor: 'transparent'}} >
-        <Box sx={{  display: 'flex',lineHeight: 300, height: 500, width: 200, marginTop: 10 ,marginRight:5, justifyContent: 'center', flexGrow:1}}>
-        <Tabs
-            orientation="vertical"
-            value={value}
-            onChange={handleChange}
-            aria-label="Vertical tabs menu"
-
-            sx={{ borderRight: 1, borderColor: 'gray' }}
-        >
-            
-                <Tab icon={<AccountCircle />} label="ACCOUNT" {...a11yProps(0)}  onClick={()=>handleTabChange(0)}/>
-                <Tab icon={<Payment />} label="STORED CARDS" {...a11yProps(1)}  onClick={()=>handleTabChange(1)} />
-                <Tab icon={<VpnKey />} label="ORDERED KEYS" {...a11yProps(2)}  onClick={()=>handleTabChange(2)}/>
-                <Tab icon={<RateReview />} label="MY REVIEWS" {...a11yProps(3)}  onClick={()=>handleTabChange(3)}/>
-                <Tab icon={<ExitToApp />} label="LOGOUT" {...a11yProps(4)}  onClick={()=>handleTabChange(4)} />
-            </Tabs>
-        </Box>
-        {/*logout modal */}          
-    <Modal isVisible={showLogoutModal} onClose ={()=> setShowLogoutModal(false)}>
-    <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
-    <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to logout?</h3>
-    <div className='flex justify-evenly mt-10 mb-10'>
-        <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
-        <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={signOut}>YES</Button>
-    </div>
-  </Modal>
+      <Box sx={{  display: 'flex',lineHeight: 300, height: 500, width: 200, marginTop: 10 ,marginRight:5, justifyContent: 'center', flexGrow:1}}>
+        <Tabs orientation="vertical" value={value} onChange={handleTabChangeValue} aria-label="Vertical tabs menu" sx={{ borderRight: 1, borderColor: 'gray' }}>      
+          <Tab icon={<AccountCircle />} label="ACCOUNT" {...a11yProps(0)}  onClick={()=>handleTabChange(0)}/>
+          <Tab icon={<Payment />} label="STORED CARDS" {...a11yProps(1)}  onClick={()=>handleTabChange(1)} />
+          <Tab icon={<VpnKey />} label="ORDERED KEYS" {...a11yProps(2)}  onClick={()=>handleTabChange(2)}/>
+          <Tab icon={<RateReview />} label="MY REVIEWS" {...a11yProps(3)}  onClick={()=>handleTabChange(3)}/>
+          <Tab icon={<ExitToApp />} label="LOGOUT" {...a11yProps(4)}  onClick={()=>handleTabChange(4)} />
+        </Tabs>
+      </Box>
+      {/*logout modal */}          
+      <Modal isVisible={showLogoutModal} onClose ={()=> setShowLogoutModal(false)}>
+        <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
+        <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to logout?</h3>
+        <div className='flex justify-evenly mt-10 mb-10'>
+            <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
+            <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={signOut}>YES</Button>
+        </div>
+      </Modal>
     </div>
     
   );

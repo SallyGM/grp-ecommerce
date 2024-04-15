@@ -38,8 +38,9 @@
 
 
 .cardButton {
-  background: '#00052d';
-  border: '#00052d'
+  background-color: #00052d;
+  background: #00052d;
+  border: #00052d;
 }
 
 .cardButton:hover {
@@ -76,12 +77,10 @@ body {
 }
 .back-prod{
   background: rgb(2,0,36);
-background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
 }
 
-/*.review-card{
-  background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
-}*/
+
 
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
@@ -96,6 +95,22 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
   text-transform: uppercase;
 }
 
+.bebas-neue-regularLarge {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: xxx-large;
+  color: white;
+  text-transform: uppercase;
+}
+
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
 .roboto-thin {
   font-family: "Roboto", sans-serif;
   font-weight: 100;
@@ -108,6 +123,14 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
   font-style: normal;
 }
 
+.roboto-lightLarge {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: x-large;
+
+}
+
 
 .game-table {
   width: 100%;
@@ -115,8 +138,17 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
   color: #fff; /* Default text color */
   border-collapse: collapse;
   background-color:#00052d;
-  font-size: large;
 
+}
+
+.game-table td{
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+
+.game-table th{
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
 }
 
 .game-table tr {
@@ -190,6 +222,8 @@ p {
   cursor: pointer;
   color: #ffffff;
   transition: background 0.1s, color 0.1s;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; 
 }
 .label:hover {
   background: #6497ff;
@@ -215,6 +249,8 @@ p {
   padding: 20px 30px 30px;
   background:#020a4f;
   color:white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; 
 
 }
 @media (min-width: 600px) {
@@ -239,9 +275,19 @@ p {
 /*CSS BASKET*/
 .top_bar_basket{
   background-color:#020a4f;
+  
 }
 .basket_btn{
-  width:35%;
+  width:65%;
+  color: #f0e8e8;
+  background:#6c0979;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+.basket_btn:hover{
+  background: #c50edd;
+  
 }
 
 .total_box{
@@ -262,6 +308,34 @@ p {
 
 .slick-dots li.slick-active button:before {
   color:white !important;
+}
+
+/* CHECKOUT CSS*/
+.summary-box{
+  background: rgb(2,0,36);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(108,9,121,1) 100%);
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; 
+  border-color:#00052d ;
+}
+
+.card-box{
+  background: rgb(6,0,112);
+  background: linear-gradient(180deg, rgba(6,0,112,1) 34%, rgba(70,117,255,1) 100%);
+  border: 0px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; 
+}
+
+.pay-btn{
+  background:#6c0979;
+}
+
+ 
+.pay-btn:hover{
+  background: #c50edd;
 }
 
 

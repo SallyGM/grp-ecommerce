@@ -7,7 +7,6 @@ import { useProductContext } from '../context/ProductContext';
 import InputMask from 'react-input-mask'
 import { useRouter } from 'next/navigation';
 import { database } from '../firebaseConfig';
-
 import { get, ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
 
@@ -246,13 +245,13 @@ export default function Home() {
 
   return (
     (checkOut === true ? (
-      <div className='pt-5 bg-blue-800 pb-20'>
+      <div className='pt-5 back-prod  pb-20'>
         <div>
-          <h1 className="text-center my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white font-mono">CheckOut</h1>
+          <h1 className=" my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white bebas-neue-regularLarge">CheckOut</h1>
         </div>
         <div className='flex flex-row'>
-          <div className='flex flex-col bg-white rounded-md justify-center gap-4 p-6 w-1/2 m-5 p-2'>
-            <h2 className='-mt-16 text-center font-bold'>Summary</h2>
+          <div className='flex flex-col summary-box rounded-md justify-center gap-4 p-6 w-1/2 m-5 p-2'>
+            <h2 className='text-center font-bold'>Summary</h2>
             <table className="table-auto">
               <thead>
                 <tr>
@@ -280,7 +279,7 @@ export default function Home() {
             <p className='text-right'>£{(basketDiscount > 0 ? basketDiscount : 0.00)}</p>
             <p className='text-right'>£{basketPrice}</p>
           </div>
-          <Card className='w-1/2 m-5 p-2'>
+          <Card className='w-1/2 m-5 p-2 card-box '>
           <h2 className='text-center font-bold'>Card details</h2>
             <form className="max-w-md mx-auto" onSubmit={handleCheckOutSubmission}>
               <div className="relative z-0 w-full mb-5 group">
@@ -356,20 +355,20 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Pay</button>
+              <button type="submit" className="pay-btn text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Pay</button>
             </form>
           </Card>
         </div>
       </div>
     ) : (
-      <div className='pt-5 bg-blue-800 pb-20'>
+      <div className='pt-5 back-prod pb-20'>
         <div>
-          <h1 className="text-center mb-5 text-3xl dark:text-white self-center text-white font-mono">MY CART</h1>
+          <h1 className="text-center mb-5  dark:text-white self-center text-white bebas-neue-regularLarge">MY CART</h1>
         </div>
-        <div className='top_bar_basket grid grid-cols-4 flex-wrap ml-20 mr-20 p-5' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
-          <h3 className='text-4xl font-bold tracking-tight dark:text-white text-white'>Product</h3>
-          <h3 className='text-4xl font-bold tracking-tight dark:text-white  text-white'>Quantity</h3>
-          <h3 className='text-4xl font-bold tracking-tight  dark:text-white text-white'>Subtotal</h3>
+        <div className='top_bar_basket text-2xl roboto-bold grid grid-cols-4 flex-wrap ml-20 mr-20 p-5' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
+          <h3 className=' tracking-tight dark:text-white text-white'>Product</h3>
+          <h3 className='tracking-tight dark:text-white  text-white'>Quantity</h3>
+          <h3 className='tracking-tight  dark:text-white text-white'>Subtotal</h3>
         </div>
       
         <div className='grid grid-rows-3 flex-wrap m-s ml-20 mr-20 mt-5'>
@@ -408,29 +407,29 @@ export default function Home() {
               </Card>
             ))
           ) : (
-            <div>
-              No items in basket
+            <div  className='text-2xl roboto-light text-white flex justify-center items-center h-full mt-10'>
+              Your Cart is empty
             </div>
           ))}
         </div>
         {(basketSize > 0 ? ( 
-          <div className=' total_box grid grid-rows-4 flex-wrap ml-20 mr-20 mt-20 pb-20'>
+          <div className=' total_box grid grid-rows-4 flex-wrap ml-20 mr-20 pb-20'>
             <div className='flex justify-between p-5'>
-              <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white font-mono ">TOTAL SAVED</h2>
-              <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white font-mono">£{parseFloat(basketDiscount).toFixed(2)}</h2>
+              <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white roboto-light ">TOTAL SAVED</h2>
+              <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white roboto-light">£{parseFloat(basketDiscount).toFixed(2)}</h2>
             </div>
             <div className='pl-10 pr-10 ml-20 mr-20'>
               <hr className="h-px my-8 bg-white border-5 dark:bg-white"/>
             </div>
             <div className='flex justify-between pl-5 pr-5'>
-              <h2 id="total_saved" className="text-left ml-20 text-2xl dark:text-white self-center text-white font-mono ">ORDER TOTAL</h2>
-              <h2 id="amount_saved "className="text-right  mr-20 text-2xl dark:text-white self-center text-white font-mono">£{basketPrice}</h2>
+              <h2 id="total_saved" className="text-left ml-20 text-2xl dark:text-white self-center text-white roboto-bold ">ORDER TOTAL</h2>
+              <h2 id="amount_saved "className="text-right  mr-20 text-2xl dark:text-white self-center text-white roboto-bold">£{basketPrice}</h2>
             </div>
 
             <div className='flex justify-center mt-10'>
-              <Button className='basket_btn bg-green-400' onClick={handleCheckOutPage}>
+              <button className='basket_btn rounded-lg roboto-light' hoverClassName='c50edd' onClick={handleCheckOutPage}>
                 CHECKOUT
-              </Button>
+              </button>
             </div>
           </div>
           ) : (
