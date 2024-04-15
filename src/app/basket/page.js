@@ -7,12 +7,10 @@ import { useProductContext } from '../context/ProductContext';
 import InputMask from 'react-input-mask'
 import { useRouter } from 'next/navigation';
 import { database } from '../firebaseConfig';
-<<<<<<< HEAD
+
 import { get, ref, update } from 'firebase/database';
-=======
 import { ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
->>>>>>> 3f7ef0dce50d43e3b71b49605ce828e3e626f7ed
 
 export default function Home() {
 
