@@ -137,7 +137,7 @@ export default function MyOrders() {
             userName: ""
         });
     };
-    //Function that checks if all filelds are filled before posting the review
+    //Function that checks if all fields are filled before posting the review
     const checkAllFieldsChange = () => {
         if (reviewData.comment !== '' && reviewData.title !== '' && rating !== 0) {
             setIsButtonDisabled(false);
@@ -149,10 +149,13 @@ export default function MyOrders() {
     return (
         <Fragment>
             <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
-                <SubNavbar />
+                <SubNavbar/>
                 <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
                     <h5 className="justify-self-center text-center text-4xl mb-6 font-bold tracking-tight text-white font-mono" > MY ORDER KEYS</h5>
-                        {OrderDetails.map((o) => (
+                    {OrderDetails.length === 0 ? (
+                        <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
+                    ) : (
+                        OrderDetails.map((o) => (
                             <Card key={o.id} style={{ backgroundColor: 'transparent' }} className="flex h-auto w-full border-2 border-white mt-3">
                                 <div className=' grid grid-cols-3 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                     <h3 className='font-bold tracking-tight dark:text-white text-white'>Order Number:</h3>
@@ -173,6 +176,7 @@ export default function MyOrders() {
                                     <a className='tracking-tight dark:text-white text-white'>Review</a>
                                     <a className='tracking-tight dark:text-white text-white'>Key</a>
                                 </div>
+                                
                                 {/* Display item details */}
                                 {getItemsForOrder(o.id).map((item, index) => (
                                     <div key={index} className='grid grid-cols-7 items-center flex-wrap border-b border-gray-300 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>    
@@ -200,7 +204,8 @@ export default function MyOrders() {
                                     </div>
                                 ))}
                             </Card>
-                        ))}
+                        ))
+                    )}
                     </div>             
                 </div>
                 {/*Review product modal */}          

@@ -209,35 +209,37 @@ export default function CardStored() {
 
                 <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
                     <h5 className="justify-self-center text-center mb-6 text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
-
-                    <div className='rounded-noneborder-b-2 border-white grid grid-cols-6 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
-                        <h3 className='  font-bold tracking-tight dark:text-white  text-white'>Card Type</h3>
-                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Name on Card</h3>
-                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Card Ending</h3>
-                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
-                        <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
-                    </div>
+                    {cardDetails.length === 0 ? (
+                        <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO CARD STORED WITHIN YOUR ACCOUNT.<br/> PLEASE ADD ONE!</div>
+                    ) : (
+                            <div className='rounded-noneborder-b-2 border-white grid grid-cols-6 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
+                                <h3 className='  font-bold tracking-tight dark:text-white  text-white'>Card Type</h3>
+                                <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Name on Card</h3>
+                                <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Card Ending</h3>
+                                <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
+                                <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
+                            </div>
+                    )}
                     {/*This is the card that can be used as a component nested in cardStored component */}
                     <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
-                    {cardDetails.map((c) => (
-                        <Card style={{ backgroundColor: 'transparent' }} key={c.id} className=" flex h-auto w-full rounded-noneborder-b-2 border-white mt-6">
-                            <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
+                        {cardDetails.map((c) => (
+                            <Card style={{ backgroundColor: 'transparent' }} key={c.id} className=" flex h-auto w-full rounded-noneborder-b-2 border-white mt-6">
+                                <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
 
-                                <img id = "card_type" class="first-line:h-8 w-8 flex-wrap justify-self-center" src="https://www.iconbolt.com/iconsets/payment-method/american-card-express-method-payment.svg" alt="card"/>
-                                <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
-                                <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
-                                <Tooltip content='Edit your card'>
-                                <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
-                                </Tooltip>
-                                <Tooltip content='Delete your card'>
-                                <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
-                                </Tooltip>
+                                    <img id = "card_type" class="first-line:h-8 w-8 flex-wrap justify-self-center" src="https://www.iconbolt.com/iconsets/payment-method/american-card-express-method-payment.svg" alt="card"/>
+                                    <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
+                                    <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
+                                    <Tooltip content='Edit your card'>
+                                    <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                    </Tooltip>
+                                    <Tooltip content='Delete your card'>
+                                    <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                    </Tooltip>
 
-                            </div>
-                        </Card>
-                    ))}
-
-                    </div>  
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
                     <div className='flex justify-self-start mt-10 ml-10 '>
                         <Button
                             type="submit"
