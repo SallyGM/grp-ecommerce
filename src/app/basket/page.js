@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { database } from '../firebaseConfig';
 
 import { get, ref, update } from 'firebase/database';
-import { ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
 
 export default function Home() {
