@@ -245,13 +245,13 @@ export default function Home() {
 
   return (
     (checkOut === true ? (
-      <div className='pt-5 bg-blue-800 pb-20'>
+      <div className='pt-5 back-prod  pb-20'>
         <div>
-          <h1 className="text-center my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white font-mono">CheckOut</h1>
+          <h1 className=" my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white bebas-neue-regularLarge">CheckOut</h1>
         </div>
         <div className='flex flex-row'>
-          <div className='flex flex-col bg-white rounded-md justify-center gap-4 p-6 w-1/2 m-5 p-2'>
-            <h2 className='-mt-16 text-center font-bold'>Summary</h2>
+          <div className='flex flex-col summary-box rounded-md justify-center gap-4 p-6 w-1/2 m-5 p-2'>
+            <h2 className='text-center font-bold'>Summary</h2>
             <table className="table-auto">
               <thead>
                 <tr>
@@ -279,7 +279,7 @@ export default function Home() {
             <p className='text-right'>£{(basketDiscount > 0 ? basketDiscount : 0.00)}</p>
             <p className='text-right'>£{basketPrice}</p>
           </div>
-          <Card className='w-1/2 m-5 p-2'>
+          <Card className='w-1/2 m-5 p-2 card-box '>
           <h2 className='text-center font-bold'>Card details</h2>
             <form className="max-w-md mx-auto" onSubmit={handleCheckOutSubmission}>
               <div className="relative z-0 w-full mb-5 group">
@@ -355,7 +355,7 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Pay</button>
+              <button type="submit" className="pay-btn text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Pay</button>
             </form>
           </Card>
         </div>

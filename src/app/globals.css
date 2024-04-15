@@ -76,12 +76,10 @@ body {
 }
 .back-prod{
   background: rgb(2,0,36);
-background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
 }
 
-/*.review-card{
-  background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
-}*/
+
 
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
@@ -276,6 +274,7 @@ p {
 /*CSS BASKET*/
 .top_bar_basket{
   background-color:#020a4f;
+  
 }
 .basket_btn{
   width:65%;
@@ -308,6 +307,34 @@ p {
 
 .slick-dots li.slick-active button:before {
   color:white !important;
+}
+
+/* CHECKOUT CSS*/
+.summary-box{
+  background: rgb(2,0,36);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(108,9,121,1) 100%);
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; 
+  border-color:#00052d ;
+}
+
+.card-box{
+  background: rgb(6,0,112);
+  background: linear-gradient(180deg, rgba(6,0,112,1) 34%, rgba(70,117,255,1) 100%);
+  border: 0px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; 
+}
+
+.pay-btn{
+  background:#6c0979;
+}
+
+ 
+.pay-btn:hover{
+  background: #c50edd;
 }
 
 
