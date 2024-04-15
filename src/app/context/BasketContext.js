@@ -172,40 +172,37 @@ export function BasketProvider({children}) {
       }
    };
 
-   //pay function 
-   //Not working yet 
-   const payForBasket = async (userBasket, currentUser) => {
+   //function to update stock, still not working
+   const stockUpdate = async (userBasket) => {
       try {
-          const updates = {};
-          for (const productId in userBasket) {
-               const quantity = userBasket[productId];
-              const productRef = ref(database, `Product/${productId}`);
-  
-               const productSnapshot = await get(productRef);
-               if (productSnapshot.exists()) {
-                  const productData = productSnapshot.val();
-                  const currentQuantity = productData.quantity || 0;
-                  const soldCount = productData.sold || 0;
-                  const newQuantity = currentQuantity - quantity;
-                  const newSoldCount = soldCount + quantity;
-  
-                  // Update quantity and sold count
-                  await update(`Product/${productId}/quantity`, newQuantity);
-                  await update(`Product/${productId}/sold`, newSoldCount);
-  
-                  // Clear the item from user's basket
-                  update[`Basket/${currentUser.uid}/${productId}`] = null;
-               }
+         const productRef = ref(database, "Product/");
+   
+         // Iterate over the items in the order
+         for (const productID of Object.keys(userBasket)) {
+            const quantityOrdered = userBasket[productID];
+            const productSnapshot = await get(productRef, productID);
+   
+            if (productSnapshot.exists()) {
+               const productData = productSnapshot.val();
+               const currentQuantity = productData.quantity;
+               const currentSold = productData.sold;
+   
+               // Update quantity and sold fields
+               const updatedQuantity = currentQuantity - quantityOrdered;
+               const updatedSold = currentSold + quantityOrdered;
+   
+               // Update the product node in Firebase
+               await update(productRef, productID), {
+                  quantity: updatedQuantity,
+                  sold: updatedSold
+               };
+            }
          }
-  
-         await update(ref(database), updates);
-  
-          // Clear user's basket
-         setUserBasket([]);
       } catch (error) {
-         console.error('Error paying for basket:', error);
+         console.error('Error updating stock:', error);
       }
    };
+
 
    // this function creates an order
    // and clear the basket
@@ -233,8 +230,10 @@ export function BasketProvider({children}) {
          try {
             const userBasketRef = ref(database, "Order/");
             await push(userBasketRef, data);
-             // Pay for the basket
-            await payForBasket(userBasket, currentUser);
+
+            await stockUpdate(userBasket);
+
+       
          } catch (error) {
             console.error('Error creating order:', error);
          }

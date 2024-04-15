@@ -1,10 +1,13 @@
 "use client"; 
-import { Button, Tabs} from "flowbite-react";
+import { Card} from "flowbite-react";
 import {database} from '../../firebaseConfig';
 import { ref, get, query } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { useBasketContext } from "../../context/BasketContext";
 import toast from 'react-hot-toast';
+import StarRating from '../../starRating.js';
+
+
 
 
 /*Product Page*/
@@ -21,7 +24,7 @@ export default function Page({ params }) {
     const prodRef = ref(database, "Product");
 
     const { addToBasket } = useBasketContext();
-
+    const [review, setReview] = useState(false);
 
 
     useEffect(() => {    
@@ -37,6 +40,29 @@ export default function Page({ params }) {
         }).catch((error) => {
             console.error(error);
             setProduct(false);
+        });
+    }, []);
+
+
+    useEffect(() => {
+        const prodRef = ref(database, "Reviews");
+        get(prodRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                snapshot.forEach((childSnapshot) => {
+                    const reviewData = childSnapshot.val();
+                    if (reviewData.productID === params.productID) {
+                        let review = { ...reviewData, id: childSnapshot.key };
+                        setReview(review);
+                        return; 
+                    }
+                });
+            } else {
+                console.log("No reviews found.");
+                setReview(false);
+            }
+        }).catch((error) => {
+            console.error(error);
+            setReview(false);
         });
     }, []);
 
@@ -167,11 +193,21 @@ export default function Page({ params }) {
                                 <input className="input" name="tabs" type="radio" id="tab-3"checked={activeTab ==='tab-3'} onChange={() => handleTabChange('tab-3')}/>
                                 <label className="label text-center text-xl dark:text-white self-center text-white font-mono" for="tab-3" >REVIEWS</label>
                                 <div className="panel text-lg dark:text-white text-white font-mono" style={{ height: '300px',width:'900px', overflowY: 'auto' }}>
-                                    <p>Eu consequat ac felis donec et. Magna etiam tempor orci eu lobortis elementum nibh tellus molestie. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. <br/>
-                                    Augue ut lectus arcu bibendum at varius vel. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Habitasse platea dictumst quisque sagittis purus.<br/>
-                                    Sed elementum tempus egestas sed. Maecenas pharetra convallis posuere morbi leo urna molestie at elementum. Imperdiet proin fermentum leo vel orci porta non pulvinar. <br/>
-                                    Adipiscing diam donec adipiscing tristique risus. Quisque id diam vel quam elementum pulvinar etiam. <br/>
-                                    Parturient montes nascetur ridiculus mus mauris vitae. Ultrices tincidunt arcu non sodales.</p>
+                                    <Card >
+                                        <StarRating rating={review.rating}></StarRating>
+                                        <div className="grid grid-cols-2 flex-wrap ">
+                                            <p className="text-black flex justify-start">Reviewed by {review.userName}</p>
+                                            <p className=" text-black flex justify-end">Date {review.date}</p>
+                                        </div>
+                                        <hr className="border-t border-black w-full my-auto" />
+                                        <div className="grid grid-rows-2 flex-wrap ">
+                                            <p className="text-black mb-0 "><b>{review.title}</b></p>
+                                            <p className=" text-black flex ">"{review.comment}"</p>
+                                           
+                                        </div>
+                                        
+                                    </Card>
+                                    
                                 </div>
                             </div>
                         </div>
