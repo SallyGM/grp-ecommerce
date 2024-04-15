@@ -96,6 +96,22 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
   text-transform: uppercase;
 }
 
+.bebas-neue-regularLarge {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: xxx-large;
+  color: white;
+  text-transform: uppercase;
+}
+
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
 .roboto-thin {
   font-family: "Roboto", sans-serif;
   font-weight: 100;
@@ -108,6 +124,14 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
   font-style: normal;
 }
 
+.roboto-lightLarge {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: x-large;
+
+}
+
 
 .game-table {
   width: 100%;
@@ -115,8 +139,17 @@ background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgb
   color: #fff; /* Default text color */
   border-collapse: collapse;
   background-color:#00052d;
-  font-size: large;
 
+}
+
+.game-table td{
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+
+.game-table th{
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
 }
 
 .game-table tr {
@@ -190,6 +223,8 @@ p {
   cursor: pointer;
   color: #ffffff;
   transition: background 0.1s, color 0.1s;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; 
 }
 .label:hover {
   background: #6497ff;
@@ -215,6 +250,8 @@ p {
   padding: 20px 30px 30px;
   background:#020a4f;
   color:white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; 
 
 }
 @media (min-width: 600px) {
@@ -241,7 +278,16 @@ p {
   background-color:#020a4f;
 }
 .basket_btn{
-  width:35%;
+  width:65%;
+  color: #f0e8e8;
+  background:#6c0979;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+.basket_btn:hover{
+  background: #c50edd;
+  
 }
 
 .total_box{
