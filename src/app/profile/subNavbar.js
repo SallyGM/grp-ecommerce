@@ -136,9 +136,6 @@ export default function VerticalTabs() {
         router.push('/login'); // Navigate to the main page
     }   
 }
-
-  
-
   return (
     <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2"style={{ backgroundColor: 'transparent'}} >
         <Box sx={{  display: 'flex',lineHeight: 300, height: 500, width: 200, marginTop: 10 ,marginRight:5, justifyContent: 'center', flexGrow:1}}>

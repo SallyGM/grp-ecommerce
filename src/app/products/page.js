@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation';
 import { useProductContext } from '../context/ProductContext';
 import { useBasketContext } from '../context/BasketContext';
 import toast from 'react-hot-toast';
+import { useFavouriteContext } from '../context/FavouriteContext';
+import { useAuth } from '../context/AuthContext';
 
 
 export default function Product() {
@@ -18,10 +20,13 @@ export default function Product() {
   const [allProducts, setAllProducts] = useState([]);
   const [customisedResults, setCustomisedResults] = useState([]); // for bestsellers and sales only
   const [showProduct, setShowProducts] = useState([]);
+  const [favourite, setFavourite] = useState([]);
   const [size, setSize] = useState(0);
   const [pSelected, setPSelected] = useState(0)
   const [sSelected, setSSelected] = useState(0)
   const router = useRouter();
+  const { currentUser } = useAuth();
+  const { favourites, addToFavourites, removeFromFavourites } = useFavouriteContext()
   const { loading, products, getProductsOnSale, getBestSellers } = useProductContext()
   const { addToBasket } = useBasketContext();
 
@@ -65,7 +70,7 @@ export default function Product() {
       }
       setSSelected(0)
     }
-  }, [search, type, products],); 
+  }, [search, type, products]); 
 
   // verify when the products have been added, and setSize 
   // to determine if the search found results 
@@ -75,6 +80,19 @@ export default function Product() {
     }
   }, [showProduct]);
   
+  useEffect(() => {
+    setFavourite(favourites)
+  }, [favourites]);
+
+  function handleClickOnFavourite(productID, e){
+    // add to the list if the item is not there
+    if(!favourite.some(item => item.id === productID)){
+      addToFavourites(productID)
+    } else {
+      removeFromFavourites(productID)
+    }
+  }
+
   // handles platform options changing
   function changePlatformOptionOnclick(event){
     const value = platform[event.target.value];
@@ -182,8 +200,22 @@ export default function Product() {
         ) : (
           <div className='flex flex-rpw flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 text-sm justify-center'>
             {showProduct.map((p, i) => (
-              <Card key={i} className="max-w-sm mx-3 my-3 w-72" renderImage={() => 
+              <Card key={i} className="relative max-w-sm mx-3 my-3 w-72" renderImage={() => 
                 <img className="w-full h-full object-cover cursor-pointer rounded-lg" src={p.images[1]} alt="image 1" onClick={(e) => handleClickOpenProduct(p.id, e)} />}>             
+                {currentUser  ? (
+                  (favourite.some(item => item.id === p.id) ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer left-1 top-1 w-6 h-6">
+                      <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} fill="white" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="absolute cursor-pointer left-1 top-1 w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                    </svg>
+                  ))
+                ) : (
+                  <></>
+                )}
+                
                 <h5 key={i} className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {p.name}
                 </h5>

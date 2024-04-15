@@ -131,7 +131,7 @@ export default function CardStored() {
                 return;
             }
         const cardRef = ref(database, 'User/' + userId + '/card/'+ card.id);
-        // Use the update method to update the address
+        // Use the update method to update the card
         update(cardRef, card)
             .then(() => {
                 toast.success("Card updated successfully");
@@ -207,7 +207,7 @@ export default function CardStored() {
             <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
                 <SubNavbar />
 
-                <div style={{ backgroundColor: 'transparent' }} className=" content-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+                <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
                     <h5 className="justify-self-center text-center mb-6 text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
 
                     <div className='rounded-noneborder-b-2 border-white grid grid-cols-6 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
@@ -227,10 +227,10 @@ export default function CardStored() {
                                 <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
                                 <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
                                 <Tooltip content='Edit your card'>
-                                <img class="first-line:h-6 w-6 flex-wrap justify-self-end" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
                                 </Tooltip>
                                 <Tooltip content='Delete your card'>
-                                <img class="first-line:h-5 w-5 flex-wrap justify-self-center" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
                                 </Tooltip>
 
                             </div>
