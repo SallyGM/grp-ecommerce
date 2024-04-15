@@ -100,11 +100,27 @@ export function FavouriteProvider({ children }) {
         const favouritesRef = ref(database, "Favourite/" + currentUser.uid + "/" + productID);
     
         await set(favouritesRef, null)
-        //const fav = {...favourites};
         setFavourites(favourites.filter(item => item.id !== productID))
 
       } catch (error) {
-          console.error('Error removing to basket:', error);
+          console.error('Error removing from basket:', error);
+      }
+    }
+  };
+
+  const removeAllFavourites = async () => {
+
+    // authenticated user
+    if (currentUser) {
+
+      try {
+        const favouritesRef = ref(database, "Favourite/" + currentUser.uid);
+    
+        await set(favouritesRef, null)
+        setFavourites([])
+
+      } catch (error) {
+          console.error('Error removing from basket:', error);
       }
     }
   };
@@ -114,6 +130,7 @@ export function FavouriteProvider({ children }) {
       error, 
       loading,
       getFavourites,
+      removeAllFavourites,
       addToFavourites,
       removeFromFavourites
  };

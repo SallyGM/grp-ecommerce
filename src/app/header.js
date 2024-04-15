@@ -91,6 +91,9 @@ export default function Header() {
                         </Link>
                         { currentUser != null ? (
                             <>
+                                <Link href="/favourites" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
+                                    Favourites
+                                </Link>
                                 <Link href="/profile" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
                                     Profile
                                 </Link>
@@ -105,7 +108,7 @@ export default function Header() {
                                 </Link>
                                 <Link href="/register" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
                                     Register
-                                    </Link>
+                                </Link>
                             </>                   
                         )}
                 </div>
