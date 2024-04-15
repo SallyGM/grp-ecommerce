@@ -281,7 +281,7 @@ export default function CardStored() {
                     <div className="noIncrementer">
                         <label htmlFor="number" className='text-white'>Sort Code</label>
                         <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
-                        id="sortCode" name="sortCode" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={formData.sortCode} 
+                        id="sortCode" name="sortCode" mask="99-99-99" maskChar="" placeholder='26-02-54' required value={formData.sortCode} 
                         onInput={checkLength(8)} onChange={handleChange}/>
                     </div>
 
@@ -379,7 +379,7 @@ export default function CardStored() {
             </div>
         </Modal>
 
-        {/*Delete card modal */}
+        {/* DELETE CARD MODAL */}
         <Modal isVisible={showDeleteCard} card = {card} onClose ={()=> setShowDeleteCard(false)}>
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE CARD</h3>
             <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this card?</h3>
