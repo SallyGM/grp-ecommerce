@@ -342,7 +342,7 @@ export default function CardStored() {
                     <div class="noIncrementer">
                         <label htmlFor="number" className='text-white'>Sort Code</label>
                         <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
-                        id="sort_code" name="sort_code" mask="99-99-99" maskChar="" placeholder='26 02 54' required value={card.sortCode}
+                        id="sort_code" name="sort_code" mask="99-99-99" maskChar="" placeholder='26-02-54' required value={card.sortCode}
                         onInput={checkLength(8)} onChange={(e) => setCard({ ...card, sortCode: e.target.value })}/> 
                     </div>
 
