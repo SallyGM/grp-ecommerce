@@ -171,37 +171,8 @@ export function BasketProvider({children}) {
          setGuestBasket([])
       }
    };
+   
 
-   //function to update stock, still not working
-   const stockUpdate = async (userBasket) => {
-      try {
-         const productRef = ref(database, "Product/");
-   
-         // Iterate over the items in the order
-         for (const productID of Object.keys(userBasket)) {
-            const quantityOrdered = userBasket[productID];
-            const productSnapshot = await get(productRef, productID);
-   
-            if (productSnapshot.exists()) {
-               const productData = productSnapshot.val();
-               const currentQuantity = productData.quantity;
-               const currentSold = productData.sold;
-   
-               // Update quantity and sold fields
-               const updatedQuantity = currentQuantity - quantityOrdered;
-               const updatedSold = currentSold + quantityOrdered;
-   
-               // Update the product node in Firebase
-               await update(productRef, productID), {
-                  quantity: updatedQuantity,
-                  sold: updatedSold
-               };
-            }
-         }
-      } catch (error) {
-         console.error('Error updating stock:', error);
-      }
-   };
 
 
    // this function creates an order
@@ -230,8 +201,6 @@ export function BasketProvider({children}) {
          try {
             const userBasketRef = ref(database, "Order/");
             await push(userBasketRef, data);
-
-            await stockUpdate(userBasket);
 
        
          } catch (error) {

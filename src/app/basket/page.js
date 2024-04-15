@@ -7,7 +7,12 @@ import { useProductContext } from '../context/ProductContext';
 import InputMask from 'react-input-mask'
 import { useRouter } from 'next/navigation';
 import { database } from '../firebaseConfig';
+<<<<<<< HEAD
+import { get, ref, update } from 'firebase/database';
+=======
 import { ref, update } from 'firebase/database';
+import { Tooltip } from 'flowbite-react';
+>>>>>>> 3f7ef0dce50d43e3b71b49605ce828e3e626f7ed
 
 export default function Home() {
 
@@ -32,6 +37,9 @@ export default function Home() {
   const sortCode = useRef();
   const expirationDate = useRef();
   const router = useRouter();
+
+
+  
 
 
 
@@ -176,10 +184,52 @@ export default function Home() {
     }
   };
 
+  //Function for product stock update
+  const updateProductStock = async (userBasket) => {
+    try {
+      // Iterate through each product ID in the userBasket
+      for (const productId in userBasket) {
+        // Get the current quantity from the userBasket
+        const quantity = userBasket[productId];
+  
+        // Retrieve the product node from the database
+        const productRef = ref(database, `Product/${productId}`);
+        const snapshot = await get(productRef);
+  
+        // Check if the product exists
+        if (snapshot.exists()) {
+          const productData = snapshot.val();
+          const currentStock = productData.quantity;
+          const currentSold = productData.sold;
+  
+          const newStock = currentStock - quantity;
+          const newSold = currentSold + quantity;
+  
+          // Update the stock quantity of the product in the database
+          await update(ref(database, `Product/${productId}`), {
+            quantity: newStock,
+            sold: newSold,
+          });
+  
+          console.log(`Updated stock quantity for product ${productId}`);
+        } else {
+          console.log(`Product ${productId} not found in the database`);
+        }
+      }
+    } catch (error) {
+      console.error('Error updating product stock:', error);
+    }
+  };
+
+  
+
   async function handleCheckOutSubmission(e){
     e.preventDefault();
     if(cardNumberError === "" && fullNameError === "" && expirationDateError === "" && cvvError === ""){
       try{
+        //calling update stock function when order is placed
+        await updateProductStock(userBasket);
+        
         await createOrder(new Date(), basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
         cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
 
@@ -195,23 +245,7 @@ export default function Home() {
     removeFromBasket(productID)
   };
 
-//Function to place the order and update the stock/sold values
-/*const handlePay = async () => {
-  try {
-    // Call payForBasket function
-    await createOrder();
-    
-    // Clear the basket after successful payment
-    await clearBasket();
-    
-    // Redirect or perform any other action after successful payment
-    // For example:
-    router.push(`/success`);
-  } catch (error) {
-    console.error('Error processing payment:', error);
-    // Handle errors, display a message, etc.
-  }
-};*/
+
 
   return (
     (checkOut === true ? (
@@ -366,11 +400,13 @@ export default function Home() {
                     </div>
                   </form>        
                   <h2 id="sub_total" className="flex  text-2xl dark:text-white text-white font-mono ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price).toFixed(2))}</h2>
-                  <Button onClick={(e) => handleDelete(b.id)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                    </svg>
-                  </Button>
+                  <Tooltip content='Delete Product from Basket'>
+                    <Button onClick={(e) => handleDelete(b.id)}>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                      </svg>
+                    </Button>
+                  </Tooltip>
                 </div>
               </Card>
             ))

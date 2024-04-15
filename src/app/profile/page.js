@@ -219,7 +219,7 @@ export default function Account() {
     return (
         <Fragment>
             <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
-                <SubNavbar />
+                <SubNavbar/>
                 
                 <div  className="self-center h-auto w-full my-6 mr-12 row-start-1 row-end-1 col-start-2 col-end-5" >
                     {userDetails && (
@@ -495,4 +495,3 @@ export default function Account() {
         </Fragment>
     );
 }
-
