@@ -242,6 +242,7 @@ p {
 @media (min-width: 600px) {
   .label {
     width: auto;
+    border-radius: 8px;
   }
 }
 .panel {
@@ -251,6 +252,8 @@ p {
   color:white;
   font-family: "Roboto", sans-serif;
   font-weight: 300; 
+  border-radius: 8px;
+  margin-top: -5px;
 
 }
 @media (min-width: 600px) {

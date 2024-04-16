@@ -181,9 +181,9 @@ export default function Page({ params }) {
                     <div className="flex pl-20 pr-20 pb-20 my-20 gap-2 " >
                         <div className="p-5 ">
         
-                            <div className="tabs">
+                            <div className="tabs ">
                                 <input className="input" name="tabs" type="radio" id="tab-1" checked={activeTab ==='tab-1'} onChange={() => handleTabChange('tab-1')} />
-                                <label className="label text-center text-xl dark:text-white self-center text-white " for="tab-1">ABOUT THE GAME</label>
+                                <label className="label rounded-md text-center text-xl dark:text-white self-center text-white " for="tab-1">ABOUT THE GAME</label>
                                 <div className="panel text-lg dark:text-white text-white " style={{ height: '300px', width:'900px', overflowY: 'auto' }} >
                                     <p>{product.description}</p>
                                 </div>
@@ -194,22 +194,22 @@ export default function Page({ params }) {
                                 </div>
                                 <input className="input" name="tabs" type="radio" id="tab-3"checked={activeTab ==='tab-3'} onChange={() => handleTabChange('tab-3')}/>
                                 <label className="label text-center text-xl dark:text-white self-center text-white " for="tab-3" >REVIEWS</label>
-                                <div className="panel text-lg dark:text-white text-white " style={{ height: '300px',width:'900px', overflowY: 'auto' }}>
+                                <div className="panel text-lg overflow-y-auto -webkit-scrollbar dark:text-white text-white " style={{ height: '300px',width:'900px', overflowY: 'auto' }}>
                                 
                                 {/* Map reviews to card, each review it's placed in one card */}
                                  {/* Change Card into div, put card external and review.map inside card (increase the divs per prod.) */}
 
                                 {review.map((review) => (
-                                    <Card className="review-card mb-10  " style={{borderRadius: '2px'}} key={review.id}>
+                                    <Card className="review-card bg-transparent mb-10  " style={{borderRadius: '8px'}} key={review.id}>
                                         <StarRating rating={review.rating}></StarRating>
                                         <div className="grid grid-cols-2 flex-wrap roboto-light">
-                                            <p className="text-black flex justify-start">Reviewed by {review.userName}</p>
-                                            <p className="text-black flex justify-end">{review.date}</p>
+                                            <p className=" flex justify-start">Reviewed by {review.userName}</p>
+                                            <p className=" flex justify-end">{review.date}</p>
                                         </div>
-                                        <hr className="border-t border-black w-full my-auto" />
+                                        <hr className="border-t border-white w-full my-auto" />
                                         <div className="grid grid-rows-2 flex-wrap">
-                                            <p className="text-black flex-wrap roboto-bold ">{review.title}</p>
-                                            <p className="text-black mb-0 roboto-light">"{review.comment}"</p>
+                                            <p className="flex-wrap roboto-bold ">{review.title}</p>
+                                            <p className="mb-0 roboto-light">"{review.comment}"</p>
                                         </div>
                                     </Card>
                                 ))}
