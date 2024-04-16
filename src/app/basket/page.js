@@ -35,6 +35,8 @@ export default function Home() {
   const router = useRouter();
 
 
+
+
   
 
 
@@ -415,7 +417,7 @@ export default function Home() {
         {(basketSize > 0 ? ( 
           <div className=' total_box grid grid-rows-4 flex-wrap ml-20 mr-20 pb-20'>
             <div className='flex justify-between p-5'>
-              <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white roboto-light ">TOTAL SAVED</h2>
+              <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white roboto-light ">SAVED</h2>
               <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white roboto-light">£{parseFloat(basketDiscount).toFixed(2)}</h2>
             </div>
             <div className='pl-10 pr-10 ml-20 mr-20'>

@@ -26,6 +26,8 @@ export default function Page({ params }) {
     const { addToBasket } = useBasketContext();
     const [review, setReview] = useState(false);
 
+    const [numReviews, setNumReviews] = useState(0);
+
 
     useEffect(() => {    
         get(prodRef).then((snapshot) => {
@@ -47,6 +49,7 @@ export default function Page({ params }) {
     //Retrieves reviews from database
     useEffect(() => {
         const prodRef = ref(database, "Reviews");
+       
         get(prodRef).then((snapshot) => {
             if (snapshot.exists()) {
                 const reviews = [];
@@ -56,8 +59,10 @@ export default function Page({ params }) {
                         const review = { ...reviewData, id: childSnapshot.key };
                         reviews.push(review);
                     }
+                    
                 });
                 setReview(reviews);
+                setNumReviews(reviews.length);
             } else {
                 console.log("No reviews found.");
                 setReview([]);
@@ -94,8 +99,15 @@ export default function Page({ params }) {
                         </div>
                         <div className="flex-1" style={{ flex: 'wrap', alignItems:"right"}}>
                             <h1 className="text-center  bebas-neue-regular ">{product.name}</h1>
-                            <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white roboto-regular" > £{product.price} </h2>
-                            <div className="relative overflow-x-auto">
+                            <div className="flex flex-row justify-between">
+                                <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " > £{product.price} </h2>
+                                <h2 className="text-white">Score</h2>
+                                <h2 className="text-right justify-end roboto-lightLarge text-white">Reviews:{numReviews}</h2>
+
+                            </div>    
+
+                            
+                            <div className="relative mt-5 overflow-x-auto">
                                 <table className="game-table dark:text-white self-center text-white" >
                                     <tbody>
                                         <tr>
