@@ -197,12 +197,14 @@ export default function Page({ params }) {
                                 <div className="panel text-lg dark:text-white text-white " style={{ height: '300px',width:'900px', overflowY: 'auto' }}>
                                 
                                 {/* Map reviews to card, each review it's placed in one card */}
+                                 {/* Change Card into div, put card external and review.map inside card (increase the divs per prod.) */}
+
                                 {review.map((review) => (
                                     <Card className="review-card mb-10  " style={{borderRadius: '2px'}} key={review.id}>
                                         <StarRating rating={review.rating}></StarRating>
                                         <div className="grid grid-cols-2 flex-wrap roboto-light">
                                             <p className="text-black flex justify-start">Reviewed by {review.userName}</p>
-                                            <p className="text-black flex justify-end">Date {review.date}</p>
+                                            <p className="text-black flex justify-end">{review.date}</p>
                                         </div>
                                         <hr className="border-t border-black w-full my-auto" />
                                         <div className="grid grid-rows-2 flex-wrap">
