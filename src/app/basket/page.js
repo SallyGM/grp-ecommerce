@@ -251,8 +251,8 @@ export default function Home() {
         </div>
         <div className='flex flex-row'>
           <div className='flex flex-col summary-box rounded-md gap-4 p-6 w-1/2 m-5'>
-            <h2 className='text-center font-bold'>Summary</h2>
-            <table className="table-auto">
+            <h2 className='text-center roboto-bold'>Summary</h2>
+            <table className="table-auto roboto-light">
               <thead>
                 <tr>
                   <th>Game</th>
@@ -280,8 +280,8 @@ export default function Home() {
             <p className='text-right'>£{basketPrice}</p>
           </div>
           <Card className='w-1/2 m-5 p-2 card-box '>
-          <h2 className='text-center font-bold'>Card details</h2>
-            <form className="max-w-md mx-auto" onSubmit={handleCheckOutSubmission}>
+          <h2 className='text-center roboto-bold'>Card details</h2>
+            <form className="max-w-md mx-auto roboto-light" onSubmit={handleCheckOutSubmission}>
               <div className="relative z-0 w-full mb-5 group">
                 <label>Full Name</label>
                 <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
@@ -355,7 +355,7 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              <button type="submit" className="pay-btn text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Pay</button>
+              <button type="submit" className="pay-btn text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center roboto-light" >Pay</button>
             </form>
           </Card>
         </div>
