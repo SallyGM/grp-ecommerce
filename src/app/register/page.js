@@ -295,7 +295,7 @@ export default function Home() {
   
   const handleCardNumber = (e) => {
     const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 19;
-    
+        // IDEA: assign e.target.value to a variable (eg: input) and use it to simplify the code     
     if (!isValid && e.target.value.length < 20 && e.target.value.length > 0) { // BUG FIX e.target.value.length < 20
       setCardNumberError('Card number has to be 16 digits long'); // BUG: if you keep pressing numbers the error appears again
     } else {
@@ -315,7 +315,7 @@ export default function Home() {
 
   const handleSortCode = (e) => {
     const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 8;
-    
+   
     if (!isValid && e.target.value.length < 9 && e.target.value.length > 0) {
       setSortCodeError('Sort code should be 6 digits long');
     } else { 
