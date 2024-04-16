@@ -4,10 +4,12 @@ import { useAuth } from "../context/AuthContext"
 import { useFavouriteContext } from "../context/FavouriteContext";
 import { useProductContext } from "../context/ProductContext";
 import { Button } from "flowbite-react";
+import { useRouter } from "next/navigation";
 
 export default function Favourites() {
 
   const { currentUser } = useAuth();
+  const router = useRouter();
   const { products } = useProductContext()
   const { favourites, addToFavourites, removeFromFavourites, removeAllFavourites } = useFavouriteContext()
   const [ favourite, setFavourite] = useState([]);
