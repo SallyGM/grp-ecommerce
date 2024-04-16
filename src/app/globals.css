@@ -183,6 +183,10 @@ body {
   background-color: #020a4f;
 }
 
+.bg-elite-blue{
+  background-color: #0a1366;
+}
+
 * {
   --tw-ring-color: rgb(0 0 0 / 0) !important;
 }
