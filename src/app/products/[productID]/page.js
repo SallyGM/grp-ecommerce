@@ -202,7 +202,7 @@ export default function Page({ params }) {
                                         <StarRating rating={review.rating}></StarRating>
                                         <div className="grid grid-cols-2 flex-wrap roboto-light">
                                             <p className="text-black flex justify-start">Reviewed by {review.userName}</p>
-                                            <p className="text-black flex justify-end">Date {review.date}</p>
+                                            <p className="text-black flex justify-end">{review.date}</p>
                                         </div>
                                         <hr className="border-t border-black w-full my-auto" />
                                         <div className="grid grid-rows-2 flex-wrap">

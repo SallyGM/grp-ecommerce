@@ -17,9 +17,6 @@ const StarRating = ({ rating }) => {
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             {stars}
-            <Typography variant="body1" component="span" style={{ marginLeft: 4 }}>
-                {rating}
-            </Typography>
         </div>
     );
 }

@@ -132,7 +132,7 @@ export default function Home() {
   const handleSortCode = (e) => {
     const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 8;
     
-    if (!isValid) {   //BUG: error does not disappear (might just be on my end)
+    if (!isValid) {
       setSortCodeError('Sort code should be 6 digits long');
     } else { 
       setSortCodeError('');
@@ -250,7 +250,7 @@ export default function Home() {
           <h1 className=" my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white bebas-neue-regularLarge">CheckOut</h1>
         </div>
         <div className='flex flex-row'>
-          <div className='flex flex-col summary-box rounded-md justify-center gap-4 p-6 w-1/2 m-5 p-2'>
+          <div className='flex flex-col summary-box rounded-md gap-4 p-6 w-1/2 m-5'>
             <h2 className='text-center font-bold'>Summary</h2>
             <table className="table-auto">
               <thead>
@@ -294,7 +294,7 @@ export default function Home() {
               </div>
               <div className="relative z-0 w-full mb-5 group">
                 <label>Sort Code</label>
-                <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" mask="99-99-99" maskChar="" placeholder='Sort Code...' required/>  
+                <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
                 {sortCodeError && <span style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>}
               </div>
               <div className="grid md:grid-cols-2 md:gap-6">
