@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from '@/components/modal.js';
 import { useTheme } from '@mui/material/styles';
-import { AccountCircle, Payment, VpnKey, RateReview, ExitToApp } from '@mui/icons-material'; // Import icons
+import { AccountCircle, Payment, VpnKey,DoneIcon, RateReview, ExitToApp } from '@mui/icons-material'; // Import icons
 import { useAuth } from '../context/AuthContext.js'
 import toast from 'react-hot-toast';
 import { deleteUser } from 'firebase/auth';
@@ -113,12 +113,13 @@ export default function Account() {
     const { products } = useProductContext();
     const [OrderDetails, setOrderDetails] = useState([]);
     const [showReviewModal, setShowReviewModal] = useState(false);
-    const [showKeyModal, setShowKeyModal] = useState(false);
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [review, setReview] = useState('');
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [copiedIndex, setCopiedIndex] = useState(null);
+
     const [reviewData, setReviewData] = useState({
         rating: '',
         title: '',
@@ -772,6 +773,8 @@ export default function Account() {
         return products.find(product => product.id === productId) || {};
     };
 
+    
+
     // Function to open delete review modal
     const openDeleteReviewModal = (review) => {
         setReviews(review);
@@ -799,6 +802,19 @@ export default function Account() {
             });
     }
     //#endregion
+    // functio that handle the gay key copy and changes of the icon(NO WORKING YET)
+
+    const handleCopySuccess = (index) => {
+        console.log('Copying item at index:', index);
+        setCopiedIndex(index);
+        // Reset the copiedIndex state after a certain time if needed
+        setTimeout(() => {
+            setCopiedIndex(null); // Reset after 2 seconds
+        }, 4000);
+    };
+    
+   
+
     
     return (
         <Fragment>
@@ -939,7 +955,7 @@ export default function Account() {
                         ) : (
                             OrderDetails.map((o) => (
                                 <Card key={o.id} style={{ backgroundColor: 'transparent' }} className="flex h-auto w-full border-2 border-white mt-3">
-                                    <div className=' grid grid-cols-3 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
+                                    <div className=' grid grid-cols-3 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr ', justifyItems: 'start' }}>
                                         <h3 className='font-bold tracking-tight dark:text-white text-white'>Order Number:</h3>
                                         <h3 className='font-bold tracking-tight dark:text-white text-white'>Date Placed:</h3>
                                         <h3 className='font-bold tracking-tight dark:text-white text-white'>Total Amount:</h3>
@@ -957,6 +973,7 @@ export default function Account() {
                                         <a className='tracking-tight dark:text-white text-white'>Price</a>
                                         <a className='tracking-tight dark:text-white text-white'>Review</a>
                                         <a className='tracking-tight dark:text-white text-white'>Key</a>
+                                        <a className='tracking-tight dark:text-white text-white'></a>
                                     </div>
                                     
                                     {/* Display item details */}
@@ -984,11 +1001,17 @@ export default function Account() {
                                                             disabled={showReviewModal}></RateReview>
                                                         </Tooltip>
                                                     )}  
-                                                        <CopyToClipboard text={o.gameKey}>
+                                                        <CopyToClipboard text={o.gameKey} onCopy={() => handleCopySuccess(index)}>
                                                             <Tooltip id="game-key-tooltip" place="top" effect="solid" content={`Click on the KEY icon to copy the game key: ${o.gameKey}`}>
-                                                                <VpnKeyIcon className="cursor-pointer hover:scale-110 hover:text-slate-200" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
+                                                                <div className="cursor-pointer hover:scale-110 hover:text-slate-200">
+                                                                    {copiedIndex === index ? (
+                                                                        <DoneIcon style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
+                                                                    ) : (
+                                                                        <VpnKeyIcon style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
+                                                                    )}
+                                                                </div>
                                                             </Tooltip>
-                                                        </CopyToClipboard>         
+                                                        </CopyToClipboard>
                                                     </Fragment>
                                                 )}
                                             </div>
