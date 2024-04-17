@@ -34,6 +34,11 @@ export default function Home() {
   const expirationDate = useRef();
   const router = useRouter();
 
+  // Function to handle navigation back to the basket page
+  const handleGoBackToBasket = () => {
+    setCheckOut(false);
+  };
+
 
 
 
@@ -255,22 +260,23 @@ export default function Home() {
           <h1 className=" my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white bebas-neue-regularLarge">CheckOut</h1>
         </div>
         <div className='flex flex-row'>
-          <div className='flex flex-col summary-box rounded-md gap-4 p-6 w-1/2 m-5'>
-            <h2 className='text-center roboto-bold'>Summary</h2>
-            <table className="table-auto roboto-light">
-              <thead>
-                <tr>
-                  <th>Game</th>
+          <div className='flex flex-col shadowed-div summary-box rounded-lg gap-4 p-6 w-1/2 m-5'>
+            <h2 className='text-center text-xl roboto-bold'>Summary</h2>
+            <table className="text-lg mt-5 roboto-light">
+              <thead >
+                <tr >
+                  <th className="px-6 py-3 ">Game</th>
                   <th>Quantity</th>
                   <th>Price</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
+                <div></div>
               {(basketSize > 0 ? (
               Object.entries(basket).map(([key, b]) => (
                 <tr key={key}>
-                  <td>{b.name}</td>
-                  <td className='text-center'>{b.quantity}</td>
+                  <td className="px-6 py-3 ">{b.name}</td>
+                  <td className='text-center '>{b.quantity}</td>
                   <td className='text-center'>{parseFloat(b.price * b.quantity).toFixed(2)}</td>
                 </tr>
               ))) : (
@@ -281,36 +287,46 @@ export default function Home() {
               </tbody>
             </table>
             <hr/>
-            <p className='text-right'>£{(basketDiscount > 0 ? basketDiscount : 0.00)}</p>
-            <p className='text-right'>£{basketPrice}</p>
+            <p className='text-right text-lg roboto-light'>£{(basketDiscount > 0 ? basketDiscount : 0.00)}</p>
+            <p className='text-right text-lg roboto-light'>£{basketPrice}</p>
           </div>
-          <Card className='w-1/2 m-5 p-2 card-box '>
-          <h2 className='text-center roboto-bold'>Card details</h2>
-            <form className="max-w-md mx-auto roboto-light" onSubmit={handleCheckOutSubmission}>
+          <div className='p-6 w-1/2 m-5 card-box rounded-lg shadowed-div '>
+          <h2 className='text-center text-xl roboto-bold'>Card details</h2>
+            <form className="max-w-md mx-auto mt-12 roboto-light" onSubmit={handleCheckOutSubmission}>
               <div className="relative z-0 w-full mb-5 group">
                 <label>Full Name</label>
-                <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
+                <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
                 {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
               </div>
               <div className="relative z-0 w-full mb-5 group">
                 <label>Card Number</label>
-                <InputMask ref={cardNumber} onChange={handleCardNumber} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" mask="9999 9999 9999 9999" maskChar="" placeholder='Card Number...' required/>  
+                <InputMask ref={cardNumber} onChange={handleCardNumber} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="9999 9999 9999 9999" maskChar="" placeholder='Card Number...' required/>  
                 {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
               </div>
               <div className="relative z-0 w-full mb-5 group">
                 <label>Sort Code</label>
-                <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
+                <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
                 {sortCodeError && <span style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>}
               </div>
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-5 group">
                   <label>Expiration Date</label>
-                  <InputMask ref={expirationDate} onChange={handleExpirationDate} className="block rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" mask="99/9999" maskChar="" placeholder='12/2024' required/>
+                  <InputMask ref={expirationDate} onChange={handleExpirationDate} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99/9999" maskChar="" placeholder='12/2024' required/>
                   {expirationDateError && <span style={{ color: 'red', fontSize: '12px' }}>{expirationDateError}</span>}
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
-                  <label>CVV</label>
-                  <InputMask ref={cvv} type={showCVV ? "text" : "password"} onChange={handleCVV} className="block rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" mask="999" maskChar="" placeholder='CVV' required/>
+                  <div className='flex flex-row'>
+                    <label>CVV</label>
+                    <Tooltip content="Three digit code on the back of your card">
+                      <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
+                        <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                      </Tooltip>
+                  </div>
+                  
+                  <InputMask ref={cvv} type={showCVV ? "text" : "password"} onChange={handleCVV} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="999" maskChar="" placeholder='CVV' required/>
                   {cvvError && <span style={{ color: 'red', fontSize: '12px' }}>{cvvError}</span>}
                   <button
                     type="button"
@@ -360,9 +376,14 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              <button type="submit" className="pay-btn text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center roboto-light" >Pay</button>
+              <div className='flex flex-row gap-20'>
+                <button type="submit" className="pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" >Pay</button>
+
+                {/*Button to go back to basket*/}
+                <button type="button" className="pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={handleGoBackToBasket} >Cancel</button>
+              </div>      
             </form>
-          </Card>
+          </div>
         </div>
       </div>
     ) : (
@@ -373,10 +394,13 @@ export default function Home() {
         
         <div className='grid grid-rows-1 flex-wrap m-s ml-20 mr-20 mb-5'>
         <Card className='bg-transparent basket_card'>
-          <div className='text-xl roboto-bold grid grid-cols-4 flex-wrap w-full' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
+          <div className='text-xl roboto-bold grid grid-cols-4 flex-wrap w-full' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
             <h3 className=' tracking-tight dark:text-white text-white'>Product</h3>
             <h3 className='tracking-tight dark:text-white  text-white'>Quantity</h3>
             <h3 className='tracking-tight  dark:text-white text-white'>Subtotal</h3>
+            <h3 className='tracking-tight  dark:text-white text-white'>Total</h3>
+
+
           </div>
        
   
@@ -384,11 +408,11 @@ export default function Home() {
             Object.entries(basket).map(([key, b]) => (
             
               <div key={key} className="flex h-auto  w-full my-6 ">
-                <div className='grid grid-cols-4 items-center flex-wrap'style={{ gridTemplateColumns:'1fr 1fr 1fr 1fr',justifyItems: 'center' }} >  
+                <div className='grid grid-cols-4 items-center flex-wrap'style={{ gridTemplateColumns:'1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }} >  
 
                   <a href="#" onClick={(e) => handleClickOpenProduct(b.id, e)}>
                     <img
-                      className='slick-slide-image'
+                      className='slick-slide-image rounded-lg'
                       src={(b.images ? b.images[2] : 'https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Preview%2FA%20Short%20Hike%20Preview%20Pic.png?alt=media&token=eee51ae3-1981-4fc6-ae13-7f1e52b885b4')}
                       alt='preview'
                       />
@@ -410,9 +434,9 @@ export default function Home() {
                     </div>
                   </form>   
 
-                  {/* Check for decimal digits,  God of war when selecting 3 of them a lot of decimal happen */}     
+                  {/* Subtotal and Total calculated and displayed per product */}     
+                  <h2 id="sub_total" className="flex  text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price).toFixed(2))}</h2>
                   <h2 id="sub_total" className="flex  text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price * b.quantity).toFixed(2))}</h2>
-                  
                   <Tooltip content='Remove Product'>
                     <img className=" first-line:h-5 w-5 flex-wrap cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "remove product" onClick={(e) => handleDelete(b.id)}/>
                   </Tooltip>

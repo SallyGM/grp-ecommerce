@@ -130,7 +130,7 @@ export default function Page({ params }) {
                                     <div className="relative mt-5 overflow-x-auto">
                                         <table className="game-table dark:text-white self-center text-white" >
                                             <tbody>
-                                                <tr>
+                                                <tr className="row-1-gt">
                                                     <th scope="row" className="px-6 py-3 ">
                                                         Release Date
                                                     </th>
