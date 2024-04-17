@@ -198,7 +198,7 @@ export default function Product() {
             <br/><br/><br/><br/><br/><br/><br/>
           </div>
         ) : (
-          <div className='flex flex-rpw flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 text-sm justify-center'>
+          <div className='flex flex-row flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 text-sm justify-center'>
             {showProduct.map((p, i) => (
               <Card key={i} className="relative max-w-sm mx-3 my-3 w-72" renderImage={() => 
                 <img className="w-full h-full object-cover cursor-pointer rounded-lg" src={p.images[1]} alt="image 1" onClick={(e) => handleClickOpenProduct(p.id, e)} />}>             
@@ -224,9 +224,6 @@ export default function Product() {
                 </p>
                 <p className="font-normal text-gray-700 dark:text-gray-400">
                   {p.console}
-                </p>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                  {p.releaseDate}
                 </p>
 
                 <Button.Group className='items-center'>
