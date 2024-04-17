@@ -10,6 +10,8 @@ import { database } from '../firebaseConfig';
 import { get, ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
 import { v4 as uuidv4 } from 'uuid';
+import toast from 'react-hot-toast';
+
 
 export default function Home() {
 
@@ -186,7 +188,7 @@ const handleGoBackToBasket = () => {
     if(currentUser){
       setCheckOut(true)
     } else {
-      router.push(`/register`);
+      router.push(`/login`);
     }
   };
 
@@ -216,14 +218,18 @@ const handleGoBackToBasket = () => {
             quantity: newStock,
             sold: newSold,
           });
+          
+          
   
           console.log(`Updated stock quantity for product ${productId}`);
         } else {
           console.log(`Product ${productId} not found in the database`);
         }
       }
+      
     } catch (error) {
       console.error('Error updating product stock:', error);
+      
     }
   };
 
@@ -242,9 +248,11 @@ const handleGoBackToBasket = () => {
         cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
 
         await clearBasket();
-        router.push(`/`);
+        router.push(`/profile/order`);
+        toast.success('Ordered placed correctly!');
       } catch (error) {
-        console.log("error")
+        console.log("error");
+        toast.success('Error placing the order.');
       }
     }
   }
