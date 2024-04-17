@@ -411,7 +411,7 @@ p {
 }
 /*Rating stars*/
 
-input[type = radio]{
+.stars-input{
   display: none;
 }
 

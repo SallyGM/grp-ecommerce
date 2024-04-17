@@ -79,8 +79,10 @@ export default function Home() {
   }
 
   function handleClickAddToCart(productID, amount, e){
-    addToBasket(productID, amount);
-    toast.success('Product added to basket!');
+    if(amount > 0){
+      addToBasket(productID, amount);
+      toast.success('Product added to basket!');
+    }
   }
 
   function handleClickChangeQuantity(p, op){
@@ -99,7 +101,7 @@ export default function Home() {
   }
 
   return (
-    <div className='back-prod'>
+    <div className='bg-blue-gradient'>
       {/*Insert costumised banner over here*/}
       <Carousel slide={true} className="overflow-hidden" style={{height: "31rem"}}>
         <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fcyberpunk_2077_banner.png?alt=media&token=59d5478f-1c47-499c-aab0-6043d7251acc" alt="..." />
