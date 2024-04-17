@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { database } from '../firebaseConfig';
 import { get, ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
 
@@ -34,12 +35,7 @@ export default function Home() {
   const expirationDate = useRef();
   const router = useRouter();
 
-  // Function to handle navigation back to the basket page
-  const handleGoBackToBasket = () => {
-    setCheckOut(false);
-  };
-
-
+  const [currentDate, setCurrentDate] = useState(new Date());
 
 
   function handleClickOpenProduct(productID, e) {
@@ -235,8 +231,10 @@ export default function Home() {
       try{
         //calling update stock function when order is placed
         await updateProductStock(userBasket);
-        
-        await createOrder(new Date(), basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
+        setCurrentDate(new Date());
+        const gameKey = uuidv4();
+
+        await createOrder(currentDate.toLocaleDateString('en-GB'),gameKey, basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
         cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
 
         await clearBasket();
@@ -251,11 +249,9 @@ export default function Home() {
     removeFromBasket(productID)
   };
 
-
-
   return (
     (checkOut === true ? (
-      <div className='pt-5 back-prod  pb-20'>
+      <div className='pt-5 bg-blue-gradient pb-20'>
         <div>
           <h1 className=" my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white bebas-neue-regularLarge">CheckOut</h1>
         </div>
@@ -387,9 +383,9 @@ export default function Home() {
         </div>
       </div>
     ) : (
-      <div className='pt-5 back-prod pb-20'>
+      <div className='pt-5 bg-blue-gradient pb-20'>
         <div>
-          <h1 className="text-center mb-5  dark:text-white self-center text-white bebas-neue-regularLarge">MY CART</h1>
+          <h1 className="text-center mb-5 self-center text-white bebas-neue-regularLarge">MY CART</h1>
         </div>
         
         <div className='grid grid-rows-1 flex-wrap m-s ml-20 mr-20 mb-5'>
@@ -418,21 +414,21 @@ export default function Home() {
                       />
                   </a>
 
-                  <form className="max-w-xs">
-                    <div className="flex max-w-[8rem]">
-                        <button type="button" id="decrement-button" onClick={(e) => handleClickChangeQuantity(b,"-", e)} data-input-counter-decrement="quantity-input" className="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                            <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16"/>
-                            </svg>
-                        </button>
-                        <input type="text" id="quantity-input" value={b.quantity} data-input-counter aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-black text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1" required />
-                        <button type="button" id="increment-button" onClick={(e) => handleClickChangeQuantity(b,"+", e)}  data-input-counter-increment="quantity-input" className="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                            <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-                            </svg>
-                        </button>
-                    </div>
-                  </form>   
+                    <form className="max-w-xs">
+                      <div className="flex max-w-[8rem]">
+                          <button type="button" id="decrement-button" onClick={(e) => handleClickChangeQuantity(b,"-", e)} data-input-counter-decrement="quantity-input" className="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                              <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16"/>
+                              </svg>
+                          </button>
+                          <input type="text" id="quantity-input" value={b.quantity} data-input-counter aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-black text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1" required />
+                          <button type="button" id="increment-button" onClick={(e) => handleClickChangeQuantity(b,"+", e)}  data-input-counter-increment="quantity-input" className="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                              <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
+                              </svg>
+                          </button>
+                      </div>
+                    </form>   
 
                   {/* Subtotal and Total calculated and displayed per product */}     
                   <h2 id="sub_total" className="flex  text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price).toFixed(2))}</h2>
