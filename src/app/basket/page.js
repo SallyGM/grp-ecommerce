@@ -46,6 +46,10 @@ export default function Home() {
     router.push(`/products/${productID}`);
 }
 
+const handleGoBackToBasket = () => {
+  setCheckOut(false);
+};
+
 
   useEffect(() => {
     if(products.length > 0){
