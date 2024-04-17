@@ -410,7 +410,7 @@ export default function Account() {
         // Create a new card object from the form data
         const newCard = {
             cardNumber: formData.cardNumber,
-            sortCode: formData.securityCode,
+            sortCode: formData.sortCode,
             expDate: formData.expDate,
             securityCode: formData.securityCode,
             cardName: formData.cardName
@@ -901,10 +901,10 @@ export default function Account() {
                                     <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
                                     <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
                                     <Tooltip content='Edit your card'>
-                                    <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                        <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
                                     </Tooltip>
                                     <Tooltip content='Delete your card'>
-                                    <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                        <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
                                     </Tooltip>
 
                                 </div>
@@ -1413,13 +1413,13 @@ export default function Account() {
                         {review && review.images && review.images[0] && (
                             <img className="self-center w-full h-28 object-cover rounded-lg" src={review.images[0]} alt="Product Image"/>
                         )}
-                        <div className=" w-full mt-3 flex  dark:text-white text-white font-mono justify-center items-center">{review.name}</div>
+                        <div className=" w-full mt-3 flex dark:text-white text-white font-mono justify-center items-center">{review.name}</div>
                             <div className='inline-flex self-center'>
                                 {[...Array(5)].map((star, index) =>{
                                     const currentRating = index + 1;
                                     return (
                                         <label>
-                                            <input type='radio' required name='rating' value={currentRating} onClick={() => setRating(currentRating)}></input>
+                                            <input type='radio' className='stars-input' required name='rating' value={currentRating} onClick={() => setRating(currentRating)}></input>
                                             <FaStar className= 'star ml-6 mt-3' size={50} 
                                             color={currentRating <= (hover || rating) ? "#ffc107" : "e4e5e9"}
                                             onMouseEnter={() => setHover(currentRating)}

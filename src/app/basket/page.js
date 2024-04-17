@@ -16,12 +16,12 @@ import toast from 'react-hot-toast';
 export default function Home() {
 
   const [ allProducts, setAllProducts] = useState([]);
-  //const [ basketSize, setBasketSize] = useState(0);
   const [ basketPrice, setBasketPrice] = useState(0);
+  const [ cards, setCards] = useState([]);
   const [ basketDiscount, setBasketDiscount] = useState(0);
   const [ checkOut, setCheckOut ] = useState(false)
   const [ basket, setBasket] = useState([]);
-  const { userBasket, basketSize, onCheckOut, guestBasket, removeFromBasket, createOrder, clearBasket } = useBasketContext();
+  const { userBasket, basketSize, guestBasket, removeFromBasket, createOrder, clearBasket } = useBasketContext();
   const { currentUser } = useAuth() // to verify which basket to use
   const { products } = useProductContext();
   const [ showCVV, setShowCVV] = useState(false) 
@@ -29,7 +29,9 @@ export default function Home() {
   const [ cardNumberError, setCardNumberError] = useState(false)  
   const [ sortCodeError, setSortCodeError] = useState(false)  
   const [ cvvError, setCVVError] = useState(false)  
-  const [ expirationDateError, setExpirationDateError] = useState(false)               
+  const [ expirationDateError, setExpirationDateError] = useState(false)    
+  const [ defaultPayment, setDefaultPayment] = useState(true); 
+  const [ paymentOption, setPaymentOption] = useState(0);            
   const fullName = useRef();
   const cardNumber = useRef();
   const cvv = useRef();
@@ -46,12 +48,11 @@ export default function Home() {
     
     // Redirect to the specific product page using the product ID
     router.push(`/products/${productID}`);
-}
+  }
 
-const handleGoBackToBasket = () => {
-  setCheckOut(false);
-};
-
+  const handleGoBackToBasket = () => {
+    setCheckOut(false);
+  };
 
   useEffect(() => {
     if(products.length > 0){
@@ -108,8 +109,8 @@ const handleGoBackToBasket = () => {
   }, [basket])
 
   useEffect(() => {
-    console.log(onCheckOut)
-  },[onCheckOut])
+    console.log(checkOut)
+  },[checkOut])
 
   const handleFullName = (e) => {
     const isValid = /^([A-Z ][a-z ]*|[a-z ]+)$/i.test(e.target.value) && e.target.value.length <= 40;
@@ -184,9 +185,26 @@ const handleGoBackToBasket = () => {
     setBasket(Object.values(b))
   };
 
-  const handleCheckOutPage = () => {
+  const handleCheckOutPage = async() => {
     if(currentUser){
       setCheckOut(true)
+      const userCardRef = ref(database, 'User/' + currentUser.uid + '/card');
+
+      await get(userCardRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data =  Object.entries(snapshot.val()).map(([id, data]) => ({
+            id, 
+            ...data,
+          }));
+
+          setDefaultPayment(false)
+          setCards(data)
+        }
+      })
+      .catch((error) => {
+          console.error('Error retrieving card details:', error);
+      });
     } else {
       router.push(`/login`);
     }
@@ -219,7 +237,6 @@ const handleGoBackToBasket = () => {
             sold: newSold,
           });
           
-          
   
           console.log(`Updated stock quantity for product ${productId}`);
         } else {
@@ -233,19 +250,22 @@ const handleGoBackToBasket = () => {
     }
   };
 
-  
-
   async function handleCheckOutSubmission(e){
     e.preventDefault();
-    if(cardNumberError === "" && fullNameError === "" && expirationDateError === "" && cvvError === ""){
+    if((cardNumberError === "" && fullNameError === "" && expirationDateError === "" && cvvError === "") || !defaultPayment){
       try{
         //calling update stock function when order is placed
         await updateProductStock(userBasket);
         setCurrentDate(new Date());
         const gameKey = uuidv4();
 
-        await createOrder(currentDate.toLocaleDateString('en-GB'),gameKey, basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
+        if(defaultPayment){
+          await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
         cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
+        } else {
+          await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, cards[paymentOption].cardName,
+        cards[paymentOption].cardNumber, cards[paymentOption].securityCode, cards[paymentOption].expDate, cards[paymentOption].sortCode);
+        }
 
         await clearBasket();
         router.push(`/profile/order`);
@@ -260,6 +280,15 @@ const handleGoBackToBasket = () => {
   const handleDelete = (productID) => {
     removeFromBasket(productID)
   };
+
+  const handlePaymentOptionChange = (e) => {
+    if(e.target.value === "default"){
+      setDefaultPayment(true)
+    } else {
+      setDefaultPayment(false)
+      setPaymentOption(e.target.value)
+    }
+  }
 
   return (
     (checkOut === true ? (
@@ -299,91 +328,119 @@ const handleGoBackToBasket = () => {
             <p className='text-right text-lg roboto-bold'>Total: £{basketPrice.toFixed(2)}</p>
           </div>
           <div className='p-6 w-1/2 m-5 card-box rounded-lg shadowed-div '>
-          <h2 className='text-center text-xl roboto-bold'>Card details</h2>
+          <h2 className='text-center text-xl roboto-bold'>Payment options</h2>
             <form className="max-w-md mx-auto mt-12 roboto-light" onSubmit={handleCheckOutSubmission}>
-              <div className="relative z-0 w-full mb-5 group">
-                <label>Full Name</label>
-                <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
-                {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
-              </div>
-              <div className="relative z-0 w-full mb-5 group">
-                <label>Card Number</label>
-                <InputMask ref={cardNumber} onChange={handleCardNumber} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="9999 9999 9999 9999" maskChar="" placeholder='Card Number...' required/>  
-                {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
-              </div>
-              <div className="relative z-0 w-full mb-5 group">
-                <label>Sort Code</label>
-                <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
-                {sortCodeError && <span style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>}
-              </div>
-              <div className="grid md:grid-cols-2 md:gap-6">
+              {cards.length > 0 ? (
+                <>
+                  <fieldset onChange={handlePaymentOptionChange}>
+                    {cards.map((key, index) => (
+                      <div className="flex items-center mb-4">
+                        <input id={index} type="radio" name="option" value={index} className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"/>
+                        <label for={index} className="ms-2 text-sm font-medium text-white dark:text-gray-300">XXXX-XXXX-XXXX-{key.cardNumber.slice(-4)}</label>
+                      </div>
+                    ))}
+
+                    <div className="flex items-center mb-4">
+                      <input id="default" type="radio" name="option" value="default" className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"/>
+                      <label for="default" className="ms-2 text-sm font-medium text-white dark:text-gray-300">Other payment method</label>
+                    </div>
+                  </fieldset>
+                </>
+              ) : (
+                <></>
+              )}
+
+              {defaultPayment ? (
+                <>
+                <hr className='h-px mx-3 my-5 bg-slate-600 border-0 dark:bg-gray-700'/>
                 <div className="relative z-0 w-full mb-5 group">
-                  <label>Expiration Date</label>
-                  <InputMask ref={expirationDate} onChange={handleExpirationDate} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99/9999" maskChar="" placeholder='12/2024' required/>
-                  {expirationDateError && <span style={{ color: 'red', fontSize: '12px' }}>{expirationDateError}</span>}
+                  <label>Full Name</label>
+                  <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
+                  {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
-                  <div className='flex flex-row'>
-                    <label>CVV</label>
-                    <Tooltip content="Three digit code on the back of your card">
-                      <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
-                        <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </svg>
-                      </Tooltip>
+                  <label>Card Number</label>
+                  <InputMask ref={cardNumber} onChange={handleCardNumber} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="9999 9999 9999 9999" maskChar="" placeholder='Card Number...' required/>  
+                  {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
+                </div>
+                <div className="relative z-0 w-full mb-5 group">
+                  <label>Sort Code</label>
+                  <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
+                  {sortCodeError && <span style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>}
+                </div>
+                <div className="grid md:grid-cols-2 md:gap-6">
+                  <div className="relative z-0 w-full mb-5 group">
+                    <label>Expiration Date</label>
+                    <InputMask ref={expirationDate} onChange={handleExpirationDate} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99/9999" maskChar="" placeholder='12/2024' required/>
+                    {expirationDateError && <span style={{ color: 'red', fontSize: '12px' }}>{expirationDateError}</span>}
                   </div>
-                  
-                  <InputMask ref={cvv} type={showCVV ? "text" : "password"} onChange={handleCVV} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="999" maskChar="" placeholder='CVV' required/>
-                  {cvvError && <span style={{ color: 'red', fontSize: '12px' }}>{cvvError}</span>}
-                  <button
-                    type="button"
-                    aria-label={
-                      showCVV ? "Password Visible" : "Password Invisible."
-                    }
-                    className="text-black dark:text-white"
-                    onClick={() => {
-                      setShowCVV((prev) => !prev);
-                    }}>
-                    {showCVV ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="#00052d"
-                        className="w-6 select-none cursor-pointer h-6 absolute top-9 right-2"
-                        tabindex="-1"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLineJoin="round"
-                          d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                        ></path>
-                        <path
-                          strokeLinecap="round"
-                          strokeLineJoin="round"
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        ></path>
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="#00052d"
-                        className="w-6 select-none cursor-pointer h-6 absolute top-9 right-2">
-                        <path
-                          strokeLinecap="round"
-                          strokeLineJoin="round"
-                          d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                        ></path>
-                      </svg>
-                    )}  
-                  </button>
+                  <div className="relative z-0 w-full mb-5 group">
+                    <div className='flex flex-row'>
+                      <label>CVV</label>
+                      <Tooltip content="Three digit code on the back of your card">
+                        <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
+                          <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        </Tooltip>
+                    </div>
+                    
+                    <InputMask ref={cvv} type={showCVV ? "text" : "password"} onChange={handleCVV} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="999" maskChar="" placeholder='CVV' required/>
+                    {cvvError && <span style={{ color: 'red', fontSize: '12px' }}>{cvvError}</span>}
+                    <button
+                      type="button"
+                      aria-label={
+                        showCVV ? "Password Visible" : "Password Invisible."
+                      }
+                      className="text-black dark:text-white"
+                      onClick={() => {
+                        setShowCVV((prev) => !prev);
+                      }}>
+                      {showCVV ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="#00052d"
+                          className="w-6 select-none cursor-pointer h-6 absolute top-9 right-2"
+                          tabindex="-1"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLineJoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                          ></path>
+                          <path
+                            strokeLinecap="round"
+                            strokeLineJoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          ></path>
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="#00052d"
+                          className="w-6 select-none cursor-pointer h-6 absolute top-9 right-2">
+                          <path
+                            strokeLinecap="round"
+                            strokeLineJoin="round"
+                            d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                          ></path>
+                        </svg>
+                      )}  
+                    </button>
+                  </div>
                 </div>
-              </div>
+                </>
+              ): (
+                <></>
+              )}
+
               <div className='flex flex-row gap-20'>
                 <button type="submit" className="pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" >Pay</button>
 
@@ -475,7 +532,8 @@ const handleGoBackToBasket = () => {
             </div>
 
             <div className='flex justify-center mt-5'>
-              <button className='basket_btn rounded-lg roboto-light' hoverClassName='c50edd' onClick={handleCheckOutPage}>
+              {/*hoverClassName='c50edd'*/}
+              <button className='basket_btn rounded-lg roboto-light'  onClick={handleCheckOutPage}>
                 CHECKOUT
               </button>
             </div>

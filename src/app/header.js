@@ -61,7 +61,7 @@ export default function Header() {
                 <div className="flex flex-wrap justify-between gap-8 columns-3 items-center mx-auto max-w-screen-xl p-4">
                     {/* Logo to be placed here :) */}
                     <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse hover:scale-110">
-                        <img className='w-22 h-24 self-center' src={logo.src}/>
+                        <img className='w-16 h-14 self-center' src={logo.src}/>
                     </Link>
                     
                     { valid ? (
