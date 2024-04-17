@@ -799,7 +799,7 @@ export default function Account() {
     
     return (
         <Fragment>
-            <div className='back-prod grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
+            <div className='bg-blue-gradient grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
                 <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2"style={{ backgroundColor: 'transparent'}} >
                     <Box sx={{  display: 'flex',lineHeight: 300, height: 500, width: 200, marginTop: 10 ,marginRight:5, justifyContent: 'center', flexGrow:1}}>
                         <Tabs orientation="vertical"  value={value} onChange={handleChange} aria-label="Vertical tabs menu" sx={{ borderRight: 1, borderColor: 'gray' }}>      

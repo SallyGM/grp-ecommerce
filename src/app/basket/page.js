@@ -34,9 +34,6 @@ export default function Home() {
   const expirationDate = useRef();
   const router = useRouter();
 
-
-
-
   function handleClickOpenProduct(productID, e) {
     // Prevent the default action of the anchor tag
     e.preventDefault();
@@ -246,11 +243,9 @@ export default function Home() {
     removeFromBasket(productID)
   };
 
-
-
   return (
     (checkOut === true ? (
-      <div className='pt-5 back-prod  pb-20'>
+      <div className='pt-5 bg-blue-gradient pb-20'>
         <div>
           <h1 className=" my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white bebas-neue-regularLarge">CheckOut</h1>
         </div>
@@ -366,66 +361,65 @@ export default function Home() {
         </div>
       </div>
     ) : (
-      <div className='pt-5 back-prod pb-20'>
+      <div className='pt-5 bg-blue-gradient pb-20'>
         <div>
-          <h1 className="text-center mb-5  dark:text-white self-center text-white bebas-neue-regularLarge">MY CART</h1>
+          <h1 className="text-center mb-5 self-center text-white bebas-neue-regularLarge">MY CART</h1>
         </div>
         
         <div className='grid grid-rows-1 flex-wrap m-s ml-20 mr-20 mb-5'>
-        <Card className='bg-transparent basket_card'>
-          <div className='text-xl roboto-bold grid grid-cols-4 flex-wrap w-full' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
-            <h3 className=' tracking-tight dark:text-white text-white'>Product</h3>
-            <h3 className='tracking-tight dark:text-white  text-white'>Quantity</h3>
-            <h3 className='tracking-tight  dark:text-white text-white'>Subtotal</h3>
-          </div>
-       
-  
-          {(basketSize > 0 ? (
-            Object.entries(basket).map(([key, b]) => (
-            
-              <div key={key} className="flex h-auto  w-full my-6 ">
-                <div className='grid grid-cols-4 items-center flex-wrap'style={{ gridTemplateColumns:'1fr 1fr 1fr 1fr',justifyItems: 'center' }} >  
-
-                  <a href="#" onClick={(e) => handleClickOpenProduct(b.id, e)}>
-                    <img
-                      className='slick-slide-image'
-                      src={(b.images ? b.images[2] : 'https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Preview%2FA%20Short%20Hike%20Preview%20Pic.png?alt=media&token=eee51ae3-1981-4fc6-ae13-7f1e52b885b4')}
-                      alt='preview'
-                      />
-                  </a>
-
-                  <form className="max-w-xs">
-                    <div className="flex max-w-[8rem]">
-                        <button type="button" id="decrement-button" onClick={(e) => handleClickChangeQuantity(b,"-", e)} data-input-counter-decrement="quantity-input" className="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                            <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16"/>
-                            </svg>
-                        </button>
-                        <input type="text" id="quantity-input" value={b.quantity} data-input-counter aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-black text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1" required />
-                        <button type="button" id="increment-button" onClick={(e) => handleClickChangeQuantity(b,"+", e)}  data-input-counter-increment="quantity-input" className="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                            <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-                            </svg>
-                        </button>
-                    </div>
-                  </form>   
-
-                  {/* Check for decimal digits,  God of war when selecting 3 of them a lot of decimal happen */}     
-                  <h2 id="sub_total" className="flex  text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price * b.quantity).toFixed(2))}</h2>
-                  
-                  <Tooltip content='Remove Product'>
-                    <img className=" first-line:h-5 w-5 flex-wrap cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "remove product" onClick={(e) => handleDelete(b.id)}/>
-                  </Tooltip>
-                  
-                </div>
-              </div>
-              
-            ))
-          ) : (
-            <div  className='text-2xl roboto-light text-white flex justify-center items-center h-full mt-10'>
-              Your Cart is empty
+          <Card className='bg-transparent basket_card'>
+            <div className='text-xl roboto-bold grid grid-cols-4 flex-wrap w-full' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
+              <h3 className=' tracking-tight text-white'>Product</h3>
+              <h3 className='tracking-tight text-white'>Quantity</h3>
+              <h3 className='tracking-tight text-white'>Subtotal</h3>
             </div>
-          ))}
+       
+            {(basketSize > 0 ? (
+              Object.entries(basket).map(([key, b]) => (
+              
+                <div key={key} className="flex h-auto w-full my-6">
+                  <div className='grid grid-cols-4 items-center flex-wrap'style={{ gridTemplateColumns:'1fr 1fr 1fr 1fr',justifyItems: 'center' }} >  
+
+                    <a href="#" onClick={(e) => handleClickOpenProduct(b.id, e)}>
+                      <img
+                        className='slick-slide-image'
+                        src={(b.images ? b.images[2] : 'https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Preview%2FA%20Short%20Hike%20Preview%20Pic.png?alt=media&token=eee51ae3-1981-4fc6-ae13-7f1e52b885b4')}
+                        alt='preview'
+                        />
+                    </a>
+
+                    <form className="max-w-xs">
+                      <div className="flex max-w-[8rem]">
+                          <button type="button" id="decrement-button" onClick={(e) => handleClickChangeQuantity(b,"-", e)} data-input-counter-decrement="quantity-input" className="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                              <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16"/>
+                              </svg>
+                          </button>
+                          <input type="text" id="quantity-input" value={b.quantity} data-input-counter aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-black text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1" required />
+                          <button type="button" id="increment-button" onClick={(e) => handleClickChangeQuantity(b,"+", e)}  data-input-counter-increment="quantity-input" className="input_btn dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-blue-700 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                              <svg className="w-3 h-3 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
+                              </svg>
+                          </button>
+                      </div>
+                    </form>   
+
+                    {/* Check for decimal digits,  God of war when selecting 3 of them a lot of decimal happen */}     
+                    <h2 id="sub_total" className="flex  text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price * b.quantity).toFixed(2))}</h2>
+                    
+                    <Tooltip content='Remove Product'>
+                      <img className=" first-line:h-5 w-5 flex-wrap cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "remove product" onClick={(e) => handleDelete(b.id)}/>
+                    </Tooltip>
+                    
+                  </div>
+                </div>
+                
+              ))
+            ) : (
+              <div  className='text-2xl roboto-light text-white flex justify-center items-center h-full mt-10'>
+                Your Cart is empty
+              </div>
+            ))}
           </Card>
         </div>
         {(basketSize > 0 ? ( 

@@ -75,13 +75,11 @@ body {
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-.back-prod{
+
+.bg-blue-gradient{
   background: rgb(2,0,36);
   background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
 }
-
-
-
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.cdnfonts.com/css/graystroke');
@@ -170,7 +168,6 @@ body {
 .prod_btn:hover{
   background: #c50edd;
 }
-
 
 .banner-game{
   background-color: #020a4f;

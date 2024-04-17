@@ -450,7 +450,7 @@ export default function Home() {
 
   return (
     <Fragment>
-      <div className='back-prod grid grid-rows-1 grid-cols-1 p-8  flex justify-content-center bg-dark-night'>
+      <div className='bg-blue-gradient grid grid-rows-1 grid-cols-1 p-8  flex justify-content-center bg-dark-night'>
 
         {/*Sign in information card*/}
         <Card className="justify-self-center w-auto h-auto  my-6" style={{background: '#020a4f', border : '#020a4f'}} >

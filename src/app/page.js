@@ -80,11 +80,12 @@ export default function Home() {
     <div className='back-prod bg-dark-night'>
       {/*Insert costumised banner over here*/}
       <Carousel slide={true} className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.jpg?alt=media&token=29b19f5f-5f95-4491-ba60-bae96c55ed2d" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fskyrim_banner.png?alt=media&token=b784b4ad-ab9f-46eb-9e67-102955178540" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fbalders_gate_banner.png?alt=media&token=93280034-98c5-41b6-bcdf-e3a72b3dffa0" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Big%2FGTA%20V.png?alt=media&token=97623a2d-b4b9-448a-8753-bbe0509aaad3" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fzelda_tears_of_the_kingdom.jpg?alt=media&token=42cd1386-b6ef-4e7f-9831-536b30d56190" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fcyberpunk_2077_banner.png?alt=media&token=59d5478f-1c47-499c-aab0-6043d7251acc" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fspider_man2_banner.png?alt=media&token=2d7de8eb-0cc4-4148-9dc7-9097a31e5504" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fzelda_breath_of_the_wild_banner.png?alt=media&token=034daaf1-e967-4c85-815f-50f7641248dc" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fbattlefield_2042_banner.png?alt=media&token=8211c0ca-2330-4c31-bbbc-8fe45c4ecc00" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fvalorant_banner.png?alt=media&token=43987944-db0d-45d2-9201-ccd33cbf5a11" alt="..." />
+        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.png?alt=media&token=3fe53db3-e4f0-4fe5-972d-43f0f4ab0ef2" alt="..." />
       </Carousel>
 
       <div className='grid grid-rows-1 grid-cols-5'>
@@ -105,7 +106,7 @@ export default function Home() {
       ) : (
         <Slider className='my-3 mx-10' {...settings} >
           {product.slice(0, 7).map((p) => (
-            <Card key={p.id}  className="mx-3 my-3" renderImage={() =>
+            <Card key={p.id}  className="relative max-w-sm mx-3 my-3 w-72" renderImage={() =>
               <img className="w-full h-full object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
               {currentUser  ? (
                 (favourite.some(item => item.id === p.id) ? (
