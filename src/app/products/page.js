@@ -168,7 +168,7 @@ export default function Product() {
   }
 
   return (
-    <div className='mb-20'>
+    <div className='back-prod mb-20'>
       <div className='grid grid-cols-4 mx-3 mt-3 mb-5 gap-4 text-sm'>
         <div className='mt-2 text-right'>
           Platform:

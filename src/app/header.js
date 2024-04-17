@@ -61,7 +61,7 @@ export default function Header() {
                 <div className="flex flex-wrap justify-between gap-8 columns-3 items-center mx-auto max-w-screen-xl p-4">
                     {/* Logo to be placed here :) */}
                     <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse hover:scale-110">
-                        <img className='w-8 h-7 self-center' src={logo.src}/>
+                        <img className='w-22 h-24 self-center' src={logo.src}/>
                     </Link>
                     
                     { valid ? (
@@ -123,37 +123,37 @@ export default function Header() {
                     <div className="flex justify-center items-center">
                         <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                             <li>
-                                <Link href="/" className='text-white hover:underline'>
-                                    Home
+                                <Link href="/" className='text-base text-white hover:underline'>
+                                    HOME
                                 </Link>                     
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "pc", type: "console"} }} className='text-white hover:underline'>
+                                <Link href={{ pathname: '/products', query: {search: "pc", type: "console"} }} className='text-base text-white hover:underline'>
                                     PC
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "xbox", type: "console"} }} className='text-white hover:underline'>
+                                <Link href={{ pathname: '/products', query: {search: "xbox", type: "console"} }} className='text-base text-white hover:underline'>
                                     XBOX
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "playstation", type: "console"} }} className='text-white hover:underline'>
-                                Playstation
+                                <Link href={{ pathname: '/products', query: {search: "playstation", type: "console"} }} className='text-base text-white hover:underline'>
+                                PLAYSTATION
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "nintendo", type: "console"} }} className='text-white hover:underline'>
-                                Nintendo
+                                <Link href={{ pathname: '/products', query: {search: "nintendo", type: "console"} }} className='text-base text-white hover:underline'>
+                                NINTENDO
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "", type: "bestsellers"} }} className='text-white hover:underline'>
-                                    Best Sellers
+                                <Link href={{ pathname: '/products', query: {search: "", type: "bestsellers"} }} className='text-base text-white hover:underline'>
+                                    BEST SELLERS
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "", type: "sales"} }} className='text-white hover:underline'> 
+                                <Link href={{ pathname: '/products', query: {search: "", type: "sales"} }} className='text-base text-white hover:underline'> 
                                     SALES
                                 </Link>
                             </li>

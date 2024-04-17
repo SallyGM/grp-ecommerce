@@ -77,7 +77,7 @@ export default function Home() {
   }
 
   return (
-    <div className='bg-dark-night'>
+    <div className='back-prod bg-dark-night'>
       {/*Insert costumised banner over here*/}
       <Carousel slide={true} className="h-56 sm:h-64 xl:h-80 2xl:h-96">
         <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.jpg?alt=media&token=29b19f5f-5f95-4491-ba60-bae96c55ed2d" alt="..." />

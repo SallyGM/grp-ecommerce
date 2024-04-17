@@ -347,10 +347,6 @@ export default function Account() {
         };
     }, [theme]);
     
-    const handleTabChangeValue = (event, newValue) => {
-        setValue(newValue);
-        console.log(newValue);
-    };
     
     const handleTabChange = (index) => {
         switch (index) {
@@ -630,7 +626,7 @@ export default function Account() {
         
     };
 
-    /*useEffect(() => {
+    {/*useEffect(() => {
         if (currentUser && currentUser.uid) { // Ensure currentUser and currentUser.id are valid
             const userId = currentUser.uid;
             const ordersRef = ref(database, 'Order');
@@ -643,7 +639,7 @@ export default function Account() {
                         ...data,
                     }));
     
-                    console.log("Orders:", orders); // Log orders to see if data is retrieved correctly
+                    console.log("Orders:", orders); 
                     setOrderDetails(orders);
                 } else {
                     console.log("No orders found");
@@ -654,8 +650,8 @@ export default function Account() {
                 setOrderDetails([]);
             });
         }
-    }, [currentUser, products]); // Include products in the dependency array
-    */
+    }, [currentUser, products]); // Include products in the dependency array*/}
+    
     
     const getItemsForOrder = (orderId) => {
         const order = OrderDetails.find(order => order.id === orderId);
@@ -706,6 +702,7 @@ export default function Account() {
                 userName: ""
             });
             setShowReviewModal(false);
+            setReviewDetails(prevReviewDetails => [...prevReviewDetails, newReview]);
         } catch (error) {
             toast.error('Error posting new review:', error);
             console.error('Error posting new review:', error);
@@ -718,7 +715,7 @@ export default function Account() {
         setShowReviewModal(true);
     };
 
-    // Function to cloe review product modal
+    // Function to close review product modal
     const closewModal = () => {
         setShowReviewModal(false);
         setReviewData({
@@ -740,6 +737,34 @@ export default function Account() {
     //#endregion
     
     //#region REVIEWS
+    useEffect(() => {
+        if (currentUser && currentUser.uid) {
+            const userId = currentUser.uid;
+            const reviewRef = ref(database, 'Reviews');
+            const userReviewsQuery = query(reviewRef, orderByChild('userID'), equalTo(userId));
+
+            get(userReviewsQuery)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const reviews = Object.entries(snapshot.val()).map(([id, data]) => ({
+                            id,
+                            ...data,
+                        }));
+
+                        console.log("Reviews:", reviews);
+                        setReviewDetails(reviews);
+                    } else {
+                        console.log("No reviews found");
+                        setReviewDetails([]);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching reviews:", error);
+                    setReviewDetails([]);
+                });
+        }
+    }, [currentUser, products]);
+
     const getProductDetails = (productId) => {
         return products.find(product => product.id === productId) || {};
     };
@@ -774,15 +799,15 @@ export default function Account() {
     
     return (
         <Fragment>
-            <div className='grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
+            <div className='back-prod grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
                 <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2"style={{ backgroundColor: 'transparent'}} >
                     <Box sx={{  display: 'flex',lineHeight: 300, height: 500, width: 200, marginTop: 10 ,marginRight:5, justifyContent: 'center', flexGrow:1}}>
-                        <Tabs orientation="vertical" value={value} onChange={handleChange} aria-label="Vertical tabs menu" sx={{ borderRight: 1, borderColor: 'gray' }}>      
-                        <Tab icon={<AccountCircle />} label="ACCOUNT" {...a11yProps(0)}  onClick={()=>handleTabChange(0)}/>
-                        <Tab icon={<Payment />} label="STORED CARDS" {...a11yProps(1)}  onClick={()=>handleTabChange(1)} />
-                        <Tab icon={<VpnKey />} label="ORDERED KEYS" {...a11yProps(2)}  onClick={()=>handleTabChange(2)}/>
-                        <Tab icon={<RateReview />} label="MY REVIEWS" {...a11yProps(3)}  onClick={()=>handleTabChange(3)}/>
-                        <Tab icon={<ExitToApp />} label="LOGOUT" {...a11yProps(4)}  onClick={()=>handleTabChange(4)} />
+                        <Tabs orientation="vertical"  value={value} onChange={handleChange} aria-label="Vertical tabs menu" sx={{ borderRight: 1, borderColor: 'gray' }}>      
+                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<AccountCircle />} label="ACCOUNT" {...a11yProps(0)}  onClick={()=>handleTabChange(0)}/>
+                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<Payment />} label="STORED CARDS" {...a11yProps(1)}  onClick={()=>handleTabChange(1)} />
+                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<VpnKey />} label="ORDERED KEYS" {...a11yProps(2)}  onClick={()=>handleTabChange(2)}/>
+                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<RateReview />} label="MY REVIEWS" {...a11yProps(3)}  onClick={()=>handleTabChange(3)}/>
+                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<ExitToApp />} label="LOGOUT" {...a11yProps(4)}  onClick={()=>handleTabChange(4)} />
                         </Tabs>
                     </Box>
                 </div>
@@ -873,10 +898,10 @@ export default function Account() {
                                     <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
                                     <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
                                     <Tooltip content='Edit your card'>
-                                    <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                    <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
                                     </Tooltip>
                                     <Tooltip content='Delete your card'>
-                                    <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                    <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
                                     </Tooltip>
 
                                 </div>
@@ -933,29 +958,35 @@ export default function Account() {
                                     
                                     {/* Display item details */}
                                     {getItemsForOrder(o.id).map((item, index) => (
-                                        <div key={index} className='grid grid-cols-7 items-center flex-wrap border-b border-gray-300 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>    
-                                            {item && item.product && (
-                                                <Fragment>
-                                                    {console.log('item.product:', item.product)}
-                                                    <div className='inline-flex col-span-2'>
-                                                    <img className="w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
-                                                    <div>
-                                                    <div className=" mt-3 text-start flex dark:text-white text-white font-mono ml-6">{item.product.name.substring(0, 19)}</div>
-                                                    </div>
-                                                    </div>
-                                                    <div className="flex text-center dark:text-white text-white font-mono">{'£ ' + item.product.price}</div>
-                                                
-                                                    <Tooltip content='Review this product'>
-                                                        <RateReview className = "cursor-pointer" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} 
-                                                        onClick={()=> openReviewProductModal(item.product)}
-                                                        disabled={showReviewModal}></RateReview>
-                                                    </Tooltip>
-                                                    <Tooltip content='See your game key'>
-                                                        <VpnKeyIcon className = "cursor-pointer" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
-                                                    </Tooltip>
-                                                </Fragment>
-                                            )}
-                                        </div>
+                                            <div key={index} className='grid grid-cols-7 items-center flex-wrap border-b border-gray-300 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>    
+                                                {item && item.product && (
+                                                    <Fragment>
+                                                        {console.log('item.product:', item.product)}
+                                                        <div className='inline-flex col-span-2'>
+                                                        <img className="w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
+                                                        <div>
+                                                        <div className=" mt-3 text-start flex dark:text-white text-white font-mono ml-6">{item.product.name.substring(0, 19)}</div>
+                                                        </div>
+                                                        </div>
+                                                        <div className="flex text-center dark:text-white text-white font-mono">{'£ ' + item.product.price}</div>
+                                                        {console.log('Review Details:', reviewDetails)}
+                                                        {reviewDetails.find(review => review.userID === currentUser.uid && review.productID === item.product.id) ? (
+                                                        <Tooltip content='You have already reviewed this product'>
+                                                            <RateReview className="cursor-pointer" style={{ height: '20px', width: '20px', justifySelf: 'center',color: '#9E9E9E' }} disabled />
+                                                        </Tooltip>
+                                                    ) : (
+                                                        <Tooltip content='Review this product'>
+                                                            <RateReview className = "cursor-pointer hover:scale-110 hover:text-slate-200" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} 
+                                                            onClick={()=> openReviewProductModal(item.product)}
+                                                            disabled={showReviewModal}></RateReview>
+                                                        </Tooltip>
+                                                    )}
+                                                        <Tooltip content='See your game key'>
+                                                            <VpnKeyIcon className = "cursor-pointer hover:scale-110 hover:text-slate-200" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
+                                                        </Tooltip>
+                                                    </Fragment>
+                                                )}
+                                            </div>
                                     ))}
                                 </Card>
                             ))
@@ -982,7 +1013,7 @@ export default function Account() {
                                         <div className='inline-flex self-start'>
                                             <h3 className='font-bold tracking-tight dark:text-white text-white'>Rating:</h3>
                                             <Tooltip content='Delete review'>
-                                                <img className=" self-end ml-48 first-line:h-5 w-5 flex-wrap self-end cursor-pointer" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteReviewModal(review)} disabled={showDeleteReview}/>
+                                                <img className="self-end ml-48 first-line:h-5 w-5 flex-wrap self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg " alt= "delete card" onClick={()=> openDeleteReviewModal(review)} disabled={showDeleteReview}/>
                                             </Tooltip>
                                         </div>
                                     
