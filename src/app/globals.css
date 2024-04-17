@@ -316,10 +316,18 @@ p {
 
 .slick-dots li button:before {
   color: gray !important;
+  font-size: 15px !important;
+  line-height: 15px !important;
 }
 
 .slick-dots li.slick-active button:before {
   color:white !important;
+  font-size: 20px !important;
+  line-height: 20px !important;
+}
+
+ .slick-prev:before, .slick-next:before  {
+  content: '' !important;
 }
 
 /* CHECKOUT CSS*/

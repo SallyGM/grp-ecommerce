@@ -24,7 +24,7 @@ export default function Page({ params }) {
     const prodRef = ref(database, "Product");
 
     const { addToBasket } = useBasketContext();
-    const [review, setReview] = useState(false);
+    const [review, setReview] = useState([]);
 
     const [numReviews, setNumReviews] = useState(0);
     const [averageReviews, setAverageReviews] = useState(0);
