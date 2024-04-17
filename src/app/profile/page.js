@@ -21,6 +21,7 @@ import { useProductContext } from '../context/ProductContext.js';
 import InputMask from 'react-input-mask';
 import { Tooltip } from 'flowbite-react';
 import {FaStar} from 'react-icons/fa';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -112,6 +113,7 @@ export default function Account() {
     const { products } = useProductContext();
     const [OrderDetails, setOrderDetails] = useState([]);
     const [showReviewModal, setShowReviewModal] = useState(false);
+    const [showKeyModal, setShowKeyModal] = useState(false);
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [review, setReview] = useState('');
@@ -725,6 +727,7 @@ export default function Account() {
             userName: ""
         });
     };
+   
 
     //Function that checks if all fields are filled before posting the review
     const checkAllFieldsChange = () => {
@@ -944,7 +947,7 @@ export default function Account() {
                                     </div>
                                     <div className='rounded-1 border-b-2 border-white grid grid-cols-3 flex-wrap mb-6 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                         <a className='tracking-tight dark:text-white text-white'>{o.id.substring(1, 8)}</a>
-                                        <a className='tracking-tight dark:text-white text-white'> 12/02/2024</a>
+                                        <a className='tracking-tight dark:text-white text-white'> {o.date}</a>
                                         <a className='tracking-tight dark:text-white text-white'>{"£ "+ parseFloat(o.price).toFixed(2)}</a>
                                         <a className='tracking-tight dark:text-white text-white'>{o.status}</a>
                                     </div>
@@ -980,10 +983,12 @@ export default function Account() {
                                                             onClick={()=> openReviewProductModal(item.product)}
                                                             disabled={showReviewModal}></RateReview>
                                                         </Tooltip>
-                                                    )}
-                                                        <Tooltip content='See your game key'>
-                                                            <VpnKeyIcon className = "cursor-pointer hover:scale-110 hover:text-slate-200" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
-                                                        </Tooltip>
+                                                    )}  
+                                                        <CopyToClipboard text={o.gameKey}>
+                                                            <Tooltip id="game-key-tooltip" place="top" effect="solid" content={`Click on the KEY icon to copy the game key: ${o.gameKey}`}>
+                                                                <VpnKeyIcon className="cursor-pointer hover:scale-110 hover:text-slate-200" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
+                                                            </Tooltip>
+                                                        </CopyToClipboard>         
                                                     </Fragment>
                                                 )}
                                             </div>

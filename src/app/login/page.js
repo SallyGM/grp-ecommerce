@@ -270,7 +270,7 @@ export default function Login() {
     )}
 
 
-    <div className='back-prod grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-dark-night'> 
+    <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-blue-gradient'> 
       <Card className="justify-self-end h-auto w-2/3 my-6" style={{background: '#020a4f', border : '#020a4f'}}>
         <h1 className="self-center text-4xl font-bold text-white font-mono">LOGIN</h1>
         <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">

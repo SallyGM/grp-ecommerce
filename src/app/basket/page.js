@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { database } from '../firebaseConfig';
 import { get, ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
 
@@ -33,6 +34,7 @@ export default function Home() {
   const sortCode = useRef();
   const expirationDate = useRef();
   const router = useRouter();
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   function handleClickOpenProduct(productID, e) {
     // Prevent the default action of the anchor tag
@@ -227,8 +229,10 @@ export default function Home() {
       try{
         //calling update stock function when order is placed
         await updateProductStock(userBasket);
-        
-        await createOrder(new Date(), basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
+        setCurrentDate(new Date());
+        const gameKey = uuidv4();
+
+        await createOrder(currentDate.toLocaleDateString('en-GB'),gameKey, basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
         cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
 
         await clearBasket();

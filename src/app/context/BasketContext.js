@@ -177,11 +177,12 @@ export function BasketProvider({children}) {
 
    // this function creates an order
    // and clear the basket
-   const createOrder = async (orderDate, discount, price, userID, fullName, cardNumber, cvv, expirationDate, sortCode) => {
+   const createOrder = async (orderDate, key, discount, price, userID, fullName, cardNumber, cvv, expirationDate, sortCode) => {
       if (currentUser) {
 
          let data = {
             "date": orderDate,
+            gameKey: key,
             "card": { 
                "fullName": fullName,
                "cardNumber": cardNumber,
@@ -195,7 +196,7 @@ export function BasketProvider({children}) {
             "discount": discount,
             "notes":"",
             "userID": userID,
-            "status": "pending"
+            "status": "Approved"
          }
 
          try {
