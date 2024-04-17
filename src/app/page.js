@@ -11,6 +11,26 @@ import { useProductContext } from './context/ProductContext.js';
 import toast from 'react-hot-toast';
 import { useFavouriteContext } from './context/FavouriteContext.js';
 import { useAuth } from './context/AuthContext.js';
+import { ArrowRightCircleIcon } from '@heroicons/react/24/solid';
+import { ArrowLeftCircleIcon } from '@heroicons/react/24/solid';
+
+function NextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div className={className} style={{ ...style, display: "block"}} onClick={onClick}>
+      <ArrowRightCircleIcon className="h-9 w-9 text-slate-200 hover:text-slate-50"/>
+    </div>
+  );
+}
+
+function PrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div className={className} style={{ ...style, display: "block"}} onClick={onClick}>
+      <ArrowLeftCircleIcon className="h-9 w-9 text-slate-200 hover:text-slate-50"/>
+    </div>
+  );
+}
 
 export default function Home() {
 
@@ -30,6 +50,8 @@ export default function Home() {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />
   };
 
   // retrieves the product table
@@ -77,15 +99,15 @@ export default function Home() {
   }
 
   return (
-    <div className='back-prod bg-dark-night'>
+    <div className='bg-dark-night'>
       {/*Insert costumised banner over here*/}
-      <Carousel slide={true} className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fcyberpunk_2077_banner.png?alt=media&token=59d5478f-1c47-499c-aab0-6043d7251acc" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fspider_man2_banner.png?alt=media&token=2d7de8eb-0cc4-4148-9dc7-9097a31e5504" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fzelda_breath_of_the_wild_banner.png?alt=media&token=034daaf1-e967-4c85-815f-50f7641248dc" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fbattlefield_2042_banner.png?alt=media&token=8211c0ca-2330-4c31-bbbc-8fe45c4ecc00" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fvalorant_banner.png?alt=media&token=43987944-db0d-45d2-9201-ccd33cbf5a11" alt="..." />
-        <img src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.png?alt=media&token=3fe53db3-e4f0-4fe5-972d-43f0f4ab0ef2" alt="..." />
+      <Carousel slide={true} className="overflow-hidden" style={{height: "31rem"}}>
+        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fcyberpunk_2077_banner.png?alt=media&token=59d5478f-1c47-499c-aab0-6043d7251acc" alt="..." />
+        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fspider_man2_banner.png?alt=media&token=2d7de8eb-0cc4-4148-9dc7-9097a31e5504" alt="..." />
+        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fzelda_breath_of_the_wild_banner.png?alt=media&token=034daaf1-e967-4c85-815f-50f7641248dc" alt="..." />
+        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fbattlefield_2042_banner.png?alt=media&token=8211c0ca-2330-4c31-bbbc-8fe45c4ecc00" alt="..." />
+        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fvalorant_banner3.png?alt=media&token=c516e255-f7fd-4ff8-a91e-245393a1bac5" alt="..." />
+        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.png?alt=media&token=3fe53db3-e4f0-4fe5-972d-43f0f4ab0ef2" alt="..." />
       </Carousel>
 
       <div className='grid grid-rows-1 grid-cols-5'>
@@ -104,7 +126,8 @@ export default function Home() {
           <span className="sr-only">Loading...</span>
         </div>
       ) : (
-        <Slider className='my-3 mx-10' {...settings} >
+        <div className='px-5'>
+          <Slider className='my-5 pl-3 ml-10 mr-10' {...settings} >
           {product.slice(0, 7).map((p) => (
             <Card key={p.id}  className="relative max-w-sm mx-3 my-3 w-72" renderImage={() =>
               <img className="w-full h-full object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
@@ -156,7 +179,8 @@ export default function Home() {
               </Button>
             </Card>
           ))}
-        </Slider>
+          </Slider>
+        </div>
       )}
 
       <div className="container my-3 py-10 px-10 mx-0 min-w-full flex flex-col items-center">
