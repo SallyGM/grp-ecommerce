@@ -287,8 +287,8 @@ const handleGoBackToBasket = () => {
               </tbody>
             </table>
             <hr/>
-            <p className='text-right text-lg roboto-light'>£{(basketDiscount > 0 ? basketDiscount : 0.00)}</p>
-            <p className='text-right text-lg roboto-light'>£{basketPrice}</p>
+            <p className='text-right text-lg roboto-bold'>Saved: £{(basketDiscount > 0 ? basketDiscount : 0.00).toFixed(2)}</p>
+            <p className='text-right text-lg roboto-bold'>Total: £{basketPrice.toFixed(2)}</p>
           </div>
           <div className='p-6 w-1/2 m-5 card-box rounded-lg shadowed-div '>
           <h2 className='text-center text-xl roboto-bold'>Card details</h2>
@@ -463,7 +463,7 @@ const handleGoBackToBasket = () => {
             </div>
             <div className='flex justify-between pl-5 pr-5'>
               <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white roboto-bold ">ORDER TOTAL</h2>
-              <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white roboto-bold">£{basketPrice}</h2>
+              <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white roboto-bold">£{basketPrice.toFixed(2)}</h2>
             </div>
 
             <div className='flex justify-center mt-5'>
