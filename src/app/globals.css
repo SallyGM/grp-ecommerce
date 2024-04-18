@@ -422,3 +422,24 @@ p {
   width: 0; /* Set the width of the scrollbar to 0 to hide it */
   background: transparent; /* Set the background color of the scrollbar */
 }
+
+
+.addCard-btn{
+  background:#512DA8;
+}
+
+
+.addCard-btn:hover{
+  background: #673AB7;
+}
+
+.tab:hover {
+  color: purple !important;
+}
+
+.tab:hover svg {
+  fill: purple !important;
+}
+.tab:hover .tab-label {
+  color: purple !important;
+}
