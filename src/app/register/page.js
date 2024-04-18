@@ -304,7 +304,7 @@ export default function Home() {
   };
 
   const handleCVV = (e) => {
-    const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 3;
+    const isValid = /^([0-9]+)$/i.test(e.target.value) && e.target.value.length === 3;
     
     if (!isValid) {
       setCVVError('CVV should be 3 digits long');
@@ -314,12 +314,12 @@ export default function Home() {
   };
 
   const handleSortCode = (e) => {
-    const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 8;
+    const isValid = /^([0-9-]+)$/i.test(e.target.value) && e.target.value.length === 8;
    
     if (!isValid && e.target.value.length < 9 && e.target.value.length > 0) {
       setSortCodeError('Sort code should be 6 digits long');
     } else { 
-      setSortCodeError('');
+      setSortCodeError('1');
     }
   };
 
@@ -678,7 +678,7 @@ export default function Home() {
                 <InputMask className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                   id="sortCode" name="sortCode" mask="99-99-99" maskChar="" placeholder='26-02-54' required value={formData.sortCode} 
                   onInput={handleSortCode} onChange={handleChange}/>
-                  {sortCodeError && <span style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>}
+                  <span className={sortCodeError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>
               </div>
 
               <div className='inline-flex justify-evenly'>
@@ -689,7 +689,7 @@ export default function Home() {
                     onInput={checkDate} onChange={handleChange}/>
                     {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
                 </div> 
-                <div className="ml-5 noIncrementer">
+                <div className="ml-5 noIncrementer relative">
                   <label htmlhtmlFor="number" className='inline-flex text-white'>CVV
                     <Tooltip content="Three digit code on the back of your card">
                       <svg  className = 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
@@ -719,7 +719,7 @@ export default function Home() {
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="#00052d"
-                        className="w-6 select-none cursor-pointer h-6 absolute top-9 right-2"
+                        className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4"
                         tabindex="-1"
                       >
                         <path
@@ -740,7 +740,7 @@ export default function Home() {
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="#00052d"
-                        className="w-6 select-none cursor-pointer h-6 absolute top-9 right-2">
+                        className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4">
                         <path
                           strokeLinecap="round"
                           strokeLineJoin="round"
