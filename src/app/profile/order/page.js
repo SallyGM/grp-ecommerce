@@ -184,10 +184,10 @@ export default function MyOrders() {
                                             <Fragment>
                                                 {console.log('item.product:', item.product)}
                                                 <div className='inline-flex col-span-2'>
-                                                <img className="w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
-                                                <div>
-                                                <div className=" mt-3 text-start flex dark:text-white text-white font-mono ml-6">{item.product.name.substring(0, 19)}</div>
-                                                </div>
+                                                    <img className="w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
+                                                    <div>
+                                                        <div className=" mt-3 text-start flex dark:text-white text-white font-mono ml-6">{item.product.name.substring(0, 19)}</div>
+                                                    </div>
                                                 </div>
                                                 <div className="flex text-center dark:text-white text-white font-mono">{'£ ' + item.product.price}</div>
                                             
