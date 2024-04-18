@@ -137,6 +137,7 @@ export default function MyOrders() {
             userName: ""
         });
     };
+    
     //Function that checks if all fields are filled before posting the review
     const checkAllFieldsChange = () => {
         if (reviewData.comment !== '' && reviewData.title !== '' && rating !== 0) {
