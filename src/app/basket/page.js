@@ -125,7 +125,7 @@ export default function Home() {
   const handleCardNumber = (e) => {
     const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 19;
     
-    if (!isValid) {
+    if (!isValid && e.target.value.length != 0) {
       setCardNumberError('Card number has to be 16 digits long');
     } else {
       setCardNumberError('');
@@ -135,7 +135,7 @@ export default function Home() {
   const handleCVV = (e) => {
     const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 3;
     
-    if (!isValid) {
+    if (!isValid && e.target.value.length != 0) {
       setCVVError('CVV should be 3 digits long');
     } else {
       setCVVError('');
@@ -145,7 +145,7 @@ export default function Home() {
   const handleSortCode = (e) => {
     const isValid = /^([0-9-]+)$/i.test(e.target.value) && e.target.value.length === 8;
     
-    if (!isValid) {
+    if (!isValid && e.target.value.length != 0) {
       setSortCodeError('Sort code should be 6 digits long');
     } else { 
       setSortCodeError('');
