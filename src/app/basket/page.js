@@ -312,7 +312,7 @@ export default function Home() {
               {(basketSize > 0 ? (
               Object.entries(basket).map(([key, b]) => (
                 <tr key={key}>
-                  <td className="px-6 py-3 ">{b.name}</td>
+                  <td className="px-6 py-3 game-title" style={{ maxWidth: '150px', overflowWrap: 'break-word' }}>{b.name}</td>
                   <td className='text-center '>{b.quantity}</td>
                   <td className='text-center'>{parseFloat(b.price * b.quantity).toFixed(2)}</td>
                 </tr>
@@ -355,24 +355,24 @@ export default function Home() {
                 <hr className='h-px mx-3 my-5 bg-slate-600 border-0 dark:bg-gray-700'/>
                 <div className="relative z-0 w-full mb-5 group">
                   <label>Full Name</label>
-                  <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
-                  {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
+                  <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-900 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
+                  {fullNameError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{fullNameError}</span>}
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
                   <label>Card Number</label>
                   <InputMask ref={cardNumber} onChange={handleCardNumber} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="9999 9999 9999 9999" maskChar="" placeholder='Card Number...' required/>  
-                  {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
+                  {cardNumberError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cardNumberError}</span>}
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
                   <label>Sort Code</label>
                   <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
-                  {sortCodeError && <span style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>}
+                  {sortCodeError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{sortCodeError}</span>}
                 </div>
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-5 group">
                     <label>Expiration Date</label>
                     <InputMask ref={expirationDate} onChange={handleExpirationDate} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99/9999" maskChar="" placeholder='12/2024' required/>
-                    {expirationDateError && <span style={{ color: 'red', fontSize: '12px' }}>{expirationDateError}</span>}
+                    {expirationDateError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{expirationDateError}</span>}
                   </div>
                   <div className="relative z-0 w-full mb-5 group">
                     <div className='flex flex-row'>
@@ -387,7 +387,7 @@ export default function Home() {
                     </div>
                     
                     <InputMask ref={cvv} type={showCVV ? "text" : "password"} onChange={handleCVV} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="999" maskChar="" placeholder='CVV' required/>
-                    {cvvError && <span style={{ color: 'red', fontSize: '12px' }}>{cvvError}</span>}
+                    {cvvError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cvvError}</span>}
                     <button
                       type="button"
                       aria-label={

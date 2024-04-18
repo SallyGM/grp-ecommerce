@@ -52,7 +52,6 @@ export default function MyOrders() {
                         id,
                         ...data,
                     }));
-    
                     console.log("Orders:", orders); // Log orders to see if data is retrieved correctly
                     setOrderDetails(orders);
                 } else {
@@ -137,6 +136,7 @@ export default function MyOrders() {
             userName: ""
         });
     };
+    
     //Function that checks if all fields are filled before posting the review
     const checkAllFieldsChange = () => {
         if (reviewData.comment !== '' && reviewData.title !== '' && rating !== 0) {
@@ -165,7 +165,7 @@ export default function MyOrders() {
                                 </div>
                                 <div className='rounded-1 border-b-2 border-white grid grid-cols-3 flex-wrap mb-6 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                     <a className='tracking-tight dark:text-white text-white'>{o.id.substring(1, 8)}</a>
-                                    <a className='tracking-tight dark:text-white text-white'> 12/02/2024</a>
+                                    <a className='tracking-tight dark:text-white text-white'> {currentDate.toLocaleDateString('en-GB')}</a>
                                     <a className='tracking-tight dark:text-white text-white'>{"£ "+ parseFloat(o.price).toFixed(2)}</a>
                                     <a className='tracking-tight dark:text-white text-white'>{o.status}</a>
                                 </div>
