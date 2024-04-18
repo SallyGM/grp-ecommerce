@@ -143,7 +143,7 @@ export default function Home() {
   };
 
   const handleSortCode = (e) => {
-    const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 8;
+    const isValid = /^([0-9-]+)$/i.test(e.target.value) && e.target.value.length === 8;
     
     if (!isValid) {
       setSortCodeError('Sort code should be 6 digits long');
