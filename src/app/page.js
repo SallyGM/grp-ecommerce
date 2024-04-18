@@ -112,7 +112,7 @@ export default function Home() {
         <img className='h-auto max-w-full rounded-none' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.png?alt=media&token=3fe53db3-e4f0-4fe5-972d-43f0f4ab0ef2" alt="..." />
       </Carousel>
 
-      <div className='grid grid-rows-1 grid-cols-5'>
+      <div className='grid grid-rows-1 grid-cols-5 mt-5'>
         <h5 className="text-2xl text-white text-center ml-3 mr-0 my-3 font-bold tracking-tight text-gray-900 dark:text-white">
           Check our best sellers
         </h5>
@@ -135,11 +135,11 @@ export default function Home() {
               <img className="w-full h-full object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
               {currentUser  ? (
                 (favourite.some(item => item.id === p.id) ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer -ml-3 top-5 w-6 h-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7">
                     <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                   </svg>
                 ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} fill="white" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="absolute cursor-pointer -ml-3 top-5 w-6 h-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} fill="white" viewBox="0 0 24 24" strokeWidth={1.5} stroke="gray" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                   </svg>
                 ))
