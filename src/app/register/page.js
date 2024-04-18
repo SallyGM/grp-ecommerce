@@ -293,20 +293,16 @@ const handleConfirmPasswordChange = (e) => {
 // BEGIN CARD MODAL CHECKS----------------------------------------------------------------------------------------------
 
 // function to enable/disable CONFIRM button
-const checkAllFieldsChange = () => {
+// const checkAllFieldsChange = () => {
 
-  // if (formData.cardName != null && formData.cardNumber != null &&
-  //     formData.sortCode != null && formData.expDate != null &&
-  //     formData.securityCode != null) {
-
-        if (fullNameError == '' && cardNumberError == '' && 
-        sortCodeError == '' && expirationDateError == '' && 
-        cvvError == '') {
-          setIsButtonDisabled(false);
-        } else {
-        setIsButtonDisabled(true);
-      }   
-};
+//         if (fullNameError == '' && cardNumberError == '' && 
+//         sortCodeError == '' && expirationDateError == '' && 
+//         cvvError == '') {
+//           setIsButtonDisabled(false);
+//         } else {
+//         setIsButtonDisabled(true);
+//       }   
+// };
 
 
 const handleFullName = (e) => {
@@ -318,20 +314,21 @@ const handleFullName = (e) => {
     setFullNameError('');
   }
 
-  checkAllFieldsChange();
+  // checkAllFieldsChange();
 };
 
 // CARD NUNMBER VALIDATION
 const handleCardNumber = (e) => {
-  const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 19;
-      // IDEA: assign e.target.value to a variable (eg: input) and use it to simplify the code     
-  if (!isValid && e.target.value.length < 20 && e.target.value.length > 0) { // BUG FIX e.target.value.length < 20
+  const input = e.target.value
+  const isValid = /^([0-9 ]+)$/i.test(input) && input.length === 19;
+   
+  if (!isValid && input.length < 20 && input.length > 0) { // BUG FIX e.target.value.length < 20
     setCardNumberError('Card number has to be 16 digits long'); // BUG: if you keep pressing numbers the error appears again
   } else {
     setCardNumberError('');
   }
 
-  checkAllFieldsChange();
+  // checkAllFieldsChange();
 };
 
 
@@ -345,21 +342,21 @@ const handleSortCode = (e) => {
     setSortCodeError('');
   }
 
-  checkAllFieldsChange();
+  // checkAllFieldsChange();
 };
 
 
 // CVV VALIDATION
 const handleCVV = (e) => {
-  const isValid = /^([0-9]+)$/i.test(e.target.value) && e.target.value.length === 3;
+  const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 3;
   
-  if (!isValid) {
-    setCVVError('CVV should be 3 digits long');
+  if (!isValid && e.target.value.length < 4 && e.target.value.length > 0) {
+    setCVVError('3 digits long');
   } else {
     setCVVError('');
   }
 
-  checkAllFieldsChange();
+  // checkAllFieldsChange();
 };
 
 // EXPIRY DATE VALIDATION
@@ -372,7 +369,7 @@ const checkDate = (e) => {
     setCheckDateError('')
   }
 
-  checkAllFieldsChange();
+  // checkAllFieldsChange();
 }
 
 //END CARD MODAL CHECKS------------------------------------------------------------------------------------------------
@@ -680,7 +677,7 @@ return (
             <div className="noIncrementer"> {/*noIncrementer is a CSS class*/}
               <label htmlhtmlFor="number" className='text-white'>Card Number</label>
               <InputMask className="block w-full my-1 mb-4 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
-              id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' mask="9999 9999 9999 9999" maskChar="" required value={formData.cardNumber} 
+              id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' mask="9999 9999 9999 9999" maskChar='' required value={formData.cardNumber} 
               onInput={handleCardNumber} onChange={handleChange}/>
               {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
             </div>
@@ -714,7 +711,8 @@ return (
                 <InputMask type={showCVV ? "text" : "password"} className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
                 inputmode="numeric" id="securityCode" name="securityCode" mask="999" maskChar='' placeholder='342' required value={formData.securityCode}
                 onInput={handleCVV} onChange={handleChange}/>
-                  {/* Eye toggle to hide/show CVV (BUG: The eye icon does not appear) */} 
+                {cvvError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cvvError}</span>}
+                  {/* Eye toggle to hide/show CVV */} 
                   <button
                   type="button"
                   aria-label={
