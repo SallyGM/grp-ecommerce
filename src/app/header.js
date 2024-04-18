@@ -7,7 +7,7 @@ import { useAuth } from './context/AuthContext'
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { useBasketContext } from '../app/context/BasketContext.js'
-import logo from '../../public/logo_white.png';
+import logo from '../../public/logo_white_magenta.png';
 
 export default function Header() {
 
