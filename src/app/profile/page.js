@@ -862,10 +862,10 @@ export default function Account() {
                         sx={{
                             borderRight: '2px solid purple',
                             '& .MuiTabs-indicator': {
-                                backgroundColor: '#c50edd', // Set the color of the indicator to the desired shade of purple
+                                backgroundColor: '#c50edd', // Set the color of the indicator to the desired color
                             },
                         }}
->
+                        >
                         <Tab className='tab' icon={<AccountCircle />} label={<span className="tab-label">ACCOUNT</span>} {...a11yProps(0)} onClick={() => handleTabChange(0)} />
                         <Tab className='tab' icon={<Payment />} label={<span className="tab-label">STORED CARDS</span>} {...a11yProps(1)} onClick={() => handleTabChange(1)} />
                         <Tab className='tab' icon={<VpnKey />} label={<span className="tab-label">ORDERED KEYS</span>} {...a11yProps(2)} onClick={() => handleTabChange(2)} />
@@ -948,7 +948,7 @@ export default function Account() {
                         {cardDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-3 mb-44 font-mono text-center">NO CARD STORED WITHIN YOUR ACCOUNT.<br/> PLEASE ADD ONE!</div>
                         ) : (
-                                <div className='rounded-noneborder-b-2 border-white grid grid-cols-6 flex-wrap  mt-3 mb-3 ml-10 pt-8 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center',position: 'sticky', top: 0, zIndex: 1  }}>
+                                <div className='rounded-noneborder-b-2 border-white grid grid-cols-6 flex-wrap  mt-3 mb-3 ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center',position: 'sticky', top: 0, zIndex: 1  }}>
                                     <h3 className='  font-bold tracking-tight dark:text-white  text-white'>Card Type</h3>
                                     <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Name on Card</h3>
                                     <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Card Ending</h3>
@@ -957,7 +957,7 @@ export default function Account() {
                                 </div>
                         )}
 
-                    <div style={{ backgroundColor: 'transparent', maxHeight: '45vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-3 mb-10 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
+                    <div style={{ backgroundColor: 'transparent', maxHeight: '45vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-3 mb-3 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
                         
                         {/*This is the card that can be used as a component nested in cardStored component */}
                         <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
@@ -1017,7 +1017,12 @@ export default function Account() {
                         {OrderDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
                         ) : (
-                            OrderDetails.map((o, index) => (
+                            OrderDetails.sort((a, b) => {
+                                const dateA = new Date(a.date.split('/').reverse().join('/'));
+                                const dateB = new Date(b.date.split('/').reverse().join('/'));
+                                return dateB - dateA;
+                            }).map((o, index) => (
+                            
                                 <Card key={o.id}  className="flex h-auto w-full summary-box mt-6">
                                     <div className=' grid grid-cols-3 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr ', justifyItems: 'start' }}>
                                         <h3 className='font-bold tracking-tight'>Order Number:</h3>
@@ -1075,13 +1080,13 @@ export default function Account() {
                                                             <button className='px-5 py-2.5 w-auto text-white bold rounded-lg px-1' onClick={() => copyToClipboard(index,o.gameKey)}>
                                                             {copiedStates[index] ? 
                                                                 <Tooltip content="Copied!">
-                                                                <svg class="w-3 h-3 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                                                <svg className="w-3 h-3 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
                                                                 </svg> 
                                                                 </Tooltip>
                                                                     : 
                                                                 <Tooltip content="Copy">
-                                                                <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                                                <svg className="w-3.5 h-3.5 hover:scale-110 hover:text-slate-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                                                                     <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
                                                                 </svg>
                                                                 </Tooltip>}
@@ -1107,7 +1112,11 @@ export default function Account() {
                         {reviewDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO PRODUCT REVIEW STORED WITHIN YOUR ACCOUNT.<br/> PLEASE REVIEW PRODUCTS!!</div>
                         ) : (
-                            reviewDetails.map((review) => (
+                            reviewDetails.sort((a, b) => {
+                                const dateA = new Date(a.date.split('/').reverse().join('/'));
+                                const dateB = new Date(b.date.split('/').reverse().join('/'));
+                                return dateB - dateA;
+                            }).map((review) => (
                                 <Card key={review.id} className="flex h-auto w-full summary-box mt-6">
                                     <div className='grid grid-cols-3 border-b border-gray-300 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                         <h3 className='font-bold tracking-tight dark:text-white text-white'>Game</h3>
