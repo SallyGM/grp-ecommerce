@@ -103,13 +103,13 @@ export default function Home() {
   return (
     <div className='bg-blue-gradient'>
       {/*Insert costumised banner over here*/}
-      <Carousel slide={true} className="overflow-hidden" style={{height: "31rem"}}>
-        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fcyberpunk_2077_banner.png?alt=media&token=59d5478f-1c47-499c-aab0-6043d7251acc" alt="..." />
-        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fspider_man2_banner.png?alt=media&token=2d7de8eb-0cc4-4148-9dc7-9097a31e5504" alt="..." />
-        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fzelda_breath_of_the_wild_banner.png?alt=media&token=034daaf1-e967-4c85-815f-50f7641248dc" alt="..." />
-        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fbattlefield_2042_banner.png?alt=media&token=8211c0ca-2330-4c31-bbbc-8fe45c4ecc00" alt="..." />
-        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fvalorant_banner3.png?alt=media&token=c516e255-f7fd-4ff8-a91e-245393a1bac5" alt="..." />
-        <img className='object-cover' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.png?alt=media&token=3fe53db3-e4f0-4fe5-972d-43f0f4ab0ef2" alt="..." />
+      <Carousel slide={true} className="overflow-hidden rounded-none" style={{height: "31rem"}}>
+        <img className='h-auto max-w-full rounded-none' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fcyberpunk_2077_banner.png?alt=media&token=59d5478f-1c47-499c-aab0-6043d7251acc" alt="..." />
+        <img className='h-auto max-w-full rounded-none' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fspider_man2_banner.png?alt=media&token=2d7de8eb-0cc4-4148-9dc7-9097a31e5504" alt="..." />
+        <img className='h-auto max-w-full rounded-none' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fzelda_breath_of_the_wild_banner.png?alt=media&token=034daaf1-e967-4c85-815f-50f7641248dc" alt="..." />
+        <img className='h-auto max-w-full rounded-none' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fbattlefield_2042_banner.png?alt=media&token=8211c0ca-2330-4c31-bbbc-8fe45c4ecc00" alt="..." />
+        <img className='h-auto max-w-full rounded-none' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fvalorant_banner3.png?alt=media&token=c516e255-f7fd-4ff8-a91e-245393a1bac5" alt="..." />
+        <img className='h-auto max-w-full rounded-none' src="https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Banner%2Fapex_legends_banner.png?alt=media&token=3fe53db3-e4f0-4fe5-972d-43f0f4ab0ef2" alt="..." />
       </Carousel>
 
       <div className='grid grid-rows-1 grid-cols-5'>
