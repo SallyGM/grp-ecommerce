@@ -116,7 +116,7 @@ export default function Home() {
         <h5 className="text-2xl text-white text-center ml-3 mr-0 my-3 font-bold tracking-tight text-gray-900 dark:text-white">
           Check our best sellers
         </h5>
-        <hr className="h-px col-span-4 mr-1 my-8 bg-slate-500 border-0 dark:bg-gray-700" />
+        <hr className="h-px col-span-4 mr-1 my-8 border-0 bg-gray-700" />
       </div>
 
       {loading ? (
