@@ -4,7 +4,6 @@ import { Fragment, useEffect, useState, useRef} from 'react';
 import { ref , push, set, get, update, query, orderByChild, equalTo, remove } from "firebase/database";
 import { database } from '../firebaseConfig.js';
 import React from 'react';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -12,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from '@/components/modal.js';
 import { useTheme } from '@mui/material/styles';
-import { AccountCircle, Payment, VpnKey,DoneIcon, RateReview, ExitToApp } from '@mui/icons-material'; // Import icons
+import { AccountCircle, Payment, VpnKey, SaveIcon, DoneIcon, RateReview, ExitToApp } from '@mui/icons-material'; // Import icons
 import { useAuth } from '../context/AuthContext.js'
 import toast from 'react-hot-toast';
 import { deleteUser } from 'firebase/auth';
@@ -21,7 +20,11 @@ import { useProductContext } from '../context/ProductContext.js';
 import InputMask from 'react-input-mask';
 import { Tooltip } from 'flowbite-react';
 import {FaStar} from 'react-icons/fa';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import amexIcon from '../images/amexIcon.png';
+import masterCardIcon from '../images/mastercardIcon.png';
+import visaIcon from '../images/visaIcon.png';
+
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -85,7 +88,6 @@ export default function Account() {
     const [showOldPassword,setShowOldPassword] = useState(false);
     const [showPassword,setShowPassword] = useState(false);
     const [showConfirmPassword,setShowConfirmPassword] = useState(false);
-
     const [value, setValue] = useState(0);
     const { signout } = useAuth();
     const [error, setError] = useState(false);
@@ -118,7 +120,7 @@ export default function Account() {
     const [review, setReview] = useState('');
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    const [copiedIndex, setCopiedIndex] = useState(null);
+   
 
     const [reviewData, setReviewData] = useState({
         rating: '',
@@ -206,9 +208,14 @@ export default function Account() {
         });
     };
 
-    const openEditDetailsModal = (details) => {
-        setDetails(details);
-        setShowModal(true);
+    const openEditDetailsModal = (userDetails) => {
+        if (userDetails) {
+            setDetails(userDetails);
+            setShowModal(true);
+        } else {
+            // Handle the case where userDetails is null or undefined
+            console.error("User details are null or undefined");
+        }
     };
     
     const handleEditButtonClick = () => {
@@ -217,13 +224,14 @@ export default function Account() {
         setInputFieldActive(true)
     };
 
-    const handleSaveButtonClick = () => {
+    const handleSaveButtonClick = (e) => {
+        e.preventDefault();
         setSaveButtonClicked(true);
         setEditButtonClicked(false);
         setInputFieldActive(false)
     };
       // Function that handle confirm button click on personal details changes dialog
-    const handleConfirmButtonClick = ()=> {   //THERE IS AN ISSUE WITH THIS BLOCK ON CODE
+    const handleConfirmButtonClick = ()=> {
         
         // Create a new details object from the form data
         const newDetails = {
@@ -320,13 +328,13 @@ export default function Account() {
         style.textContent = `
         .MuiTab-root {
             color: white !important;
-            borderRight: 4px  solid #6497ff;
+            borderRight: 4px  solid #6c0979;
             margin-bottom: 20px;
             font-size: 16px
         }
         .MuiTabs-vertical .MuiTab-root:hover {
             color: #6497ff !important;
-            borderRight: 4px  solid #6497ff;
+            borderRight: 4px  solid #6c0979;
           }
           .MuiTabs-vertical .MuiTab-root {
             display: inline;
@@ -403,6 +411,21 @@ export default function Account() {
             [e.target.name] : e.target.value
         });
     };
+    // Function check card type
+    const getCardType = (cardNumber) => {
+        const firstDigit = cardNumber.charAt(0);
+        
+        if (firstDigit === '4') {
+            return 'visa';
+        } else if (firstDigit === '5') {
+            return 'mastercard';
+        } else if (firstDigit === '3') {
+            return 'amex';
+        } else {
+            return 'unknown';
+        }
+    };
+    
 
     // Function that handles the submit on add new card modal
     const handleSubmitAddNewCard = (e) => {
@@ -544,26 +567,32 @@ export default function Account() {
     }
 
     useEffect(() => {
-        if(value === 1){
+        if (value === 1) {
             const userId = currentUser.uid;
             if (!userId) {
                 console.log("No current user logged in");
                 return;
             }
-            const cardRef = ref(database, "User");
-            get(cardRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const cardArray = Object.entries(snapshot.child(userId).child('card').val()).map(([id, data]) => ({
-                        id,
-                        ...data,
-                    }));
-                    setCardDetails(cardArray);
-                } else {
-                    console.log("No data found")
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
+    
+            const cardRef = ref(database, `User/${userId}/card`);
+    
+            get(cardRef)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const cardData = snapshot.val();
+                        const cardArray = Object.entries(cardData).map(([id, data]) => ({
+                            id,
+                            ...data,
+                        }));
+                        setCardDetails(cardArray);
+                    } else {
+                        console.log("No card data found for the current user");
+                        setCardDetails([]); // Set an empty array if no card data is found
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching card data:", error);
+                });
         } else if (value === 2){
             if (currentUser && currentUser.uid) { // Ensure currentUser and currentUser.id are valid
                 const userId = currentUser.uid;
@@ -616,7 +645,7 @@ export default function Account() {
             }
         }
         
-    }, [value]);
+    }, [value, currentUser]);
     //#endregion
 
     //#region ORDER
@@ -802,32 +831,47 @@ export default function Account() {
             });
     }
     //#endregion
-    // functio that handle the gay key copy and changes of the icon(NO WORKING YET)
-
-    const handleCopySuccess = (index) => {
-        console.log('Copying item at index:', index);
-        setCopiedIndex(index);
-        // Reset the copiedIndex state after a certain time if needed
-        setTimeout(() => {
-            setCopiedIndex(null); // Reset after 2 seconds
-        }, 4000);
-    };
-    
+    // function that handle the game key copy and changes of the button state
+    const [copiedStates, setCopiedStates] = useState(OrderDetails.map(() => false));
+        const copyToClipboard = async (index, key) => {
+            try {
+                await navigator.clipboard.writeText(key);
+                const updatedCopiedStates = [...copiedStates];
+                updatedCopiedStates[index] = true;
+                setCopiedStates(updatedCopiedStates);
+                setTimeout(() => {
+                    updatedCopiedStates[index] = false;
+                    setCopiedStates(updatedCopiedStates);
+                }, 1000);
+            } catch (error) {
+                console.error('Failed to copy text to clipboard:', error);
+            }
+        };
    
-
     
     return (
         <Fragment>
             <div className='bg-blue-gradient grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
                 <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2"style={{ backgroundColor: 'transparent'}} >
-                    <Box sx={{  display: 'flex',lineHeight: 300, height: 500, width: 200, marginTop: 10 ,marginRight:5, justifyContent: 'center', flexGrow:1}}>
-                        <Tabs orientation="vertical"  value={value} onChange={handleChange} aria-label="Vertical tabs menu" sx={{ borderRight: 1, borderColor: 'gray' }}>      
-                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<AccountCircle />} label="ACCOUNT" {...a11yProps(0)}  onClick={()=>handleTabChange(0)}/>
-                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<Payment />} label="STORED CARDS" {...a11yProps(1)}  onClick={()=>handleTabChange(1)} />
-                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<VpnKey />} label="ORDERED KEYS" {...a11yProps(2)}  onClick={()=>handleTabChange(2)}/>
-                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<RateReview />} label="MY REVIEWS" {...a11yProps(3)}  onClick={()=>handleTabChange(3)}/>
-                        <Tab className='hover:scale-110 hover:text-slate-200' icon={<ExitToApp />} label="LOGOUT" {...a11yProps(4)}  onClick={()=>handleTabChange(4)} />
-                        </Tabs>
+                    <Box sx={{  display: 'flex', lineHeight: 300, height: 500, width: 200, marginTop: 10 ,marginRight:5, justifyContent: 'center', flexGrow:1}}>
+                    <Tabs
+                        orientation="vertical"
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="Vertical tabs menu"
+                        sx={{
+                            borderRight: '2px solid purple',
+                            '& .MuiTabs-indicator': {
+                                backgroundColor: '#c50edd', // Set the color of the indicator to the desired shade of purple
+                            },
+                        }}
+>
+                        <Tab className='tab' icon={<AccountCircle />} label={<span className="tab-label">ACCOUNT</span>} {...a11yProps(0)} onClick={() => handleTabChange(0)} />
+                        <Tab className='tab' icon={<Payment />} label={<span className="tab-label">STORED CARDS</span>} {...a11yProps(1)} onClick={() => handleTabChange(1)} />
+                        <Tab className='tab' icon={<VpnKey />} label={<span className="tab-label">ORDERED KEYS</span>} {...a11yProps(2)} onClick={() => handleTabChange(2)} />
+                        <Tab className='tab' icon={<RateReview />} label={<span className="tab-label">MY REVIEWS</span>} {...a11yProps(3)} onClick={() => handleTabChange(3)} />
+                        <Tab className='tab' icon={<ExitToApp />} label={<span className="tab-label">LOGOUT</span>} {...a11yProps(4)} onClick={() => handleTabChange(4)} />
+                    </Tabs>
                     </Box>
                 </div>
                 {/* ACCOUNT */}
@@ -859,32 +903,35 @@ export default function Account() {
                                     <div className='grid grid-cols-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
                                     <h2 id="empty_content" className="flex dark:text-white text-white font-mono "></h2>
 
-                                        <Button
-                                            className="w-40 visible justify-self-end  mt-6 mb-20 mr-3 self-end" color='success'
-                                            onClick={()=> openEditDetailsModal(userDetails)}
+                                        <button
+                                            className={`w-40 visible justify-self-end mt-6 mb-20 mr-3 self-end text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 ${editButtonClicked && !saveButtonClicked ? 'bg-green-400 hover:bg-green-500' : 'bg-gray-400'}`}
+                                                onClick={(e) => {
+                                                e.preventDefault(); // Prevent default form submission behavior
+                                                openEditDetailsModal(userDetails);
+                                            }}
                                             disabled={!editButtonClicked || saveButtonClicked}>
                                             SAVE
-                                        </Button>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         )}
                         <div className='flex justify-evenly mt-10'>
-                            <Button className="w-52" color='red' onClick={()=> setShowPasswordModal(true)} disabled={showPasswordModal}>
+                            <button className="w-52 pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=> setShowPasswordModal(true)} disabled={showPasswordModal}>
                                 CHANGE PASSWORD
-                            </Button>
-                            <Button className="w-52" color='success' onClick={handleEditButtonClick} disabled={editButtonClicked}>
+                            </button>
+                            <button className="w-52 text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 bg-green-400 hover:bg-green-500" onClick={handleEditButtonClick} disabled={editButtonClicked}>
                                 EDIT INFORMATION
-                            </Button>
+                            </button>
                         </div>
                     </div>
 
                     <div className='flex place-content-start h-auto row-start-2 row-end-2 col-span-1 mb-6'>
                         <div>
-                            <Button type="submit" className="w-auto text-white" onClick={()=> setShowDeleteModal(true)}  disabled={showDeletedModal}>
+                            <button type="submit" className="w-auto text-white bold rounded-lg px-5 py-2.5 addCard-btn" onClick={()=> setShowDeleteModal(true)}  disabled={showDeletedModal}>
                                 DELETE ACCOUNT
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </>
@@ -894,72 +941,89 @@ export default function Account() {
 
                 {/* STORED CARDS */}
                 { value ===  1 ? (
-                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
-                    <h5 className="justify-self-center text-center mb-6 text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
-                    {cardDetails.length === 0 ? (
-                        <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO CARD STORED WITHIN YOUR ACCOUNT.<br/> PLEASE ADD ONE!</div>
-                    ) : (
-                            <div className='rounded-noneborder-b-2 border-white grid grid-cols-6 flex-wrap ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center' }}>
-                                <h3 className='  font-bold tracking-tight dark:text-white  text-white'>Card Type</h3>
-                                <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Name on Card</h3>
-                                <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Card Ending</h3>
-                                <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
-                                <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
-                            </div>
-                    )}
-                    {/*This is the card that can be used as a component nested in cardStored component */}
-                    <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
-                        {cardDetails.map((c) => (
-                            <Card style={{ backgroundColor: 'transparent' }} key={c.id} className=" flex h-auto w-full rounded-noneborder-b-2 border-white mt-6">
-                                <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
+                    <>
+                    <div style={{ backgroundColor: 'transparent'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
 
-                                    <img id = "card_type" class="first-line:h-8 w-8 flex-wrap justify-self-center" src="https://www.iconbolt.com/iconsets/payment-method/american-card-express-method-payment.svg" alt="card"/>
-                                    <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
-                                    <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
-                                    <Tooltip content='Edit your card'>
-                                        <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
-                                    </Tooltip>
-                                    <Tooltip content='Delete your card'>
-                                        <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
-                                    </Tooltip>
-
+                    <h5 style={{ position: 'sticky', top: 0, zIndex: 1 }} className="justify-self-center text-center mb-3 text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
+                        {cardDetails.length === 0 ? (
+                            <div className="text-2xl text-white mt-3 mb-44 font-mono text-center">NO CARD STORED WITHIN YOUR ACCOUNT.<br/> PLEASE ADD ONE!</div>
+                        ) : (
+                                <div className='rounded-noneborder-b-2 border-white grid grid-cols-6 flex-wrap  mt-3 mb-3 ml-10 pt-8 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center',position: 'sticky', top: 0, zIndex: 1  }}>
+                                    <h3 className='  font-bold tracking-tight dark:text-white  text-white'>Card Type</h3>
+                                    <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Name on Card</h3>
+                                    <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Card Ending</h3>
+                                    <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
+                                    <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
                                 </div>
-                            </Card>
-                        ))}
+                        )}
+
+                    <div style={{ backgroundColor: 'transparent', maxHeight: '45vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-3 mb-10 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
+                        
+                        {/*This is the card that can be used as a component nested in cardStored component */}
+                        <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
+                            {cardDetails.map((c) => (
+                                <Card key={c.id} className=" flex h-auto w-full summary-box mt-6">
+                                    <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
+
+                                        <img
+                                            src={
+                                                getCardType(c.cardNumber) === 'visa'
+                                                    ? 'https://img.icons8.com/fluency/48/visa.png'
+                                                    : getCardType(c.cardNumber) === 'mastercard'
+                                                        ? 'https://img.icons8.com/fluency/48/mastercard.png'
+                                                        : getCardType(c.cardNumber) === 'amex'
+                                                            ? 'https://example.com/amex-icon.svg'
+                                                            : 'https://img.icons8.com/fluency/48/credit-card-front.png'
+                                            }
+                                            alt="Card Image"
+                                        />
+                                        <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
+                                        <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
+                                        <Tooltip content='Edit your card'>
+                                            <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                        </Tooltip>
+                                        <Tooltip content='Delete your card'>
+                                            <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                        </Tooltip>
+
+                                    </div>
+                                </Card>
+                            ))}
+                        </div>
                     </div>
-                    <div className='flex justify-self-start mt-10 ml-10 '>
-                        <Button
-                            type="submit"
-                            className="w-60 inline-flex text-white self-center " color='blue'
-                            onClick={()=> setShowAddCardModal(true)}
-                            disabled={showAddCardModal}> 
-                            ADD NEW CARD
-                            <svg className="w-6 h-6 ml-3" fill='currentColor' stroke='white' aria-hidden="true" xmlns="https://reactsvgicons.com/search?q=add" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" strokeMiterlimit={10} strokeWidth={32} d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"/>
-                                <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M256 176v160M336 256H176"/>
-                            </svg>
-                        </Button>
-                    </div>
-                    
+                    <div className='flex mb-10 mt-3 col-span-3 justify-self-center ml-10'>
+                    <button
+                        type="submit"
+                        className="w-60 inline-flex text-white self-center bold rounded-lg px-5 py-2.5 addCard-btn"
+                        onClick={()=> setShowAddCardModal(true)}
+                        disabled={showAddCardModal}> 
+                        ADD NEW CARD
+                        <svg className="w-6 h-6 ml-3" fill='currentColor' stroke='white' aria-hidden="true" xmlns="https://reactsvgicons.com/search?q=add" viewBox="0 0 512 512">
+                            <path fill="none" stroke="currentColor" strokeMiterlimit={10} strokeWidth={32} d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"/>
+                            <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M256 176v160M336 256H176"/>
+                        </svg>
+                    </button>
                 </div>
+                </div>
+                </>
                 ): (
                     <></>
                 )}
 
                 {/* ORDERED KEYS */}
                 { value ===  2 ? (
-                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-1 col-start-2 col-end-5 " >
+                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
                         <h5 className="justify-self-center text-center text-4xl mb-6 font-bold tracking-tight text-white font-mono" > MY ORDER KEYS</h5>
                         {OrderDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
                         ) : (
-                            OrderDetails.map((o) => (
-                                <Card key={o.id} style={{ backgroundColor: 'transparent' }} className="flex h-auto w-full border-2 border-white mt-3">
+                            OrderDetails.map((o, index) => (
+                                <Card key={o.id}  className="flex h-auto w-full summary-box mt-6">
                                     <div className=' grid grid-cols-3 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr ', justifyItems: 'start' }}>
-                                        <h3 className='font-bold tracking-tight dark:text-white text-white'>Order Number:</h3>
-                                        <h3 className='font-bold tracking-tight dark:text-white text-white'>Date Placed:</h3>
-                                        <h3 className='font-bold tracking-tight dark:text-white text-white'>Total Amount:</h3>
-                                        <h3 className='font-bold tracking-tight dark:text-white text-white'>Status:</h3>
+                                        <h3 className='font-bold tracking-tight'>Order Number:</h3>
+                                        <h3 className='font-bold tracking-tight'>Date Placed:</h3>
+                                        <h3 className='font-bold tracking-tight'>Total Amount:</h3>
+                                        <h3 className='font-bold tracking-tight'>Status:</h3>
                                     </div>
                                     <div className='rounded-1 border-b-2 border-white grid grid-cols-3 flex-wrap mb-6 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                         <a className='tracking-tight dark:text-white text-white'>{o.id.substring(1, 8)}</a>
@@ -967,7 +1031,7 @@ export default function Account() {
                                         <a className='tracking-tight dark:text-white text-white'>{"£ "+ parseFloat(o.price).toFixed(2)}</a>
                                         <a className='tracking-tight dark:text-white text-white'>{o.status}</a>
                                     </div>
-                                    <div className='border-b border-gray-300 grid grid-cols-5 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
+                                    <div className=' grid grid-cols-5 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                         <a className='tracking-tight dark:text-white text-white'>Product</a>
                                         <a className='tracking-tight dark:text-white text-white'></a>
                                         <a className='tracking-tight dark:text-white text-white'>Price</a>
@@ -977,10 +1041,10 @@ export default function Account() {
                                     </div>
                                     
                                     {/* Display item details */}
-                                    {getItemsForOrder(o.id).map((item, index) => (
-                                            <div key={index} className='grid grid-cols-7 items-center flex-wrap border-b border-gray-300 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>    
+                                    {getItemsForOrder(o.id).map((item, itemIdex) => (
+                                            <div key={itemIdex} className='grid grid-cols-7 items-center flex-wrap border-b border-gray-300 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>    
                                                 {item && item.product && (
-                                                    <Fragment>
+                                                    <Fragment key={item.product.id}>
                                                         {console.log('item.product:', item.product)}
                                                         <div className='inline-flex col-span-2'>
                                                         <img className="w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
@@ -1001,17 +1065,29 @@ export default function Account() {
                                                             disabled={showReviewModal}></RateReview>
                                                         </Tooltip>
                                                     )}  
-                                                        <CopyToClipboard text={o.gameKey} onCopy={() => handleCopySuccess(index)}>
-                                                            <Tooltip id="game-key-tooltip" place="top" effect="solid" content={`Click on the KEY icon to copy the game key: ${o.gameKey}`}>
-                                                                <div className="cursor-pointer hover:scale-110 hover:text-slate-200">
-                                                                    {copiedIndex === index ? (
-                                                                        <DoneIcon style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
-                                                                    ) : (
-                                                                        <VpnKeyIcon style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} />
-                                                                    )}
-                                                                </div>
-                                                            </Tooltip>
-                                                        </CopyToClipboard>
+                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                            <input
+                                                                type="text"
+                                                                value={o.gameKey}
+                                                                readOnly
+                                                                style={{ flex: '1', backgroundColor: 'transparent', border: 'none' }}
+                                                            />
+                                                            <button className='px-5 py-2.5 w-auto text-white bold rounded-lg px-1' onClick={() => copyToClipboard(index,o.gameKey)}>
+                                                            {copiedStates[index] ? 
+                                                                <Tooltip content="Copied!">
+                                                                <svg class="w-3 h-3 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                                                                </svg> 
+                                                                </Tooltip>
+                                                                    : 
+                                                                <Tooltip content="Copy">
+                                                                <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                                                    <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
+                                                                </svg>
+                                                                </Tooltip>}
+                                                            </button>
+                                                        </div>
+
                                                     </Fragment>
                                                 )}
                                             </div>
@@ -1032,7 +1108,7 @@ export default function Account() {
                             <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO PRODUCT REVIEW STORED WITHIN YOUR ACCOUNT.<br/> PLEASE REVIEW PRODUCTS!!</div>
                         ) : (
                             reviewDetails.map((review) => (
-                                <Card key={review.id} style={{ backgroundColor: 'transparent'}} className="flex h-auto w-full mt-3">
+                                <Card key={review.id} className="flex h-auto w-full summary-box mt-6">
                                     <div className='grid grid-cols-3 border-b border-gray-300 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                         <h3 className='font-bold tracking-tight dark:text-white text-white'>Game</h3>
                                         <h3 className='font-bold tracking-tight dark:text-white text-white'>Name</h3>
@@ -1094,12 +1170,12 @@ export default function Account() {
             </Modal>
 
             {/*Personal details modal */}
-            <Modal isVisible={showModal} details = {details} onClose ={()=> setShowModal(false)}>
+            <Modal isVisible={showModal} userDetails = {userDetails} onClose ={()=> setShowModal(false)}>
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>PERSONAL DETAILS CHANGES</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to save the changes?</h3>
                 <div className='flex justify-evenly mt-10'>
                     <Button className="w-52" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</Button>
-                    <Button className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmButtonClick(details)}>CONFIRM</Button>
+                    <Button className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmButtonClick()}>CONFIRM</Button>
                 </div>
             </Modal>
 
@@ -1452,7 +1528,6 @@ export default function Account() {
                                     );
                                 })}
                             </div>
-                        {/*<p className='mb-2 justify-self-center' name= "rating" value={reviewData.rating} onChange={handleChange}>Selected Rating is {rating} out of 5</p>*/}
                         <div className='justify-center mt-2'>
                             <label className=' mb-2'>Title</label>
                             <textarea

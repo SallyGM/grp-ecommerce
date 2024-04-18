@@ -253,6 +253,11 @@ export default function Login() {
     }
   };
 
+
+  const redirectToRegistration  = () =>{
+    router.push('/register');
+  }
+
   return (
     <Fragment>
 
@@ -349,7 +354,7 @@ export default function Login() {
               </div>
             </div>
             <a className="text-sm font-semibold text-indigo-600  hover:text-indigo-500 text-white" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
-            <Button className="justify-self-center bold text-white w-full mt-7 bg-green-400" type='submit' color='success' >LOGIN</Button>
+            <button id="login" className="justify-self-center bold text-white w-full mt-7 bg-green-400 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2" type='submit'>LOGIN</button>
           </form>
           
         </div>
@@ -394,9 +399,9 @@ export default function Login() {
         </svg>
         <a className="text-white font-mono">BE PART OF A COMMUNITY</a>
       </div>
-      <Button disabled={loading}  className=" self-center w-72 mt-24 bold text-white " color='success'>
-        <Link href="/register">REGISTER</Link>
-      </Button>
+      <button type='button' id="register" disabled={loading} onClick={redirectToRegistration} className="self-center w-72 bold text-white mt-7 bg-green-400 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2" >
+        REGISTER
+      </button>
     </Card>
   </div>
     {/*Forgot password modal */}
