@@ -73,7 +73,7 @@ export default function Home() {
             price: prod[i].price,
             name: prod[i].name,
             images: prod[i].images, // Example of adding an extra field with a customized value
-            discount: prod[i].discount // Example of customizing the value based on its length
+            discount: prod[i].discount 
           };
         } else {
           return { id, quantity }
@@ -314,7 +314,17 @@ export default function Home() {
                 <tr key={key}>
                   <td className="px-6 py-3 game-title" style={{ maxWidth: '150px', overflowWrap: 'break-word' }}>{b.name}</td>
                   <td className='text-center '>{b.quantity}</td>
-                  <td className='text-center'>{parseFloat(b.price * b.quantity).toFixed(2)}</td>
+                  {b.discount > 0 ? (
+                    <div className='text-center'> {/*If price has a discount, it will be showed barred */}
+                      <span style={{ textDecoration: "line-through", marginRight: "0.5rem" }}>
+                        £{parseFloat(b.price * b.quantity).toFixed(2)}
+                      </span>
+                      £{parseFloat((b.price - (b.price * b.discount)) * b.quantity).toFixed(2)}
+                    </div>
+                  ) : (
+                    <div className='text-center'>
+                    £{parseFloat(b.price * b.quantity).toFixed(2)}</div>
+                  )}
                 </tr>
               ))) : (
                 <tr>
@@ -324,8 +334,10 @@ export default function Home() {
               </tbody>
             </table>
             <hr/>
-            <p className='text-right text-lg roboto-bold'>Saved: £{(basketDiscount > 0 ? basketDiscount : 0.00).toFixed(2)}</p>
-            <p className='text-right text-lg roboto-bold'>Total: £{basketPrice.toFixed(2)}</p>
+            <div className='text-right mr-14'>
+              <p className=' text-lg roboto-bold'>Saved: £{(basketDiscount > 0 ? basketDiscount : 0.00).toFixed(2)}</p>
+              <p className=' text-lg roboto-bold'>Total: £{basketPrice.toFixed(2)}</p>
+            </div>
           </div>
           <div className='p-6 w-1/2 m-5 card-box rounded-lg shadowed-div '>
           <h2 className='text-center text-xl roboto-bold'>Payment options</h2>
