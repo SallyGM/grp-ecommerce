@@ -1531,7 +1531,7 @@ export default function Account() {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="#00052d"
-                                            className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4"
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4"
                                             tabindex="-1"
                                             >
                                             <path
@@ -1552,7 +1552,7 @@ export default function Account() {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="#00052d"
-                                            className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4">
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4">
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLineJoin="round"
