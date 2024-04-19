@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useBasketContext } from "../../context/BasketContext";
 import toast from 'react-hot-toast';
 import StarRating from '../../starRating.js';
+import { useProductContext } from '../../context/ProductContext';
 
 
 
@@ -19,34 +20,28 @@ export default function Page({ params }) {
         setActiveTab(tabId);
     }
 
-    const [product, setProduct] = useState(false);
-
-    const prodRef = ref(database, "Product");
-
     const { addToBasket } = useBasketContext();
     const [review, setReview] = useState([]);
 
     const [numReviews, setNumReviews] = useState(0);
     const [averageReviews, setAverageReviews] = useState(0);
+    const { loading, products } = useProductContext();
+    const [product, setProduct] = useState(false);
+   
 
-
-    useEffect(() => {    
-        get(prodRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                let productArray = snapshot.child(params.productID).val();
-                productArray.id = params.productID;
-                setProduct(productArray);
+    useEffect(() => {
+        if (!loading) {
+            // Find the product with the same ID
+            const foundProduct = products.find(prod => prod.id === params.productID);
+            if (foundProduct) {
+                setProduct(foundProduct);
             } else {
-                console.log("No data found");
-                setProduct(false);
+                setProduct(null);
             }
-        }).catch((error) => {
-            console.error(error);
-            setProduct(false);
-        });
-    }, []);
+        }
+    }, [loading, products, params.productID]);
 
-
+  
     //Retrieves reviews from database
     useEffect(() => {
         const prodRef = ref(database, "Reviews");
@@ -118,7 +113,20 @@ export default function Page({ params }) {
                                 </div>
                                 <div className="flex-wrap mt-2" style={{ flex: 'wrap', alignItems:"right"}}>
                                     <div className="flex flex-row justify-between">
-                                        <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " > £{product.price} </h2>
+                                    {product.discount > 0 && (
+                                            <div>
+                                            <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " >
+                                                Price:&nbsp;
+                                                <span style={{ textDecoration: "line-through" }}>
+                                                £{product.price.toFixed(2)}
+                                                </span>{" "}
+                                                 £{(product.price - (product.price * product.discount)).toFixed(2)}
+                                            </h2>
+                                            </div>
+                                        )}
+                                        {product.discount === 0 && (
+                                            <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " >Price: £{product.price.toFixed(2)}</h2>
+                                        )}
                                         <div>
                                             <h2 className="text-right flex flex-row roboto-lightLarge text-white">{averageReviews}&nbsp;<StarRating rating={averageReviews}></StarRating>&nbsp;({numReviews})</h2>
 

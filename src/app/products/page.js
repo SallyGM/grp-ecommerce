@@ -220,7 +220,7 @@ export default function Product() {
                   {p.name}
                 </h5>
                 <p className="font-normal text-gray-700 dark:text-gray-400">
-                  £ {(p.discount > 0 ? parseFloat(p.price - p.price * p.discount).toFixed(2): p.price)}
+                  £ {(p.discount > 0 ? parseFloat(p.price - p.price * p.discount).toFixed(2): p.price.toFixed(2))}
                 </p>
                 <p className="font-normal text-gray-700 dark:text-gray-400">
                   {p.console}
