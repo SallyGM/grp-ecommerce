@@ -128,11 +128,11 @@ export default function Home() {
           <span className="sr-only">Loading...</span>
         </div>
       ) : (
-        <div className='px-5'>
+        <div className='px-5 '>
           <Slider className='my-5 pl-3 ml-10 mr-10' {...settings} >
           {product.slice(0, 7).map((p) => (
-            <Card key={p.id}  className="relative max-w-sm mx-3 my-3 w-72" renderImage={() =>
-              <img className="w-full h-full object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
+            <Card key={p.id}  className="relative max-w-sm mx-3  my-3 w-72" renderImage={() =>
+              <img className="w-full h-40 object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
               {currentUser  ? (
                 (favourite.some(item => item.id === p.id) ? (
                   <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7">
@@ -146,10 +146,12 @@ export default function Home() {
               ) : (
                 <></>
               )}
+             
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 h-20 dark:text-white" >
+                  {p.name}
+                </h5>
               
-              <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {p.name}
-              </h5>
+              
               <p className="font-normal text-gray-700 dark:text-gray-400">
                 £{(p.discount > 0 ? parseFloat(p.price - p.price * p.discount).toFixed(2): p.price)}
               </p>

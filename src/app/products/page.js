@@ -201,7 +201,7 @@ export default function Product() {
           <div className='flex flex-row flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 text-sm justify-center'>
             {showProduct.map((p, i) => (
               <Card key={i} className="relative max-w-sm mx-3 my-3 w-72" renderImage={() => 
-                <img className="w-full h-full object-cover cursor-pointer rounded-lg" src={p.images[1]} alt="image 1" onClick={(e) => handleClickOpenProduct(p.id, e)} />}>             
+                <img className="w-full h-60 object-fill cursor-pointer rounded-lg" src={p.images[2]} alt="image 1" onClick={(e) => handleClickOpenProduct(p.id, e)} />}>             
                 {currentUser  ? (
                   (favourite.some(item => item.id === p.id) ? (
                     <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer left-1 top-1 w-7 h-7">
@@ -216,7 +216,7 @@ export default function Product() {
                   <></>
                 )}
                 
-                <h5 key={i} className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h5 key={i} className="text-2xl font-bold tracking-tight h-20 text-gray-900 dark:text-white">
                   {p.name}
                 </h5>
                 <p className="font-normal text-gray-700 dark:text-gray-400">
