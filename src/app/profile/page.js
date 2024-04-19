@@ -20,9 +20,7 @@ import { useProductContext } from '../context/ProductContext.js';
 import InputMask from 'react-input-mask';
 import { Tooltip } from 'flowbite-react';
 import {FaStar} from 'react-icons/fa';
-import amexIcon from '../images/amexIcon.png';
-import masterCardIcon from '../images/mastercardIcon.png';
-import visaIcon from '../images/visaIcon.png';
+
 
 
 
@@ -101,7 +99,21 @@ export default function Account() {
     const [showEditCard, setShowEditCard] = useState(false);
     const [showDeleteCard, setShowDeleteCard] = useState(false);
     const [card, setCard] = useState('');
-    const [checkDateError, setCheckDateError] = useState('');
+    const [ fullNameError, setFullNameError] = useState(false)
+    const [ cardNumberError, setCardNumberError] = useState(false)  
+    const [ sortCodeError, setSortCodeError] = useState(false)  
+    const [ cvvError, setCVVError] = useState(false)
+    const [checkDateError, setCheckDateError] = useState('');     
+    const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(true); 
+    const [ fullNameEditCardError, setFullNameEditCardError] = useState(false)
+    const [ cardNumberEditCardError, setCardNumberEditCardError] = useState(false)  
+    const [ sortCodeEditCardError, setSortCodeEditCardError] = useState(false)  
+    const [ cvvEditCardError, setCVVEditCardError] = useState(false)
+    const [checkDateEditCardError, setCheckDateEditCardError] = useState('');     
+    const [isConfirmButtonEditCardDisabled, setIsConfirmButtonEditCardDisabled] = useState(true);
+    const [ showCVV, setShowCVV] = useState(false)
+    const [ showEditCardCVV, setShowEditCardCVV] = useState(false)
+    const [ showAddCardCVV, setShowAddCardCVV] = useState(false)
     const [formData, setFormData] = useState({
         cardNumber: '',
         sortCode: '',
@@ -120,7 +132,7 @@ export default function Account() {
     const [review, setReview] = useState('');
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    const [ showCVV, setShowCVV] = useState(false)
+    
    
 
     const [reviewData, setReviewData] = useState({
@@ -478,34 +490,154 @@ export default function Account() {
     };
 
     // HANDLE MAX LENGTH IN CARD NUMBER, SORT CODE AND CVV
-    //partial ref: https://www.youtube.com/watch?v=DDUdZNCuwtU
     const checkLengthCardNumber = (maxLength) => {
         return function (e) {
             if (e.target.value.length > maxLength)
                 e.target.value = e.target.value.slice(0, maxLength);
         }
     }
+    // function to enable/disable CONFIRM button add card modal
+    const checkAllAddCardFieldsChange = () => {
+
+        if (fullNameError == '' &&  formData.cardName != '' && cardNumberError == '' && formData.cardNumber != ''
+        && sortCodeError == '' && formData.sortCode != '' && checkDateError == '' && formData.expDate != '' &&
+        cvvError == ''&& formData.securityCode != '') {
+        setIsConfirmButtonDisabled(false);
+        } else {
+        setIsConfirmButtonDisabled(true);
+        }   
+    };
+    // function to enable/disable CONFIRM button edit card modal
+    const checkAllEditCardFieldsChange = () => {
+
+        if (fullNameEditCardError == '' &&  card.cardName != '' && cardNumberEditCardError == '' && card.cardNumber != ''
+        && sortCodeEditCardError == '' && card.sortCode != '' && checkDateEditCardError == '' && card.expDate != '' &&
+        cvvEditCardError == ''&& card.securityCode != '') {
+        setIsConfirmButtonEditCardDisabled(false);
+        } else {
+        setIsConfirmButtonEditCardDisabled(true);
+        }   
+    };
+
+    // CARD HOLDER NAME VALIDATION ADD CARD MODAL
+    const handleFullName = (e) => {
+        const isValid = /^([A-Z ][a-z ]*|[a-z ]+)$/i.test(e.target.value) && e.target.value.length <= 40 && e.target.value.length >0;
+
+        if (!isValid ) {
+        setFullNameError('Full name cannot contain special characters or numbers');
+        } else {
+        setFullNameError('');
+        }
+    checkAllAddCardFieldsChange();
+    };
+    // CARD HOLDER NAME VALIDATION EDIT CARD MODAL
+    const handleFullNameEditCard = (e) => {
+        const isValid = /^([A-Z ][a-z ]*|[a-z ]+)$/i.test(e.target.value) && e.target.value.length <= 40 && e.target.value.length >0;
+
+        if (!isValid ) {
+        setFullNameEditCardError('Full name cannot contain special characters or numbers');
+        } else {
+            setFullNameEditCardError('');
+        }
+        checkAllEditCardFieldsChange();
+    };
+    // CARD NUNMBER VALIDATION ADD CARD MODAL
+    const handleCardNumber = (e) => {
+        const input = e.target.value
+        const isValid = /^([0-9 ]+)$/i.test(input) && input.length === 19;
+        
+        if (!isValid && input.length < 20 && input.length > 0 ) { 
+        setCardNumberError('Card number has to be 16 digits long'); 
+        } else {
+        setCardNumberError('');
+        }
+    
+        checkAllAddCardFieldsChange();
+    };
+    // CARD NUNMBER VALIDATION EDIT CARD MODAL
+    const handleCardNumberEditCard = (e) => {
+        const input = e.target.value
+        const isValid = /^([0-9 ]+)$/i.test(input) && input.length === 19;
+        
+        if (!isValid && input.length < 20 && input.length > 0 ) { 
+        setCardNumberEditCardError('Card number has to be 16 digits long'); 
+        } else {
+        setCardNumberEditCardError('');
+        }
+    
+        checkAllEditCardFieldsChange();
+    };
+
+    // SORT CODE VALIDATION ADD CARD MODAL
+    const handleSortCode = (e) => {
+        const isValid = /^([0-9-]+)$/i.test(e.target.value) && e.target.value.length === 8;
+        
+        if (!isValid && e.target.value.length < 9 && e.target.value.length > 0) { 
+        setSortCodeError('Sort code should be 6 digits long');
+        } else { 
+        setSortCodeError('');
+        }
+        checkAllAddCardFieldsChange();
+    };
+    // SORT CODE VALIDATION EDIT CARD MODAL
+    const handleSortCodeEditCard = (e) => {
+        const isValid = /^([0-9-]+)$/i.test(e.target.value) && e.target.value.length === 8;
+        
+        if (!isValid && e.target.value.length < 9 && e.target.value.length > 0) { 
+        setSortCodeEditCardError('Sort code should be 6 digits long');
+        } else { 
+        setSortCodeEditCardError('');
+        }
+        checkAllEditCardFieldsChange();
+    };
 
     // CHECKS IF EXPIRY DATE IS VALID ADD CARD MODAL
     const checkAddModalDate = (e) => {
         const currentDate = new Date;
         const expireDate = new Date(e.target.value);
-        if (currentDate > expireDate) {
+        if (expireDate!= null && currentDate > expireDate) {
           setCheckDateError('Invalid Date')
         } else {
           setCheckDateError('')
         }
+        checkAllAddCardFieldsChange();
     }
     // CHECKS IF EXPIRY DATE IS VALID EDIT CARD MODAL
     const checkEditModalDate = (e) => {
         const currentDate = new Date;
         const expireDate = new Date(e.target.value);
-        if (currentDate > expireDate) {
-          setCheckDateError('Invalid Date')
+        if (expireDate!= null && currentDate > expireDate) {
+          setCheckDateEditCardError('Invalid Date')
         } else {
-          setCheckDateError('')
+        setCheckDateEditCardError('')
         }
+        checkAllEditCardFieldsChange();
     }
+    // CVV VALIDATION ADD CARD MODAL
+    const handleCVV = (e) => {
+        const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 3;
+        
+        if (!isValid && e.target.value.length < 4 && e.target.value.length > 0) {
+        setCVVError('3 digits long');
+        } else {
+        setCVVError('');
+        }
+    
+        checkAllAddCardFieldsChange();
+    };
+    // CVV VALIDATION EDIT CARD MODAL
+    const handleCVVEditCard = (e) => {
+        const isValid = /^([0-9 ]+)$/i.test(e.target.value) && e.target.value.length === 3;
+        
+        if (!isValid && e.target.value.length < 4 && e.target.value.length > 0) {
+        setCVVEditCardError('3 digits long');
+        } else {
+        setCVVEditCardError('');
+        }
+    
+        checkAllEditCardFieldsChange();
+    };
+    
 
     // Function that handle confirm button click on edit card dialog
     const handleConfirmEditCardClick = (card) => {
@@ -1335,21 +1467,24 @@ export default function Account() {
                         <div>
                             <label htmlFor="text" className='text-white'>Cardholder Name</label>
                             <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 "
-                            type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChangeCardDetails}/>
+                            onInput={handleFullName} type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChangeCardDetails}/>
+                            {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
                         </div>
 
                         <div class="noIncrementer"> {/*noIncrementer is a CSS class*/}
                             <label htmlFor="number" className='text-white'>Card Number</label>
                             <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
                             id="cardNumber" name="cardNumber" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
-                            onInput={checkLengthCardNumber(19)} onChange={handleChangeCardDetails}/>
+                            onInput={handleCardNumber} onChange={handleChangeCardDetails}/>
+                            {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
                         </div>
 
                         <div className="noIncrementer">
                             <label htmlFor="number" className='text-white'>Sort Code</label>
                             <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
                             id="sortCode" name="sortCode" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={formData.sortCode} 
-                            onInput={checkLengthCardNumber(8)} onChange={handleChangeCardDetails}/>
+                            onInput={handleSortCode} onChange={handleChangeCardDetails}/>
+                            <span className={sortCodeError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>
                         </div>
 
                         <div className='inline-flex justify-evenly'>
@@ -1361,7 +1496,7 @@ export default function Account() {
                                 {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
                             </div>
                             
-                            <div className='ml-5 noIncrementer'>
+                            <div className="relative z-0 w-full mb-5 group">
                                 <label htmlFor="number" className='inline-flex text-white'>CVV
                                 <Tooltip content="Three digit code on the back of your card">
                                     <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
@@ -1371,16 +1506,68 @@ export default function Account() {
                                     </svg>
                                 </Tooltip>
                                 </label>
-                                <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 "
-                                type="number" inputmode="numeric" id="securityCode" name="securityCode" placeholder='342' required value={formData.securityCode} 
-                                onInput={checkLengthCardNumber(3)} onChange={handleChangeCardDetails}/>
-
+                                <InputMask className="block w-full rounded-md py-1.5 px-1.5 mt-3 border-2 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6 "
+                                type={showAddCardCVV ? "text" : "password"}
+                                mask="999"
+                                maskChar=""
+                                inputMode="numeric" inputmode="numeric" id="securityCode" name="securityCode" placeholder='342' required value={formData.securityCode} 
+                                onInput={handleCVV} onChange={handleChangeCardDetails}/>
+                                
+                                {/* Eye toggle to hide/show CVV - not aligned in the middle*/}
+                                <button
+                                        className="text-black dark:text-white"
+                                        style={{ paddingRight: '0.5rem' }}
+                                        type="button"
+                                        aria-label={
+                                            showAddCardCVV ? "Password Visible" : "Password Invisible."
+                                        }
+                                        onClick={() => {
+                                            setShowAddCardCVV((prev) => !prev);
+                                        }}>
+                                        {showAddCardCVV ? (
+                                            <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="#00052d"
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4"
+                                            tabindex="-1"
+                                            >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLineJoin="round"
+                                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                            ></path>
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLineJoin="round"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                            ></path>
+                                            </svg>
+                                        ) : (
+                                            <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="#00052d"
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4">
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLineJoin="round"
+                                                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                                            ></path>
+                                            </svg>
+                                        )}  
+                                        </button>
+                                        {cvvError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cvvError}</span>}
                             </div>
                         </div>
 
                         <div className='flex justify-evenly mt-10'>
                             <Button className="w-2/4 mr-3 mb-4 mt-4" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                            <Button type="submit" className="w-2/4 ml-3 mb-4 mt-4"  style={{background: '#00052d', border : '#00052d'}} >CONFIRM</Button>
+                            <Button disabled={isConfirmButtonDisabled} type="submit" className="w-2/4 ml-3 mb-4 mt-4"  style={{background: '#00052d', border : '#00052d'}} >CONFIRM</Button>
                         </div>
                     </form>
                 </div>
@@ -1395,23 +1582,26 @@ export default function Account() {
                     <form className="space-y-6 text-white font-mono" method="POST onSubmit={handleSubmit}">
 
                         <div>
-                            <label htmlFor="text" className='text-white'>Card Holder</label>
+                            <label htmlFor="text" className='text-white'>Cardholder Name</label>
                             <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 "
-                            type="text" id="card_holder" name="card_holder" placeholder='John Wick' required value={card.cardName} onChange={(e) => setCard({ ...card, fullName: e.target.value })}/>
+                            onInput={handleFullNameEditCard} type="text" id="card_holder" name="card_holder" placeholder='John Wick' required value={card.cardName} onChange={(e) => setCard({ ...card, fullName: e.target.value })}/>
+                            {fullNameEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameEditCardError}</span>}
                         </div>
 
                         <div class="noIncrementer">
                             <label htmlFor="number" className='text-white'>Card Number</label>
                             <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
                             id="card_number" name="card_number" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={card.cardNumber} 
-                            onInput={checkLengthCardNumber(19)} onChange={(e) => setCard({ ...card, cardNumber: e.target.value })}/> 
+                            onInput={handleCardNumberEditCard} onChange={(e) => setCard({ ...card, cardNumber: e.target.value })}/> 
+                            {cardNumberEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberEditCardError}</span>}
                         </div>
 
                         <div class="noIncrementer">
                             <label htmlFor="number" className='text-white'>Sort Code</label>
                             <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
                             id="sort_code" name="sort_code" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={card.sortCode}
-                            onInput={checkLengthCardNumber(8)} onChange={(e) => setCard({ ...card, sortCode: e.target.value })}/> 
+                            onInput={handleSortCodeEditCard} onChange={(e) => setCard({ ...card, sortCode: e.target.value })}/> 
+                            <span className={sortCodeEditCardError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeEditCardError}</span>
                         </div>
 
                         <div className='inline-flex justify-evenly'>
@@ -1420,10 +1610,10 @@ export default function Account() {
                                 <input className="block w-full my-3.5 rounded-md p-1.5 text-gray-900 "
                                 type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate}
                                 onInput={checkEditModalDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
-                                {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
+                                {checkDateEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateEditCardError}</span>}
                             </div>
 
-                            <div className='ml-3' class="noIncrementer">
+                            <div className="relative z-0 w-full mb-5 group">
                                 <label htmlFor="number" className='inline-flex text-white'>CVV
                                 <Tooltip content="Three digit code on the back of your card">
                                     <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
@@ -1433,56 +1623,69 @@ export default function Account() {
                                     </svg>
                                 </Tooltip>
                                 </label>
-                                <input className="block w-full my-3.5 rounded-md p-1.5 text-gray-900 "
-                                type="number" id="cvv" name="cvv" placeholder='342' required value={card.securityCode}
-                                onInput={checkLengthCardNumber(3)} onChange={(e) => setCard({ ...card, securityCode: e.target.value })}/>
-                                    {/* Eye toggle to hide/show CVV (BUG: The eye icon does not appear) */} 
+                                    <InputMask
+                                    type={showEditCardCVV ? "text" : "password"}
+                                    className="block w-full rounded-md py-1.5 px-1.5 mt-3 border-2 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6"
+                                    inputMode="numeric"
+                                    mask="999"
+                                    maskChar=""
+                                    id="cvv"
+                                    name="cvv"
+                                    placeholder="342"
+                                    required
+                                    value={card.securityCode}
+                                    onInput={handleCVVEditCard}
+                                    onChange={(e) => setCard({ ...card, securityCode: e.target.value })}
+                                    />
+                                    {/* Eye toggle to hide/show CVV - not aligned in the middle*/}
                                     <button
-                                    type="button"
-                                    aria-label={
-                                        showCVV ? "Password Visible" : "Password Invisible."
-                                    }
-                                    className="text-black dark:text-white"
-                                    onClick={() => {
-                                        setShowCVV((prev) => !prev);
-                                    }}>
-                                    {showCVV ? (
-                                        <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="#00052d"
-                                        className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4"
-                                        tabindex="-1"
-                                        >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLineJoin="round"
-                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                        ></path>
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLineJoin="round"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        ></path>
-                                        </svg>
-                                    ) : (
-                                        <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="#00052d"
-                                        className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4">
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLineJoin="round"
-                                            d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                                        ></path>
-                                        </svg>
-                                    )}  
-                                    </button>
+                                        className="text-black dark:text-white"
+                                        style={{ paddingRight: '0.5rem' }}
+                                        type="button"
+                                        aria-label={
+                                            showEditCardCVV ? "Password Visible" : "Password Invisible."
+                                        }
+                                        onClick={() => {
+                                            setShowEditCardCVV((prev) => !prev);
+                                        }}>
+                                        {showEditCardCVV ? (
+                                            <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="#00052d"
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4"
+                                            tabindex="-1"
+                                            >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLineJoin="round"
+                                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                            ></path>
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLineJoin="round"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                            ></path>
+                                            </svg>
+                                        ) : (
+                                            <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="#00052d"
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4">
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLineJoin="round"
+                                                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                                            ></path>
+                                            </svg>
+                                        )}  
+                                        </button>
+                                        {cvvEditCardError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cvvEditCardError}</span>}
                             </div>
                         </div>
                     </form>
@@ -1490,7 +1693,7 @@ export default function Account() {
 
                 <div className='flex justify-evenly mt-10 mb-2'>
                     <Button type="submit"className="w-2/6 mr-1" onClick ={()=>setShowEditCard(false)}> DISMISS</Button>
-                    <Button type="submit" className="w-2/6 ml-1"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</Button>
+                    <Button disabled={isConfirmButtonEditCardDisabled} type="submit" className="w-2/6 ml-1"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</Button>
                 </div>
             </Modal>
 

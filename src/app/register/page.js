@@ -293,28 +293,28 @@ const handleConfirmPasswordChange = (e) => {
 // BEGIN CARD MODAL CHECKS----------------------------------------------------------------------------------------------
 
 // function to enable/disable CONFIRM button
-// const checkAllFieldsChange = () => {
+ const checkAllFieldsChange = () => {
 
-//         if (fullNameError == '' && cardNumberError == '' && 
-//         sortCodeError == '' && expirationDateError == '' && 
-//         cvvError == '') {
-//           setIsButtonDisabled(false);
-//         } else {
-//         setIsButtonDisabled(true);
-//       }   
-// };
+         if (fullNameError == '' &&  formData.cardName != '' && cardNumberError == '' && formData.cardNumber != ''
+         && sortCodeError == '' && formData.sortCode != '' && expirationDateError == '' && formData.expDate != '' &&
+         cvvError == ''&& formData.securityCode != '') {
+           setIsButtonDisabled(false);
+         } else {
+         setIsButtonDisabled(true);
+       }   
+ };
 
 
 const handleFullName = (e) => {
-  const isValid = /^([A-Z ][a-z ]*|[a-z ]+)$/i.test(e.target.value) && e.target.value.length <= 40;
+  const isValid = /^([A-Z ][a-z ]*|[a-z ]+)$/i.test(e.target.value) && e.target.value.length <= 40 && e.target.value.length >0;
   
-  if (!isValid && e.target.value.length > 0) {
+  if (!isValid ) {
     setFullNameError('Full name cannot contain special characters or numbers');
   } else {
     setFullNameError('');
   }
 
-  // checkAllFieldsChange();
+   checkAllFieldsChange();
 };
 
 // CARD NUNMBER VALIDATION
@@ -322,13 +322,13 @@ const handleCardNumber = (e) => {
   const input = e.target.value
   const isValid = /^([0-9 ]+)$/i.test(input) && input.length === 19;
    
-  if (!isValid && input.length < 20 && input.length > 0) { // BUG FIX e.target.value.length < 20
-    setCardNumberError('Card number has to be 16 digits long'); // BUG: if you keep pressing numbers the error appears again
+  if (!isValid && input.length < 20 && input.length > 0 ) { 
+    setCardNumberError('Card number has to be 16 digits long'); 
   } else {
     setCardNumberError('');
   }
 
-  // checkAllFieldsChange();
+   checkAllFieldsChange();
 };
 
 
@@ -336,13 +336,13 @@ const handleCardNumber = (e) => {
 const handleSortCode = (e) => {
   const isValid = /^([0-9-]+)$/i.test(e.target.value) && e.target.value.length === 8;
   
-  if (!isValid && e.target.value.length < 9 && e.target.value.length > 0) {
+  if (!isValid && e.target.value.length < 9 && e.target.value.length > 0) { 
     setSortCodeError('Sort code should be 6 digits long');
   } else { 
     setSortCodeError('');
   }
 
-  // checkAllFieldsChange();
+   checkAllFieldsChange();
 };
 
 
@@ -356,20 +356,20 @@ const handleCVV = (e) => {
     setCVVError('');
   }
 
-  // checkAllFieldsChange();
+   checkAllFieldsChange();
 };
 
 // EXPIRY DATE VALIDATION
 const checkDate = (e) => {
   const currentDate = new Date;
   const expireDate = new Date(e.target.value);
-  if (currentDate > expireDate) {
+  if (expireDate!= null && currentDate > expireDate) {
     setCheckDateError('Invalid Date')
   } else {
     setCheckDateError('')
   }
 
-  // checkAllFieldsChange();
+   checkAllFieldsChange();
 }
 
 //END CARD MODAL CHECKS------------------------------------------------------------------------------------------------

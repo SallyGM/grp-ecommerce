@@ -425,12 +425,12 @@ p {
 
 
 .addCard-btn{
-  background:#512DA8;
+  background:#673AB7;
 }
 
 
 .addCard-btn:hover{
-  background: #673AB7;
+  background: #512DA8;
 }
 
 .tab:hover {
