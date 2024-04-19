@@ -299,7 +299,8 @@ export default function Home() {
         <div className='flex flex-row'>
           <div className='flex flex-col shadowed-div summary-box rounded-lg gap-4 p-6 w-1/2 m-5'>
             <h2 className='text-center text-xl roboto-bold'>Summary</h2>
-            <table className="text-lg mt-5 roboto-light">
+            <hr class="h-px mt-8  bg-slate-600 border-0 dark:bg-gray-700"></hr>
+            <table className="text-lg  roboto-light">
               <thead >
                 <tr >
                   <th className="px-6 py-3 ">Game</th>
@@ -313,7 +314,7 @@ export default function Home() {
               Object.entries(basket).map(([key, b]) => (
                 <tr key={key}>
                   <td className="px-6 py-3 game-title" style={{ maxWidth: '150px', overflowWrap: 'break-word' }}>{b.name}</td>
-                  <td className='text-center '>{b.quantity}</td>
+                  <td className='text-center  '>{b.quantity}</td>
                   {b.discount > 0 ? (
                     <div className='text-center'> {/*If price has a discount, it will be showed barred */}
                       <span style={{ textDecoration: "line-through", marginRight: "0.5rem" }}>
@@ -333,9 +334,9 @@ export default function Home() {
               ))}
               </tbody>
             </table>
-            <hr/>
+            <hr class="h-px mt-8  bg-slate-600 border-0 dark:bg-gray-700"></hr>
             <div className='text-right mr-14'>
-              <p className=' text-lg roboto-bold'>Saved: £{(basketDiscount > 0 ? basketDiscount : 0.00).toFixed(2)}</p>
+              <p className=' text-lg roboto-light'>Saved: £{(basketDiscount > 0 ? basketDiscount : 0.00).toFixed(2)}</p>
               <p className=' text-lg roboto-bold'>Total: £{basketPrice.toFixed(2)}</p>
             </div>
           </div>

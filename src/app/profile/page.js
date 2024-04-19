@@ -1087,9 +1087,9 @@ export default function Account() {
                 {/* ORDERED KEYS */}
                 { value ===  2 ? (
                     <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
-                        <h5 className="justify-self-center text-center text-4xl mb-6 font-bold tracking-tight text-white font-mono" > MY ORDER KEYS</h5>
+                        <h5 className="justify-self-center text-center text-4xl mb-6 tracking-tight text-white bebas-neue-regularLarge" > MY ORDER KEYS</h5>
                         {OrderDetails.length === 0 ? (
-                            <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
+                            <div className="text-2xl text-white mt-32 mb-44 bebas-neue-regular text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
                         ) : (
                             OrderDetails.sort((a, b) => {
                                 const dateA = new Date(a.date.split('/').reverse().join('/'));
@@ -1097,20 +1097,20 @@ export default function Account() {
                                 return dateB - dateA;
                             }).map((o, index) => (
                             
-                                <Card key={o.id}  className="flex h-auto w-full summary-box mt-6">
+                                <Card key={o.id}  className="flex h-auto w-full roboto-bold summary-box mt-6">
                                     <div className=' grid grid-cols-3 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr ', justifyItems: 'start' }}>
                                         <h3 className='font-bold tracking-tight'>Order Number:</h3>
                                         <h3 className='font-bold tracking-tight'>Date Placed:</h3>
                                         <h3 className='font-bold tracking-tight'>Total Amount:</h3>
                                         <h3 className='font-bold tracking-tight'>Status:</h3>
                                     </div>
-                                    <div className='rounded-1 border-b-2 border-white grid grid-cols-3 flex-wrap mb-6 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
+                                    <div className='rounded-1 border-b-2 border-white grid grid-cols-3 roboto-light flex-wrap mb-6 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                         <a className='tracking-tight dark:text-white text-white'>{o.id.substring(1, 8)}</a>
                                         <a className='tracking-tight dark:text-white text-white'> {o.date}</a>
                                         <a className='tracking-tight dark:text-white text-white'>{"£ "+ parseFloat(o.price).toFixed(2)}</a>
                                         <a className='tracking-tight dark:text-white text-white'>{o.status}</a>
                                     </div>
-                                    <div className=' grid grid-cols-5 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
+                                    <div className=' grid grid-cols-5 flex-wrap ml-3 mr-3 p-3 roboto-light' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
                                         <a className='tracking-tight dark:text-white text-white'>Product</a>
                                         <a className='tracking-tight dark:text-white text-white'></a>
                                         <a className='tracking-tight dark:text-white text-white'>Price</a>
@@ -1121,17 +1121,17 @@ export default function Account() {
                                     
                                     {/* Display item details */}
                                     {getItemsForOrder(o.id).map((item, itemIdex) => (
-                                            <div key={itemIdex} className='grid grid-cols-7 items-center flex-wrap border-b border-gray-300 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>    
+                                            <div key={itemIdex} className='grid grid-cols-7 items-center roboto-light flex-wrap border-b border-gray-300 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>    
                                                 {item && item.product && (
                                                     <Fragment key={item.product.id}>
                                                         {console.log('item.product:', item.product)}
                                                         <div className='inline-flex col-span-2'>
                                                         <img className="w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
                                                         <div>
-                                                        <div className=" mt-3 text-start flex dark:text-white text-white font-mono ml-6">{item.product.name.substring(0, 19)}</div>
+                                                        <div className=" mt-3 text-start flex dark:text-white text-white  ml-6">{item.product.name.substring(0, 19)}</div>
                                                         </div>
                                                         </div>
-                                                        <div className="flex text-center dark:text-white text-white font-mono">{'£ ' + item.product.price}</div>
+                                                        <div className="flex text-center dark:text-white text-white ">{'£ ' + item.product.price}</div>
                                                         {console.log('Review Details:', reviewDetails)}
                                                         {reviewDetails.find(review => review.userID === currentUser.uid && review.productID === item.product.id) ? (
                                                         <Tooltip content='You have already reviewed this product'>
