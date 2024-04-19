@@ -91,7 +91,7 @@ export default function Page({ params }) {
         <div>
             {product ? (
             <div>
-                <div className="bg-blue-gradient">  
+                <div className="bg-blue-gradient pb-1">  
                     <div className="grid grid-rows-2 pt-10" style={{gridTemplateRows:'1fr 8fr'}}>
                         <div className="flex-wrap grid grid-cols-2 gap-20 mr-20 ml-20 w-auto h-auto mb-5" >
                             <div></div>
