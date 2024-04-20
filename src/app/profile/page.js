@@ -1068,7 +1068,7 @@ export default function Account() {
                     <div className='flex mb-10 mt-3 col-span-3 justify-self-center ml-10'>
                     <button
                         type="submit"
-                        className="w-60 inline-flex text-white self-center bold rounded-lg px-5 py-2.5 addCard-btn"
+                        className="w-60 inline-flex text-white self-center bold rounded-lg px-5 py-2.5 pay-btn"
                         onClick={()=> setShowAddCardModal(true)}
                         disabled={showAddCardModal}> 
                         ADD NEW CARD
@@ -1247,8 +1247,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to logout?</h3>
                 <div className='flex justify-evenly mt-10 mb-10'>
-                    <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
-                    <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={signOut}>YES</Button>
+                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</button>
+                    <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={signOut}>YES</button>
                 </div>
             </Modal>
 
@@ -1257,8 +1257,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>PERSONAL DETAILS CHANGES</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to save the changes?</h3>
                 <div className='flex justify-evenly mt-10'>
-                    <Button className="w-52" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</Button>
-                    <Button className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmButtonClick()}>CONFIRM</Button>
+                    <button className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</button>
+                    <button className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmButtonClick()}>CONFIRM</button>
                 </div>
             </Modal>
 
@@ -1439,8 +1439,8 @@ export default function Account() {
                             </div> 
                         </div>
                         <div className='flex justify-evenly my-10'>
-                            <Button type="submit" className="w-52 mr-2 cardButton text-white" color='gray' onClick ={()=>setShowPasswordModal(false)}> DISMISS</Button>
-                            <Button type="submit" className="w-52 ml-2" style={{background: '#00052d', border : '#00052d'}}>CONFIRM</Button>
+                            <button type="submit" className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color='gray' onClick ={()=>setShowPasswordModal(false)}> DISMISS</button>
+                            <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" >CONFIRM</button>
                         </div>
                     </form>
                 </div>
@@ -1451,8 +1451,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE ACCOUNT</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete yur acount?</h3>
                 <div className='flex justify-evenly mt-10 mb-10'>
-                    <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</Button>
-                    <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</Button>
+                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</button>
+                    <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</button>
                 </div>
             </Modal>
 
@@ -1471,7 +1471,7 @@ export default function Account() {
                             {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
                         </div>
 
-                        <div class="noIncrementer"> {/*noIncrementer is a CSS class*/}
+                        <div> 
                             <label htmlFor="number" className='text-white'>Card Number</label>
                             <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
                             id="cardNumber" name="cardNumber" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
@@ -1479,7 +1479,7 @@ export default function Account() {
                             {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
                         </div>
 
-                        <div className="noIncrementer">
+                        <div>
                             <label htmlFor="number" className='text-white'>Sort Code</label>
                             <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
                             id="sortCode" name="sortCode" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={formData.sortCode} 
@@ -1510,13 +1510,12 @@ export default function Account() {
                                 type={showAddCardCVV ? "text" : "password"}
                                 mask="999"
                                 maskChar=""
-                                inputMode="numeric" inputmode="numeric" id="securityCode" name="securityCode" placeholder='342' required value={formData.securityCode} 
+                                inputMode="numeric" id="securityCode" name="securityCode" placeholder='342' required value={formData.securityCode} 
                                 onInput={handleCVV} onChange={handleChangeCardDetails}/>
                                 
-                                {/* Eye toggle to hide/show CVV - not aligned in the middle*/}
+                                {/* Eye toggle to hide/show CVV */}
                                 <button
                                         className="text-black dark:text-white"
-                                        style={{ paddingRight: '0.5rem' }}
                                         type="button"
                                         aria-label={
                                             showAddCardCVV ? "Password Visible" : "Password Invisible."
@@ -1566,8 +1565,8 @@ export default function Account() {
                         </div>
 
                         <div className='flex justify-evenly mt-10'>
-                            <Button className="w-2/4 mr-3 mb-4 mt-4" onClick ={()=>setShowAddCardModal(false)}> DISMISS</Button>
-                            <Button disabled={isConfirmButtonDisabled} type="submit" className="w-2/4 ml-3 mb-4 mt-4"  style={{background: '#00052d', border : '#00052d'}} >CONFIRM</Button>
+                            <button className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowAddCardModal(false)}> DISMISS</button>
+                            <button disabled={isConfirmButtonDisabled} type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" >CONFIRM</button>
                         </div>
                     </form>
                 </div>
@@ -1588,7 +1587,7 @@ export default function Account() {
                             {fullNameEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameEditCardError}</span>}
                         </div>
 
-                        <div class="noIncrementer">
+                        <div>
                             <label htmlFor="number" className='text-white'>Card Number</label>
                             <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
                             id="card_number" name="card_number" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={card.cardNumber} 
@@ -1596,7 +1595,7 @@ export default function Account() {
                             {cardNumberEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberEditCardError}</span>}
                         </div>
 
-                        <div class="noIncrementer">
+                        <div>
                             <label htmlFor="number" className='text-white'>Sort Code</label>
                             <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
                             id="sort_code" name="sort_code" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={card.sortCode}
@@ -1625,7 +1624,7 @@ export default function Account() {
                                 </label>
                                     <InputMask
                                     type={showEditCardCVV ? "text" : "password"}
-                                    className="block w-full rounded-md py-1.5 px-1.5 mt-3 border-2 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md py-1.5 px-1.5 ml-1 mt-3 border-2 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6"
                                     inputMode="numeric"
                                     mask="999"
                                     maskChar=""
@@ -1637,10 +1636,9 @@ export default function Account() {
                                     onInput={handleCVVEditCard}
                                     onChange={(e) => setCard({ ...card, securityCode: e.target.value })}
                                     />
-                                    {/* Eye toggle to hide/show CVV - not aligned in the middle*/}
+                                    {/* Eye toggle to hide/show CVV */}
                                     <button
                                         className="text-black dark:text-white"
-                                        style={{ paddingRight: '0.5rem' }}
                                         type="button"
                                         aria-label={
                                             showEditCardCVV ? "Password Visible" : "Password Invisible."
@@ -1655,7 +1653,7 @@ export default function Account() {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="#00052d"
-                                            className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4"
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4"
                                             tabindex="-1"
                                             >
                                             <path
@@ -1676,7 +1674,7 @@ export default function Account() {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="#00052d"
-                                            className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4">
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4">
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLineJoin="round"
@@ -1692,8 +1690,8 @@ export default function Account() {
                 </div>
 
                 <div className='flex justify-evenly mt-10 mb-2'>
-                    <Button type="submit"className="w-2/6 mr-1" onClick ={()=>setShowEditCard(false)}> DISMISS</Button>
-                    <Button disabled={isConfirmButtonEditCardDisabled} type="submit" className="w-2/6 ml-1"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</Button>
+                    <button type="submit"className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowEditCard(false)}> DISMISS</button>
+                    <button disabled={isConfirmButtonEditCardDisabled} type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</button>
                 </div>
             </Modal>
 
@@ -1702,8 +1700,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE CARD</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this card?</h3>
                 <div className='flex justify-evenly mt-10 mb-2'>
-                    <Button type="submit"className="w-52" color="gray" onClick ={()=>showDeleteCard(false)}> DISMISS</Button>
-                    <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmDeleteCardClick(card)}>CONFIRM</Button>
+                    <button type="submit"className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>showDeleteCard(false)}> DISMISS</button>
+                    <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmDeleteCardClick(card)}>CONFIRM</button>
                 </div>
             </Modal>
 
@@ -1764,8 +1762,8 @@ export default function Account() {
                             </label>
                         </div>
                         <div className='flex justify-evenly mt-5 mb-10'>
-                            <Button  className="w-52 mr-2" color="gray" onClick ={()=>closewModal()}> DISMISS</Button>
-                            <Button  className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}} disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</Button>
+                            <button  className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>closewModal()}> DISMISS</button>
+                            <button  className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</button>
                         </div>
                     </div>
             </Modal>
@@ -1775,8 +1773,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE REVIEW</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this review?</h3>
                 <div className='flex justify-evenly mt-10 mb-2'>
-                    <Button type="submit" className="w-52" color="gray" onClick={()=> setShowDeleteReview(false)}> DISMISS</Button>
-                    <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmDeleteReviewClick(reviews)}>CONFIRM</Button>
+                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick={()=> setShowDeleteReview(false)}> DISMISS</button>
+                    <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmDeleteReviewClick(reviews)}>CONFIRM</button>
                 </div>
             </Modal>
         </Fragment>

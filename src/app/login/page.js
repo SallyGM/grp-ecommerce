@@ -416,8 +416,8 @@ export default function Login() {
             {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
         </div>
         <div className='flex justify-evenly mt-10'>
-            <Button className="w-52 mr-2" color="gray" onClick ={()=>setShowForgotPassword(false)}> DISMISS</Button>
-            <Button type='submit' className="w-52 ml-2"  style={{background: '#00052d', border : '#00052d'}}>CONFIRM</Button>
+            <button className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light mr-2" onClick ={()=>setShowForgotPassword(false)}> DISMISS</button>
+            <button type='submit' className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light ml-2">CONFIRM</button>
         </div>
       </form>
     </Modal>
@@ -426,7 +426,7 @@ export default function Login() {
       <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
       <h3 className='flex self-center font-semibold text-white  mb-5'>We have sent you an email with the reset password link</h3>
       <div className='flex justify-end mt-10'>
-          <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={()=>handleConfirmCheckEmailClick()}>OK</Button>
+          <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmCheckEmailClick()}>OK</button>
       </div>
     </Modal>
   </Fragment>

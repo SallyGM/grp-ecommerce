@@ -17,15 +17,7 @@
   }
 }*/
 
-/*removes the incrementer in the number input field*/
-/*reference: https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp#gsc.tab=0*/
-.noIncrementer {
-  /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+
   /* Firefox */
   input[type=number] {
     -moz-appearance: textfield;
@@ -34,7 +26,7 @@
     -o-appearance: none; /* Opera */
     appearance: none; /* Standard */
   }
-}
+
 
 
 .cardButton {
@@ -422,17 +414,6 @@ p {
   width: 0; /* Set the width of the scrollbar to 0 to hide it */
   background: transparent; /* Set the background color of the scrollbar */
 }
-
-
-.addCard-btn{
-  background:#673AB7;
-}
-
-
-.addCard-btn:hover{
-  background: #512DA8;
-}
-
 .tab:hover {
   color: purple !important;
 }
@@ -442,4 +423,26 @@ p {
 }
 .tab:hover .tab-label {
   color: purple !important;
+}
+/*MODAL BUTTONS*/
+.confirm-btn{
+  background:#0a1366;
+}
+
+
+.confirm-btn:hover{
+  background: #050347;
+}
+.dismiss-btn{
+  background: transparent;
+  border-color: #0a1366; /* Change to the desired color */
+  box-shadow: 0 0 0 2px #0a1366; /* Optional: Add a box shadow for emphasis */
+
+}
+
+
+.dismiss-btn:hover{
+  background: #0a1366;
+  border-color: #0a1366; /* Change to the desired color */
+  box-shadow: 0 0 0 2px #0a1366; /* Optional: Add a box shadow for emphasis */
 }
