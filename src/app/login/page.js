@@ -276,7 +276,7 @@ export default function Login() {
 
 
     <div className='grid grid-rows-1 grid-cols-2 gap-6 row-span-1 bg-blue-gradient'> 
-      <Card className="justify-self-end h-auto w-2/3 my-6" style={{background: '#020a4f', border : '#020a4f'}}>
+      <Card className="justify-self-end h-auto w-2/3 my-6 summary-box" >
         <h1 className="self-center text-4xl font-bold text-white font-mono">LOGIN</h1>
         <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
@@ -383,7 +383,7 @@ export default function Login() {
         </Button>   
     </Card>
 
-    <Card className=" justify-self-start h-auto  w-2/3 my-6" style={{background: '#020a4f', border : '#020a4f'}} >
+    <Card className=" justify-self-start h-auto  w-2/3 my-6 summary-box" >
       <h1 className="self-center text-4xl font-bold text-white font-mono ">REGISTER</h1>
       <p className="text-white text-center font-mono my-8  mt-12 mb-12">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMMUNITY</p>
       <div className="inline-flex mt-6 place-content-evenly">

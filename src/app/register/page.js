@@ -462,7 +462,7 @@ return (
     <div className='bg-blue-gradient grid grid-rows-1 grid-cols-1 p-8  flex justify-content-center bg-dark-night'>
 
       {/*Sign in information card*/}
-      <Card className="justify-self-center w-auto h-auto  my-6" style={{background: '#020a4f', border : '#020a4f'}} >
+      <Card className="justify-self-center w-auto h-auto  my-6 summary-box" >
   
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
         <br/>
@@ -626,9 +626,9 @@ return (
                 </Fab>
                 <a className=" text-sm  font-semibold text-indigo-600 ml-3 text-white">Add Card Details (Optional)</a>
               </div>
-              <Button className="w-72 col-span-2 place-self-end mt-2 bold text-white" color='success' type="submit" disabled={showCheckEmail}>
+              <button className="w-72 col-span-2 place-self-end mt-2 bold text-white bg-green-400 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2" type="submit" disabled={showCheckEmail}>
                 REGISTER
-              </Button>
+              </button>
             </form>
 
             {/*Divider between login options*/} 
