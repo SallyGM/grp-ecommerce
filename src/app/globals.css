@@ -162,14 +162,14 @@ body {
   width: 100%;
   margin-top: 10px;
   color: #f0e8e8;
-  background:#6c0979;
+  background:#c50edd;
   padding-top: 10px;
   padding-bottom: 10px;
 
 }
 
 .prod_btn:hover{
-  background: #c50edd;
+  background: #6c0979;
 }
 
 .banner-game{
@@ -287,13 +287,13 @@ p {
 .basket_btn{
   width:50%;
   color: #f0e8e8;
-  background:#6c0979;
+  background:#c50edd;
   padding-top: 8px;
   padding-bottom: 8px;
 
 }
 .basket_btn:hover{
-  background: #c50edd;
+  background: #6c0979;
   
 }
 
@@ -358,12 +358,12 @@ p {
 }
 
 .pay-btn{
-  background:#6c0979;
+  background:#c50edd;
 }
 
 
 .pay-btn:hover{
-  background: #c50edd;
+  background: #6c0979;
 }
 
 .input-field:focus {
@@ -448,17 +448,25 @@ p {
 }
 .dismiss-btn:hover{
   background: #0a1366;
-  border-color: #050347; /* Change to the desired color */
+  border-color: #0a1366; /* Change to the desired color */
   box-shadow: 0 0 0 2px #050347; /* Optional: Add a box shadow for emphasis */
   width: 180px;
   margin-right: 3px;
 }
 
-
-.transparent-input {
-  background-color: transparent;
-  border: 2px solid #6c0979; /* Change to the desired border color */
-  border-radius: 5px; /* Optional: Adjust border radius as needed */
-  padding: 8px; /* Optional: Adjust padding as needed */
-  color: white; /* Optional: Set text color to white */
+.deleteAccount-btn{
+  background: transparent;
+  border-color: #0a1366; /* Change to the desired color */
+  box-shadow: 0 0 0 2px #0a1366; /* Optional: Add a box shadow for emphasis */
+  width: 350px;
+  margin-right: 3px;
+  
 }
+.deleteAccount-btn:hover{
+  background: #0a1366;
+  border-color: #0a1366; /* Change to the desired color */
+  box-shadow: 0 0 0 2px #050347; /* Optional: Add a box shadow for emphasis */
+  width: 350px;
+  margin-right: 3px;
+}
+

@@ -1001,9 +1001,9 @@ export default function Account() {
                         </div>
                     </div>
 
-                    <div className='flex place-content-start h-auto row-start-2 row-end-2 col-span-1 mb-6'>
+                    <div className='flex justify-self-start h-auto row-start-2 row-end-2 col-start-3 col-end-5 mb-6'>
                         <div>
-                            <button type="submit" className="w-auto text-white bold rounded-lg px-5 py-2.5 addCard-btn" onClick={()=> setShowDeleteModal(true)}  disabled={showDeletedModal}>
+                            <button type="submit" className="text-white bold rounded-lg px-5 py-2.5 mt-10 deleteAccount-btn" onClick={()=> setShowDeleteModal(true)}  disabled={showDeletedModal}>
                                 DELETE ACCOUNT
                             </button>
                         </div>
@@ -1762,8 +1762,8 @@ export default function Account() {
                             </label>
                         </div>
                         <div className='flex justify-evenly mt-5 mb-10'>
-                            <button  className="dismiss-btn text-white rounded-lg text-m sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>closewModal()}> DISMISS</button>
-                            <button  className="confirm-btn text-white rounded-lg text-m sm:w-auto px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</button>
+                            <button  className="dismiss-btn text-white rounded-lg text-m  px-5 py-2.5 text-center roboto-light" onClick ={()=>closewModal()}> DISMISS</button>
+                            <button  className="confirm-btn text-white rounded-lg text-m  px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</button>
                         </div>
                     </div>
             </Modal>
@@ -1773,7 +1773,7 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE REVIEW</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this review?</h3>
                 <div className='flex justify-evenly mt-10 mb-2'>
-                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m  py-2.5 text-center roboto-light" color="gray" onClick={()=> setShowDeleteReview(false)}> DISMISS</button>
+                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m  py-2.5 text-center roboto-light"  onClick={()=> setShowDeleteReview(false)}> DISMISS</button>
                     <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmDeleteReviewClick(reviews)}>CONFIRM</button>
                 </div>
             </Modal>
