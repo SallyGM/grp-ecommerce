@@ -1247,8 +1247,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to logout?</h3>
                 <div className='flex justify-evenly mt-10 mb-10'>
-                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</button>
-                    <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={signOut}>YES</button>
+                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowLogoutModal(false)}>NO</button>
+                    <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={signOut}>YES</button>
                 </div>
             </Modal>
 
@@ -1257,8 +1257,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>PERSONAL DETAILS CHANGES</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to save the changes?</h3>
                 <div className='flex justify-evenly mt-10'>
-                    <button className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</button>
-                    <button className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmButtonClick()}>CONFIRM</button>
+                    <button className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowModal(false)}> DISMISS</button>
+                    <button className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmButtonClick()}>CONFIRM</button>
                 </div>
             </Modal>
 
@@ -1439,8 +1439,8 @@ export default function Account() {
                             </div> 
                         </div>
                         <div className='flex justify-evenly my-10'>
-                            <button type="submit" className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color='gray' onClick ={()=>setShowPasswordModal(false)}> DISMISS</button>
-                            <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" >CONFIRM</button>
+                            <button type="submit" className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" color='gray' onClick ={()=>setShowPasswordModal(false)}> DISMISS</button>
+                            <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" >CONFIRM</button>
                         </div>
                     </form>
                 </div>
@@ -1451,8 +1451,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE ACCOUNT</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete yur acount?</h3>
                 <div className='flex justify-evenly mt-10 mb-10'>
-                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</button>
-                    <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</button>
+                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</button>
+                    <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</button>
                 </div>
             </Modal>
 
@@ -1565,8 +1565,8 @@ export default function Account() {
                         </div>
 
                         <div className='flex justify-evenly mt-10'>
-                            <button className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowAddCardModal(false)}> DISMISS</button>
-                            <button disabled={isConfirmButtonDisabled} type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" >CONFIRM</button>
+                            <button className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowAddCardModal(false)}> DISMISS</button>
+                            <button disabled={isConfirmButtonDisabled} type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" >CONFIRM</button>
                         </div>
                     </form>
                 </div>
@@ -1690,8 +1690,8 @@ export default function Account() {
                 </div>
 
                 <div className='flex justify-evenly mt-10 mb-2'>
-                    <button type="submit"className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowEditCard(false)}> DISMISS</button>
-                    <button disabled={isConfirmButtonEditCardDisabled} type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</button>
+                    <button type="submit"className="dismiss-btn text-white rounded-lg text-m  px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowEditCard(false)}> DISMISS</button>
+                    <button disabled={isConfirmButtonEditCardDisabled} type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmEditCardClick(card)}>CONFIRM</button>
                 </div>
             </Modal>
 
@@ -1700,8 +1700,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE CARD</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this card?</h3>
                 <div className='flex justify-evenly mt-10 mb-2'>
-                    <button type="submit"className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>showDeleteCard(false)}> DISMISS</button>
-                    <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmDeleteCardClick(card)}>CONFIRM</button>
+                    <button type="submit"className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowDeleteCard(false)}> DISMISS</button>
+                    <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmDeleteCardClick(card)}>CONFIRM</button>
                 </div>
             </Modal>
 
@@ -1762,8 +1762,8 @@ export default function Account() {
                             </label>
                         </div>
                         <div className='flex justify-evenly mt-5 mb-10'>
-                            <button  className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>closewModal()}> DISMISS</button>
-                            <button  className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</button>
+                            <button  className="dismiss-btn text-white rounded-lg text-m sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>closewModal()}> DISMISS</button>
+                            <button  className="confirm-btn text-white rounded-lg text-m sm:w-auto px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</button>
                         </div>
                     </div>
             </Modal>
@@ -1773,8 +1773,8 @@ export default function Account() {
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE REVIEW</h3>
                 <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete this review?</h3>
                 <div className='flex justify-evenly mt-10 mb-2'>
-                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" color="gray" onClick={()=> setShowDeleteReview(false)}> DISMISS</button>
-                    <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmDeleteReviewClick(reviews)}>CONFIRM</button>
+                    <button type="submit" className="dismiss-btn text-white rounded-lg text-m  py-2.5 text-center roboto-light" color="gray" onClick={()=> setShowDeleteReview(false)}> DISMISS</button>
+                    <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmDeleteReviewClick(reviews)}>CONFIRM</button>
                 </div>
             </Modal>
         </Fragment>

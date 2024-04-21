@@ -369,10 +369,10 @@ p {
 .input-field:focus {
   border-color: #6c0979; /* Change to the desired color */
   box-shadow: 0 0 0 2px #6c0979; /* Optional: Add a box shadow for emphasis */
+
 }
+
  
-
-
 .bg-salmon {
   background-color: salmon;
   color: white;
@@ -427,22 +427,38 @@ p {
 /*MODAL BUTTONS*/
 .confirm-btn{
   background:#0a1366;
+  box-shadow: 0 0 0 2px #050347; /* Optional: Add a box shadow for emphasis */
+  width: 180px;
+  margin-left: 3px;
 }
-
-
 .confirm-btn:hover{
   background: #050347;
+  box-shadow: 0 0 0 2px #050347; /* Optional: Add a box shadow for emphasis */
+  width: 180px;
+  margin-left: 3px;
 }
+
 .dismiss-btn{
   background: transparent;
   border-color: #0a1366; /* Change to the desired color */
   box-shadow: 0 0 0 2px #0a1366; /* Optional: Add a box shadow for emphasis */
-
+  width: 180px;
+  margin-right: 3px;
+  
+}
+.dismiss-btn:hover{
+  background: #0a1366;
+  border-color: #050347; /* Change to the desired color */
+  box-shadow: 0 0 0 2px #050347; /* Optional: Add a box shadow for emphasis */
+  width: 180px;
+  margin-right: 3px;
 }
 
 
-.dismiss-btn:hover{
-  background: #0a1366;
-  border-color: #0a1366; /* Change to the desired color */
-  box-shadow: 0 0 0 2px #0a1366; /* Optional: Add a box shadow for emphasis */
+.transparent-input {
+  background-color: transparent;
+  border: 2px solid #6c0979; /* Change to the desired border color */
+  border-radius: 5px; /* Optional: Adjust border radius as needed */
+  padding: 8px; /* Optional: Adjust padding as needed */
+  color: white; /* Optional: Set text color to white */
 }

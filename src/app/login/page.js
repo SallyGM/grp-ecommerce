@@ -283,7 +283,7 @@ export default function Login() {
 
             <div>
               <label htmlFor="email">Email address</label>
-              <input className="block w-full mt-2 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              <input className="block w-full bg-transparent mt-2 rounded-md py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               onChange={handleEmailChange} ref={email}/>
                 {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}  
             </div>
@@ -408,16 +408,16 @@ export default function Login() {
     <Modal isVisible={showForgotPassword}  onClose ={()=> setShowForgotPassword(false)}>
       <h3 className='text-xl flex self-center font-semibold text-white mb-5'>RESET YOUR PASSWORD</h3>
       <h3 className='flex self-center font-semibold text-white  mb-5'>Insert your email to reset your password</h3>
-      <form className="space-y-6 text-white self-center font-mono" onSubmit={handleSendResetPasswordVerification}>
-        <div className=' mt-2 mb-2  flex-wrap'>  
-        <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
-            <input className="block w-full rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            type="email" id="first name" name="email" required onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
+      <form className="text-white self-center font-mono" onSubmit={handleSendResetPasswordVerification}>
+        <div className=' mt-2 mb-2 flex-wrap'>  
+            <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
+            <input className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            type="email" id="recover_email" name="recover_email" required onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
             {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
         </div>
         <div className='flex justify-evenly mt-10'>
-            <button className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light mr-2" onClick ={()=>setShowForgotPassword(false)}> DISMISS</button>
-            <button type='submit' className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light ml-2">CONFIRM</button>
+            <button className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowForgotPassword(false)}> DISMISS</button>
+            <button type='submit' className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light">CONFIRM</button>
         </div>
       </form>
     </Modal>
@@ -426,7 +426,7 @@ export default function Login() {
       <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
       <h3 className='flex self-center font-semibold text-white  mb-5'>We have sent you an email with the reset password link</h3>
       <div className='flex justify-end mt-10'>
-          <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmCheckEmailClick()}>OK</button>
+          <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmCheckEmailClick()}>OK</button>
       </div>
     </Modal>
   </Fragment>

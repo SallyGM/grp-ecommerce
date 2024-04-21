@@ -763,8 +763,8 @@ return (
             </div>
 
             <div className='flex justify-evenly'>
-              <button className="dismiss-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowAddCardModal(false)}>DISMISS</button>
-              <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={setCardData}>CONFIRM</button>
+              <button className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowAddCardModal(false)}>DISMISS</button>
+              <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={setCardData}>CONFIRM</button>
             </div>
           </form>
         </div>
@@ -775,7 +775,7 @@ return (
         <h3 className='text-xl flex self-center font-semibold text-white mb-5'>CHECK YOUR EMAIL</h3>
         <h3 className='flex self-center font-semibold text-white  mb-5'>Verify your email before login into your account</h3>
         <div className='flex justify-end mt-10'>
-          <button type="submit" className="confirm-btn text-white rounded-lg text-m w-52 sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmCheckEmailClick()}>OK</button>
+          <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleConfirmCheckEmailClick()}>OK</button>
         </div>
       </Modal>
     </Fragment>
