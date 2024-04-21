@@ -131,7 +131,7 @@ export default function Home() {
         <div className='px-5 '>
           <Slider className='my-5 pl-3 ml-10 mr-10' {...settings} >
           {product.slice(0, 7).map((p) => (
-            <Card key={p.id}  className="relative max-w-sm mx-3  my-3 w-72" renderImage={() =>
+            <Card key={p.id}  className="relative max-w-sm mx-3 my-3 w-72" renderImage={() =>
               <img className="w-full h-40 object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
               {currentUser  ? (
                 (favourite.some(item => item.id === p.id) ? (
@@ -190,9 +190,9 @@ export default function Home() {
       <div className="container my-3 py-10 px-10 mx-0 min-w-full flex flex-col items-center">
         <div className="basis-1/4"></div>
         <div className="basis-1/2">
-          <Button>
+          <button className='prod_btn my-3 mx-3 rounded-lg'>
             See more
-          </Button>
+          </button>
         </div>
         <div className="basis-1/4"></div>
       </div>

@@ -75,7 +75,7 @@ export default function Favourites() {
                     {favouriteProducts.map((f) => (
                       <tr key={f.id} class="border-b border-stone-50 bg-dark-night hover:bg-blue-900">
                           <th scope="row" class="px-0 py-0">
-                            <img className='slick-slide-image rounded-md cursor-pointer' onClick={(e) => handleClickOpenProduct(f.id, e)} src={(f.images ? f.images[1]: 'https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Preview%2FA%20Short%20Hike%20Preview%20Pic.png?alt=media&token=eee51ae3-1981-4fc6-ae13-7f1e52b885b4')}
+                            <img className='slick-slide-image h-40 rounded-md cursor-pointer' onClick={(e) => handleClickOpenProduct(f.id, e)} src={(f.images ? f.images[1]: 'https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Preview%2FA%20Short%20Hike%20Preview%20Pic.png?alt=media&token=eee51ae3-1981-4fc6-ae13-7f1e52b885b4')}
                             alt='preview'/>
                           </th>
                           <td class="px-6 py-4 cursor-pointer" onClick={(e) => handleClickOpenProduct(f.id, e)}>

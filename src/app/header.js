@@ -69,7 +69,7 @@ export default function Header() {
 
     return (
         <header className='sticky top-0 z-50'>
-        <div >
+        <div>
             <nav className="border-gray-200 bg-dark-night">
                 <div className="flex flex-wrap justify-between gap-8 columns-3 items-center mx-auto max-w-screen-xl p-4">
                     {/* Logo to be placed here :) */}
