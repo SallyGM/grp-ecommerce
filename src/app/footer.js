@@ -1,9 +1,9 @@
 {/* Importing Link for navigation and icons */}
 import Link from 'next/link';
 import Image from 'next/image';
-import amexIcon from './images/amexIcon.png';
-import masterCardIcon from './images/mastercardIcon.png';
-import visaIcon from './images/visaIcon.png';
+import amexIcon from '../../public/amexIcon.png';
+import masterCardIcon from '../../public/mastercardIcon.png';
+import visaIcon from '../../public/visaIcon.png';
 
 export default function Footer() {
   return (

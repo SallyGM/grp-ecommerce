@@ -19,9 +19,7 @@ import { useRouter } from 'next/navigation';
 import { useProductContext } from '../context/ProductContext.js';
 import InputMask from 'react-input-mask';
 import { Tooltip } from 'flowbite-react';
-import {FaStar} from 'react-icons/fa';
-
-
+import { FaStar } from 'react-icons/fa';
 
 
 function TabPanel(props) {

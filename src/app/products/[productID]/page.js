@@ -1,272 +1,60 @@
-"use client"; 
-import { Card} from "flowbite-react";
-import {database} from '../../firebaseConfig';
-import { ref, get, query } from "firebase/database";
-import React, { useEffect, useState } from 'react';
-import { useBasketContext } from "../../context/BasketContext";
-import toast from 'react-hot-toast';
-import StarRating from '../../starRating.js';
-import { useProductContext } from '../../context/ProductContext';
-
-/*Product Page*/
+import ProductDetails from '@/components/productDetails.js'
+import { ref, get } from "firebase/database";
+import { database } from '@/app/firebaseConfig.js';
 
 export default function Page({ params }) {
-    const [activeTab, setActiveTab] = useState('tab-1');
+    const { productID } = params;
+    if (productID) {
+        return (
+        <div>
+            <ProductDetails productIDParam={productID}>
+            </ProductDetails>
+        </div>
+        );
+    } else {
+        return <div>Product not found</div>;
+    }
+}
 
-    const handleTabChange = (tabId) => {
-        setActiveTab(tabId);
+export async function generateStaticParams() {
+    const productIDs = ["1ODsYuYVgIYydinlIkkTuvlMG7Wdt0jr",
+    "7tilk19afpeo66r9df2ihcfmmzprn2cm",
+    "bfbc0u66at1bob0y16041ozseveqbxip",
+    "ca06c64znq9w12ue08y1shgtmmhuv17s",
+    "cwnl11fyild2fq5v3x6za9a3hk03uwwc",
+    "gh1kgn04ph0n9axao30upgkiyz94a86j",
+    "i6d0hkskj3d2hq73duja1nm5awa9v7pp",
+    "jvspf7o03lrwtw33q4bujt5vaipfveif",
+    "kk2b8amtrz0vjzgvhs6w9g2k53rbnhw6",
+    "ksmpm3iyh44v5inqtfsjde970hmwv6lr",
+    "nytrb2h0piqbk9n0ssw4t835d2pzwkvx",
+    "o8huddgwrrsz8elph8ayzahc92sndqd6",
+    "oy2ptisgzl3iik6o62r2lzd0gkudw6i0",
+    "q40x37n9ofvuypukwrjpk2nxyp5cu8bf",
+    "qp8hx81mv5uonjydnfdt8z6t2eb75j2y",
+    "s6gjmrzfxrn2pwnvrp5rwn961gtul2st",
+    "wa5o0cwfwqe5yhawmiy1vaey8svsc0fs",
+    "x3v743qk8rzsq740b6gh0i09z0tmf7j4",
+    "x9ws06dzn3771h3gfcptvojp667qi69r",
+    "zv9kkdcojd26dj7uw7jy7pyax60hevd8"]
+
+    const staticParams = productIDs.map((id) => ({
+        productID: id,
+      }));
+    
+      return staticParams;
+
+    /*const prodRef = ref(database, 'Product');
+    const snapshot = await get(prodRef);
+  
+    const staticParams = [];
+    if (snapshot.exists()) {
+      snapshot.forEach((childSnapshot) => {
+        const product = childSnapshot.val();
+        
+        staticParams.push({ productID: product.id });
+      });
     }
 
-    const { addToBasket } = useBasketContext();
-    const [review, setReview] = useState([]);
-
-    const [numReviews, setNumReviews] = useState(0);
-    const [averageReviews, setAverageReviews] = useState(0);
-    const { loading, products } = useProductContext();
-    const [product, setProduct] = useState(false);
-   
-
-    useEffect(() => {
-        if (!loading) {
-            // Find the product with the same ID
-            const foundProduct = products.find(prod => prod.id === params.productID);
-            if (foundProduct) {
-                setProduct(foundProduct);
-            } else {
-                setProduct(null);
-            }
-        }
-    }, [loading, products, params.productID]);
-
-  
-    //Retrieves reviews from database
-    useEffect(() => {
-        const prodRef = ref(database, "Reviews");
-       
-        get(prodRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                const reviews = [];
-                let total = 0; // Initialize total outside the loop
-                snapshot.forEach((childSnapshot) => {
-                    const reviewData = childSnapshot.val();
-                    if (reviewData.productID === params.productID) {
-                        const review = { ...reviewData, id: childSnapshot.key };
-                        reviews.push(review);
-                        total += review.rating; // Add the rating to the total
-                    }
-                });
-                setReview(reviews);
-                setNumReviews(reviews.length);
-                if (reviews.length > 0) {
-                    const averageRating = total / reviews.length;
-                    setAverageReviews(averageRating);
-                } else {
-                    setAverageReviews(0); // Set average to 0 if there are no reviews
-                }
-            } else {
-                console.log("No reviews found.");
-                setReview([]);
-                setNumReviews(0);
-                setAverageReviews(0); // Set average to 0 if there are no reviews
-            }
-        }).catch((error) => {
-            console.error(error);
-            setReview([]);
-            setNumReviews(0);
-            setAverageReviews(0); // Set average to 0 if there's an error
-        });
-    }, []);
-
-    function handleClickAddToCart(productID, e){
-        addToBasket(productID, 1);
-        toast.success('Product added to basket!');
-      }
-      
-   
-    
-    return (
-        <div>
-            {product ? (
-            <div>
-                <div className="bg-blue-gradient pb-1">  
-                    <div className="grid grid-rows-2 pt-10" style={{gridTemplateRows:'1fr 8fr'}}>
-                        <div className="flex-wrap grid grid-cols-2 gap-20 mr-20 ml-20 w-auto h-auto mb-5" >
-                            <div></div>
-                            <div>
-                                <h1 className="text-center  bebas-neue-regular ">{product.name}</h1>
-                            </div>
-
-                        </div> 
-                            <div className="grid grid-cols-2 gap-20 mr-20 ml-20" >
-                                <div>
-                                    <div className="card grid grid-rows-2 flex-wrap mt-16" style={{ gridTemplateRows: '1fr 3fr'}} >
-                                            <div className="banner-game pt-5 pb-5">
-                                            <p className="text-center text-lg dark:text-white self-center text-white roboto-light m-auto" >{product.console} VERSION</p>
-                                            </div>
-                                            <div className="prod-img ">
-                                                <img src={product.images[0]} alt="Image" className=" object-contain rounded-lg" />
-                                            </div>
-                                    </div>
-                                </div>
-                                <div className="flex-wrap mt-2" style={{ flex: 'wrap', alignItems:"right"}}>
-                                    <div className="flex flex-row justify-between">
-                                    {product.discount > 0 && (
-                                            <div>
-                                            <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " >
-                                                Price:&nbsp;
-                                                <span style={{ textDecoration: "line-through" }}>
-                                                £{product.price.toFixed(2)}
-                                                </span>{" "}
-                                                 £{(product.price - (product.price * product.discount)).toFixed(2)}
-                                            </h2>
-                                            </div>
-                                        )}
-                                        {product.discount === 0 && (
-                                            <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " >Price: £{product.price.toFixed(2)}</h2>
-                                        )}
-                                        <div>
-                                            <h2 className="text-right flex flex-row roboto-lightLarge text-white">{averageReviews}&nbsp;<StarRating rating={averageReviews}></StarRating>&nbsp;({numReviews})</h2>
-
-                                        </div>
-
-                                    </div>    
-
-                                    
-                                    <div className="relative mt-5 overflow-x-auto">
-                                        <table className="game-table dark:text-white self-center text-white" >
-                                            <tbody>
-                                                <tr className="row-1-gt">
-                                                    <th scope="row" className="px-6 py-3 ">
-                                                        Release Date
-                                                    </th>
-                                                    <td className="px-6 py-3 ">
-                                                        {product.releaseDate}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" className="px-6 py-3 ">
-                                                        Developer
-                                                    </th>
-                                                    <td className="px-6 py-3">
-                                                        {product.developer}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" className="px-6 py-3 ">
-                                                        Publisher
-                                                    </th>
-                                                    <td className="px-6 py-3">
-                                                        {product.publisher}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" className="px-6 py-3 ">
-                                                        Delivery
-                                                    </th>
-                                                    <td className="px-6 py-3">
-                                                        {product.delivery}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" className="px-6 py-3 ">
-                                                        Platform
-                                                    </th>
-                                                    <td className="px-6 py-3">
-                                                        {product.platform}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" className="px-6 py-3 ">
-                                                        Console
-                                                    </th>
-                                                    <td className="px-6 py-3">
-                                                        {product.console}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" className="px-6 py-3 f">
-                                                        Language
-                                                    </th>
-                                                    <td className="px-6 py-3">
-                                                        {product.language}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" className="px-6 py-3 ">
-                                                        PG
-                                                    </th>
-                                                    <td className="px-6 py-3">
-                                                        {product.ageRestriction}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" className="px-6 py-3 ">
-                                                        Genre
-                                                    </th>
-                                                    <td className="px-6 py-3">
-                                                        {product.genre}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <button className='prod_btn w-52 rounded-lg roboto-light' hoverClassName='c50edd' onClick={(e) => handleClickAddToCart(product.id, product.amount, e)}>
-                                        ADD TO CART
-                                        </button>
-                                    </div>
-                                </div>   
-                            </div>
-                        </div>
-                        <div className="flex pl-20 pr-20 pb-20 my-20 gap-2 " >
-                            <div className="p-5 ">
-            
-                                <div className="tabs ">
-                                    <input className="input" name="tabs" type="radio" id="tab-1" checked={activeTab ==='tab-1'} onChange={() => handleTabChange('tab-1')} />
-                                    <label className="label rounded-md text-center text-xl dark:text-white self-center text-white " for="tab-1">ABOUT THE GAME</label>
-                                    <div className="panel text-lg dark:text-white text-white " style={{ height: '300px', width:'900px', overflowY: 'auto' }} >
-                                        <p>{product.description}</p>
-                                    </div>
-                                    <input className="input" name="tabs" type="radio" id="tab-2" checked={activeTab ==='tab-2'} onChange={() => handleTabChange('tab-2')}/>
-                                    <label className="label text-center text-xl dark:text-white self-center text-white " for="tab-2">SPECIFICATIONS</label>
-                                    <div className="panel text-lg dark:text-white text-white " style={{ height: '300px',width:'900px', overflowY: 'auto' }}>
-                                        <p>{product.specifications}</p>
-                                    </div>
-                                    <input className="input" name="tabs" type="radio" id="tab-3"checked={activeTab ==='tab-3'} onChange={() => handleTabChange('tab-3')}/>
-                                    <label className="label text-center text-xl dark:text-white self-center text-white " for="tab-3" >REVIEWS ({numReviews})</label>
-                                    <div className="panel text-lg overflow-y-auto -webkit-scrollbar dark:text-white text-white " style={{ height: '300px',width:'900px', overflowY: 'auto' }}>
-                                    
-                                    {/* Map reviews to card, each review it's placed in one div insidethe card*/}
-
-                                    <div className="review-card bg-transparent mb-10  "  >
-                                        {review.map((review) => (
-                                            <div className="mb-16" key={review.id} >
-                                        
-                                                <StarRating rating={review.rating}></StarRating>
-                                                <div className="grid grid-cols-2 flex-wrap roboto-light">
-                                                    <p className=" flex justify-start">Reviewed by {review.userName}</p>
-                                                    <p className=" flex justify-end">{review.date}</p>
-                                                </div>
-                                                <hr className="border-t border-white w-full my-auto" />
-                                                <div className="grid grid-rows-2 flex-wrap">
-                                                    <p className="flex-wrap roboto-bold ">{review.title}</p>
-                                                    <p className="mb-0 roboto-light">"{review.comment}"</p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                        
-                                    </div>
-    
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            ) : (
-            <div>
-                <p>Product not found</p>
-            </div>
-            )}
-        </div>
-    );
+    return staticParams;*/
 }
