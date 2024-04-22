@@ -468,35 +468,35 @@ return (
         <br/>
         <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="firstName">First Name*</label>
+            <label>First Name*</label>
             <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
             type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
             {firstNameError && <span style={{ color: 'red', fontSize: '12px' }}>{firstNameError}</span>}
           </div>
           
           <div>
-            <label htmlFor="lastName">Last Name*</label>
+            <label>Last Name*</label>
             <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
             {lastNameError && <span style={{ color: 'red', fontSize: '12px' }}>{lastNameError}</span>}
           </div>
 
           <div>
-            <label htmlFor="email">Email*</label>
+            <label>Email*</label>
             <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
             {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}
           </div>
 
           <div>
-            <label htmlFor="confirmEmail">Confirm Email*</label>
+            <label>Confirm Email*</label>
             <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}  autoComplete="nope"></input>
             {confEmailError && <span style={{ color: 'red', fontSize: '12px' }}>{confEmailError}</span>}
           </div>
 
           <div>
-            <label className='inline-flex' htmlFor="password">Password*
+            <label className='inline-flex'>Password*
               <Tooltip content="Password must contain more then 8 characters mixed with at least one special character">
                   <svg className='ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
                     <path d="M12 11.5V16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -559,7 +559,7 @@ return (
               </div>
             </div>    
             <div>
-              <label className='inline-flex' htmlFor="confirmPassword">Confirm Password*
+              <label className='inline-flex'>Confirm Password*
                 <Tooltip content="Password must match the password">
                   <svg  className= 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
                     <path d="M12 11.5V16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -667,24 +667,24 @@ return (
           
           <form className="space-y-6 text-white font-mono">
             <div>
-              <label htmlhtmlFor="text" className='text-white'>Cardholder Name</label>
-              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+              <label className='text-white'>Cardholder Name</label>
+              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-text-gray-6000 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
               type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} 
               onInput={handleFullName} onChange={handleChange}/>
               {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
             </div>
 
             <div className="noIncrementer"> {/*noIncrementer is a CSS class*/}
-              <label htmlhtmlFor="number" className='text-white'>Card Number</label>
-              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+              <label className='text-white'>Card Number</label>
+              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
               id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' mask="9999 9999 9999 9999" maskChar='' required value={formData.cardNumber} 
               onInput={handleCardNumber} onChange={handleChange}/>
               {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
             </div>
 
             <div className="noIncrementer">
-              <label htmlhtmlFor="number" className='text-white'>Sort Code</label>
-              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+              <label className='text-white'>Sort Code</label>
+              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                 id="sortCode" name="sortCode" mask="99-99-99" maskChar="" placeholder='26-02-54' required value={formData.sortCode} 
                 onInput={handleSortCode} onChange={handleChange}/>
                 <span className={sortCodeError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>
@@ -692,14 +692,14 @@ return (
 
             <div className='inline-flex justify-evenly'>
               <div className='mr-5'>
-                  <label htmlhtmlFor="number" className='text-white'>Exp.Date</label>
-                  <input className="block w-44 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                  <label className='text-white'>Exp.Date</label>
+                  <input className="block w-44 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                   type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} 
                   onInput={checkDate} onChange={handleChange}/>
                   {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
               </div> 
               <div className="ml-5 noIncrementer relative">
-                <label htmlhtmlFor="number" className='inline-flex text-white'>CVV
+                <label className='inline-flex text-white'>CVV
                   <Tooltip content="Three digit code on the back of your card">
                     <svg  className = 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
                       <path d="M12 11.5V16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -708,7 +708,7 @@ return (
                     </svg>
                   </Tooltip>
                 </label>
-                <InputMask type={showCVV ? "text" : "password"} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                <InputMask type={showCVV ? "text" : "password"} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                 inputmode="numeric" id="securityCode" name="securityCode" mask="999" maskChar='' placeholder='342' required value={formData.securityCode}
                 onInput={handleCVV} onChange={handleChange}/>
                 {cvvError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cvvError}</span>}

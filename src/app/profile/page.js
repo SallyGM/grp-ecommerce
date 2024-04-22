@@ -19,9 +19,7 @@ import { useRouter } from 'next/navigation';
 import { useProductContext } from '../context/ProductContext.js';
 import InputMask from 'react-input-mask';
 import { Tooltip } from 'flowbite-react';
-import {FaStar} from 'react-icons/fa';
-
-
+import { FaStar } from 'react-icons/fa';
 
 
 function TabPanel(props) {
@@ -287,10 +285,10 @@ export default function Account() {
                 return;
             }
             setLoading(true);
-            // Delete the currently authenticated user's account
-            await deleteUser(currentUser);
             // Remove user data from the Realtime Database
             await remove(ref(database, `/User/` + userId));
+            // Delete the currently authenticated user's account
+            await deleteUser(currentUser);
             console.log('User account deleted successfully.');
             toast.success('Account deleted permanently');
             setShowDeleteModal(false); // Close the delete modal
@@ -1466,14 +1464,14 @@ export default function Account() {
                         
                         <div>
                             <label htmlFor="text" className='text-white'>Cardholder Name</label>
-                            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                             onInput={handleFullName} type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChangeCardDetails}/>
                             {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
                         </div>
 
                         <div> 
                             <label htmlFor="number" className='text-white'>Card Number</label>
-                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                             id="cardNumber" name="cardNumber" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
                             onInput={handleCardNumber} onChange={handleChangeCardDetails}/>
                             {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
@@ -1481,7 +1479,7 @@ export default function Account() {
 
                         <div>
                             <label htmlFor="number" className='text-white'>Sort Code</label>
-                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                             id="sortCode" name="sortCode" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={formData.sortCode} 
                             onInput={handleSortCode} onChange={handleChangeCardDetails}/>
                             <span className={sortCodeError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>
@@ -1490,7 +1488,7 @@ export default function Account() {
                         <div className='inline-flex justify-evenly'>
                             <div className='mr-5'>
                                 <label htmlFor="number" className='text-white'>Exp.Date</label>
-                                <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                                <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                                 type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate}
                                 onInput={checkAddModalDate} onChange={handleChangeCardDetails}/>
                                 {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
@@ -1506,7 +1504,7 @@ export default function Account() {
                                     </svg>
                                 </Tooltip>
                                 </label>
-                                <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6 "
+                                <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset sm:text-sm sm:leading-6 "
                                 type={showAddCardCVV ? "text" : "password"}
                                 mask="999"
                                 maskChar=""

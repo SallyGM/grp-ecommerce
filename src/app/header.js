@@ -54,7 +54,7 @@ export default function Header() {
 
     function handleSubmit(e){
         if(valid){
-            router.push(`/products?search=${search.current.value.toString().toLowerCase()}&type=search`);
+            router.push(`/product?search=${search.current.value.toString().toLowerCase()}&type=search`);
         }
     }
 
@@ -141,32 +141,32 @@ export default function Header() {
                                 </Link>                     
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "pc", type: "console"} }} className='text-base text-white hover:underline'>
+                                <Link href={{ pathname: '/product', query: {search: "pc", type: "console"} }} className='text-base text-white hover:underline'>
                                     PC
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "xbox", type: "console"} }} className='text-base text-white hover:underline'>
+                                <Link href={{ pathname: '/product', query: {search: "xbox", type: "console"} }} className='text-base text-white hover:underline'>
                                     XBOX
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "playstation", type: "console"} }} className='text-base text-white hover:underline'>
+                                <Link href={{ pathname: '/product', query: {search: "playstation", type: "console"} }} className='text-base text-white hover:underline'>
                                 PLAYSTATION
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "nintendo", type: "console"} }} className='text-base text-white hover:underline'>
+                                <Link href={{ pathname: '/product', query: {search: "nintendo", type: "console"} }} className='text-base text-white hover:underline'>
                                 NINTENDO
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "", type: "bestsellers"} }} className='text-base text-white hover:underline'>
+                                <Link href={{ pathname: '/product', query: {search: "", type: "bestsellers"} }} className='text-base text-white hover:underline'>
                                     BEST SELLERS
                                 </Link>
                             </li>
                             <li>
-                                <Link href={{ pathname: '/products', query: {search: "", type: "sales"} }} className='text-base text-white hover:underline'> 
+                                <Link href={{ pathname: '/product', query: {search: "", type: "sales"} }} className='text-base text-white hover:underline'> 
                                     SALES
                                 </Link>
                             </li>
