@@ -285,10 +285,10 @@ export default function Account() {
                 return;
             }
             setLoading(true);
-            // Delete the currently authenticated user's account
-            await deleteUser(currentUser);
             // Remove user data from the Realtime Database
             await remove(ref(database, `/User/` + userId));
+            // Delete the currently authenticated user's account
+            await deleteUser(currentUser);
             console.log('User account deleted successfully.');
             toast.success('Account deleted permanently');
             setShowDeleteModal(false); // Close the delete modal
