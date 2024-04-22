@@ -668,7 +668,7 @@ return (
           <form className="space-y-6 text-white font-mono">
             <div>
               <label className='text-white'>Cardholder Name</label>
-              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-text-gray-6000 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
               type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} 
               onInput={handleFullName} onChange={handleChange}/>
               {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
@@ -676,7 +676,7 @@ return (
 
             <div className="noIncrementer"> {/*noIncrementer is a CSS class*/}
               <label className='text-white'>Card Number</label>
-              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
               id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' mask="9999 9999 9999 9999" maskChar='' required value={formData.cardNumber} 
               onInput={handleCardNumber} onChange={handleChange}/>
               {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
@@ -684,7 +684,7 @@ return (
 
             <div className="noIncrementer">
               <label className='text-white'>Sort Code</label>
-              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                 id="sortCode" name="sortCode" mask="99-99-99" maskChar="" placeholder='26-02-54' required value={formData.sortCode} 
                 onInput={handleSortCode} onChange={handleChange}/>
                 <span className={sortCodeError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>
@@ -693,7 +693,7 @@ return (
             <div className='inline-flex justify-evenly'>
               <div className='mr-5'>
                   <label className='text-white'>Exp.Date</label>
-                  <input className="block w-44 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                  <input className="block w-44 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                   type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} 
                   onInput={checkDate} onChange={handleChange}/>
                   {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
@@ -708,7 +708,7 @@ return (
                     </svg>
                   </Tooltip>
                 </label>
-                <InputMask type={showCVV ? "text" : "password"} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                <InputMask type={showCVV ? "text" : "password"} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
                 inputmode="numeric" id="securityCode" name="securityCode" mask="999" maskChar='' placeholder='342' required value={formData.securityCode}
                 onInput={handleCVV} onChange={handleChange}/>
                 {cvvError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cvvError}</span>}
