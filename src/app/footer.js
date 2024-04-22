@@ -32,22 +32,19 @@ export default function Footer() {
 
         <div className='row-span-2 text-center mx-auto'>
           <b>WE ACCEPT:</b><br/><br/>
-          <Image
-            src={visaIcon}
-            height={40}
-            width={40}
+          <img
+            src={visaIcon.src}
+            className='w-8 h-4 mx-auto'
             alt="visa card"
           /><br/>
-          <Image
-            src={amexIcon}
-            height={40}
-            width={40}
+          <img
+            src={amexIcon.src}
+            className='w-9 h-5 mx-auto'
             alt="amex"
           /><br/>
-          <Image
-            src={masterCardIcon}
-            height={40}
-            width={40}
+          <img
+            src={masterCardIcon.src}
+            className='w-10 h-7 mx-auto'
             alt="master card"
           />
         </div>

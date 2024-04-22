@@ -46,7 +46,6 @@ export default function Header() {
         }
     }
 
-
     // opens the Logout Modal
     function openLogoutModal () {
         setShowLogoutModal(true)
@@ -134,7 +133,7 @@ export default function Header() {
             <nav className="bg-elite-blue">
                 <div className="max-w-screen-xl px-4 py-3 mx-auto">
                     <div className="flex justify-center items-center">
-                        <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+                        <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm overflow-x-scroll no-scrollbar">
                             <li>
                                 <Link href="/" className='text-base text-white hover:underline'>
                                     HOME
