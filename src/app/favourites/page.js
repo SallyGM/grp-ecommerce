@@ -52,42 +52,42 @@ export default function Favourites() {
           <>
             <div className="p-6 mx-5 my-5 items-center rounded-lg shadow bg-dark-night">
               <h2 className="text-3xl text-center text-white font-bold">Favourites</h2>
-                <div class="relative overflow-x-auto">
-                  <table class="w-full text-center text-white my-5">
-                    <thead class="text-lg bg-elite-blue text-white uppercase">
+                <div className="relative overflow-x-auto">
+                  <table className="w-full text-center text-white my-5">
+                    <thead className="text-lg bg-elite-blue text-white uppercase">
                       <tr>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Product
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Console
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Price
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                     {favouriteProducts.map((f) => (
-                      <tr key={f.id} class="border-b border-stone-50 bg-dark-night hover:bg-blue-900">
-                          <th scope="row" class="px-0 py-0">
-                            <img className='slick-slide-image h-40 rounded-md cursor-pointer' onClick={(e) => handleClickOpenProduct(f.id, e)} src={(f.images ? f.images[1]: 'https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Preview%2FA%20Short%20Hike%20Preview%20Pic.png?alt=media&token=eee51ae3-1981-4fc6-ae13-7f1e52b885b4')}
+                      <tr key={f.id} className="border-b border-stone-50 bg-dark-night hover:bg-blue-900">
+                          <th scope="row" className="px-0 py-0">
+                            <img className='slick-slide-image w-96 rounded-md cursor-pointer' onClick={(e) => handleClickOpenProduct(f.id, e)} src={(f.images ? f.images[1]: 'https://firebasestorage.googleapis.com/v0/b/buster-games-356c2.appspot.com/o/Preview%2FA%20Short%20Hike%20Preview%20Pic.png?alt=media&token=eee51ae3-1981-4fc6-ae13-7f1e52b885b4')}
                             alt='preview'/>
                           </th>
-                          <td class="px-6 py-4 cursor-pointer" onClick={(e) => handleClickOpenProduct(f.id, e)}>
+                          <td className="px-6 py-4 cursor-pointer" onClick={(e) => handleClickOpenProduct(f.id, e)}>
                               {f.name}
                           </td>
-                          <td class="px-6 py-4">
+                          <td className="px-6 py-4">
                               {f.console}
                           </td>
-                          <td class="px-6 py-4">
+                          <td className="px-6 py-4">
                               £{(f.discount > 0 ? parseFloat(f.price - f.price * f.discount).toFixed(2): f.price)}
                           </td>
-                          <td class="px-6 py-4">
+                          <td className="px-6 py-4">
                             <Tooltip content='Remove from favourites'>
                               <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(f.id, e)} viewBox="0 0 24 24" fill="red" className="cursor-pointer my-5 mx-5 w-9 h-9 hover:scale-110">
                                 <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
@@ -110,9 +110,17 @@ export default function Favourites() {
             </div>
         </>
       ) : (
-        <div className="p-6 mx-5 my-5 bg-white items-center border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <h2 className="text-3xl text-center font-bold">Favourites</h2>
-          <p>No items added to favourites yet...</p>
+        <div className="p-6 mx-5 my-5 items-center border border-gray-200 rounded-lg shadow bg-blue-gradient">
+          <h2 className="text-3xl text-center font-bold text-white">Favourites</h2>
+          <div className="flex items-center self-center p-4 text-sm text-white rounded-lg bg-transparent dark:bg-gray-800 dark:text-gray-300 " role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 me-5 text-white">
+              <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
+            </svg>
+            <span className="sr-only">Info</span>
+            <div>
+              No items added to favourites yet...
+            </div>
+          </div>
         </div>
       )}
     </div>

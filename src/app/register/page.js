@@ -620,11 +620,11 @@ return (
                     {confPasswordError && <span style={{ color: 'red', fontSize: '12px' }}>{confPasswordError}</span>}
                 </div>            
               </div>
-              <div className='inline-flex items-center col-span-2 mt-6' onClick={()=> setShowAddCardModal(true)}>
+              <div className='inline-flex items-center col-span-2 mt-6 z-30' onClick={()=> setShowAddCardModal(true)}>
                 <Fab color="primary" size="small" aria-label="add" disabled={showAddCardModal}>
                   <AddIcon />
                 </Fab>
-                <a className=" text-sm  font-semibold text-indigo-600 ml-3 text-white">Add Card Details (Optional)</a>
+                <a className=" text-sm font-semibold text-indigo-600 ml-3 text-white">Add Card Details (Optional)</a>
               </div>
               <button className="md:w-72 sm:w-full sm:col-span-2 md:place-self-end mt-2 bold text-white bg-green-400 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2" type="submit" disabled={showCheckEmail}>
                 REGISTER

@@ -131,7 +131,6 @@ export default function Account() {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     
-   
 
     const [reviewData, setReviewData] = useState({
         rating: '',
@@ -923,7 +922,7 @@ export default function Account() {
     
     return (
         <Fragment>
-            <div className='sm-grid-cols-2 bg-blue-gradient grid grid-rows-1 md:grid-cols-4 md:gap-x-20 md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-3 bg-dark-night justify-items-center'> 
+            <div className='sm-grid-cols-2 bg-blue-gradient grid grid-rows-1 md:grid-cols-4 md:gap-x-20 md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-3 bg-dark-night justify-items-center overflow-x-scroll no-scrollbar'> 
                 <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2"style={{ backgroundColor: 'transparent'}} >
                     <Box sx={{
                             display: 'flex',
@@ -958,7 +957,7 @@ export default function Account() {
                 {/* ACCOUNT */}
                 {value ===  0 ? (
                     <>
-                    <div  className="self-center h-auto w-full my-6  row-start-1 row-end-1 col-start-2 col-end-5" >
+                    <div className="self-center h-auto w-full my-6 row-start-1 row-end-1 col-start-2 col-end-5" >
                         {userDetails && (
                         <div className='grid grid-rows-1'>
                         <h5 className="justify-self-center sm:self-center text-4xl font-bold tracking-tight mt-10 text-white font-mono" > ACCOUNT INFORMATION</h5>
