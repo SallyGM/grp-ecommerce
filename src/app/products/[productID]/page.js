@@ -2,14 +2,11 @@
 import { Card} from "flowbite-react";
 import {database} from '../../firebaseConfig';
 import { ref, get, query } from "firebase/database";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useBasketContext } from "../../context/BasketContext";
 import toast from 'react-hot-toast';
 import StarRating from '../../starRating.js';
 import { useProductContext } from '../../context/ProductContext';
-
-
-
 
 /*Product Page*/
 

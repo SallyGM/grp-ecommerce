@@ -1,6 +1,6 @@
 "use client"; 
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Button } from 'flowbite-react';
+import { Card, Datepicker } from 'flowbite-react';
 import { useBasketContext } from '../context/BasketContext'
 import { useAuth } from '../context/AuthContext'
 import { useProductContext } from '../context/ProductContext';
@@ -11,7 +11,6 @@ import { get, ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
-
 
 export default function Home() {
 
@@ -269,7 +268,7 @@ export default function Home() {
 
         await clearBasket();
         router.push(`/profile/order`);
-        toast.success('Ordered placed correctly!');
+        toast.success('Ordered placed!');
       } catch (error) {
         console.log("error");
         toast.success('Error placing the order.');
@@ -368,23 +367,23 @@ export default function Home() {
                 <hr className='h-px mx-3 my-5 bg-slate-600 border-0 dark:bg-gray-700'/>
                 <div className="relative z-0 w-full mb-5 group">
                   <label>Full Name</label>
-                  <input ref={fullName} onChange={handleFullName} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-900 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
+                  <input ref={fullName} onChange={handleFullName} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
                   {fullNameError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{fullNameError}</span>}
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
                   <label>Card Number</label>
-                  <InputMask ref={cardNumber} onChange={handleCardNumber} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="9999 9999 9999 9999" maskChar="" placeholder='Card Number...' required/>  
+                  <InputMask ref={cardNumber} onChange={handleCardNumber} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6" mask="9999 9999 9999 9999" maskChar="" placeholder='Card Number...' required/>  
                   {cardNumberError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cardNumberError}</span>}
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
                   <label>Sort Code</label>
-                  <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
+                  <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
                   {sortCodeError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{sortCodeError}</span>}
                 </div>
                 <div className="grid md:grid-cols-2 md:gap-6">
                   <div className="relative z-0 w-full mb-5 group">
                     <label>Expiration Date</label>
-                    <InputMask ref={expirationDate} onChange={handleExpirationDate} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="99/9999" maskChar="" placeholder='12/2024' required/>
+                    <InputMask ref={expirationDate} onChange={handleExpirationDate} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6" mask="99/9999" maskChar="" placeholder='12/2024' required/>
                     {expirationDateError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{expirationDateError}</span>}
                   </div>
                   <div className="relative z-0 w-full mb-5 group">
@@ -399,14 +398,14 @@ export default function Home() {
                         </Tooltip>
                     </div>
                     
-                    <InputMask ref={cvv} type={showCVV ? "text" : "password"} onChange={handleCVV} className="block w-full rounded-md py-1.5 px-1.5 mt-2 focus:bg-fuchsia-200 border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6" mask="999" maskChar="" placeholder='CVV' required/>
+                    <InputMask ref={cvv} type={showCVV ? "text" : "password"} onChange={handleCVV} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6" mask="999" maskChar="" placeholder='CVV' required/>
                     {cvvError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cvvError}</span>}
                     <button
                       type="button"
                       aria-label={
                         showCVV ? "Password Visible" : "Password Invisible."
                       }
-                      className="text-black dark:text-white"
+                      className="text-white"
                       onClick={() => {
                         setShowCVV((prev) => !prev);
                       }}>
@@ -416,8 +415,8 @@ export default function Home() {
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth="1.5"
-                          stroke="#00052d"
-                          className="w-6 select-none cursor-pointer h-6 absolute top-9 right-2"
+                          stroke="currentColor"
+                          className="w-6 select-none cursor-pointer h-6 absolute top-10 right-2"
                           tabindex="-1"
                         >
                           <path
@@ -437,8 +436,8 @@ export default function Home() {
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth="1.5"
-                          stroke="#00052d"
-                          className="w-6 select-none cursor-pointer h-6 absolute top-9 right-2">
+                          stroke="currentColor"
+                          className="w-6 select-none cursor-pointer h-6 absolute top-10 right-2">
                           <path
                             strokeLinecap="round"
                             strokeLineJoin="round"
@@ -477,11 +476,7 @@ export default function Home() {
             <h3 className='tracking-tight dark:text-white  text-white'>Quantity</h3>
             <h3 className='tracking-tight  dark:text-white text-white'>Subtotal</h3>
             <h3 className='tracking-tight  dark:text-white text-white'>Total</h3>
-
-
           </div>
-       
-  
           {(basketSize > 0 ? (
             Object.entries(basket).map(([key, b]) => (
             

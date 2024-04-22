@@ -283,7 +283,7 @@ export default function Login() {
 
             <div>
               <label htmlFor="email">Email address</label>
-              <input className="block w-full bg-transparent mt-2 rounded-md py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
               onChange={handleEmailChange} ref={email}/>
                 {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}  
             </div>
@@ -300,14 +300,14 @@ export default function Login() {
                 </label>
                 <div className="relative">
                     <input
-                      className="block w-full mt-2 my-2.5 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6 sm:text-sm sm:leading-6"
                       onChange={handlePasswordChange} ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
                         <button
                           type="button"
                           aria-label={
                             showPassword ? "Password Visible" : "Password Invisible."
                           }
-                          className="text-black dark:text-white"
+                          className="text-white"
                           onClick={() => {
                             setShowPassword((prev) => !prev);
                           }}
@@ -318,7 +318,7 @@ export default function Login() {
                               fill="none"
                               viewBox="0 0 24 24"
                               strokeWidth="1.5"
-                              stroke="#00052d"
+                              stroke="currentColor"
                               className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
                               tabIndex="-1"
                             >
@@ -339,7 +339,7 @@ export default function Login() {
                               fill="none"
                               viewBox="0 0 24 24"
                               strokeWidth="1.5"
-                              stroke="#00052d"
+                              stroke="currentColor"
                               className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                             >
                               <path

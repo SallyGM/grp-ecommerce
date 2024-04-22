@@ -469,28 +469,28 @@ return (
         <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="firstName">First Name*</label>
-            <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
+            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
             type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
             {firstNameError && <span style={{ color: 'red', fontSize: '12px' }}>{firstNameError}</span>}
           </div>
           
           <div>
             <label htmlFor="lastName">Last Name*</label>
-            <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
+            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
             {lastNameError && <span style={{ color: 'red', fontSize: '12px' }}>{lastNameError}</span>}
           </div>
 
           <div>
             <label htmlFor="email">Email*</label>
-            <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
+            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
             {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}
           </div>
 
           <div>
             <label htmlFor="confirmEmail">Confirm Email*</label>
-            <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
+            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}  autoComplete="nope"></input>
             {confEmailError && <span style={{ color: 'red', fontSize: '12px' }}>{confEmailError}</span>}
           </div>
@@ -498,7 +498,7 @@ return (
           <div>
             <label className='inline-flex' htmlFor="password">Password*
               <Tooltip content="Password must contain more then 8 characters mixed with at least one special character">
-                  <svg  className = 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
+                  <svg className='ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
                     <path d="M12 11.5V16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -506,14 +506,14 @@ return (
               </Tooltip>
             </label>
             <div className="relative">
-              <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
+              <input className="block w-96 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
               onChange={handlePasswordChange} required ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
                 <button
                   type="button"
                   aria-label={
                     showPassword ? "Password Visible" : "Password Invisible."
                   }
-                  className="text-black dark:text-white"
+                  className="text-white"
                   onClick={() => {
                     setShowPassword((prev) => !prev);
                   }}>
@@ -523,8 +523,8 @@ return (
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
-                      stroke="#00052d"
-                      className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
+                      stroke="currentColor"
+                      className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                       tabIndex="-1"
                     >
                       <path
@@ -544,7 +544,7 @@ return (
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
-                      stroke="#00052d"
+                      stroke="currentColor"
                       className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                     >
                       <path
@@ -569,14 +569,14 @@ return (
                 </Tooltip>
               </label>
                 <div className="relative">
-                  <input className="block w-96 rounded-md py-1.5 px-1.5 mt-2 border-0 text-gray-900 placeholder:text-gray-400"
+                  <input className="block w-96 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                         onChange={handleConfirmPasswordChange} ref={confirmPassword} id="confirmPassword" name="confirmPassword" required type={showConfirmPassword ? "text" : "password"}/>
                     <button
                       type="button"
                       aria-label={
                         showConfirmPassword ? "Password Visible" : "Password Invisible."
                       }
-                      className="text-black dark:text-white"
+                      className="text-white"
                       onClick={() => {
                         setShowConfirmPassword((prev) => !prev);
                       }}
@@ -587,7 +587,7 @@ return (
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth="1.5"
-                          stroke="#00052d"
+                          stroke="currentColor"
                           className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
                           tabIndex="-1"
                         >
@@ -608,7 +608,7 @@ return (
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth="1.5"
-                          stroke="#00052d"
+                          stroke="currentColor"
                           className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round"
@@ -668,7 +668,7 @@ return (
           <form className="space-y-6 text-white font-mono">
             <div>
               <label htmlhtmlFor="text" className='text-white'>Cardholder Name</label>
-              <input className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
               type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} 
               onInput={handleFullName} onChange={handleChange}/>
               {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
@@ -676,7 +676,7 @@ return (
 
             <div className="noIncrementer"> {/*noIncrementer is a CSS class*/}
               <label htmlhtmlFor="number" className='text-white'>Card Number</label>
-              <InputMask className="block w-full my-1 mb-4 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
               id="cardNumber" name="cardNumber" placeholder='4625 2563 2356 8514' mask="9999 9999 9999 9999" maskChar='' required value={formData.cardNumber} 
               onInput={handleCardNumber} onChange={handleChange}/>
               {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
@@ -684,7 +684,7 @@ return (
 
             <div className="noIncrementer">
               <label htmlhtmlFor="number" className='text-white'>Sort Code</label>
-              <InputMask className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+              <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                 id="sortCode" name="sortCode" mask="99-99-99" maskChar="" placeholder='26-02-54' required value={formData.sortCode} 
                 onInput={handleSortCode} onChange={handleChange}/>
                 <span className={sortCodeError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>
@@ -693,7 +693,7 @@ return (
             <div className='inline-flex justify-evenly'>
               <div className='mr-5'>
                   <label htmlhtmlFor="number" className='text-white'>Exp.Date</label>
-                  <input className="block w-44 my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                  <input className="block w-44 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                   type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate} 
                   onInput={checkDate} onChange={handleChange}/>
                   {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
@@ -708,7 +708,7 @@ return (
                     </svg>
                   </Tooltip>
                 </label>
-                <InputMask type={showCVV ? "text" : "password"} className="block w-full my-1 rounded-md p-1.5 text-gray-900 placeholder:text-gray-400"
+                <InputMask type={showCVV ? "text" : "password"} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                 inputmode="numeric" id="securityCode" name="securityCode" mask="999" maskChar='' placeholder='342' required value={formData.securityCode}
                 onInput={handleCVV} onChange={handleChange}/>
                 {cvvError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{cvvError}</span>}
@@ -718,7 +718,7 @@ return (
                   aria-label={
                     showCVV ? "Password Visible" : "Password Invisible."
                   }
-                  className="text-black dark:text-white"
+                  className="text-white"
                   onClick={() => {
                     setShowCVV((prev) => !prev);
                   }}>
@@ -728,8 +728,8 @@ return (
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
-                      stroke="#00052d"
-                      className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4"
+                      stroke="#currentColor"
+                      className="w-6 select-none cursor-pointer h-6 absolute top-10 right-4"
                       tabindex="-1"
                     >
                       <path
@@ -749,8 +749,8 @@ return (
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
-                      stroke="#00052d"
-                      className="w-6 select-none cursor-pointer h-6 absolute top-8 right-4">
+                      stroke="currentColor"
+                      className="w-6 select-none cursor-pointer h-6 absolute top-10 right-4">
                       <path
                         strokeLinecap="round"
                         strokeLineJoin="round"

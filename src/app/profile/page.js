@@ -954,28 +954,28 @@ export default function Account() {
                     <div  className="self-center h-auto w-full my-6 mr-12 row-start-1 row-end-1 col-start-2 col-end-5" >
                         {userDetails && (
                         <div className='grid grid-rows-1 mr-12'>
-                        <h5 className="justify-self-center  text-4xl font-bold tracking-tight mt-24 text-white font-mono" > ACCOUNT INFORMATION</h5>
+                        <h5 className="justify-self-center text-4xl font-bold tracking-tight mt-24 text-white font-mono" > ACCOUNT INFORMATION</h5>
 
                             <div style={{ backgroundColor: 'transparent' }} className="flex justify-center mt-24 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
                                 <form>
-                                    <div className='grid grid-cols-2  mb-3 flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center'}}>    
-                                        <h2 id="first_name" className="flex dark:text-white  text-white text-2xl font-mono ">FIRST NAME:</h2>
-                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    <div className='grid grid-cols-2 mb-3 flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center'}}>    
+                                        <h2 id="first_name" className="flex text-white text-2xl font-mono ">FIRST NAME:</h2>
+                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                         type="first_name" id="first name" name="firstName" value={userDetails.firstName} onChange={handleChange}/>
                                     </div>
                                     <div className='grid grid-cols-2 mt-3 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                        <h2 id="last_name" className="flex dark:text-white text-white text-2xl font-mono ">LAST NAME:</h2>
-                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        <h2 id="last_name" className="flex text-white text-2xl font-mono ">LAST NAME:</h2>
+                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                         type="last_name" id="first name" name="lastName" value={userDetails.lastName} onChange={handleChange}/>
                                     </div>
                                     <div className='grid grid-cols-2 mt-3 mb-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                        <h2 id="email_address" className="flex dark:text-white text-white text-2xl font-mono ">EMAIL ADDRESS:</h2>
-                                        <input disabled className="block w-64 rounded-md mr-3 border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        <h2 id="email_address" className="flex text-white text-2xl font-mono ">EMAIL ADDRESS:</h2>
+                                        <input disabled className="block w-64 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent text-white border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                         type="email" defaultValue={(currentUser ? currentUser.email : "")} id="first name" name="email"/>
                                     </div>
                                     
                                     <div className='grid grid-cols-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                    <h2 id="empty_content" className="flex dark:text-white text-white font-mono "></h2>
+                                    <h2 id="empty_content" className="flex  text-white font-mono "></h2>
 
                                         <button
                                             className={`w-40 visible justify-self-end mt-6 mb-20 mr-3 self-end text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 ${editButtonClicked && !saveButtonClicked ? 'bg-green-400 hover:bg-green-500' : 'bg-gray-400'}`}
@@ -1054,10 +1054,10 @@ export default function Account() {
                                         <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
                                         <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
                                         <Tooltip content='Edit your card'>
-                                            <img class="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                            <img className="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
                                         </Tooltip>
                                         <Tooltip content='Delete your card'>
-                                            <img class="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                            <img className="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
                                         </Tooltip>
 
                                     </div>
@@ -1155,7 +1155,7 @@ export default function Account() {
                                                             {copiedStates[index] ? 
                                                                 <Tooltip content="Copied!">
                                                                 <svg className="w-3 h-3 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5"/>
                                                                 </svg> 
                                                                 </Tooltip>
                                                                     : 
@@ -1271,14 +1271,14 @@ export default function Account() {
                         <div >
                             <label htmlFor="password" className='text-white'>Old Password</label>
                             <div className="relative">
-                                    <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                     id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword} type={showOldPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
                                                 aria-label={
                                                 showOldPassword ? "Password Visible" : "Password Invisible."
                                                 }
-                                                className="text-black dark:text-white"
+                                                className="text-white"
                                                 onClick={() => {
                                                 setShowOldPassword((prev) => !prev);
                                                 }}
@@ -1288,19 +1288,19 @@ export default function Account() {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="#00052d"
-                                                    className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
-                                                    tabindex="-1"
+                                                    strokeWidth="1.5"
+                                                    stroke="currentColor"
+                                                    className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
+                                                    tabIndex="-1"
                                                 >
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
                                                     ></path>
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                                     ></path>
                                                 </svg>
@@ -1309,13 +1309,13 @@ export default function Account() {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="#00052d"
+                                                    strokeWidth="1.5"
+                                                    stroke="currentColor"
                                                     className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                                                 >
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
                                                     ></path>
                                                 </svg>
@@ -1328,14 +1328,14 @@ export default function Account() {
                         <div>
                             <label htmlFor="password" className='text-white'>New Password</label>
                             <div className="relative">
-                                    <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                     id="newPassword" name="newPassword" required onChange={handleNewPasswordChange} ref={newPassword} type={showPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
                                                 aria-label={
                                                 showPassword ? "Password Visible" : "Password Invisible."
                                                 }
-                                                className="text-black dark:text-white"
+                                                className="text-white"
                                                 onClick={() => {
                                                 setShowPassword((prev) => !prev);
                                                 }}
@@ -1345,19 +1345,19 @@ export default function Account() {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="#00052d"
+                                                    strokeWidth="1.5"
+                                                    stroke="currentColor"
                                                     className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
-                                                    tabindex="-1"
+                                                    tabIndex="-1"
                                                 >
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
                                                     ></path>
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                                     ></path>
                                                 </svg>
@@ -1366,13 +1366,13 @@ export default function Account() {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="#00052d"
+                                                    strokeWidth="1.5"
+                                                    stroke="currentColor"
                                                     className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                                                 >
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
                                                     ></path>
                                                 </svg>
@@ -1385,14 +1385,14 @@ export default function Account() {
                         <div>
                             <label htmlFor="password" className='text-white'>Confirm New Password</label>
                             <div className="relative">
-                                    <input className="block w-full mt-2 rounded-md border-1  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                     id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword} type={showConfirmPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
                                                 aria-label={
                                                 showConfirmPassword ? "Password Visible" : "Password Invisible."
                                                 }
-                                                className="text-black dark:text-white"
+                                                className="text-white"
                                                 onClick={() => {
                                                 setShowConfirmPassword((prev) => !prev);
                                                 }}
@@ -1402,19 +1402,19 @@ export default function Account() {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="#00052d"
-                                                    className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
-                                                    tabindex="-1"
+                                                    strokeWidth="1.5"
+                                                    stroke="currentColor"
+                                                    className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
+                                                    tabIndex="-1"
                                                 >
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
                                                     ></path>
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                                     ></path>
                                                 </svg>
@@ -1423,13 +1423,13 @@ export default function Account() {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="#00052d"
+                                                    strokeWidth="1.5"
+                                                    stroke="currentColor"
                                                     className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                                                 >
                                                     <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
                                                     d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
                                                     ></path>
                                                 </svg>
@@ -1466,14 +1466,14 @@ export default function Account() {
                         
                         <div>
                             <label htmlFor="text" className='text-white'>Cardholder Name</label>
-                            <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 "
+                            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                             onInput={handleFullName} type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChangeCardDetails}/>
                             {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
                         </div>
 
                         <div> 
                             <label htmlFor="number" className='text-white'>Card Number</label>
-                            <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
+                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                             id="cardNumber" name="cardNumber" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
                             onInput={handleCardNumber} onChange={handleChangeCardDetails}/>
                             {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
@@ -1481,7 +1481,7 @@ export default function Account() {
 
                         <div>
                             <label htmlFor="number" className='text-white'>Sort Code</label>
-                            <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
+                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                             id="sortCode" name="sortCode" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={formData.sortCode} 
                             onInput={handleSortCode} onChange={handleChangeCardDetails}/>
                             <span className={sortCodeError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>
@@ -1490,7 +1490,7 @@ export default function Account() {
                         <div className='inline-flex justify-evenly'>
                             <div className='mr-5'>
                                 <label htmlFor="number" className='text-white'>Exp.Date</label>
-                                <input className="block w-52 my-2.5 rounded-md p-1.5 text-gray-900 "
+                                <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                                 type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate}
                                 onInput={checkAddModalDate} onChange={handleChangeCardDetails}/>
                                 {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
@@ -1499,14 +1499,14 @@ export default function Account() {
                             <div className="relative z-0 w-full mb-5 group">
                                 <label htmlFor="number" className='inline-flex text-white'>CVV
                                 <Tooltip content="Three digit code on the back of your card">
-                                    <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
-                                    <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <svg  className='ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
+                                    <path d="M12 11.5V16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                                     </svg>
                                 </Tooltip>
                                 </label>
-                                <InputMask className="block w-full rounded-md py-1.5 px-1.5 mt-3 border-2 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6 "
+                                <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6 "
                                 type={showAddCardCVV ? "text" : "password"}
                                 mask="999"
                                 maskChar=""
@@ -1515,7 +1515,7 @@ export default function Account() {
                                 
                                 {/* Eye toggle to hide/show CVV */}
                                 <button
-                                        className="text-black dark:text-white"
+                                        className="text-white"
                                         type="button"
                                         aria-label={
                                             showAddCardCVV ? "Password Visible" : "Password Invisible."
@@ -1529,9 +1529,9 @@ export default function Account() {
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
-                                            stroke="#00052d"
+                                            stroke="currentColor"
                                             className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4"
-                                            tabindex="-1"
+                                            tabIndex="-1"
                                             >
                                             <path
                                                 strokeLinecap="round"
@@ -1550,7 +1550,7 @@ export default function Account() {
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
-                                            stroke="#00052d"
+                                            stroke="currentColor"
                                             className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4">
                                             <path
                                                 strokeLinecap="round"
@@ -1582,14 +1582,14 @@ export default function Account() {
 
                         <div>
                             <label htmlFor="text" className='text-white'>Cardholder Name</label>
-                            <input className="block w-full my-2.5 rounded-md p-1.5 text-gray-900 "
+                            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                             onInput={handleFullNameEditCard} type="text" id="card_holder" name="card_holder" placeholder='John Wick' required value={card.cardName} onChange={(e) => setCard({ ...card, fullName: e.target.value })}/>
                             {fullNameEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameEditCardError}</span>}
                         </div>
 
                         <div>
                             <label htmlFor="number" className='text-white'>Card Number</label>
-                            <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
+                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                             id="card_number" name="card_number" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={card.cardNumber} 
                             onInput={handleCardNumberEditCard} onChange={(e) => setCard({ ...card, cardNumber: e.target.value })}/> 
                             {cardNumberEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberEditCardError}</span>}
@@ -1597,7 +1597,7 @@ export default function Account() {
 
                         <div>
                             <label htmlFor="number" className='text-white'>Sort Code</label>
-                            <InputMask className="block w-full rounded-md p-1.5 text-gray-900 "
+                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                             id="sort_code" name="sort_code" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={card.sortCode}
                             onInput={handleSortCodeEditCard} onChange={(e) => setCard({ ...card, sortCode: e.target.value })}/> 
                             <span className={sortCodeEditCardError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeEditCardError}</span>
@@ -1606,7 +1606,7 @@ export default function Account() {
                         <div className='inline-flex justify-evenly'>
                             <div className='mr-3'>
                                 <label htmlFor="number" className='text-white'>Exp.Date</label>
-                                <input className="block w-full my-3.5 rounded-md p-1.5 text-gray-900 "
+                                <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                                 type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate}
                                 onInput={checkEditModalDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
                                 {checkDateEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateEditCardError}</span>}
@@ -1615,16 +1615,16 @@ export default function Account() {
                             <div className="relative z-0 w-full mb-5 group">
                                 <label htmlFor="number" className='inline-flex text-white'>CVV
                                 <Tooltip content="Three digit code on the back of your card">
-                                    <svg  className = 'ml-2' width="24px" height="24px" stroke-width="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
-                                    <path d="M12 11.5V16.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <svg  className = 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
+                                    <path d="M12 11.5V16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    <path d="M12 7.51L12.01 7.49889" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                                     </svg>
                                 </Tooltip>
                                 </label>
                                     <InputMask
                                     type={showEditCardCVV ? "text" : "password"}
-                                    className="block w-full rounded-md py-1.5 px-1.5 ml-1 mt-3 border-2 text-black shadow-sm focus:outline-none focus:border-red ring-1 ring-inset  placeholder:text-gray-400 focus:ring-0 focus:placeholder:text-black focus:ring-inset sm:text-sm sm:leading-6"
+                                    className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                     inputMode="numeric"
                                     mask="999"
                                     maskChar=""
@@ -1638,7 +1638,7 @@ export default function Account() {
                                     />
                                     {/* Eye toggle to hide/show CVV */}
                                     <button
-                                        className="text-black dark:text-white"
+                                        className="text-white"
                                         type="button"
                                         aria-label={
                                             showEditCardCVV ? "Password Visible" : "Password Invisible."
@@ -1652,9 +1652,9 @@ export default function Account() {
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
-                                            stroke="#00052d"
+                                            stroke="currentColor"
                                             className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4"
-                                            tabindex="-1"
+                                            tabIndex="-1"
                                             >
                                             <path
                                                 strokeLinecap="round"
@@ -1673,7 +1673,7 @@ export default function Account() {
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
-                                            stroke="#00052d"
+                                            stroke="currentColor"
                                             className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4">
                                             <path
                                                 strokeLinecap="round"
@@ -1731,7 +1731,7 @@ export default function Account() {
                         <div className='justify-center mt-2'>
                             <label className=' mb-2'>Title</label>
                             <textarea
-                                class="self-center peer h-12 mt-2 min-h-[10px] w-96 resize-none rounded-[7px] border border-blue-gray-200  bg-white px-3 py-2.5 font-sans text-sm font-normal text-gray-900 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
+                                className="self-center peer h-12 mt-2 min-h-[10px] w-96 resize-none rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-200 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
                                 placeholder=" "
                                 required
                                 name= "title"
@@ -1742,7 +1742,7 @@ export default function Account() {
                         <div className='justify-self-center mt-2'>
                             <label className=' mb-2'>Write your comment</label> 
                             <textarea
-                                class="peer h-full min-h-[150px] w-96 mt-2 resize-none rounded-[7px] border border-blue-gray-200  bg-white px-3 py-2.5 font-sans text-sm font-normal text-gray-900 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
+                                className="peer h-full min-h-[150px] w-96 mt-2 resize-none rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-200 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
                                 placeholder=" "
                                 name= "comment"
                                 required
@@ -1762,8 +1762,8 @@ export default function Account() {
                             </label>
                         </div>
                         <div className='flex justify-evenly mt-5 mb-10'>
-                            <button  className="dismiss-btn text-white rounded-lg text-m  px-5 py-2.5 text-center roboto-light" onClick ={()=>closewModal()}> DISMISS</button>
-                            <button  className="confirm-btn text-white rounded-lg text-m  px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</button>
+                            <button className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick ={()=>closewModal()}> DISMISS</button>
+                            <button className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={()=>handleReviewProductButtonClick()}>POST</button>
                         </div>
                     </div>
             </Modal>
