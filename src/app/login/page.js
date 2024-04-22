@@ -282,14 +282,14 @@ export default function Login() {
           <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
 
             <div>
-              <label htmlFor="email">Email address</label>
+              <label>Email address</label>
               <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
               onChange={handleEmailChange} ref={email}/>
                 {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}  
             </div>
 
             <div>
-                <label className='inline-flex'  htmlFor="password">Password
+                <label className='inline-flex'>Password
                   <Tooltip content="Password must contain more then 8 characters mixed with at least one special character">
                     <svg  className = 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
                       <path d="M12 11.5V16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
