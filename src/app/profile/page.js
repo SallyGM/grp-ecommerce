@@ -923,11 +923,20 @@ export default function Account() {
     
     return (
         <Fragment>
-            <div className='bg-blue-gradient grid grid-rows-1 grid-cols-4 gap-x-20 row-start-1 row-end-2 col-start-1 col-end-3 bg-dark-night justify-items-center'> 
+            <div className='sm-grid-cols-2 bg-blue-gradient grid grid-rows-1 md:grid-cols-4 md:gap-x-20 md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-3 bg-dark-night justify-items-center'> 
                 <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2"style={{ backgroundColor: 'transparent'}} >
-                    <Box sx={{  display: 'flex', lineHeight: 300, height: 500, width: 200, marginTop: 10 ,marginRight:5, justifyContent: 'center', flexGrow:1}}>
+                    <Box sx={{
+                            display: 'flex',
+                            lineHeight: 300,
+                            height: { sm: 300, md: 500 }, // Adjust height for different screen sizes
+                            width: { sm: '100%', md: 200 }, // Adjust width for different screen sizes
+                            marginTop: 10,
+                            marginRight: 5,
+                            justifyContent: 'center',
+                            flexGrow: 1
+                        }}>
                     <Tabs
-                        orientation="vertical"
+                        orientation='vertical'
                         value={value}
                         onChange={handleChange}
                         aria-label="Vertical tabs menu"
@@ -949,30 +958,30 @@ export default function Account() {
                 {/* ACCOUNT */}
                 {value ===  0 ? (
                     <>
-                    <div  className="self-center h-auto w-full my-6 mr-12 row-start-1 row-end-1 col-start-2 col-end-5" >
+                    <div  className="self-center h-auto w-full my-6  row-start-1 row-end-1 col-start-2 col-end-5" >
                         {userDetails && (
-                        <div className='grid grid-rows-1 mr-12'>
-                        <h5 className="justify-self-center text-4xl font-bold tracking-tight mt-24 text-white font-mono" > ACCOUNT INFORMATION</h5>
+                        <div className='grid grid-rows-1'>
+                        <h5 className="justify-self-center sm:self-center text-4xl font-bold tracking-tight mt-10 text-white font-mono" > ACCOUNT INFORMATION</h5>
 
-                            <div style={{ backgroundColor: 'transparent' }} className="flex justify-center mt-24 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
+                            <div style={{ backgroundColor: 'transparent' }} className="flex justify-center mt-6 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
                                 <form>
-                                    <div className='grid grid-cols-2 mb-3 flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center'}}>    
-                                        <h2 id="first_name" className="flex text-white text-2xl font-mono ">FIRST NAME:</h2>
-                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
+                                        <h2 id="first_name" className="flex text-white font-mono ">FIRST NAME:</h2>
+                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block md:w-full sm:w-full bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                         type="first_name" id="first name" name="firstName" value={userDetails.firstName} onChange={handleChange}/>
                                     </div>
-                                    <div className='grid grid-cols-2 mt-3 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                        <h2 id="last_name" className="flex text-white text-2xl font-mono ">LAST NAME:</h2>
+                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
+                                        <h2 id="last_name" className="flex text-white  font-mono ">LAST NAME:</h2>
                                         <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                         type="last_name" id="first name" name="lastName" value={userDetails.lastName} onChange={handleChange}/>
                                     </div>
-                                    <div className='grid grid-cols-2 mt-3 mb-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
-                                        <h2 id="email_address" className="flex text-white text-2xl font-mono ">EMAIL ADDRESS:</h2>
+                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
+                                        <h2 id="email_address" className="flex text-white  font-mono ">EMAIL ADDRESS:</h2>
                                         <input disabled className="block w-64 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent text-white border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                         type="email" defaultValue={(currentUser ? currentUser.email : "")} id="first name" name="email"/>
                                     </div>
                                     
-                                    <div className='grid grid-cols-2 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr',justifyItems: 'center' }}>    
+                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
                                     <h2 id="empty_content" className="flex  text-white font-mono "></h2>
 
                                         <button
@@ -989,23 +998,24 @@ export default function Account() {
                             </div>
                         </div>
                         )}
-                        <div className='flex justify-evenly mt-10'>
-                            <button className="w-52 pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={()=> setShowPasswordModal(true)} disabled={showPasswordModal}>
+                        <div className='flex flex-col sm:flex-row justify-center sm:justify-evenly mt-10'>
+                            <button className="md:w-52 pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={() => setShowPasswordModal(true)} disabled={showPasswordModal}>
                                 CHANGE PASSWORD
                             </button>
-                            <button className="w-52 text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 bg-green-400 hover:bg-green-500" onClick={handleEditButtonClick} disabled={editButtonClicked}>
+                            <button className="md:w-52 sm:w-32 text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 bg-green-400 hover:bg-green-500 mt-3 sm:mt-0" onClick={handleEditButtonClick} disabled={editButtonClicked}>
                                 EDIT INFORMATION
                             </button>
                         </div>
-                    </div>
 
-                    <div className='flex justify-self-start h-auto row-start-2 row-end-2 col-start-3 col-end-5 mb-6'>
-                        <div>
-                            <button type="submit" className="text-white bold rounded-lg px-5 py-2.5 mt-10 deleteAccount-btn" onClick={()=> setShowDeleteModal(true)}  disabled={showDeletedModal}>
-                                DELETE ACCOUNT
-                            </button>
+                        <div className='flex justify-center sm:justify-start h-auto row-start-2 row-end-2 col-start-3 col-end-5 mb-6'>
+                            <div>
+                                <button type="submit" className="text-white bold rounded-lg px-5 py-2.5 mt-10 deleteAccount-btn" onClick={() => setShowDeleteModal(true)} disabled={showDeletedModal}>
+                                    DELETE ACCOUNT
+                                </button>
+                            </div>
                         </div>
                     </div>
+
                 </>
                 ) : (
                     <></>
@@ -1015,68 +1025,66 @@ export default function Account() {
                 { value ===  1 ? (
                     <>
                     <div style={{ backgroundColor: 'transparent'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
-
-                    <h5 style={{ position: 'sticky', top: 0, zIndex: 1 }} className="justify-self-center text-center mb-3 text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
+                        <h5 style={{ position: 'sticky', top: 0, zIndex: 1 }} className="justify-self-center text-center mb-3 text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
                         {cardDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-3 mb-44 font-mono text-center">NO CARD STORED WITHIN YOUR ACCOUNT.<br/> PLEASE ADD ONE!</div>
                         ) : (
-                                <div className='rounded-noneborder-b-2 border-white grid grid-cols-6 flex-wrap  mt-3 mb-3 ml-10 mr-10 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', justifyItems: 'center',position: 'sticky', top: 0, zIndex: 1  }}>
-                                    <h3 className='  font-bold tracking-tight dark:text-white  text-white'>Card Type</h3>
-                                    <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Name on Card</h3>
-                                    <h3 className='  font-bold tracking-tight  dark:text-white text-white'>Card Ending</h3>
-                                    <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
-                                    <h3 className='  font-bold tracking-tight  dark:text-white text-white'></h3>
-                                </div>
+                            <div className='md:rounded-none md:border-b-2 md:border-white md:grid md:grid-cols-6 md:flex-wrap md:mt-3 md:mb-3 md:ml-10 md:mr-10 p-3 sm:hidden' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', alignItems: 'center', position: 'sticky', top: 0, zIndex: 1 }}>
+                                <h3 className='font-bold tracking-tight dark:text-white text-white'>Card Type</h3>
+                                <h3 className='font-bold tracking-tight dark:text-white text-white'>Name on Card</h3>
+                                <h3 className='font-bold tracking-tight dark:text-white text-white'>Card Ending</h3>
+                                <h3 className='font-bold tracking-tight dark:text-white text-white'></h3>
+                                <h3 className='font-bold tracking-tight dark:text-white text-white'></h3>
+                            </div>
                         )}
 
-                    <div style={{ backgroundColor: 'transparent', maxHeight: '45vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-3 mb-3 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
-                        
-                        {/*This is the card that can be used as a component nested in cardStored component */}
-                        <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
-                            {cardDetails.map((c) => (
-                                <Card key={c.id} className=" flex h-auto w-full summary-box mt-6">
-                                    <div className='grid grid-cols-6 items-center flex-wrap'style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',justifyItems: 'center' }}>    
-
-                                        <img
-                                            src={
-                                                getCardType(c.cardNumber) === 'visa'
-                                                    ? 'https://img.icons8.com/fluency/48/visa.png'
-                                                    : getCardType(c.cardNumber) === 'mastercard'
-                                                        ? 'https://img.icons8.com/fluency/48/mastercard.png'
-                                                        : getCardType(c.cardNumber) === 'amex'
-                                                            ? 'https://example.com/amex-icon.svg'
-                                                            : 'https://img.icons8.com/fluency/48/credit-card-front.png'
-                                            }
-                                            alt="Card Image"
-                                        />
-                                        <h2 id="card_name" className="flex dark:text-white text-white font-mono ">{c.cardName}</h2>
-                                        <h2 id="card_ending" className="flex dark:text-white text-white font-mono ">{c.cardNumber.slice(-4)}</h2>
-                                        <Tooltip content='Edit your card'>
-                                            <img className="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
-                                        </Tooltip>
-                                        <Tooltip content='Delete your card'>
-                                            <img className="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
-                                        </Tooltip>
-
-                                    </div>
-                                </Card>
-                            ))}
+                        <div style={{ backgroundColor: 'transparent', maxHeight: '45vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-3 mb-3 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
+                            {/*This is the card that can be used as a component nested in cardStored component */}
+                            <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
+                                {cardDetails.map((c) => (
+                                    <Card key={c.id} className="flex h-auto w-full summary-box mt-6">
+                                        <div className='sm:flex sm:flex-row sm:items-center sm:justify-between sm:w-full md:grid md:grid-cols-6 md:items-center md:flex-wrap' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', alignItems: 'center' }}>    
+                                            <img
+                                                src={
+                                                    getCardType(c.cardNumber) === 'visa'
+                                                        ? 'https://img.icons8.com/fluency/48/visa.png'
+                                                        : getCardType(c.cardNumber) === 'mastercard'
+                                                            ? 'https://img.icons8.com/fluency/48/mastercard.png'
+                                                            : getCardType(c.cardNumber) === 'amex'
+                                                                ? 'https://example.com/amex-icon.svg'
+                                                                : 'https://img.icons8.com/fluency/48/credit-card-front.png'
+                                                }
+                                                alt="Card Image"
+                                                className="w-12 h-12"
+                                            />
+                                            <h2 className="dark:text-white text-white font-mono">{c.cardName}</h2>
+                                            <h2 className="dark:text-white text-white font-mono">{c.cardNumber.slice(-4)}</h2>
+                                            <Tooltip content='Edit your card'>
+                                                <img className="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                            </Tooltip>
+                                            <Tooltip content='Delete your card'>
+                                                <img className="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                            </Tooltip>
+                                        </div>
+                                    </Card>
+                                ))}
+                            </div>
+                        </div>
+                        <div className='flex mb-10 mt-3 col-span-3 justify-self-center ml-10'>
+                            <button
+                                type="submit"
+                                className="w-60 inline-flex text-white self-center bold rounded-lg px-5 py-2.5 pay-btn"
+                                onClick={()=> setShowAddCardModal(true)}
+                                disabled={showAddCardModal}> 
+                                ADD NEW CARD
+                                <svg className="w-6 h-6 ml-3" fill='currentColor' stroke='white' aria-hidden="true" xmlns="https://reactsvgicons.com/search?q=add" viewBox="0 0 512 512">
+                                    <path fill="none" stroke="currentColor" strokeMiterlimit={10} strokeWidth={32} d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"/>
+                                    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M256 176v160M336 256H176"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                    <div className='flex mb-10 mt-3 col-span-3 justify-self-center ml-10'>
-                    <button
-                        type="submit"
-                        className="w-60 inline-flex text-white self-center bold rounded-lg px-5 py-2.5 pay-btn"
-                        onClick={()=> setShowAddCardModal(true)}
-                        disabled={showAddCardModal}> 
-                        ADD NEW CARD
-                        <svg className="w-6 h-6 ml-3" fill='currentColor' stroke='white' aria-hidden="true" xmlns="https://reactsvgicons.com/search?q=add" viewBox="0 0 512 512">
-                            <path fill="none" stroke="currentColor" strokeMiterlimit={10} strokeWidth={32} d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"/>
-                            <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M256 176v160M336 256H176"/>
-                        </svg>
-                    </button>
-                </div>
-                </div>
+
                 </>
                 ): (
                     <></>
@@ -1085,7 +1093,7 @@ export default function Account() {
                 {/* ORDERED KEYS */}
                 { value ===  2 ? (
                     <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
-                        <h5 className="justify-self-center text-center text-4xl mb-6 tracking-tight text-white bebas-neue-regularLarge" > MY ORDER KEYS</h5>
+                        <h5 className="justify-self-center text-center text-4xl mb-6 tracking-tight text-white bebas-neue-regularLarge" > MY ORDERED KEYS</h5>
                         {OrderDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 bebas-neue-regular text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
                         ) : (
