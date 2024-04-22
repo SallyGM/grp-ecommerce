@@ -459,43 +459,43 @@ async function handleSubmit(e) {
 
 return (
   <Fragment>
-    <div className='bg-blue-gradient grid grid-rows-1 grid-cols-1 p-8  flex justify-content-center bg-dark-night'>
+    <div className='flex bg-blue-gradient grid grid-rows-1 grid-cols-1 p-8 justify-content-center bg-dark-night'>
 
       {/*Sign in information card*/}
       <Card className="justify-self-center w-auto h-auto  my-6 summary-box" >
   
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
         <br/>
-        <form className="grid grid-rows-3 grid-cols-2 gap-10 mr-10 ml-10  display: flex self-center text-white font-mono" onSubmit={handleSubmit}>
-          <div>
+        <form className="grid grid-cols-1 gap-6 md:grid-cols-2 sm:w-auto md:w-full  self-center text-white font-mono" onSubmit={handleSubmit}>
+          <div className="col-span-full md:col-span-1">
             <label>First Name*</label>
             <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
             type="text" id="firstName"  name="firstName" required maxLength={40} onChange={handleFirstNameChange} ref={fName}></input>
             {firstNameError && <span style={{ color: 'red', fontSize: '12px' }}>{firstNameError}</span>}
           </div>
           
-          <div>
+          <div className="col-span-full md:col-span-1">
             <label>Last Name*</label>
             <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="text" id="lastName"  name="lastName" required maxLength={40} onChange={handleLastNameChange} ref={lName}></input>
             {lastNameError && <span style={{ color: 'red', fontSize: '12px' }}>{lastNameError}</span>}
           </div>
 
-          <div>
+          <div className="col-span-full md:col-span-1">
             <label>Email*</label>
             <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="email" id="email" name="email" required onChange={handleEmailChange} ref={email}></input>
             {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}
           </div>
 
-          <div>
+          <div className="col-span-full md:col-span-1">
             <label>Confirm Email*</label>
             <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
             type="email" id="confirmEmail" name="confirmEmail" required onChange={handleConfirmEmailChange} ref={confirmEmail}  autoComplete="nope"></input>
             {confEmailError && <span style={{ color: 'red', fontSize: '12px' }}>{confEmailError}</span>}
           </div>
 
-          <div>
+          <div className="col-span-full md:col-span-1">
             <label className='inline-flex'>Password*
               <Tooltip content="Password must contain more then 8 characters mixed with at least one special character">
                   <svg className='ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
@@ -506,7 +506,7 @@ return (
               </Tooltip>
             </label>
             <div className="relative">
-              <input className="block w-96 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
+              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset "
               onChange={handlePasswordChange} required ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
                 <button
                   type="button"
@@ -558,7 +558,7 @@ return (
                 {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
               </div>
             </div>    
-            <div>
+            <div className="col-span-full md:col-span-1">
               <label className='inline-flex'>Confirm Password*
                 <Tooltip content="Password must match the password">
                   <svg  className= 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
@@ -569,7 +569,7 @@ return (
                 </Tooltip>
               </label>
                 <div className="relative">
-                  <input className="block w-96 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                  <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
                         onChange={handleConfirmPasswordChange} ref={confirmPassword} id="confirmPassword" name="confirmPassword" required type={showConfirmPassword ? "text" : "password"}/>
                     <button
                       type="button"
@@ -626,29 +626,29 @@ return (
                 </Fab>
                 <a className=" text-sm  font-semibold text-indigo-600 ml-3 text-white">Add Card Details (Optional)</a>
               </div>
-              <button className="w-72 col-span-2 place-self-end mt-2 bold text-white bg-green-400 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2" type="submit" disabled={showCheckEmail}>
+              <button className="md:w-72 sm:w-full sm:col-span-2 md:place-self-end mt-2 bold text-white bg-green-400 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2" type="submit" disabled={showCheckEmail}>
                 REGISTER
               </button>
             </form>
 
             {/*Divider between login options*/} 
-            <div className="inline-flex mt-6 self-center">
-              <Divider className="self-center w-96 "></Divider>
-                <a className="justify-self-center text-white m-3"> OR </a>
-              <Divider className="self-center w-96 "></Divider>
+            <div className="inline-flex mt-6 self-center col-span-full flex-wrap justify-center">
+              <Divider className="self-center w-36 md:w-96 mb-4"></Divider>
+              <a className="justify-self-center text-white m-3"> OR </a>
+              <Divider className="self-center w-36 md:w-96 mb-4"></Divider>
             </div>
             
-            <div className='inline-flex place-content-center'>
-              {/*Facebook sign in button*/}
-              <Button onClick={signInWithFacebook}  className="inline-flex bg-blue-600 text-white w-2/6 mr-4" color='blue'>
+            <div className='grid grid-cols-1 place-content-center col-span-full md:grid-cols-2 md:inline-flex md:self-center md:w-2/3'>
+              {/* Facebook sign in button */}
+              <Button onClick={signInWithFacebook} className="inline-flex bg-blue-600 text-white w-full md:w-2/3 mb-4 md:mr-4" color='blue'>
                 <svg className="w-6 h-6 mr-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
                 </svg>
                 Sign up with Facebook
               </Button>
 
-              {/*Google sign in button*/}
-              <Button onClick={signInWithGoogle} className="inline-flex bg-red-400 text-white w-2/6 ml-4" color='red'>
+              {/* Google sign in button */}
+              <Button onClick={signInWithGoogle} className="inline-flex bg-red-400 text-white w-full md:w-2/3 mb-4 md:ml-4" color='red'>
                 <svg className="w-6 h-6 mr-3" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
                 </svg>
