@@ -168,7 +168,6 @@ export default function Account() {
           }
           catch (e) {
             toast.error(e)
-            console.log(e)  
           }
         } else {
             setOldPasswordError("Old Password required")
@@ -253,7 +252,6 @@ export default function Account() {
 
         if (!userId) {
             toast.error("No current user logged in")
-            console.log("No current user logged in");
             return;
         }
 
@@ -262,7 +260,6 @@ export default function Account() {
         // Use the update method to update the details
         update(detailsRef, newDetails)
             .then(() => {
-                console.log("Details updated successfully");
                 setShowModal(false);
                 setSaveButtonClicked(true);
                 setEditButtonClicked(false);
@@ -280,7 +277,6 @@ export default function Account() {
         try {
             const userId = currentUser.uid;
             if (!userId) {
-                console.log(currentUser);
                 return;
             }
             setLoading(true);
@@ -288,7 +284,6 @@ export default function Account() {
             await remove(ref(database, `/User/` + userId));
             // Delete the currently authenticated user's account
             await deleteUser(currentUser);
-            console.log('User account deleted successfully.');
             toast.success('Account deleted permanently');
             setShowDeleteModal(false); // Close the delete modal
             router.push('/'); // Redirect to the home page
@@ -307,7 +302,6 @@ export default function Account() {
         const fetchData = async () => {
             const userId = currentUser.uid;
             if (!userId) {
-                console.log(currentUser);
                 return;
             }
         
@@ -322,7 +316,7 @@ export default function Account() {
                 const { firstName, lastName } = userDetails;
                 setUserDetails({ firstName, lastName });
             } else {
-                console.log("No data available");
+                toast.error("No Data available")
             }
         } catch (error) {
             toast.error("No Data available",error)
@@ -373,24 +367,19 @@ export default function Account() {
         switch (index) {
             case 0:
                 setValue(0);
-                console.log(index);
                 break;
             case 1:
                 setValue(1);
-                console.log(index);
                 break;
             case 2:
-                console.log(index);
                 setValue(2);
                 break;
             case 3:
                 setValue(3);
-                console.log(index);
                 break;
             case 4:
                 setValue(3);
                 setShowLogoutModal(true); 
-                console.log(index);
                 break;
             default:
                 break;
@@ -447,7 +436,6 @@ export default function Account() {
         };
         const userId = currentUser.uid;
             if (!userId) {
-                console.log("No current user logged in");
                 return;
             }
 
@@ -458,7 +446,6 @@ export default function Account() {
         set(ref(database, 'User/' + userId + '/card/' + newCardKey), newCard)
             .then(() => {
                 toast.success('New card added successfully');
-                console.log('New card added successfully');
                 setCardDetails(prevCardDetails => [...prevCardDetails, { id: newCardKey, ...newCard }]);
                 setFormData({
                     cardNumber: '',
@@ -640,7 +627,6 @@ export default function Account() {
     const handleConfirmEditCardClick = (card) => {
         const userId = currentUser.uid;
             if (!userId) {
-                console.log("No current user logged in");
                 return;
             }
         const cardRef = ref(database, 'User/' + userId + '/card/'+ card.id);
@@ -648,7 +634,6 @@ export default function Account() {
         update(cardRef, card)
             .then(() => {
                 toast.success("Card updated successfully");
-                console.log("Card updated successfully");
                 // Update local state with the new values
                 setCardDetails(prevCardDetails => {
                     // Find the index of the updated card in the array
@@ -673,7 +658,6 @@ export default function Account() {
     const handleConfirmDeleteCardClick = (card) => {
         const userId = currentUser.uid;
             if (!userId) {
-                console.log("No current user logged in");
                 return;
             }
         const cardRef = ref(database, 'User/' + userId + '/card/'+ card.id);
@@ -681,7 +665,6 @@ export default function Account() {
         remove(cardRef, card)
             .then(() => {
                 toast.success("Card deleted successfully");
-                console.log("Card deleted successfully");
                 // Update local state with the new values
                 setCardDetails(prevCardDetails => prevCardDetails.filter(crd => crd.id !== card.id));
                 setShowDeleteCard(false);
@@ -696,7 +679,6 @@ export default function Account() {
         if (value === 1) {
             const userId = currentUser.uid;
             if (!userId) {
-                console.log("No current user logged in");
                 return;
             }
     
@@ -712,7 +694,6 @@ export default function Account() {
                         }));
                         setCardDetails(cardArray);
                     } else {
-                        console.log("No card data found for the current user");
                         setCardDetails([]); // Set an empty array if no card data is found
                     }
                 })
@@ -732,10 +713,8 @@ export default function Account() {
                             ...data,
                         }));
         
-                        console.log("Orders:", orders); // Log orders to see if data is retrieved correctly
                         setOrderDetails(orders);
                     } else {
-                        console.log("No orders found");
                         setOrderDetails([]);
                     }
                 }).catch((error) => {
@@ -757,10 +736,8 @@ export default function Account() {
                                 ...data,
                             }));
     
-                            console.log("Reviews:", reviews);
                             setReviewDetails(reviews);
                         } else {
-                            console.log("No reviews found");
                             setReviewDetails([]);
                         }
                     })
@@ -802,9 +779,7 @@ export default function Account() {
     const handleReviewProductButtonClick = async () => {
         setCurrentDate(new Date());
         const userId = currentUser.uid;
-        console.log("user: ", currentUser);
         if (!userId) {
-            console.log("No current user logged in");
             return;
         }
         // Create a new review object from the form data
@@ -825,7 +800,6 @@ export default function Account() {
             // Set the new review object at the specified path in the database
             await set(ref(database, 'Reviews/' + newReviewKey), newReview);
             toast.success('New Review posted successfully');
-            console.log('New Review posted successfully');
             setReviewData({
                 rating: "",
                 title: "",
@@ -884,21 +858,18 @@ export default function Account() {
     const handleConfirmDeleteReviewClick = (review) => {
         const userId = currentUser.uid;
         if (!userId) {
-            console.log("No current user logged in");
             return;
         }
         const reviewRef = ref(database, 'Reviews/' + review.id);
         remove(reviewRef, review)
             .then(() => {
                 toast.success("Review deleted successfully");
-                console.log("Review deleted successfully");
                 // Update local state with the new values
                 setReviewDetails(prevReviewDetails => prevReviewDetails.filter(rw => rw.id !== review.id));
                 setShowDeleteReview(false);
             })
             .catch((error) => {
                 toast.error("Error deleting card:", error);
-                console.error("Error deleting card:", error);
             });
     }
     //#endregion
