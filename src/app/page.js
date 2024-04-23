@@ -216,7 +216,7 @@ export default function Home() {
       <div className="container my-3 py-10 px-10 mx-0 min-w-full flex flex-col items-center">
         <div className="basis-1/4"></div>
         <div className="basis-1/2">
-          <button className='prod_btn my-3 mx-3 rounded-lg'>
+          <button className='prod_btn p-5 my-3 mx-3 rounded-lg'>
             See more
           </button>
         </div>

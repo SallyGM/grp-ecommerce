@@ -159,7 +159,7 @@ body {
 
 
 .prod_btn{
-  width: 100%;
+  
   margin-top: 10px;
   color: #f0e8e8;
   background:#c50edd;
@@ -206,9 +206,7 @@ p {
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  max-width: 900px;
   background: rgb(30 64 175 / var(--tw-bg-opacity));
-  box-shadow: 0 48px 80px -32px rgba(0,0,0,0.3);
 }
 
 
@@ -219,8 +217,6 @@ p {
 
 
 .label {
-  width: 100%;
-  margin-right: 10px;
   padding: 20px 30px;
   background: #020024;
   cursor: pointer;
@@ -279,6 +275,27 @@ p {
   height: 4px; /* Adjust the height of the space as needed */
   background-color:rgb(30 64 175); /* Change the color of the space */
   margin-top: 10px; /* Adjust the top margin to create space */
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f0e8e8;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #06054D;
+  border-radius: 0px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #0748A3;
 }
 
 

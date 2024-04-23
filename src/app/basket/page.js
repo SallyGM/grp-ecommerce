@@ -313,17 +313,18 @@ export default function Home() {
               Object.entries(basket).map(([key, b]) => (
                 <tr key={key}>
                   <td className="px-6 py-3 game-title" style={{ maxWidth: '150px', overflowWrap: 'break-word' }}>{b.name}</td>
-                  <td className='text-center  '>{b.quantity}</td>
+                  <td className='text-center'>{b.quantity}</td>
+                  
                   {b.discount > 0 ? (
-                    <div className='text-center'> {/*If price has a discount, it will be showed barred */}
+                    <td className='text-center px-6 py-3'> {/*If price has a discount, it will be showed barred */}
                       <span style={{ textDecoration: "line-through", marginRight: "0.5rem" }}>
                         £{parseFloat(b.price * b.quantity).toFixed(2)}
                       </span>
                       £{parseFloat((b.price - (b.price * b.discount)) * b.quantity).toFixed(2)}
-                    </div>
+                    </td>
                   ) : (
-                    <div className='text-center'>
-                    £{parseFloat(b.price * b.quantity).toFixed(2)}</div>
+                    <td className='text-center'>
+                    £{parseFloat(b.price * b.quantity).toFixed(2)}</td>
                   )}
                 </tr>
               ))) : (
@@ -470,7 +471,7 @@ export default function Home() {
         </div>
         
         <div className='flex flex-col m-s ml-20 mr-20 mb-5'>
-        <Card className='bg-transparent basket_card overflow-x-scroll no-scrollbar'>
+        <Card className='bg-transparent basket_card overflow-x-scroll'>
           <table class="w-full text-center text-white my-5">
             <thead class="text-lg bg-elite-blue text-white uppercase">
               <tr>
