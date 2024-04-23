@@ -1042,7 +1042,7 @@ export default function Account() {
                             <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
                                 {cardDetails.map((c) => (
                                     <Card key={c.id} className="flex h-auto w-full summary-box mt-6">
-                                        <div className='sm:flex sm:flex-row sm:items-center sm:justify-between sm:w-full md:grid md:grid-cols-6 md:items-center md:flex-wrap' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', alignItems: 'center' }}>    
+                                        <div className='sm:flex sm:flex-row sm:justify-between sm:w-full md:grid md:grid-cols-6 md:items-center md:flex-wrap' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', alignItems: 'center' }}>    
                                             <img
                                                 src={
                                                     getCardType(c.cardNumber) === 'visa'
@@ -1059,10 +1059,10 @@ export default function Account() {
                                             <h2 className="dark:text-white text-white font-mono">{c.cardName}</h2>
                                             <h2 className="dark:text-white text-white font-mono">{c.cardNumber.slice(-4)}</h2>
                                             <Tooltip content='Edit your card'>
-                                                <img className="first-line:h-6 w-6 flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                                <img className="first-line:h-6 w-6 sm:justify-self-start flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
                                             </Tooltip>
                                             <Tooltip content='Delete your card'>
-                                                <img className="first-line:h-5 w-5 flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                                <img className="first-line:h-5 w-5 sm:justify-self-end flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
                                             </Tooltip>
                                         </div>
                                     </Card>
@@ -1091,7 +1091,7 @@ export default function Account() {
 
                 {/* ORDERED KEYS */}
                 { value ===  2 ? (
-                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
+                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="sm:felx sm:flex-col overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
                         <h5 className="justify-self-center text-center text-4xl mb-6 tracking-tight text-white bebas-neue-regularLarge" > MY ORDERED KEYS</h5>
                         {OrderDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 bebas-neue-regular text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
@@ -1103,78 +1103,98 @@ export default function Account() {
                             }).map((o, index) => (
                             
                                 <Card key={o.id}  className="flex h-auto w-full roboto-bold summary-box mt-6">
-                                    <div className=' grid grid-cols-3 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr ', justifyItems: 'start' }}>
-                                        <h3 className='font-bold tracking-tight'>Order Number:</h3>
-                                        <h3 className='font-bold tracking-tight'>Date Placed:</h3>
-                                        <h3 className='font-bold tracking-tight'>Total Amount:</h3>
-                                        <h3 className='font-bold tracking-tight'>Status:</h3>
+                                    <div className='rounded-1 border-b-2 border-white mb-6 ml-3 mr-3 p-3 sm:flex sm:flex-wrap sm:justify-between sm:grid sm:grid-cols-4'>
+                                        <div className="flex flex-wrap sm:flex-nowrap w-full">
+                                            <h3 className='font-bold tracking-tight w-full sm:w-auto'>Order Number:</h3>
+                                            <a className='tracking-tight dark:text-white text-white md:ml-2 w-full sm:w-auto'>{o.id.substring(1, 8)}</a>
+                                        </div>
+                                        <div className="flex flex-wrap sm:flex-nowrap w-full">
+                                            <h3 className='font-bold tracking-tight w-full sm:w-auto'>Date Placed:</h3>
+                                            <a className='tracking-tight dark:text-white text-white md:ml-2 w-full sm:w-auto'> {o.date}</a>
+                                        </div>
+                                        <div className="flex flex-wrap sm:flex-nowrap w-full">
+                                            <h3 className='font-bold tracking-tight w-full sm:w-auto'>Total Amount:</h3>
+                                            <a className='tracking-tight dark:text-white text-white md:ml-2 w-full sm:w-auto'>{"£ "+ parseFloat(o.price).toFixed(2)}</a>
+                                        </div>
+                                        <div className="flex flex-wrap sm:flex-nowrap w-full">
+                                            <h3 className='font-bold tracking-tight w-full sm:w-auto'>Status:</h3>
+                                            <a className='tracking-tight dark:text-white text-white md:ml-2 w-full sm:w-auto'>{o.status}</a>
+                                        </div>
                                     </div>
-                                    <div className='rounded-1 border-b-2 border-white grid grid-cols-3 roboto-light flex-wrap mb-6 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
-                                        <a className='tracking-tight dark:text-white text-white'>{o.id.substring(1, 8)}</a>
-                                        <a className='tracking-tight dark:text-white text-white'> {o.date}</a>
-                                        <a className='tracking-tight dark:text-white text-white'>{"£ "+ parseFloat(o.price).toFixed(2)}</a>
-                                        <a className='tracking-tight dark:text-white text-white'>{o.status}</a>
+
+                                    <div className='ml-3 mr-3 p-3 md:flex md:flex-wrap md:justify-between md:grid-cols-5 hidden md:grid'>
+                                        <div className="sm:w-full">
+                                            <a className='tracking-tight dark:text-white text-white'>Product</a>
+                                        </div>
+                                        <div className="sm:w-full">
+                                            <a className='tracking-tight dark:text-white text-white'></a>
+                                        </div>
+                                        <div className="sm:w-full">
+                                            <a className='tracking-tight dark:text-white text-white'>Price</a>
+                                        </div>
+                                        <div className="sm:w-full">
+                                            <a className='tracking-tight dark:text-white text-white'>Review</a>
+                                        </div>
+                                        <div className="sm:w-full">
+                                            <a className='tracking-tight dark:text-white text-white'>Key</a>
+                                        </div>
+                                        <div className="sm:w-full">
+                                            <a className='tracking-tight dark:text-white text-white'></a>
+                                        </div>
                                     </div>
-                                    <div className=' grid grid-cols-5 flex-wrap ml-3 mr-3 p-3 roboto-light' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
-                                        <a className='tracking-tight dark:text-white text-white'>Product</a>
-                                        <a className='tracking-tight dark:text-white text-white'></a>
-                                        <a className='tracking-tight dark:text-white text-white'>Price</a>
-                                        <a className='tracking-tight dark:text-white text-white'>Review</a>
-                                        <a className='tracking-tight dark:text-white text-white'>Key</a>
-                                        <a className='tracking-tight dark:text-white text-white'></a>
-                                    </div>
+
+
+
                                     
                                     {/* Display item details */}
                                     {getItemsForOrder(o.id).map((item, itemIdex) => (
-                                            <div key={itemIdex} className='grid grid-cols-7 items-center roboto-light flex-wrap border-b border-gray-300 ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>    
-                                                {item && item.product && (
-                                                    <Fragment key={item.product.id}>
-                                                        {console.log('item.product:', item.product)}
-                                                        <div className='inline-flex col-span-2'>
+                                            <div key={itemIdex} className='flex flex-wrap border-b border-gray-300 ml-3 mr-3 p-3 md:grid md:grid-cols-5 md:gap-4 md:items-center'>
+                                            {item && item.product && (
+                                                <Fragment key={item.product.id}>
+                                                    <div className='flex col-span-2'>
                                                         <img className="w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
-                                                        <div>
-                                                        <div className=" mt-3 text-start flex dark:text-white text-white  ml-6">{item.product.name.substring(0, 19)}</div>
-                                                        </div>
-                                                        </div>
-                                                        <div className="flex text-center dark:text-white text-white ">{'£ ' + item.product.price}</div>
-                                                        {console.log('Review Details:', reviewDetails)}
-                                                        {reviewDetails.find(review => review.userID === currentUser.uid && review.productID === item.product.id) ? (
+                                                        <div className="md:ml-3 mt-3 md:mt-6 md:text-center text-center md:text-left dark:text-white text-white">{item.product.name.substring(0, 19)}</div>
+                                                    </div>
+                                                    <div className="flex justify-start dark:text-white text-white mt-2">{`£ ${item.product.price}`}</div>
+                                                    {/* Check review details */}
+                                                    {console.log('Review Details:', reviewDetails)}
+                                                    {reviewDetails.find(review => review.userID === currentUser.uid && review.productID === item.product.id) ? (
                                                         <Tooltip content='You have already reviewed this product'>
-                                                            <RateReview className="cursor-pointer" style={{ height: '20px', width: '20px', justifySelf: 'center',color: '#9E9E9E' }} disabled />
+                                                            <RateReview className="cursor-pointer" style={{ height: '20px', width: '20px', justifySelf: 'center', color: '#9E9E9E' }} disabled />
                                                         </Tooltip>
                                                     ) : (
                                                         <Tooltip content='Review this product'>
-                                                            <RateReview className = "cursor-pointer hover:scale-110 hover:text-slate-200" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} 
+                                                            <RateReview className="cursor-pointer hover:scale-110 hover:text-slate-200" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} 
                                                             onClick={()=> openReviewProductModal(item.product)}
-                                                            disabled={showReviewModal}></RateReview>
+                                                            disabled={showReviewModal} />
                                                         </Tooltip>
                                                     )}  
-                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                            <input
-                                                                type="text"
-                                                                value={o.gameKey}
-                                                                readOnly
-                                                                style={{ flex: '1', backgroundColor: 'transparent', border: 'none' }}
-                                                            />
-                                                            <button className='px-5 py-2.5 w-auto text-white bold rounded-lg px-1' onClick={() => copyToClipboard(index,o.gameKey)}>
-                                                            {copiedStates[index] ? 
+                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                        <input
+                                                            type="text"
+                                                            value={o.gameKey}
+                                                            readOnly
+                                                            style={{ flex: '1', backgroundColor: 'transparent', border: 'none' }}
+                                                        />
+                                                        <button className='px-5 py-2.5 w-auto text-white bold rounded-lg px-1' onClick={() => copyToClipboard(index,o.gameKey)}>
+                                                            {copiedStates[index] ? (
                                                                 <Tooltip content="Copied!">
-                                                                <svg className="w-3 h-3 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5"/>
-                                                                </svg> 
+                                                                    <svg className="w-3 h-3 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                                                                    </svg> 
                                                                 </Tooltip>
-                                                                    : 
+                                                            ) : (
                                                                 <Tooltip content="Copy">
-                                                                <svg className="w-3.5 h-3.5 hover:scale-110 hover:text-slate-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                                                    <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
-                                                                </svg>
-                                                                </Tooltip>}
-                                                            </button>
-                                                        </div>
-
-                                                    </Fragment>
-                                                )}
-                                            </div>
+                                                                    <svg className="w-3.5 h-3.5 hover:scale-110 hover:text-slate-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                                                        <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
+                                                                    </svg>
+                                                                </Tooltip>
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                </Fragment>
+                                            )}
+                                        </div>                                        
                                     ))}
                                 </Card>
                             ))
