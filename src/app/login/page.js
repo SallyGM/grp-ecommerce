@@ -367,7 +367,7 @@ export default function Login() {
         </div>
         
         {/*Facebook sign in button*/}
-        <button onClick={signInWithFacebook} className="text-white bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-600/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-blue-600/55 me-2 mb-2 md:w-72 self-center">
+        <button onClick={signInWithFacebook} className="text-white bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-600/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-blue-600/55 me-2 mb-2 md:w-72 justify-center self-center">
           <svg className="w-6 h-6 me-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
           </svg>
@@ -375,7 +375,7 @@ export default function Login() {
         </button>
 
         {/*Google sign in button*/}
-        <button onClick={signInWithGoogle} className="text-white bg-red-400 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-red-400/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-red-400/55 me-2 mb-2 md:w-72 self-center">
+        <button onClick={signInWithGoogle} className="text-white bg-red-400 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-red-400/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-red-400/55 me-2 mb-2 md:w-72 justify-center self-center">
           <svg className="w-6 h-6 me-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
           </svg>

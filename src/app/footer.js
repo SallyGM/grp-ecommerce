@@ -8,7 +8,6 @@ import visaIcon from '../../public/visaIcon.png';
 export default function Footer() {
   return (
     <div className='bg-dark-night py-2'>
-      <hr className='h-px mx-3 bg-slate-600 border-0 dark:bg-gray-700'/>
       <div className="grid grid-rows-3 grid-cols-5 gap-1 text-xs px-3 pt-5 text-white">
 
         <div className='mx-3'>
