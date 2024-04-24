@@ -191,9 +191,14 @@ export default function Home() {
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 h-20" >
                   {p.name}
                 </h5>
-                
+
                 <p className="font-normal text-gray-700">
-                  £{(p.discount > 0 ? parseFloat(p.price - p.price * p.discount).toFixed(2): p.price)}
+                  £{(p.price - (p.price * p.discount)).toFixed(2)}
+                  {p.discount > 0 ? (
+                    <span className='ml-2 line-through'>£{p.price.toFixed(2)}</span>
+                  ) :  (
+                    <></>
+                  )}
                 </p>
 
                 <Button.Group className='items-center self-center'>

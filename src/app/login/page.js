@@ -180,7 +180,7 @@ export default function Login() {
     
     // Validate email pattern
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
-    if (!isEmailValid) {
+    if (!isEmailValid && e.target.value.length != 0) {
       setEmailError('Invalid email address');
     }else {
       setEmailError('');
@@ -192,7 +192,7 @@ export default function Login() {
     
     // Validate password pattern (at least 8 characters and must contain one special character)
     const isPasswordValid = /[^a-zA-Z0-9]/.test(e.target.value) && e.target.value.length >= 8;
-    if (!isPasswordValid) {
+    if (!isPasswordValid && e.target.value.length != 0) {
       setPasswordError('Password must be at least 8 characters long and contain one specal character');
     } else {
       setPasswordError('');
@@ -353,7 +353,7 @@ export default function Login() {
                   {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
               </div>
             </div>
-            <a className="text-sm font-semibold text-indigo-600 hover:text-indigo-500 text-white" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
+            <a className="text-sm font-semibold text-white transition hover:text-base hover:text-pink-buster" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
             <button id="login" className="justify-self-center bold text-white w-full mt-7 bg-green-400 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2" type='submit'>LOGIN</button>
           </form>
           
@@ -425,7 +425,7 @@ export default function Login() {
       <form className="text-white self-center font-mono" onSubmit={handleSendResetPasswordVerification}>
         <div className=' mt-2 mb-2 flex-wrap'>  
             <h2 id="email_address" className="flex mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
-            <input className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 placeholder:text-grey-200 sm:text-sm sm:leading-6 border-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
             type="email" id="recover_email" name="recover_email" required onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
             {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
         </div>
