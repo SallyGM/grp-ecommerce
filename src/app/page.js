@@ -177,22 +177,21 @@ export default function Home() {
                 <></>
               )}
              
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 h-20 dark:text-white" >
-                  {p.name}
-                </h5>
-              
+              <h5 className="text-2xl font-bold tracking-tight text-gray-900 h-20 dark:text-white" >
+                {p.name}
+              </h5>
               
               <p className="font-normal text-gray-700">
                 £{(p.discount > 0 ? parseFloat(p.price - p.price * p.discount).toFixed(2): p.price)}
               </p>
 
-              <Button.Group className='items-center'>
+              <Button.Group className='items-center self-center'>
                 <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                   </svg>
                 </Button>
-                <Button color="gray" className='cursor-auto hover:bg-slate-50'>
+                <Button color="gray" className='cursor-auto p-1 hover:bg-slate-50'>
                   {p.amount}
                 </Button>
                 <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"+", e)} >
@@ -205,7 +204,7 @@ export default function Home() {
               <button className="bg-dark-night rounded-lg text-white p-3 hover:bg-[#0d1a8d]" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
               
               <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
-              <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                   <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
                   <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
                 </svg>
