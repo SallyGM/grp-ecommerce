@@ -20,6 +20,7 @@ import { useProductContext } from '../context/ProductContext.js';
 import InputMask from 'react-input-mask';
 import { Tooltip } from 'flowbite-react';
 import { FaStar } from 'react-icons/fa';
+import { Menu } from '@mui/material';
 
 
 function TabPanel(props) {
@@ -130,6 +131,7 @@ export default function Account() {
     const [review, setReview] = useState('');
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [showTabMenu, setShowTabMenu] = useState(false);
     
 
     const [reviewData, setReviewData] = useState({
@@ -139,6 +141,17 @@ export default function Account() {
         userName: ''
     });
     //#endregion
+    
+    const toggleTabMenu = () => {
+        setShowTabMenu(!showTabMenu)
+        var element = document.getElementById("tabMenu");
+        if(showTabMenu){
+            element.classList.remove("hidden")
+        }else{
+            element.classList.add("hidden")
+        }
+        
+    };
 
     //#region REVIEW VARIABLES
     const [reviewDetails, setReviewDetails] = useState([]);
@@ -248,13 +261,13 @@ export default function Account() {
             lastName: userDetails.lastName
         };
 
-        const userId = currentUser.uid;
-
-        if (!userId) {
+        
+        if (!currentUser) {
             toast.error("No current user logged in")
             return;
         }
 
+        const userId = currentUser.uid;
         const detailsRef = ref(database, 'User/'+ userId);
 
         // Use the update method to update the details
@@ -275,10 +288,11 @@ export default function Account() {
       
     const handleDeleteAccountButtonClick = async () => {
         try {
-            const userId = currentUser.uid;
-            if (!userId) {
+            
+            if (!currentUser) {
                 return;
             }
+            const userId = currentUser.uid;
             setLoading(true);
             // Remove user data from the Realtime Database
             await remove(ref(database, `/User/` + userId));
@@ -300,28 +314,28 @@ export default function Account() {
     // retrieves user data
     useEffect(() => {
         const fetchData = async () => {
-            const userId = currentUser.uid;
-            if (!userId) {
+            
+            if (!currentUser) {
                 return;
             }
+            const userId = currentUser.uid;
+            const userRef = ref(database, 'User/' + userId);
         
-        const userRef = ref(database, 'User/' + userId);
         
-        
-        try {
-            const snapshot = ((await get(userRef)));
-            if (snapshot.exists()) {
-                const userDetails = snapshot.val();
-                // Extract required fields (first name, last name, email)
-                const { firstName, lastName } = userDetails;
-                setUserDetails({ firstName, lastName });
-            } else {
-                toast.error("No Data available")
+            try {
+                const snapshot = ((await get(userRef)));
+                if (snapshot.exists()) {
+                    const userDetails = snapshot.val();
+                    // Extract required fields (first name, last name, email)
+                    const { firstName, lastName } = userDetails;
+                    setUserDetails({ firstName, lastName });
+                } else {
+                    toast.error("No Data available")
+                }
+            } catch (error) {
+                toast.error("No Data available",error)
+                console.error("Error fetching data:", error);
             }
-        } catch (error) {
-            toast.error("No Data available",error)
-            console.error("Error fetching data:", error);
-        }
         };
 
         fetchData();
@@ -434,10 +448,11 @@ export default function Account() {
             securityCode: formData.securityCode,
             cardName: formData.cardName
         };
+        
+        if (!currentUser) {
+            return;
+        }
         const userId = currentUser.uid;
-            if (!userId) {
-                return;
-            }
 
         // Generate a unique key for the new card
         const newCardKey = push(ref(database, 'User/' + userId + '/card')).key;
@@ -625,10 +640,12 @@ export default function Account() {
 
     // Function that handle confirm button click on edit card dialog
     const handleConfirmEditCardClick = (card) => {
+        
+        if (!currentUser) {
+            return;
+        }
+            
         const userId = currentUser.uid;
-            if (!userId) {
-                return;
-            }
         const cardRef = ref(database, 'User/' + userId + '/card/'+ card.id);
         // Use the update method to update the card
         update(cardRef, card)
@@ -656,10 +673,10 @@ export default function Account() {
 
     // Function that handle confirm button click on delete card dialog
     const handleConfirmDeleteCardClick = (card) => {
-        const userId = currentUser.uid;
-            if (!userId) {
-                return;
-            }
+        if (!currentUser) {
+            return;
+        }
+            const userId = currentUser.uid;
         const cardRef = ref(database, 'User/' + userId + '/card/'+ card.id);
         // Use the update method to update the address
         remove(cardRef, card)
@@ -677,10 +694,12 @@ export default function Account() {
 
     useEffect(() => {
         if (value === 1) {
-            const userId = currentUser.uid;
-            if (!userId) {
+            
+            if (!currentUser) {
                 return;
             }
+
+            const userId = currentUser.uid;
     
             const cardRef = ref(database, `User/${userId}/card`);
     
@@ -778,10 +797,11 @@ export default function Account() {
     // Post review function
     const handleReviewProductButtonClick = async () => {
         setCurrentDate(new Date());
-        const userId = currentUser.uid;
-        if (!userId) {
+        
+        if (!currentUser) {
             return;
         }
+        const userId = currentUser.uid;
         // Create a new review object from the form data
         const newReview = {
             rating: rating,
@@ -856,10 +876,11 @@ export default function Account() {
     };
     // Function that handle confirm button click on delete review dialog
     const handleConfirmDeleteReviewClick = (review) => {
-        const userId = currentUser.uid;
-        if (!userId) {
+        
+        if (!currentUser) {
             return;
         }
+        
         const reviewRef = ref(database, 'Reviews/' + review.id);
         remove(reviewRef, review)
             .then(() => {
@@ -893,51 +914,57 @@ export default function Account() {
     
     return (
         <Fragment>
-            <div className='sm-grid-cols-2 bg-blue-gradient grid grid-rows-1 md:grid-cols-4 md:gap-x-20 md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-3 bg-dark-night justify-items-center overflow-x-scroll no-scrollbar'> 
-                <div className="justify-self-end h-auto w-auto my-6 row-span-1 col-start-1 col-end-2"style={{ backgroundColor: 'transparent'}} >
-                    <Box sx={{
-                            display: 'flex',
-                            lineHeight: 300,
-                            height: { sm: 300, md: 500 }, // Adjust height for different screen sizes
-                            width: { sm: '100%', md: 200 }, // Adjust width for different screen sizes
-                            marginTop: 10,
-                            marginRight: 5,
-                            justifyContent: 'center',
-                            flexGrow: 1
-                        }}>
-                    <Tabs
-                        orientation='vertical'
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="Vertical tabs menu"
-                        sx={{
-                            borderRight: '2px solid purple',
-                            '& .MuiTabs-indicator': {
-                                backgroundColor: '#c50edd', // Set the color of the indicator to the desired color
-                            },
-                        }}
+            <div className='sm-grid-cols-1 bg-blue-gradient grid grid-rows-1 md:grid-cols-4 md:gap-x-20 md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-3 bg-dark-night justify-items-center overflow-x-scroll no-scrollbar'> 
+                
+                <div className="relative">
+                    {/* Button to toggle visibility of tab menu */}
+                    <button 
+                        className="absolute top-0 left-0 mt-4 w-36 px-4 py-2 bg-dark-night text-white rounded"
+                        onClick={toggleTabMenu}
+                    >
+                        MENU
+                        
+                    </button>
+
+                    {/* Tab menu */}
+                    <div 
+                        className="mt-20 border-none absolute top-0 left-0 p-4 border border-gray-300 md:bg-transparent bg-dark-night rounded-lg"
+                        style={{ zIndex: 10 }}
+                        id = "tabMenu"
+                    >
+                        <Tabs
+                            orientation='vertical'
+                            value={value}
+                            onChange={handleChange}
+                            aria-label="Vertical tabs menu"
+                            sx={{
+                                borderRight: '2px solid purple',
+                                '& .MuiTabs-indicator': {
+                                    backgroundColor: '#c50edd', // Set the color of the indicator to the desired color
+                                },
+                            }}
                         >
-                        <Tab className='tab' icon={<AccountCircle />} label={<span className="tab-label">ACCOUNT</span>} {...a11yProps(0)} onClick={() => handleTabChange(0)} />
-                        <Tab className='tab' icon={<Payment />} label={<span className="tab-label">STORED CARDS</span>} {...a11yProps(1)} onClick={() => handleTabChange(1)} />
-                        <Tab className='tab' icon={<VpnKey />} label={<span className="tab-label">ORDERED KEYS</span>} {...a11yProps(2)} onClick={() => handleTabChange(2)} />
-                        <Tab className='tab' icon={<RateReview />} label={<span className="tab-label">MY REVIEWS</span>} {...a11yProps(3)} onClick={() => handleTabChange(3)} />
-                        <Tab className='tab' icon={<ExitToApp />} label={<span className="tab-label">LOGOUT</span>} {...a11yProps(4)} onClick={() => handleTabChange(4)} />
-                    </Tabs>
-                    </Box>
+                            <Tab className='tab' icon={<AccountCircle />} label={<span className="tab-label">ACCOUNT</span>} {...a11yProps(0)} onClick={() => handleTabChange(0)} />
+                            <Tab className='tab' icon={<Payment />} label={<span className="tab-label">STORED CARDS</span>} {...a11yProps(1)} onClick={() => handleTabChange(1)} />
+                            <Tab className='tab' icon={<VpnKey />} label={<span className="tab-label">ORDERED KEYS</span>} {...a11yProps(2)} onClick={() => handleTabChange(2)} />
+                            <Tab className='tab' icon={<RateReview />} label={<span className="tab-label"><br/>MY<br/> REVIEWS</span>} {...a11yProps(3)} onClick={() => handleTabChange(3)} />
+                            <Tab className='tab' icon={<ExitToApp />} label={<span className="tab-label">LOGOUT</span>} {...a11yProps(4)} onClick={() => handleTabChange(4)} />
+                        </Tabs>
+                    </div>
                 </div>
                 {/* ACCOUNT */}
                 {value ===  0 ? (
                     <>
-                    <div className="self-center h-auto w-full my-6 row-start-1 row-end-1 col-start-2 col-end-5" >
+                    <div className="sm:flex-cols sm:justify-self-center md:justify-self-center h-auto w-72 md:w-full my-6 row-start-1 row-end-1 col-start-2 col-end-5" >
                         {userDetails && (
                         <div className='grid grid-rows-1'>
-                        <h5 className="justify-self-center sm:self-center text-4xl font-bold tracking-tight mt-10 text-white font-mono" > ACCOUNT INFORMATION</h5>
+                        <h5 className="justify-self-center sm:text-2xl text-center md:text-4xl font-bold tracking-tight mt-10 text-white font-mono" > ACCOUNT INFORMATION</h5>
 
                             <div style={{ backgroundColor: 'transparent' }} className="flex justify-center mt-6 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
                                 <form>
                                     <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
                                         <h2 id="first_name" className="flex text-white font-mono ">FIRST NAME:</h2>
-                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block md:w-full sm:w-full bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-full sm:w-full bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                         type="first_name" id="first name" name="firstName" value={userDetails.firstName} onChange={handleChange}/>
                                     </div>
                                     <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
@@ -977,9 +1004,9 @@ export default function Account() {
                             </button>
                         </div>
 
-                        <div className='flex justify-center sm:justify-start h-auto row-start-2 row-end-2 col-start-3 col-end-5 mb-6'>
+                        <div className='flex md:self-center sm:justify-center sm-w-32 h-auto row-start-2 row-end-2 col-start-2 col-end-5 mb-6'>
                             <div>
-                                <button type="submit" className="text-white bold rounded-lg px-5 py-2.5 mt-10 deleteAccount-btn" onClick={() => setShowDeleteModal(true)} disabled={showDeletedModal}>
+                                <button type="submit" className="text-white bold rounded-lg px-5 py-2.5  mt-10 deleteAccount-btn" onClick={() => setShowDeleteModal(true)} disabled={showDeletedModal}>
                                     DELETE ACCOUNT
                                 </button>
                             </div>
@@ -995,11 +1022,11 @@ export default function Account() {
                 { value ===  1 ? (
                     <>
                     <div style={{ backgroundColor: 'transparent'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
-                        <h5 style={{ position: 'sticky', top: 0, zIndex: 1 }} className="justify-self-center text-center mb-3 text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
+                        <h5 style={{ position: 'sticky', top: 0, zIndex: 1 }} className="justify-self-center sm:justify-self-center text-center sm:text-center sm:text-2xl mb-3 md:text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
                         {cardDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-3 mb-44 font-mono text-center">NO CARD STORED WITHIN YOUR ACCOUNT.<br/> PLEASE ADD ONE!</div>
                         ) : (
-                            <div className='md:rounded-none md:border-b-2 md:border-white md:grid md:grid-cols-6 md:flex-wrap md:mt-3 md:mb-3 md:ml-10 md:mr-10 p-3 sm:hidden' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', alignItems: 'center', position: 'sticky', top: 0, zIndex: 1 }}>
+                            <div className='md:rounded-none md:border-b-2 md:border-white md:grid md:grid-cols-6 md:flex-wrap md:mt-3 md:mb-3 md:ml-10 md:mr-10 p-3 hidden md:grid' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', alignItems: 'center', position: 'sticky', top: 0, zIndex: 1 }}>
                                 <h3 className='font-bold tracking-tight dark:text-white text-white'>Card Type</h3>
                                 <h3 className='font-bold tracking-tight dark:text-white text-white'>Name on Card</h3>
                                 <h3 className='font-bold tracking-tight dark:text-white text-white'>Card Ending</h3>
@@ -1010,33 +1037,37 @@ export default function Account() {
 
                         <div style={{ backgroundColor: 'transparent', maxHeight: '45vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-3 mb-3 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
                             {/*This is the card that can be used as a component nested in cardStored component */}
-                            <div className='grid grid-rows-3 flex-wrap m-s ml-10 mr-10'>
+                            <div className='grid grid-rows-3 flex-wrap m-s md:ml-10 sm:ml-10 sm:mr-10'>
                                 {cardDetails.map((c) => (
-                                    <Card key={c.id} className="flex h-auto w-full summary-box mt-6">
-                                        <div className='sm:flex sm:flex-row sm:justify-between sm:w-full md:grid md:grid-cols-6 md:items-center md:flex-wrap' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', alignItems: 'center' }}>    
-                                            <img
-                                                src={
-                                                    getCardType(c.cardNumber) === 'visa'
-                                                        ? 'https://img.icons8.com/fluency/48/visa.png'
-                                                        : getCardType(c.cardNumber) === 'mastercard'
-                                                            ? 'https://img.icons8.com/fluency/48/mastercard.png'
-                                                            : getCardType(c.cardNumber) === 'amex'
-                                                                ? 'https://example.com/amex-icon.svg'
-                                                                : 'https://img.icons8.com/fluency/48/credit-card-front.png'
-                                                }
-                                                alt="Card Image"
-                                                className="w-12 h-12"
-                                            />
-                                            <h2 className="dark:text-white text-white font-mono">{c.cardName}</h2>
-                                            <h2 className="dark:text-white text-white font-mono">{c.cardNumber.slice(-4)}</h2>
+                                    <Card key={c.id} className="flex md:h-auto md:w-full sm:w-full sm:justify-self-center summary-box mt-6">
+                                    <div className='sm:flex sm:flex-row sm:justify-between sm:w-full md:grid md:grid-cols-6 md:items-center md:flex-wrap' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', alignItems: 'center' }}>    
+                                        <img
+                                            src={
+                                                getCardType(c.cardNumber) === 'visa'
+                                                    ? 'https://img.icons8.com/fluency/48/visa.png'
+                                                    : getCardType(c.cardNumber) === 'mastercard'
+                                                        ? 'https://img.icons8.com/fluency/48/mastercard.png'
+                                                        : getCardType(c.cardNumber) === 'amex'
+                                                            ? 'https://example.com/amex-icon.svg'
+                                                            : 'https://img.icons8.com/fluency/48/credit-card-front.png'
+                                            }
+                                            alt="Card Image"
+                                            className="w-12 h-12"
+                                        />
+                                        <h2 className="dark:text-white text-white font-mono">{c.cardName}</h2>
+                                        <h2 className="dark:text-white text-white font-mono">{c.cardNumber.slice(-4)}</h2>
+                                        <div className="inline-flex sm:justify-between">
                                             <Tooltip content='Edit your card'>
-                                                <img className="first-line:h-6 w-6 sm:justify-self-start flex-wrap justify-self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                                <img className="first-line:h-6 w-6 cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
                                             </Tooltip>
                                             <Tooltip content='Delete your card'>
-                                                <img className="first-line:h-5 w-5 sm:justify-self-end flex-wrap justify-self-center cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                                <img className="first-line:h-5 w-5 cursor-pointer hover:scale-110 hover:text-slate-200 md:ml-32" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
                                             </Tooltip>
                                         </div>
-                                    </Card>
+
+                                    </div>
+                                </Card>
+                                
                                 ))}
                             </div>
                         </div>
@@ -1063,7 +1094,7 @@ export default function Account() {
                 {/* ORDERED KEYS */}
                 { value ===  2 ? (
                     <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="sm:felx sm:flex-col overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
-                        <h5 className="justify-self-center text-center text-4xl mb-6 tracking-tight text-white bebas-neue-regularLarge" > MY ORDERED KEYS</h5>
+                        <h5 className="justify-self-center text-center sm:text-2xl md:text-4xl mb-6 tracking-tight text-white bebas-neue-regularLarge" > MY ORDERED KEYS</h5>
                         {OrderDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 bebas-neue-regular text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
                         ) : (
@@ -1093,79 +1124,74 @@ export default function Account() {
                                         </div>
                                     </div>
 
-                                    <div className='ml-3 mr-3 p-3 md:flex md:flex-wrap md:justify-between md:grid-cols-5 hidden md:grid'>
-                                        <div className="sm:w-full">
-                                            <a className='tracking-tight dark:text-white text-white'>Product</a>
-                                        </div>
-                                        <div className="sm:w-full">
-                                            <a className='tracking-tight dark:text-white text-white'></a>
-                                        </div>
-                                        <div className="sm:w-full">
-                                            <a className='tracking-tight dark:text-white text-white'>Price</a>
-                                        </div>
-                                        <div className="sm:w-full">
-                                            <a className='tracking-tight dark:text-white text-white'>Review</a>
-                                        </div>
-                                        <div className="sm:w-full">
-                                            <a className='tracking-tight dark:text-white text-white'>Key</a>
-                                        </div>
-                                        <div className="sm:w-full">
-                                            <a className='tracking-tight dark:text-white text-white'></a>
-                                        </div>
-                                    </div>
-
-
-
-                                    
                                     {/* Display item details */}
                                     {getItemsForOrder(o.id).map((item, itemIdex) => (
-                                            <div key={itemIdex} className='flex flex-wrap border-b border-gray-300 ml-3 mr-3 p-3 md:grid md:grid-cols-5 md:gap-4 md:items-center'>
-                                            {item && item.product && (
-                                                <Fragment key={item.product.id}>
-                                                    <div className='flex col-span-2'>
-                                                        <img className="w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
-                                                        <div className="md:ml-3 mt-3 md:mt-6 md:text-center text-center md:text-left dark:text-white text-white">{item.product.name.substring(0, 19)}</div>
-                                                    </div>
-                                                    <div className="flex justify-start dark:text-white text-white mt-2">{`£ ${item.product.price}`}</div>
-                                                    {/* Check review details */}
-                                                    {console.log('Review Details:', reviewDetails)}
-                                                    {reviewDetails.find(review => review.userID === currentUser.uid && review.productID === item.product.id) ? (
-                                                        <Tooltip content='You have already reviewed this product'>
-                                                            <RateReview className="cursor-pointer" style={{ height: '20px', width: '20px', justifySelf: 'center', color: '#9E9E9E' }} disabled />
-                                                        </Tooltip>
-                                                    ) : (
-                                                        <Tooltip content='Review this product'>
-                                                            <RateReview className="cursor-pointer hover:scale-110 hover:text-slate-200" style={{ height: '20px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} 
-                                                            onClick={()=> openReviewProductModal(item.product)}
-                                                            disabled={showReviewModal} />
-                                                        </Tooltip>
-                                                    )}  
-                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                        <input
-                                                            type="text"
-                                                            value={o.gameKey}
-                                                            readOnly
-                                                            style={{ flex: '1', backgroundColor: 'transparent', border: 'none' }}
-                                                        />
-                                                        <button className='px-5 py-2.5 w-auto text-white bold rounded-lg px-1' onClick={() => copyToClipboard(index,o.gameKey)}>
-                                                            {copiedStates[index] ? (
-                                                                <Tooltip content="Copied!">
-                                                                    <svg className="w-3 h-3 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5"/>
-                                                                    </svg> 
-                                                                </Tooltip>
-                                                            ) : (
-                                                                <Tooltip content="Copy">
-                                                                    <svg className="w-3.5 h-3.5 hover:scale-110 hover:text-slate-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                                                        <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
-                                                                    </svg>
-                                                                </Tooltip>
-                                                            )}
-                                                        </button>
-                                                    </div>
-                                                </Fragment>
-                                            )}
-                                        </div>                                        
+                                           <div key={itemIdex} className='flex flex-wrap border-b border-gray-300 ml-3 mr-3 p-3 md:grid md:grid-cols-5 md:gap-4 md:items-center'>
+                                           {item && item.product && (
+                                               <Fragment key={item.product.id}>
+                                                   <div className='flex flex-col md:flex-row md:col-span-2'>
+                                                       <img className="md:w-16 h-16 object-cover rounded-lg" src={item.product.images[0]} alt="Product Image"/>
+                                                       <div className="md:ml-3 mt-3 md:mt-6 md:text-left sm:mt-3 sm:ml-0 sm:w-full sm:text-center dark:text-white text-white">{item.product.name.substring(0, 19)}</div>
+                                                   </div>
+                                       
+                                                   <div className="flex w-full justify-start dark:text-white text-white mt-2">{`£ ${item.product.price}`}</div>
+                                       
+                                                   {/* Check review details */}
+                                                   {reviewDetails.find(review => review.userID === currentUser.uid && review.productID === item.product.id) ? (
+                                                       <Tooltip content='You have already reviewed this product'>
+                                                       <div className="relative">
+                                                           {/* Position the icon at the top right corner */}
+                                                           <div className="absolute top-0 right-0 -mt-2 mr-2">
+                                                           <RateReview className="cursor-pointer" style={{
+                                                               height: '20px',
+                                                               width: '20px',
+                                                               justifySelf: 'center',
+                                                               filter: 'brightness(0) invert(1)',
+                                                               marginTop: '3px',
+                                                           }} disabled />
+                                                           </div>
+                                                       </div>
+                                                   </Tooltip>
+                                               ) : (
+                                                   <Tooltip content='Review this product'>
+                                                    <div className="relative">
+                                                        <div className="absolute top-0 right-0 -mt-2 mr-2">
+                                                            <RateReview className="cursor-pointer hover:scale-110 hover:text-slate-200" 
+                                                                style={{ height: '20px', marginTop: '3px', width: '20px', justifySelf: 'center', filter: 'brightness(0) invert(1)' }} 
+                                                                onClick={() => openReviewProductModal(item.product)}
+                                                                disabled={showReviewModal} />
+                                                           </div>
+                                                   </div>
+                                                   </Tooltip>
+                                                   )}
+                                       
+                                                   <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                       <input
+                                                           type="text"
+                                                           value={o.gameKey}
+                                                           readOnly
+                                                           style={{ flex: '1', backgroundColor: 'transparent', border: 'none' }}
+                                                       />
+                                                       <button className='px-5 py-2.5 w-auto text-white bold rounded-lg px-1' onClick={() => copyToClipboard(index,o.gameKey)}>
+                                                           {copiedStates[index] ? (
+                                                               <Tooltip content="Copied!">
+                                                                   <svg className="w-3 h-3 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                                                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                                                                   </svg> 
+                                                               </Tooltip>
+                                                           ) : (
+                                                               <Tooltip content="Copy">
+                                                                   <svg className="w-3.5 h-3.5 hover:scale-110 hover:text-slate-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                                                       <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
+                                                                   </svg>
+                                                               </Tooltip>
+                                                           )}
+                                                       </button>
+                                                   </div>
+                                               </Fragment>
+                                           )}
+                                       </div>
+                                                                             
                                     ))}
                                 </Card>
                             ))
@@ -1178,7 +1204,7 @@ export default function Account() {
                 {/* MY REVIEWS */}
                 { value ===  3 ? (
                     <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24  row-start-1 row-end-1 col-start-2 col-end-5 " >
-                        <h5 className="justify-self-center text-center text-4xl mb-6 font-bold tracking-tight text-white font-mono"> MY REVIEWS</h5>
+                        <h5 className="justify-self-center sm:text-2xl text-center md:text-4xl mb-6 font-bold tracking-tight text-white font-mono"> MY REVIEWS</h5>
                         {reviewDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO PRODUCT REVIEW STORED WITHIN YOUR ACCOUNT.<br/> PLEASE REVIEW PRODUCTS!!</div>
                         ) : (
@@ -1187,33 +1213,38 @@ export default function Account() {
                                 const dateB = new Date(b.date.split('/').reverse().join('/'));
                                 return dateB - dateA;
                             }).map((review) => (
-                                <Card key={review.id} className="flex h-auto w-full summary-box mt-6">
-                                    <div className='grid grid-cols-3 border-b border-gray-300 flex-wrap ml-3 mr-3 p-3' style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', justifyItems: 'start' }}>
-                                        <h3 className='font-bold tracking-tight dark:text-white text-white'>Game</h3>
-                                        <h3 className='font-bold tracking-tight dark:text-white text-white'>Name</h3>
-                                        <h3 className='font-bold tracking-tight dark:text-white text-white'>Date Placed:</h3>
-                                        <h3 className='font-bold tracking-tight dark:text-white text-white'>Posted as:</h3>
-                                        <div className='inline-flex self-start'>
-                                            <h3 className='font-bold tracking-tight dark:text-white text-white'>Rating:</h3>
-                                            <Tooltip content='Delete review'>
-                                                <img className="self-end ml-48 first-line:h-5 w-5 flex-wrap self-end cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg " alt= "delete card" onClick={()=> openDeleteReviewModal(review)} disabled={showDeleteReview}/>
-                                            </Tooltip>
+                                <Card key={review.id} className="h-auto w-full summary-box mt-6">
+                                    <div className='flex flex-col sm:flex-row sm:flex-wrap border-b border-gray-300 ml-3 mr-3 p-3 md:grid md:grid-cols-5 md:gap-4 md:items-center'>
+                                        <div className='mb-3 sm:mb-0 sm:w-1/5'>
+                                            <h3 className='font-bold tracking-tight dark:text-white text-white'>Game</h3>
+                                            {getProductDetails(review.productID) && (
+                                                <img className="mt-2 md:w-24 h-16 sm:w-full object-cover sm:h-16 rounded-lg" src={getProductDetails(review.productID).images[1]} alt="Product Image" />
+
+                                            )}
                                         </div>
-                                    
-                                        {getProductDetails(review.productID) && (
-                                            <Fragment>
-                                                {console.log('product details:', getProductDetails(review.productID))}
-                                                <img className="mt-6 w-28 h-28 object-cover rounded-lg" src={getProductDetails(review.productID).images[1]} alt="Product Image" />
-                                                <a className='mt-6 mr-16 tracking-tight dark:text-white text-white' style={{ wordWrap: 'break-word' }}>{getProductDetails(review.productID).name}</a>
-                                                <a className='mt-6 tracking-tight dark:text-white text-white'>{review.date}</a>
-                                                <a className='mt-6 tracking-tight dark:text-white text-white'>{review.userName}</a>
-                                                <div className='inline-flex self-start'>
+                                        <div className='mb-3 sm:mb-0 sm:w-1/5'>
+                                            <h3 className='font-bold tracking-tight dark:text-white text-white'>Name</h3>
+                                            {getProductDetails(review.productID) && (
+                                                <a className='mt-2 sm:mt-1 tracking-tight dark:text-white text-white'>{getProductDetails(review.productID).name}</a>
+                                            )}
+                                        </div>
+                                        <div className='mb-3 sm:mb-0 sm:w-1/5'>
+                                            <h3 className='font-bold tracking-tight dark:text-white text-white'>Date Placed:</h3>
+                                            <a className='mt-2 sm:mt-1 tracking-tight dark:text-white text-white'>{review.date}</a>
+                                        </div>
+                                        <div className='mb-3 sm:mb-0 sm:w-1/5'>
+                                            <h3 className='font-bold tracking-tight dark:text-white text-white'>Posted as:</h3>
+                                            <a className='mt-2 sm:mt-1 tracking-tight dark:text-white text-white'>{review.userName}</a>
+                                        </div>
+                                        <div className='mb-3 sm:mb-0 sm:w-1/5'>
+                                            <h3 className='font-bold tracking-tight dark:text-white text-white'>Rating:</h3>
+                                                <div className='flex items-center'>
                                                     {[...Array(5)].map((star, index) => {
                                                         const currentRating = review.rating;
                                                         return (
                                                             <label key={index}>
                                                                 <FaStar
-                                                                    className='star ml-1 mt-6'
+                                                                    className='star ml-1 mt-2'
                                                                     size={20}
                                                                     color={index + 1 <= currentRating ? "#ffc107" : "#e4e5e9"}
                                                                 />
@@ -1221,15 +1252,21 @@ export default function Account() {
                                                         );
                                                     })}
                                                 </div>
-                                            </Fragment>
-                                        )}
-                                    
+                                        </div>
                                     </div>
-                                    <div className='self-start'>
+                                    <div className='self-start w-full'>
                                         <a className='ml-3 mb-3 font-bold text-white'>{review.title}</a>
-                                        <p className='ml-3 text-white'>{review.comment}</p>
+                                        <p className='ml-3 text-white'style={{ wordWrap: 'break-word' }}>{review.comment}</p>
+                                        <div className='flex items-center'>
+                                            <div className='ml-auto'>
+                                                <Tooltip content='Delete review'>
+                                                    <img className="h-5 w-5 cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg " alt= "delete card" onClick={()=> openDeleteReviewModal(review)} disabled={showDeleteReview}/>
+                                                </Tooltip>
+                                            </div>
+                                        </div>
                                     </div>
                                 </Card>
+
                             ))
                         )}
                     </div>
