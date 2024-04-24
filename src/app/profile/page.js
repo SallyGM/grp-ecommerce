@@ -20,8 +20,6 @@ import { useProductContext } from '../context/ProductContext.js';
 import InputMask from 'react-input-mask';
 import { Tooltip } from 'flowbite-react';
 import { FaStar } from 'react-icons/fa';
-import { Menu } from '@mui/material';
-
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
