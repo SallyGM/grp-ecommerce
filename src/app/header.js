@@ -181,8 +181,8 @@ export default function Header() {
             <h3 className='text-xl flex self-center font-semibold text-white mb-5'>LOG OUT</h3>
             <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to logout?</h3>
             <div className='flex justify-evenly mt-10 mb-10'>
-                <Button type="submit" className="w-52" color="gray" onClick ={()=>setShowLogoutModal(false)}>NO</Button>
-                <Button type="submit" className="w-52"  style={{background: '#00052d', border : '#00052d'}} onClick={signOut}>YES</Button>
+                <button type="submit" className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowLogoutModal(false)}>NO</button>
+                <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={signOut}>YES</button>
             </div>
         </Modal>
     </header>

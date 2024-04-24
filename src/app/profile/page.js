@@ -933,29 +933,31 @@ export default function Account() {
                         <div className='grid grid-rows-1'>
                         <h5 className="justify-self-center sm:self-center text-4xl font-bold tracking-tight mt-10 text-white font-mono" > ACCOUNT INFORMATION</h5>
 
-                            <div style={{ backgroundColor: 'transparent' }} className="flex justify-center mt-6 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
+                            <div className="flex justify-center mt-6 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
                                 <form>
-                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
-                                        <h2 id="first_name" className="flex text-white font-mono ">FIRST NAME:</h2>
-                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block md:w-full sm:w-full bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
-                                        type="first_name" id="first name" name="firstName" value={userDetails.firstName} onChange={handleChange}/>
+                                    <div className='mt-5' style={{ display: 'grid', gridTemplateColumns: '1fr', justifyItems: 'start', alignItems: 'start' }}>    
+                                        <label id="first_name" className="flex text-white font-mono ">FIRST NAME:</label>
+                                        <input className="block md:w-full sm:w-full sm:text-sm sm:leading-6 bg-transparent text-white rounded-md py-1.5 px-1.5 border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:border focus:border-fuchsia-800 focus:outline-none focus:bg-transparent"
+                                        type="first_name" id="first name" name="firstName" value={userDetails.firstName}
+                                        onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} onChange={handleChange}/>
                                     </div>
-                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
-                                        <h2 id="last_name" className="flex text-white  font-mono ">LAST NAME:</h2>
-                                        <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block w-64 bg-transparent text-white rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
-                                        type="last_name" id="first name" name="lastName" value={userDetails.lastName} onChange={handleChange}/>
+                                    <div className='mt-5' style={{ display: 'grid', gridTemplateColumns: '1fr', justifyItems: 'start', alignItems: 'start' }}>    
+                                        <label id="last_name" className="flex text-white font-mono ">LAST NAME:</label>
+                                        <input className="block w-64 sm:text-sm sm:leading-6 bg-transparent text-white rounded-md py-1.5 px-1.5 border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:border focus:border-fuchsia-800 focus:outline-none focus:bg-transparent"
+                                        type="last_name" id="first name" name="lastName" value={userDetails.lastName}
+                                        onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} onChange={handleChange}/>
                                     </div>
-                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
-                                        <h2 id="email_address" className="flex text-white  font-mono ">EMAIL ADDRESS:</h2>
-                                        <input disabled className="block w-64 bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent text-white border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
-                                        type="email" defaultValue={(currentUser ? currentUser.email : "")} id="first name" name="email"/>
+                                    <div className='mt-5' style={{ display: 'grid', gridTemplateColumns: '1fr', justifyItems: 'start', alignItems: 'start' }}>    
+                                        <label id="email_address" className="flex text-white font-mono ">EMAIL ADDRESS:</label>
+                                        <input disabled className="block w-64 sm:text-sm sm:leading-6 text-white bg-transparent rounded-md py-1.5 px-1.5 border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:border focus:border-fuchsia-800 focus:outline-none focus:bg-transparent"
+                                        type="email" id="first name" name="email" defaultValue={(currentUser ? currentUser.email : "")}/>
                                     </div>
                                     
-                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
+                                    <div className='mt-5' style={{ display: 'grid', gridTemplateColumns: '1fr', justifyItems: 'start', alignItems: 'start' }}>    
                                     <h2 id="empty_content" className="flex  text-white font-mono "></h2>
 
                                         <button
-                                            className={`w-40 visible justify-self-end mt-6 mb-20 mr-3 self-end text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 ${editButtonClicked && !saveButtonClicked ? 'bg-green-400 hover:bg-green-500' : 'bg-gray-400'}`}
+                                            className={`w-40 visible justify-self-end my-6 mr-3 self-end text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 ${editButtonClicked && !saveButtonClicked ? 'bg-green-400 hover:bg-green-500' : 'bg-gray-400'}`}
                                                 onClick={(e) => {
                                                 e.preventDefault(); // Prevent default form submission behavior
                                                 openEditDetailsModal(userDetails);
@@ -1267,7 +1269,7 @@ export default function Account() {
                         <div >
                             <label htmlFor="password" className='text-white'>Old Password</label>
                             <div className="relative">
-                                    <input className="00 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    <input className="block w-full bg-transparent placeholder:text-grey-200 sm:text-sm sm:leading-6 rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                                     id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword} type={showOldPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
@@ -1324,7 +1326,7 @@ export default function Account() {
                         <div>
                             <label htmlFor="password" className='text-white'>New Password</label>
                             <div className="relative">
-                                    <input className="00 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    <input className="block w-full bg-transparent placeholder:text-grey-200 sm:text-sm sm:leading-6 rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                                     id="newPassword" name="newPassword" required onChange={handleNewPasswordChange} ref={newPassword} type={showPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
@@ -1381,7 +1383,7 @@ export default function Account() {
                         <div>
                             <label htmlFor="password" className='text-white'>Confirm New Password</label>
                             <div className="relative">
-                                    <input className="00 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    <input className="block w-full bg-transparent placeholder:text-grey-200 sm:text-sm sm:leading-6 rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                                     id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword} type={showConfirmPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
@@ -1445,7 +1447,7 @@ export default function Account() {
             {/*Delete account modal */}          
             <Modal isVisible={showDeletedModal} onClose ={()=> setShowDeleteModal(false)}>
                 <h3 className='text-xl flex self-center font-semibold text-white mb-5'>DELETE ACCOUNT</h3>
-                <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete yur acount?</h3>
+                <h3 className='flex self-center font-semibold text-white  mb-5'>Are you sure you want to delete your account?</h3>
                 <div className='flex justify-evenly mt-10 mb-10'>
                     <button type="submit" className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" color="gray" onClick ={()=>setShowDeleteModal(false)}> DISMISS</button>
                     <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick={()=>handleDeleteAccountButtonClick()}>CONFIRM</button>
