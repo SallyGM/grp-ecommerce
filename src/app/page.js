@@ -172,7 +172,7 @@ export default function Home() {
           <div className='px-5'>
             <Slider className='my-5 pl-3 ml-10 mr-10 self-center' {...settings} >
             {onSale.slice(0, 7).map((p) => (
-              <Card key={p.id} className="relative transition hover:scale-110 bg-transparent max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() =>
+              <Card key={p.id} className="relative transition hover:scale-110 bg-white max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() =>
                 <img className="w-full h-40 object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
                 {currentUser  ? (
                   (favourite.some(item => item.id === p.id) ? (
@@ -266,7 +266,7 @@ export default function Home() {
         <div className='px-5'>
           <Slider className='my-5 pl-3 ml-10 mr-10 self-center' {...settings} >
           {bestsellers.slice(0, 7).map((p) => (
-            <Card key={p.id} className="relative transition hover:scale-110 bg-transparent max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() =>
+            <Card key={p.id} className="relative transition hover:scale-110 bg-white max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() =>
               <img className="w-full h-40 object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
               {currentUser  ? (
                 (favourite.some(item => item.id === p.id) ? (

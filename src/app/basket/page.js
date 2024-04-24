@@ -302,7 +302,7 @@ export default function Home() {
             <table className="text-lg  roboto-light">
               <thead >
                 <tr >
-                  <th className="px-6 py-3 ">Game</th>
+                  <th className="px-6 py-3">Game</th>
                   <th>Quantity</th>
                   <th>Price</th>
                 </tr>
