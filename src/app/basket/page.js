@@ -471,7 +471,7 @@ export default function Home() {
         </div>
         
         <div className='flex flex-col m-s ml-20 mr-20 mb-5'>
-        <Card className='bg-transparent basket_card overflow-x-scroll'>
+        <Card className='bg-transparent basket_card overflow-x-scroll md:overflow-hidden'>
           <table class="w-full text-center text-white my-5">
             <thead class="text-lg bg-elite-blue text-white uppercase">
               <tr>

@@ -17,17 +17,14 @@
   }
 }*/
 
-
-  /* Firefox */
-  input[type=number] {
-    -moz-appearance: textfield;
-    /* Define appearance property with vendor prefixes */
-    -webkit-appearance: none; /* Safari and Chrome */
-    -o-appearance: none; /* Opera */
-    appearance: none; /* Standard */
-  }
-
-
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  /* Define appearance property with vendor prefixes */
+  -webkit-appearance: none; /* Safari and Chrome */
+  -o-appearance: none; /* Opera */
+  appearance: none; /* Standard */
+}
 
 .cardButton {
   background-color: #00052d;
