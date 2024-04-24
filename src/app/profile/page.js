@@ -1107,7 +1107,7 @@ export default function Account() {
                                 <Card key={o.id}  className="flex h-auto w-full roboto-bold summary-box mt-6">
                                     <div className='rounded-1 border-b-2 border-white mb-6 ml-3 mr-3 p-3 sm:flex sm:flex-wrap sm:justify-between sm:grid sm:grid-cols-4'>
                                         <div className="flex flex-wrap sm:flex-nowrap w-full">
-                                            <h3 className='font-bold tracking-tight w-full sm:w-auto'>Order Number:</h3>
+                                            <h3 className='font-bold tracking-tight w-full sm:w-auto'>Order Reference:</h3>
                                             <a className='tracking-tight dark:text-white text-white md:ml-2 w-full sm:w-auto'>{o.id.substring(1, 8)}</a>
                                         </div>
                                         <div className="flex flex-wrap sm:flex-nowrap w-full">
@@ -1304,7 +1304,7 @@ export default function Account() {
                         <div >
                             <label htmlFor="password" className='text-white'>Old Password</label>
                             <div className="relative">
-                                    <input className="00 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    <input className="focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                     id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword} type={showOldPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
@@ -1761,8 +1761,8 @@ export default function Account() {
                                     );
                                 })}
                             </div>
-                        <div className='justify-center mt-2'>
-                            <label className=' mb-2'>Title</label>
+                        <div className=' sm:flex-rows justify-center mt-2'>
+                            <label className='sm:w-full mb-2'>Title</label>
                             <textarea
                                 className="self-center peer h-12 mt-2 min-h-[10px] w-96 resize-none rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-200 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200"
                                 placeholder=" "
