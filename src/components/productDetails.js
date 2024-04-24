@@ -122,7 +122,7 @@ export default function Page({ productIDParam }) {
                                             <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " >Price: £{product.price.toFixed(2)}</h2>
                                         )}
                                         <div>
-                                            <h2 className="text-right flex flex-row roboto-lightLarge text-white">{averageReviews}&nbsp;<StarRating rating={averageReviews}></StarRating>&nbsp;({numReviews})</h2>
+                                            <h2 className="text-right flex flex-row roboto-lightLarge text-white">{averageReviews.toFixed(2)}&nbsp;<StarRating rating={averageReviews}></StarRating>&nbsp;({numReviews})</h2>
 
                                         </div>
 
