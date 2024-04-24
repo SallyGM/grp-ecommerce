@@ -215,15 +215,31 @@ export default function Product() {
                 ) : (
                   <></>
                 )}
-                
+            
                 <h5 key={i} className="text-2xl font-bold tracking-tight h-20 text-gray-900">
                   {p.name}
                 </h5>
                 <p className="font-normal text-gray-700">
-                  £ {(p.discount > 0 ? parseFloat(p.price - p.price * p.discount).toFixed(2): p.price.toFixed(2))}
+                  £{(p.price - (p.price * p.discount)).toFixed(2)}
+                    {p.discount > 0 ? (
+                      <span className='ml-2 line-through text-red-500'>£{p.price.toFixed(2)}</span>
+                    ) :  (
+                      <></>
+                    )}
                 </p>
-                <p className="font-normal text-gray-700">
-                  {p.console}
+                <p>
+                  {p.console.toLowerCase().includes("pc") ?  (
+                    <span class="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-sm font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">{p.console}</span>
+                  ) : (
+                    p.console.toLowerCase().includes("xbox") ? (
+                      <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20">{p.console}</span>
+                    ) : (
+                      p.console.toLowerCase().includes("playstation")  ? (
+                        <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">{p.console}</span>
+                      ) : (
+                        <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-600/10">{p.console}</span>
+                      ))
+                  )}        
                 </p>
 
                 <Button.Group className='items-center self-center'>
