@@ -1267,7 +1267,7 @@ export default function Account() {
                         <div >
                             <label htmlFor="password" className='text-white'>Old Password</label>
                             <div className="relative">
-                                    <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    <input className="00 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                     id="oldPassword" name="oldPassword" required onChange={handleOldPasswordChange} ref={oldPassword} type={showOldPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
@@ -1324,7 +1324,7 @@ export default function Account() {
                         <div>
                             <label htmlFor="password" className='text-white'>New Password</label>
                             <div className="relative">
-                                    <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    <input className="00 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                     id="newPassword" name="newPassword" required onChange={handleNewPasswordChange} ref={newPassword} type={showPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
@@ -1381,7 +1381,7 @@ export default function Account() {
                         <div>
                             <label htmlFor="password" className='text-white'>Confirm New Password</label>
                             <div className="relative">
-                                    <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    <input className="00 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
                                     id="confirmNewPassword" name="confirmNewPassword" required onChange={handleNewConfirmPasswordChange} ref={newConfPassword} type={showConfirmPassword ? "text" : "password"}/>
                                             <button
                                                 type="button"
@@ -1462,14 +1462,14 @@ export default function Account() {
                         
                         <div>
                             <label htmlFor="text" className='text-white'>Cardholder Name</label>
-                            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
+                            <input className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                             onInput={handleFullName} type="text" id="cardName" name="cardName" placeholder='John Wick' required value={formData.cardName} onChange={handleChangeCardDetails}/>
                             {fullNameError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameError}</span>}
                         </div>
 
                         <div> 
                             <label htmlFor="number" className='text-white'>Card Number</label>
-                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
+                            <InputMask className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                             id="cardNumber" name="cardNumber" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={formData.cardNumber} 
                             onInput={handleCardNumber} onChange={handleChangeCardDetails}/>
                             {cardNumberError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberError}</span>}
@@ -1477,7 +1477,7 @@ export default function Account() {
 
                         <div>
                             <label htmlFor="number" className='text-white'>Sort Code</label>
-                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
+                            <InputMask className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                             id="sortCode" name="sortCode" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={formData.sortCode} 
                             onInput={handleSortCode} onChange={handleChangeCardDetails}/>
                             <span className={sortCodeError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeError}</span>
@@ -1486,13 +1486,13 @@ export default function Account() {
                         <div className='inline-flex justify-evenly'>
                             <div className='mr-5'>
                                 <label htmlFor="number" className='text-white'>Exp.Date</label>
-                                <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset"
+                                <input className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                                 type="month" id="expDate" name="expDate" placeholder='12/24' required value={formData.expDate}
                                 onInput={checkAddModalDate} onChange={handleChangeCardDetails}/>
                                 {checkDateError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateError}</span>}
                             </div>
                             
-                            <div className="relative z-0 w-full mb-5 group">
+                            <div className="ml-5 noIncrementer relative">
                                 <label htmlFor="number" className='inline-flex text-white'>CVV
                                 <Tooltip content="Three digit code on the back of your card">
                                     <svg  className='ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
@@ -1502,7 +1502,7 @@ export default function Account() {
                                     </svg>
                                 </Tooltip>
                                 </label>
-                                <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-text-gray-600 focus:ring-0 focus:placeholder:text-gray-600 focus:ring-inset sm:text-sm sm:leading-6 "
+                                <InputMask className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                                 type={showAddCardCVV ? "text" : "password"}
                                 mask="999"
                                 maskChar=""
@@ -1578,14 +1578,14 @@ export default function Account() {
 
                         <div>
                             <label htmlFor="text" className='text-white'>Cardholder Name</label>
-                            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                            <input className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                             onInput={handleFullNameEditCard} type="text" id="card_holder" name="card_holder" placeholder='John Wick' required value={card.cardName} onChange={(e) => setCard({ ...card, fullName: e.target.value })}/>
                             {fullNameEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{fullNameEditCardError}</span>}
                         </div>
 
                         <div>
                             <label htmlFor="number" className='text-white'>Card Number</label>
-                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                            <InputMask className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                             id="card_number" name="card_number" mask="9999 9999 9999 9999" maskChar="" placeholder='4625 2563 2356 8514' required value={card.cardNumber} 
                             onInput={handleCardNumberEditCard} onChange={(e) => setCard({ ...card, cardNumber: e.target.value })}/> 
                             {cardNumberEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{cardNumberEditCardError}</span>}
@@ -1593,22 +1593,22 @@ export default function Account() {
 
                         <div>
                             <label htmlFor="number" className='text-white'>Sort Code</label>
-                            <InputMask className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                            <InputMask className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                             id="sort_code" name="sort_code" mask="99 99 99" maskChar="" placeholder='26 02 54' required value={card.sortCode}
                             onInput={handleSortCodeEditCard} onChange={(e) => setCard({ ...card, sortCode: e.target.value })}/> 
                             <span className={sortCodeEditCardError.length > 1 ? '' : "text-opacity-0"} style={{ color: 'red', fontSize: '12px' }}>{sortCodeEditCardError}</span>
                         </div>
 
                         <div className='inline-flex justify-evenly'>
-                            <div className='mr-3'>
+                            <div className='mr-5'>
                                 <label htmlFor="number" className='text-white'>Exp.Date</label>
-                                <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset"
+                                <input className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                                 type="month" id="exp_date" name="exp_date" placeholder='12/24' required value={card.expDate}
                                 onInput={checkEditModalDate} onChange={(e) => setCard({ ...card, expDate: e.target.value })}/>
                                 {checkDateEditCardError && <span style={{ color: 'red', fontSize: '12px' }}>{checkDateEditCardError}</span>}
                             </div>
 
-                            <div className="relative z-0 w-full mb-5 group">
+                            <div className="ml-5 noIncrementer relative">
                                 <label htmlFor="number" className='inline-flex text-white'>CVV
                                 <Tooltip content="Three digit code on the back of your card">
                                     <svg  className = 'ml-2' width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" color="#FFFFFF">
@@ -1620,7 +1620,7 @@ export default function Account() {
                                 </label>
                                     <InputMask
                                     type={showEditCardCVV ? "text" : "password"}
-                                    className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+                                    className="block w-full bg-transparent sm:text-sm sm:leading-6 placeholder-text-grey-200 rounded-md py-1.5 px-1.5 mt-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                                     inputMode="numeric"
                                     mask="999"
                                     maskChar=""

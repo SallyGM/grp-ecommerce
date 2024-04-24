@@ -34,8 +34,12 @@ module.exports = {
         '9xl':'8rem' /* 128px */
       },
       boxShadow: {
-        'input': '0 0 10px 2px rgba(227, 18, 140, 0.7)',
-      }
+        'input': '0 0 10px 3px rgba(227, 18, 140, 0.5)',
+        'focus': 'inset 0 0 3px 3px rgba(227, 18, 140, 0.5)'
+      },
+      colors: {
+        'pink-buster': '#E3128C', // rgb(227,18,140)
+      },
     },
     plugins: [
       require('flowbite/plugin'),

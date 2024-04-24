@@ -283,7 +283,7 @@ export default function Login() {
 
             <div>
               <label>Email address</label>
-              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+              <input className="block w-full bg-transparent placeholder:text-grey-200 rounded-md sm:text-sm sm:leading-6 py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
               onChange={handleEmailChange} ref={email}/>
                 {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}  
             </div>
@@ -300,7 +300,7 @@ export default function Login() {
                 </label>
                 <div className="relative">
                     <input
-                      className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6 sm:text-sm sm:leading-6"
+                      className="block w-full bg-transparent placeholder:text-grey-200 rounded-md sm:text-sm sm:leading-6 py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                       onChange={handlePasswordChange} ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
                         <button
                           type="button"
