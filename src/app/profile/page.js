@@ -912,7 +912,7 @@ export default function Account() {
     
     return (
         <Fragment>
-            <div className='sm-grid-cols-1 bg-blue-gradient grid grid-rows-1 md:grid-cols-4 md:gap-x-20 md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-3 bg-dark-night justify-items-center overflow-x-scroll no-scrollbar'> 
+            <div className='sm-grid-cols-1 bg-blue-gradient grid grid-rows-1 md:grid-cols-4 md:gap-x-6  md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-3 bg-dark-night justify-items-center overflow-x-scroll no-scrollbar'> 
                 
                 <div className="relative">
                     {/* Button to toggle visibility of tab menu */}
@@ -945,14 +945,14 @@ export default function Account() {
                 {/* ACCOUNT */}
                 {value ===  0 ? (
                     <>
-                    <div className="sm:flex-cols sm:justify-self-center md:justify-self-center h-auto w-72 md:w-full my-6 row-start-1 row-end-1 col-start-2 col-end-5" >
+                    <div className="sm:flex-cols sm:justify-self-center md:justify-self-start h-auto w-72 md:w-full my-6 row-start-1 row-end-1 col-start-2 col-end-5" >
                         {userDetails && (
                         <div className='grid grid-rows-1'>
                         <h5 className="justify-self-center sm:text-2xl text-center md:text-4xl font-bold tracking-tight mt-10 text-white font-mono" > ACCOUNT INFORMATION</h5>
 
                             <div style={{ backgroundColor: 'transparent' }} className="flex justify-center mt-6 h-auto w-full bg-transparent border-white border-b-2 border-teal-500">
                                 <form>
-                                    <div className='mb-3' style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', justifyItems: 'start', alignItems: 'start' }}>    
+                                    <div className='mb-3 sm:w-full' style={{ display: 'grid', gridTemplateColumns: '1fr', justifyItems: 'start', alignItems: 'start' }}>    
                                         <h2 id="first_name" className="flex text-white font-mono ">FIRST NAME:</h2>
                                         <input onClick={handleEditButtonClick} disabled={!editButtonClicked || saveButtonClicked} className="block md:w-full sm:w-full sm:text-sm sm:leading-6 bg-transparent text-white rounded-md py-1.5 px-1.5 border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:border focus:border-fuchsia-800 focus:outline-none focus:bg-transparent"
                                         type="first_name" id="first name" name="firstName" value={userDetails.firstName} onChange={handleChange}/>
@@ -972,7 +972,7 @@ export default function Account() {
                                     <h2 id="empty_content" className="flex  text-white font-mono "></h2>
 
                                         <button
-                                            className={`w-40 visible justify-self-end mt-6 mb-20 mr-3 self-end text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 ${editButtonClicked && !saveButtonClicked ? 'bg-green-400 hover:bg-green-500' : 'bg-gray-400'}`}
+                                            className={`w-40 visible justify-self-end mt-6 mb-6 mr-3 self-end text-white bold focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 ${editButtonClicked && !saveButtonClicked ? 'bg-green-400 hover:bg-green-500' : 'bg-gray-400'}`}
                                                 onClick={(e) => {
                                                 e.preventDefault(); // Prevent default form submission behavior
                                                 openEditDetailsModal(userDetails);
@@ -994,9 +994,9 @@ export default function Account() {
                             </button>
                         </div>
 
-                        <div className='flex md:self-center sm:justify-center sm-w-32 h-auto row-start-2 row-end-2 col-start-2 col-end-5 mb-6'>
+                        <div className='sm:flex sm:col-span-1 md:self-center sm:justify-center h-auto md:row-start-2 md:row-end-2 md:col-start-2 md:col-end-5 mb-6'>
                             <div>
-                                <button type="submit" className="text-white bold rounded-lg px-5 py-2.5  mt-10 deleteAccount-btn" onClick={() => setShowDeleteModal(true)} disabled={showDeletedModal}>
+                                <button type="submit" className="text-white bold rounded-lg px-5 py-2.5 mt-10 deleteAccount-btn" onClick={() => setShowDeleteModal(true)} disabled={showDeletedModal}>
                                     DELETE ACCOUNT
                                 </button>
                             </div>
@@ -1011,7 +1011,7 @@ export default function Account() {
                 {/* STORED CARDS */}
                 { value ===  1 ? (
                     <>
-                    <div style={{ backgroundColor: 'transparent'}} className="overflow-y-auto content-center h-auto w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
+                    <div style={{ backgroundColor: 'transparent'}} className="overflow-y-auto content-center h-auto sm:w-56 md:w-full my-6 mr-12 mt-24 bg-blue-900 border-blue-900 row-start-1 row-end-2 col-start-2 col-end-5 " >
                         <h5 style={{ position: 'sticky', top: 0, zIndex: 1 }} className="justify-self-center sm:justify-self-center text-center sm:text-center sm:text-2xl mb-3 md:text-4xl font-bold tracking-tight text-white font-mono" > MY STORED CARDS</h5>
                         {cardDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-3 mb-44 font-mono text-center">NO CARD STORED WITHIN YOUR ACCOUNT.<br/> PLEASE ADD ONE!</div>
@@ -1046,12 +1046,12 @@ export default function Account() {
                                         />
                                         <h2 className="dark:text-white text-white font-mono">{c.cardName}</h2>
                                         <h2 className="dark:text-white text-white font-mono">{c.cardNumber.slice(-4)}</h2>
-                                        <div className="inline-flex sm:justify-between">
+                                        <div className="inline-flex ">
                                             <Tooltip content='Edit your card'>
                                                 <img className="first-line:h-6 w-6 cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
                                             </Tooltip>
                                             <Tooltip content='Delete your card'>
-                                                <img className="first-line:h-5 w-5 cursor-pointer hover:scale-110 hover:text-slate-200 md:ml-32" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                                <img className="first-line:h-5 w-5  cursor-pointer hover:scale-110 hover:text-slate-200 md:ml-32" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
                                             </Tooltip>
                                         </div>
 
@@ -1083,8 +1083,8 @@ export default function Account() {
 
                 {/* ORDERED KEYS */}
                 { value ===  2 ? (
-                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="sm:felx sm:flex-col overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
-                        <h5 className="justify-self-center text-center sm:text-2xl md:text-4xl mb-6 tracking-tight text-white bebas-neue-regularLarge" > MY ORDERED KEYS</h5>
+                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="sm:flex sm:flex-col md:overflow-y-auto md:justify-items-center h-auto sm-ml-3 sm:w-56 md:w-full md:my-6 md:mt-24 md:row-start-1 md:row-end-1 md:col-start-2 md:col-end-5 " >
+                        <h5 className="justify-self-center text-center sm:text-2xl md:text-4xl mb-6 font-bold tracking-tight text-white font-mono" > MY ORDERED KEYS</h5>
                         {OrderDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 bebas-neue-regular text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
                         ) : (
@@ -1094,7 +1094,7 @@ export default function Account() {
                                 return dateB - dateA;
                             }).map((o, index) => (
                             
-                                <Card key={o.id}  className="flex h-auto w-full roboto-bold summary-box mt-6">
+                                <Card key={o.id}  className="flex h-auto md:w-full roboto-bold summary-box mt-6">
                                     <div className='rounded-1 border-b-2 border-white mb-6 ml-3 mr-3 p-3 sm:flex sm:flex-wrap sm:justify-between sm:grid sm:grid-cols-4'>
                                         <div className="flex flex-wrap sm:flex-nowrap w-full">
                                             <h3 className='font-bold tracking-tight w-full sm:w-auto'>Order Number:</h3>
@@ -1116,7 +1116,7 @@ export default function Account() {
 
                                     {/* Display item details */}
                                     {getItemsForOrder(o.id).map((item, itemIdex) => (
-                                           <div key={itemIdex} className='flex flex-wrap border-b border-gray-300 ml-3 mr-3 p-3 md:grid md:grid-cols-5 md:gap-4 md:items-center'>
+                                           <div key={itemIdex} className='flex flex-wrap border-b border-gray-300 ml-3 mr-3 p-3 md:grid md:grid-cols-5  md:items-center'>
                                            {item && item.product && (
                                                <Fragment key={item.product.id}>
                                                    <div className='flex flex-col md:flex-row md:col-span-2'>
@@ -1193,7 +1193,7 @@ export default function Account() {
 
                 {/* MY REVIEWS */}
                 { value ===  3 ? (
-                    <div style={{ backgroundColor: 'transparent', minHeight: '70vh', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto justify-items-center h-auto w-full my-6 mr-12 mt-24  row-start-1 row-end-1 col-start-2 col-end-5 " >
+                    <div style={{ backgroundColor: 'transparent', minHeight: '70vh', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box'}} className="overflow-y-auto justify-items-center h-auto sm:flex-col w-72 sm:ml-16 md:w-full md:my-6 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
                         <h5 className="justify-self-center sm:text-2xl text-center md:text-4xl mb-6 font-bold tracking-tight text-white font-mono"> MY REVIEWS</h5>
                         {reviewDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 font-mono text-center">NO PRODUCT REVIEW STORED WITHIN YOUR ACCOUNT.<br/> PLEASE REVIEW PRODUCTS!!</div>
