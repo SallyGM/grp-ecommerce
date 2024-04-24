@@ -17,14 +17,17 @@
   }
 }*/
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-  /* Define appearance property with vendor prefixes */
-  -webkit-appearance: none; /* Safari and Chrome */
-  -o-appearance: none; /* Opera */
-  appearance: none; /* Standard */
-}
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+    /* Define appearance property with vendor prefixes */
+    -webkit-appearance: none; /* Safari and Chrome */
+    -o-appearance: none; /* Opera */
+    appearance: none; /* Standard */
+  }
+
+
 
 .cardButton {
   background-color: #00052d;
@@ -154,7 +157,6 @@ body {
 }
 
 .prod_btn{
-  
   margin-top: 10px;
   color: #f0e8e8;
   background:#c50edd;

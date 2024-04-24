@@ -72,7 +72,7 @@ export default function Header() {
             <nav className="border-gray-200 bg-dark-night">
                 <div className="flex flex-wrap justify-between gap-8 columns-3 items-center mx-auto max-w-screen-xl p-4">
                     {/* Logo to be placed here :) */}
-                    <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse hover:scale-110">
+                    <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse transition ease-in-out hover:animate-pulse hover:scale-110">
                         <img className='w-16 h-14 self-center' src={logo.src}/> 
                         <span className='text-white bebas-neue-regular'>GAME BUSTERS</span>
                     </Link>

@@ -33,6 +33,9 @@ module.exports = {
         '8xl':'6rem', /* 96px */
         '9xl':'8rem' /* 128px */
       },
+      boxShadow: {
+        'input': '0 0 10px 2px rgba(227, 18, 140, 0.7)',
+      }
     },
     plugins: [
       require('flowbite/plugin'),

@@ -200,7 +200,7 @@ export default function Product() {
         ) : (
           <div className='flex flex-row flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 justify-center'>
             {showProduct.map((p, i) => (
-              <Card key={i} className="relative max-w-sm mx-3 my-3 w-72" renderImage={() => 
+              <Card key={i} className="relative transition hover:scale-110 max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() => 
                 <img className="w-full h-60 object-fill cursor-pointer rounded-lg" src={p.images[2]} alt="image 1" onClick={(e) => handleClickOpenProduct(p.id, e)} />}>             
                 {currentUser  ? (
                   (favourite.some(item => item.id === p.id) ? (

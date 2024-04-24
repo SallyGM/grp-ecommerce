@@ -114,7 +114,7 @@ export default function Home() {
   const handleFullName = (e) => {
     const isValid = /^([A-Z ][a-z ]*|[a-z ]+)$/i.test(e.target.value) && e.target.value.length <= 40;
     
-    if (!isValid && e.target.value.length > 0) {
+    if (!isValid && e.target.value.length != 0) {
       setFullNameError('Full name cannot contain special characters or numbers');
     } else {
       setFullNameError('');
