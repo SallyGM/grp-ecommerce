@@ -267,8 +267,8 @@ export default function Home() {
         }
 
         await clearBasket();
-        router.push(`/profile/order`);
         toast.success('Ordered placed!');
+        router.push(`/`);
       } catch (error) {
         console.log("error");
         toast.success('Error placing the order.');
@@ -367,7 +367,7 @@ export default function Home() {
                 <>
                 <hr className='h-px mx-3 my-5 bg-slate-600 border-0 dark:bg-gray-700'/>
                 <div className="relative z-0 w-full mb-5 group">
-                  <label>Full Name</label>
+                  <label>Cardholder full name:</label>
                   <input ref={fullName} onChange={handleFullName} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6" placeholder="Full Name..." required />     
                   {fullNameError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{fullNameError}</span>}
                 </div>
@@ -378,7 +378,7 @@ export default function Home() {
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
                   <label>Sort Code</label>
-                  <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6" mask="99 99 99" maskChar="" placeholder='Sort Code...' required/>  
+                  <InputMask ref={sortCode} onChange={handleSortCode} className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6" mask="99-99-99" maskChar="" placeholder='Sort Code...' required/>  
                   {sortCodeError && <span style={{ color: 'red', fontSize: '14px', fontWeight:"bold" }}>{sortCodeError}</span>}
                 </div>
                 <div className="grid md:grid-cols-2 md:gap-6">
