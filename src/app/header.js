@@ -72,7 +72,7 @@ export default function Header() {
             <nav className="border-gray-200 bg-dark-night">
                 <div className="flex flex-wrap justify-between gap-8 columns-3 items-center mx-auto max-w-screen-xl p-4">
                     {/* Logo to be placed here :) */}
-                    <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse hover:scale-110">
+                    <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse transition ease-in-out hover:animate-pulse hover:scale-110">
                         <img className='w-16 h-14 self-center' src={logo.src}/> 
                         <span className='text-white bebas-neue-regular'>GAME BUSTERS</span>
                     </Link>
@@ -83,7 +83,7 @@ export default function Header() {
                                 <MagnifyingGlassIcon className="w-4 h-4 text-gray-500 hover:scale-110"/>                   
                                 <span className="sr-only">Search icon</span>
                             </button>
-                            <input type="text" onChange={handleChange} ref={search} className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..."/>
+                            <input type="text" onChange={handleChange} ref={search} className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search..."/>
                         </div>
                     ) : (
                         <div className="relative hidden md:block">
@@ -91,7 +91,7 @@ export default function Header() {
                                 <MagnifyingGlassIcon className="w-4 h-4 text-gray-500 hover:scale-110"/>                   
                                 <span className="sr-only">Search icon</span>
                             </button>
-                            <input type="text" onChange={handleChange} ref={search} className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..."/>                      
+                            <input type="text" onChange={handleChange} ref={search} className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search..."/>                      
                         </div>
                     )}
 
@@ -104,12 +104,12 @@ export default function Header() {
                         </Link>
                         { currentUser != null ? (
                             <>
-                                <Link href="/favourites" className="hover:underline">
+                                <Link href="/favourites" className="hover:underline cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-white hover:scale-110 hover:text-slate-200">
                                         <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                                     </svg>
                                 </Link>
-                                <Link href="/profile" className="hover:underline">
+                                <Link href="/profile" className="hover:underline cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-white hover:scale-110 hover:text-slate-200">
                                         <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clipRule="evenodd" />
                                     </svg>

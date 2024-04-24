@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
+  darkMode: 'false',
+  content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -32,6 +33,13 @@ module.exports = {
         '7xl':'4.5rem', /* 72px */
         '8xl':'6rem', /* 96px */
         '9xl':'8rem' /* 128px */
+      },
+      boxShadow: {
+        'input': '0 0 10px 3px rgba(227, 18, 140, 0.5)',
+        'focus': 'inset 0 0 3px 3px rgba(227, 18, 140, 0.5)'
+      },
+      colors: {
+        'pink-buster': '#E3128C', // rgb(227,18,140)
       },
     },
     plugins: [

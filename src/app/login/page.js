@@ -276,14 +276,14 @@ export default function Login() {
 
 
     <div className='flex flex-col md:flex-row lg:flex-row bg-blue-gradient'> 
-      <Card className="self-center h-screen w-1/2 my-6 my-12 summary-box sm:my-6 sm:mx-6 md:ml-24 md:mr-3 overflow-y-scroll no-scrollbar" >
-        <h1 className="self-center text-4xl font-bold text-white font-mono">LOGIN</h1>
+      <div className="self-center h-screen w-1/2 my-6 my-12 summary-box sm:my-6 sm:mx-6 md:ml-24 md:mr-3 overflow-y-scroll no-scrollbar p-6 rounded-lg shadow" >
+        <h1 className="self-center text-4xl font-bold text-center m-3 text-white font-mono">LOGIN</h1>
         <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
 
             <div>
               <label>Email address</label>
-              <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6"
+              <input className="block w-full bg-transparent placeholder:text-grey-200 rounded-md sm:text-sm sm:leading-6 py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
               onChange={handleEmailChange} ref={email}/>
                 {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}  
             </div>
@@ -300,7 +300,7 @@ export default function Login() {
                 </label>
                 <div className="relative">
                     <input
-                      className="block w-full bg-transparent rounded-md py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 focus:border-fuchsia-800 shadow-sm focus:outline-none focus:border-red ring-1 ring-inset placeholder:text-gray-200 focus:ring-0 focus:placeholder:text-white focus:ring-inset sm:text-sm sm:leading-6 sm:text-sm sm:leading-6"
+                      className="block w-full bg-transparent placeholder:text-grey-200 rounded-md sm:text-sm sm:leading-6 py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
                       onChange={handlePasswordChange} ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
                         <button
                           type="button"
@@ -360,35 +360,38 @@ export default function Login() {
         </div>
 
         {/*Divider between login options*/} 
-        <div className="inline-flex mt-6 self-center">
+        <div className="inline-flex my-6 items-center justify-center self-center w-full">
           <Divider className="self-center m-3 w-24 md:w-48"></Divider>
             <a className="justify-self-center text-white m-3"> OR </a>
           <Divider className="self-center m-3 w-24 md:w-48"></Divider>
         </div>
         
-        {/*Facebook sign in button*/}
-        <button onClick={signInWithFacebook} className="text-white bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-600/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-blue-600/55 me-2 mb-2 md:w-72 justify-center self-center">
-          <svg className="w-6 h-6 me-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
-          </svg>
-          Sign in with Facebook
-        </button>
+        <div className="flex flex-col">
+          {/*Facebook sign in button*/}
+          <button onClick={signInWithFacebook} className="text-white w-full bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-600/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 md:w-80 justify-center self-center">
+            <svg className="w-6 h-6 me-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d ="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+            </svg>
+            Sign in with Facebook
+          </button>
 
-        {/*Google sign in button*/}
-        <button onClick={signInWithGoogle} className="text-white bg-red-400 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-red-400/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-red-400/55 me-2 mb-2 md:w-72 justify-center self-center">
-          <svg className="w-6 h-6 me-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
-          </svg>
-          Sign in with Google
-        </button>   
-      </Card>
+          {/*Google sign in button*/}
+          <button onClick={signInWithGoogle} className="text-white w-full mt-2 bg-red-400 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-red-400/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 md:w-80 justify-center self-center">
+            <svg className="w-6 h-6 me-2" fill='white' aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d ="M6 12a6 6 0 0011.659 2H12v-4h9.805v4H21.8c-.927 4.564-4.962 8-9.8 8-5.523 0-10-4.477-10-10S6.477 2 12 2a9.99 9.99 0 018.282 4.393l-3.278 2.295A6 6 0 006 12z"/>
+            </svg>
+            Sign in with Google
+          </button> 
+        </div> 
+          
+      </div>
 
-      <Card className="self-center h-screen w-1/2 my-6 my-12 summary-box sm:my-6 sm:mx-6 md:mr-24 md:ml-3 overflow-y-scroll no-scrollbar">
-        <h1 className="self-center text-4xl font-bold text-white font-mono ">REGISTER</h1>
+      <div className="self-center h-screen w-1/2 my-6 my-12 summary-box sm:my-6 sm:mx-6 md:mr-24 md:ml-3 overflow-y-scroll no-scrollbar p-6 rounded-lg shadow">
+        <h1 className="self-center text-4xl font-bold text-white font-mono text-center m-3">REGISTER</h1>
         <p className="text-white text-center font-mono my-8  mt-12 mb-12">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMMUNITY</p>
 
-        <div class="flex items-center self-center p-4 text-sm text-white rounded-lg bg-transparent dark:bg-gray-800 dark:text-gray-300 " role="alert">
-          <svg className="text-white mr-6 bi bi-tags" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white"viewBox="0 0 16 16">
+        <div class="flex flex-col md:flex-row items-center m-3 justify-center self-center p-4 text-sm text-white rounded-lg bg-transparent" role="alert">
+          <svg className="text-white mr-6 mb-4 md:mb-0 bi bi-tags" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white"viewBox="0 0 16 16">
             <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z"/>
             <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z"/>
           </svg>
@@ -398,8 +401,8 @@ export default function Login() {
           </div>
         </div>
 
-        <div class="flex items-center self-center p-4 text-sm text-white rounded-lg bg-transparent dark:bg-gray-800 dark:text-gray-300 " role="alert">
-          <svg className="text-white mr-6 bi bi-globe" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" viewBox="0 0 16 16">
+        <div class="flex flex-col md:flex-row items-center m-3 justify-center self-center p-4 text-sm text-white rounded-lg bg-transparent" role="alert">
+          <svg className="text-white mr-6 mb-4 md:mb-0 bi bi-globe" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" viewBox="0 0 16 16">
             <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z"/>
           </svg>
           <span class="sr-only">Info</span>
@@ -408,10 +411,12 @@ export default function Login() {
           </div>
         </div>
 
-        <button type='button' id="register" disabled={loading} onClick={redirectToRegistration} className="bold text-white mt-7 bg-green-400 w-full focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2 md:w-80 self-center" >
-          REGISTER
-        </button>
-      </Card>
+        <div className='flex flex-row justify-center'>
+          <button type='button' id="register" disabled={loading} onClick={redirectToRegistration} className="bold text-white w-full mt-7 bg-green-400 w-full focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2 md:w-96 items-center self-center" >
+            REGISTER
+          </button>
+        </div>
+      </div>
   </div>
     {/*Forgot password modal */}
     <Modal isVisible={showForgotPassword}  onClose ={()=> setShowForgotPassword(false)}>
@@ -419,7 +424,7 @@ export default function Login() {
       <h3 className='flex self-center font-semibold text-white  mb-5'>Insert your email to reset your password</h3>
       <form className="text-white self-center font-mono" onSubmit={handleSendResetPasswordVerification}>
         <div className=' mt-2 mb-2 flex-wrap'>  
-            <h2 id="email_address" className="flex dark:text-white mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
+            <h2 id="email_address" className="flex mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
             <input className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             type="email" id="recover_email" name="recover_email" required onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
             {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
