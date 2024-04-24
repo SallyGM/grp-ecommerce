@@ -24,7 +24,11 @@ export function ProductProvider({ children }) {
         }));
 
         // filter by date
-        salesArray = salesArray.filter((s) => new Date(s.endDate).getTime() >= new Date().getTime())
+        
+        salesArray = salesArray.filter((s) => {
+          var date = s.endDate.split(/\//);
+          return new Date(date[1] + "/" + date[0] + "/" + date[2]).getTime() >= new Date().getTime()
+        }) 
 
         setError(false);
         if(salesArray.length != 0){
