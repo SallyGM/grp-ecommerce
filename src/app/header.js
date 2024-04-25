@@ -74,7 +74,7 @@ export default function Header() {
                     {/* Logo to be placed here :) */}
                     <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse transition ease-in-out hover:animate-pulse hover:scale-110">
                         <img className='w-16 h-14 self-center' src={logo.src}/> 
-                        <span className='text-white bebas-neue-regular'>GAME BUSTERS</span>
+                        <span className='text-white bebas-neue-medium md:bebas-neue-regular'>GAME BUSTERS</span>
                     </Link>
                     
                     { valid ? (

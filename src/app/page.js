@@ -192,11 +192,11 @@ export default function Home() {
                 <img className="w-full h-40 object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
                 {currentUser  ? (
                   (favourite.some(item => item.id === p.id) ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7">
+                    <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7 hover:scale-125">
                       <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                     </svg>
                   ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} fill="white" viewBox="0 0 24 24" strokeWidth={1.5} stroke="gray" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7">
+                    <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} fill="#f7f7f7" viewBox="0 0 24 24" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7 hover:scale-125">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                     </svg>
                   ))
@@ -211,7 +211,7 @@ export default function Home() {
                 <p className="font-normal text-gray-700">
                   £{(p.price - (p.price * p.discount)).toFixed(2)}
                   {p.discount > 0 ? (
-                    <span className='ml-2 line-through'>£{p.price.toFixed(2)}</span>
+                    <span className='ml-2 text-red-500 line-through'>£{p.price.toFixed(2)}</span>
                   ) :  (
                     <></>
                   )}
@@ -235,13 +235,22 @@ export default function Home() {
 
                 <button className="bg-dark-night rounded-lg text-white p-3 hover:bg-[#0d1a8d]" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
                 
-                <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
-                  <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
-                    <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
-                  </svg>
-                  Add to Cart
-                </button>
+                {p.quantity == 0 ? (
+                  <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:bg-slate-500 rounded-lg text-center justify-center self-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"className="w-6 h-6 me-3 text-white" >
+                      <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
+                    </svg>
+                    Out of stock
+                    </button>
+                  ): (
+                  <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
+                    <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
+                    </svg>
+                    Add to Cart
+                  </button>
+                )}
               </Card>
             ))}
             </Slider>
@@ -286,11 +295,11 @@ export default function Home() {
               <img className="w-full h-40 object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
               {currentUser  ? (
                 (favourite.some(item => item.id === p.id) ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7">
+                  <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7 hover:scale-125">
                     <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                   </svg>
                 ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} fill="white" viewBox="0 0 24 24" strokeWidth={1.5} stroke="gray" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7">
+                  <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} fill="#f7f7f7" viewBox="0 0 24 24" className="absolute cursor-pointer -ml-3 top-4 w-7 h-7 hover:scale-125">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                   </svg>
                 ))
@@ -302,9 +311,14 @@ export default function Home() {
                 {p.name}
               </h5>
               
-              <p className="font-normal text-gray-700">
-                £{(p.discount > 0 ? parseFloat(p.price - p.price * p.discount).toFixed(2): p.price)}
-              </p>
+                <p className="font-normal text-gray-700">
+                  £{(p.price - (p.price * p.discount)).toFixed(2)}
+                  {p.discount > 0 ? (
+                    <span className='ml-2 text-red-500 line-through'>£{p.price.toFixed(2)}</span>
+                  ) :  (
+                    <></>
+                  )}
+                </p>
 
               <Button.Group className='items-center self-center'>
                 <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>
@@ -324,13 +338,22 @@ export default function Home() {
 
               <button className="bg-dark-night rounded-lg text-white p-3 hover:bg-[#0d1a8d]" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
               
-              <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
-                <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
-                  <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
-                </svg>
-                Add to Cart
-              </button>
+              {p.quantity == 0 ? (
+                <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:bg-slate-500 rounded-lg text-center justify-center self-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"className="w-6 h-6 me-3 text-white" >
+                    <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
+                  </svg>
+                  Out of stock
+                  </button>
+                ): (
+                <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
+                  <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
+                    <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
+                  </svg>
+                  Add to Cart
+                </button>
+                )}
             </Card>
           ))}
           </Slider>

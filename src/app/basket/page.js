@@ -95,7 +95,7 @@ export default function Home() {
   
           if(b.discount > 0){
             total += parseFloat(b.price - b.price * b.discount).toFixed(2) * quantity;
-            discount += b.price * b.discount
+            discount += b.price * b.discount *b.quantity;
           } else {
             total += price * quantity;
           }
@@ -230,22 +230,27 @@ export default function Home() {
           const newStock = currentStock - quantity;
           const newSold = currentSold + quantity;
   
-          // Update the stock quantity of the product in the database
-          await update(ref(database, `Product/${productId}`), {
-            quantity: newStock,
-            sold: newSold,
-          });
-          
-  
-          console.log(`Updated stock quantity for product ${productId}`);
+          // make sure the product quantity needs to be valid
+          if(newStock < 0){
+            toast.error("Quantity of the " + productData.name + "is unavailable!")
+            return false;
+          } else {
+            // Update the stock quantity of the product in the database
+            await update(ref(database, `Product/${productId}`), {
+              quantity: newStock,
+              sold: newSold,
+            });
+
+            return true;
+          }
         } else {
           console.log(`Product ${productId} not found in the database`);
+          return false;
         }
       }
-      
     } catch (error) {
       console.error('Error updating product stock:', error);
-      
+      return false;
     }
   };
 
@@ -254,21 +259,26 @@ export default function Home() {
     if((cardNumberError === "" && fullNameError === "" && expirationDateError === "" && cvvError === "") || !defaultPayment){
       try{
         //calling update stock function when order is placed
-        await updateProductStock(userBasket);
-        setCurrentDate(new Date());
-        const gameKey = uuidv4();
+        const stockUpdate = await updateProductStock(userBasket);
+        if(stockUpdate){
+          setCurrentDate(new Date());
+          const gameKey = uuidv4();
 
-        if(defaultPayment){
-          await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
-        cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
+          if(defaultPayment){
+            await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
+          cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
+          } else {
+            await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, cards[paymentOption].cardName,
+          cards[paymentOption].cardNumber, cards[paymentOption].securityCode, cards[paymentOption].expDate, cards[paymentOption].sortCode);
+          }
+
+          await clearBasket();
+          toast.success('Ordered placed!');
+          router.push(`/`);
         } else {
-          await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, cards[paymentOption].cardName,
-        cards[paymentOption].cardNumber, cards[paymentOption].securityCode, cards[paymentOption].expDate, cards[paymentOption].sortCode);
+          toast.error("Please ammend the order to CheckOut")
         }
-
-        await clearBasket();
-        toast.success('Ordered placed!');
-        router.push(`/`);
+        
       } catch (error) {
         console.log("error");
         toast.success('Error placing the order.');
@@ -473,7 +483,7 @@ export default function Home() {
         <div className='flex flex-col m-s ml-20 mr-20 mb-5'>
         <Card className='bg-transparent basket_card overflow-x-scroll md:overflow-hidden'>
           <table class="w-full text-center text-white my-5">
-            <thead class="text-lg bg-elite-blue text-white uppercase">
+            <thead class="text-lg bg-elite-blue  text-white uppercase">
               <tr>
                 <th scope="col" class="px-6 py-3">
                   Product
@@ -523,7 +533,7 @@ export default function Home() {
                   <h2 id="sub_total" className="flex w-1/5 text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price).toFixed(2))}</h2>
                   </td>
                   <td className="px-6 py-4">
-                  <h2 id="sub_total" className="flex w-1/5 text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price * b.quantity).toFixed(2))}</h2>
+                  <h2 id="total" className="flex w-1/5 text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2)*b.quantity: parseFloat(b.price * b.quantity).toFixed(2))}</h2>
                   </td>
                   <td className="px-6 py-4">
                     <Tooltip content='Remove Product'>
@@ -543,30 +553,33 @@ export default function Home() {
           </table>
           </Card>
         </div>
-        {(basketSize > 0 ? ( 
-          <div className='total_box grid grid-rows-4 flex-wrap ml-20 mr-20 pb-10'>
-            <div className='flex justify-between p-5'>
-              <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white roboto-light ">SAVED</h2>
-              <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white roboto-light">£{parseFloat(basketDiscount).toFixed(2)}</h2>
-            </div>
-            <div className='pl-10 pr-10 ml-20 mr-20'>
-              <hr className="h-px my-8 bg-white border-5 dark:bg-white"/>
-            </div>
-            <div className='flex justify-between pl-5 pr-5'>
-              <h2 id="total_saved" className="text-left ml-20 text-xl dark:text-white self-center text-white roboto-bold ">ORDER TOTAL</h2>
-              <h2 id="amount_saved "className="text-right  mr-20 text-xl dark:text-white self-center text-white roboto-bold">£{basketPrice.toFixed(2)}</h2>
-            </div>
+        {(basketSize > 0 ? (
+          <div className='flex-row flex  w-11/12 md:w-8/12 mx-auto justify-center'>
+            <div className='total_box flex-col w-full md:grid md:grid-rows-4  pt-2 pb-2' >
+              <div className='flex justify-between  '>
+                <h2 id="total_saved" className="text-left ml-5 md:ml-40 text-xl dark:text-white self-center text-white roboto-light ">SAVED</h2>
+                <h2 id="amount_saved "className="text-right mr-5 md:mr-40 text-xl dark:text-white self-center text-white roboto-light">£{parseFloat(basketDiscount).toFixed(2)}</h2>
+              </div>
+              <div className='ml-5 mr-5 md:ml-20 justify-center md:mr-20'>
+                <hr className="h-px self-center bg-white border-5 dark:bg-white"/>
+              </div>
+              <div className='flex justify-between '>
+                <h2 id="total_saved" className="text-left ml-5 md:ml-40 md:text-xl dark:text-white self-center text-white roboto-bold ">ORDER TOTAL</h2>
+                <h2 id="amount_saved "className="text-right mr-5 md:mr-40 md:text-xl dark:text-white self-center text-white roboto-bold">£{basketPrice.toFixed(2)}</h2>
+              </div>
 
-            <div className='flex justify-center mt-5'>
-              {/*hoverClassName='c50edd'*/}
-              <button className='basket_btn bold text-white mt-7 w-full focus:outline-none focus:ring-4 rounded-lg px-5 py-2.5 me-2 mb-2 md:w-80 self-center' onClick={handleCheckOutPage}>
-                CHECKOUT
-              </button>
+              <div className='flex justify-center  '>
+                {/*hoverClassName='c50edd'*/}
+                <button className='basket_btn text-white   w-full focus:outline-none focus:ring-4 rounded-lg  md:px-5 py-2.5 roboto-light md:w-80 self-center' onClick={handleCheckOutPage}>
+                  CHECKOUT
+                </button>
+              </div>
             </div>
-          </div>
+          </div> 
           ) : (
             <></>
-          ))}
+          ))
+          }
         
       </div>
     ))
