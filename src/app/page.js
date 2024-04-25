@@ -125,7 +125,7 @@ export default function Home() {
   }
 
   function handleClickChangeQuantity(p, op){
-    let prod = [...product]
+    let prod = [...bestsellers]
     let i = prod.indexOf(p)
 
     if(op == "+" && prod[i].amount <= 10){
@@ -138,6 +138,22 @@ export default function Home() {
     
     setBestSellers(prod)
   }
+
+  function handleClickChangeQuantityOnSales(p, op){
+    let prod = [...onSale]
+    let i = prod.indexOf(p)
+
+    if(op == "+" && prod[i].amount <= 10){
+      prod[i].amount += 1
+    } else {
+      if(prod[i].amount != 0){
+        prod[i].amount -= 1
+      }
+    }
+    
+    setOnSale(prod)
+  }
+
 
   return (
     <div className='bg-blue-gradient'>
@@ -202,7 +218,7 @@ export default function Home() {
                 </p>
 
                 <Button.Group className='items-center self-center'>
-                  <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>
+                  <Button color="gray" onClick={(e) => handleClickChangeQuantityOnSales(p,"-", e)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                     </svg>
@@ -210,7 +226,7 @@ export default function Home() {
                   <Button color="gray" className='cursor-auto p-1 hover:bg-slate-50'>
                     {p.amount}
                   </Button>
-                  <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"+", e)} >
+                  <Button color="gray" onClick={(e) => handleClickChangeQuantityOnSales(p,"+", e)} >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
