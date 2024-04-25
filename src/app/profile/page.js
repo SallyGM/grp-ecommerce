@@ -1046,12 +1046,16 @@ export default function Account() {
                                         />
                                         <h2 className="dark:text-white text-white font-mono">{c.cardName}</h2>
                                         <h2 className="dark:text-white text-white font-mono">{c.cardNumber.slice(-4)}</h2>
-                                        <div className="inline-flex ">
+                                        <div className="flex-col my-8 md:my-0 md:inline-flex relative">
                                             <Tooltip content='Edit your card'>
-                                                <img className="first-line:h-6 w-6 cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/darkwing-free/edit.svg" alt="edit card" onClick={()=> openEditCardModal(c)} disabled={showEditCard}/>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="absolute first-line:h-6 w-6 left-0 bottom-0 cursor-pointer hover:scale-110 hover:text-slate-200"  onClick={()=> openEditCardModal(c)} disabled={showEditCard}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                                </svg>
                                             </Tooltip>
                                             <Tooltip content='Delete your card'>
-                                                <img className="first-line:h-5 w-5  cursor-pointer hover:scale-110 hover:text-slate-200 md:ml-32" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg" alt= "delete card" onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}/>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="absolute first-line:h-6 w-6 right-0 bottom-0 cursor-pointer hover:scale-110 hover:text-slate-200"   onClick={()=> openDeleteCardModal(c)} disabled={showDeleteCard}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                </svg>
                                             </Tooltip>
                                         </div>
 
@@ -1083,7 +1087,7 @@ export default function Account() {
 
                 {/* ORDERED KEYS */}
                 { value ===  2 ? (
-                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="sm:flex sm:flex-col md:overflow-y-auto md:justify-items-center h-auto sm-ml-3 sm:w-56 md:w-full md:my-6 md:mt-24 md:row-start-1 md:row-end-1 md:col-start-2 md:col-end-5 " >
+                    <div style={{ backgroundColor: 'transparent', maxHeight: '80vh', paddingRight: '17px', boxSizing: 'content-box' }} className="overflow-y-auto justify-items-center h-auto sm:flex-col w-72 sm:ml-16 md:w-full md:my-6 mt-24 row-start-1 row-end-1 col-start-2 col-end-5 " >
                         <h5 className="justify-self-center text-center sm:text-2xl md:text-4xl mb-6 font-bold tracking-tight text-white font-mono" > MY ORDERED KEYS</h5>
                         {OrderDetails.length === 0 ? (
                             <div className="text-2xl text-white mt-32 mb-44 bebas-neue-regular text-center">NO ORDERS STORED WITHIN YOUR ACCOUNT.<br/> PLEASE PURCHASE PRODUCTS!!</div>
@@ -1245,12 +1249,14 @@ export default function Account() {
                                         </div>
                                     </div>
                                     <div className='self-start w-full'>
-                                        <a className='ml-3 mb-3 font-bold text-white'>{review.title}</a>
-                                        <p className='ml-3 text-white'style={{ wordWrap: 'break-word' }}>{review.comment}</p>
+                                        <a className='ml-3 mb-3 font-bold text-white mr-3'>{review.title}</a>
+                                        <p className='ml-3 text-white break-words mr-3'>{review.comment}</p>
                                         <div className='flex items-center'>
                                             <div className='ml-auto'>
                                                 <Tooltip content='Delete review'>
-                                                    <img className="h-5 w-5 cursor-pointer hover:scale-110 hover:text-slate-200" style={{ filter: 'brightness(0) invert(1)' }} src="https://www.iconbolt.com/iconsets/flowbite-solid/trash-bin.svg " alt= "delete card" onClick={()=> openDeleteReviewModal(review)} disabled={showDeleteReview}/>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5 w-5 cursor-pointer hover:scale-110 hover:text-slate-200" onClick={()=> openDeleteReviewModal(review)} disabled={showDeleteReview}>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                </svg>
                                                 </Tooltip>
                                             </div>
                                         </div>
