@@ -283,7 +283,7 @@ export default function Login() {
 
             <div>
               <label>Email address</label>
-              <input className="block w-full bg-transparent placeholder:text-grey-200 rounded-md sm:text-sm sm:leading-6 py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
+              <input className="block w-full bg-transparent placeholder:text-grey-200 rounded-md sm:text-sm sm:leading-6 py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-purple focus:shadow-input focus:shadow-focus focus:border focus:border-purple focus:outline-none focus:placeholder:text-white"
               onChange={handleEmailChange} ref={email}/>
                 {emailError && <span style={{ color: 'red', fontSize: '12px' }}>{emailError}</span>}  
             </div>
@@ -300,7 +300,7 @@ export default function Login() {
                 </label>
                 <div className="relative">
                     <input
-                      className="block w-full bg-transparent placeholder:text-grey-200 rounded-md sm:text-sm sm:leading-6 py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
+                      className="block w-full bg-transparent placeholder:text-grey-200 rounded-md sm:text-sm sm:leading-6 py-1.5 px-1.5 mt-2 focus:bg-transparent border-2 border-white hover:shadow-input hover:border-purple focus:shadow-input focus:shadow-focus focus:border focus:border-purple focus:outline-none focus:placeholder:text-white"
                       onChange={handlePasswordChange} ref={password} type={showPassword ? "text" : "password"} name="password"id="password"/>
                         <button
                           type="button"
@@ -353,7 +353,7 @@ export default function Login() {
                   {passwordError && <span style={{ color: 'red', fontSize: '12px' }}>{passwordError}</span>}
               </div>
             </div>
-            <a className="text-sm font-semibold text-white transition hover:text-base hover:text-pink-buster" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
+            <a className="text-sm font-semibold text-white transition hover:text-base hover:text-light-purple" onClick={()=>setShowForgotPassword(true)}>Forgot password?</a>
             <button id="login" className="justify-self-center bold text-white w-full mt-7 bg-green-400 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-300 rounded-lg px-5 py-2.5 me-2 mb-2" type='submit'>LOGIN</button>
           </form>
           
@@ -425,7 +425,7 @@ export default function Login() {
       <form className="text-white self-center font-mono" onSubmit={handleSendResetPasswordVerification}>
         <div className=' mt-2 mb-2 flex-wrap'>  
             <h2 id="email_address" className="flex mb-2 text-white font-mono ">EMAIL ADDRESS*</h2>  
-            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 placeholder:text-grey-200 sm:text-sm sm:leading-6 border-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-fuchsia-800 focus:shadow-input focus:shadow-focus focus:border focus:border-fuchsia-800 focus:outline-none focus:placeholder:text-white"
+            <input className="block w-full bg-transparent rounded-md py-1.5 px-1.5 placeholder:text-grey-200 sm:text-sm sm:leading-6 border-2 border-2 border-white focus:bg-transparent hover:shadow-input hover:border-purple focus:shadow-input focus:shadow-focus focus:border focus:border-purple focus:outline-none focus:placeholder:text-white"
             type="email" id="recover_email" name="recover_email" required onChange={handleForgotPasswordEmailChange} ref={emailModal}/>
             {emailModalError && <span style={{ color: 'red', fontSize: '12px' }}>{emailModalError}</span>}  
         </div>
