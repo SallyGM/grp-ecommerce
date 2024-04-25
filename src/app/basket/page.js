@@ -61,6 +61,10 @@ export default function Home() {
     setCheckOut(false);
   };
 
+  const handleGoBackToHome = () => {
+    router.push("/");
+  };
+
   useEffect(() => {
     if(products.length > 0){
       setAllProducts(products)
@@ -601,7 +605,7 @@ export default function Home() {
       <Modal isVisible={isOrderPlaced} onClose ={()=> setIsOrderPlaced(false)}>
         <h2 className="text-2xl font-bold mb-4">Order Placed Successfully!</h2>
         <p>Your order has been successfully placed. Thank you for shopping with us!</p>
-        <button  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 mt-6 rounded">Close</button>
+        <button  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 mt-6 rounded" onClick={handleGoBackToHome}>Close</button>
       </Modal>
     </Fragment>
   );
