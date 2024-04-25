@@ -34,6 +34,14 @@ module.exports = {
         '8xl':'6rem', /* 96px */
         '9xl':'8rem' /* 128px */
       },
+      borderWidth: {
+        '0': '0',
+        '2': '2px',
+        '3': '3px',
+        '4': '4px',
+        '6': '6px',
+        '8': '8px',
+      },
       boxShadow: {
         'card': '0 0 10px 3px rgba(255, 255, 255, 0.5)',
         'input': '0 0 10px 3px rgba(227, 18, 140, 0.5)',
@@ -41,6 +49,7 @@ module.exports = {
 
       },
       colors: {
+        'dark-night': '#020a4f', // rgb(2,10,79)
         'elite-blue': '#0a1366', // rgb(10,19,102)
         'light-purple': '#f505f5', // rgb(245,5,245)
         'pink-buster': '#E3128C', // rgb(227,18,140)
