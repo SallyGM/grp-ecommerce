@@ -18,6 +18,10 @@ export default function Page({ params }) {
 
 export async function generateStaticParams() {
     const productIDs = ["1ODsYuYVgIYydinlIkkTuvlMG7Wdt0jr",
+    "3456ooof4jtig7sl4z9gjdzcveh8t5cs",
+    "3lz2cch3749x4es8ypes8xwg2tb45oiz",
+    "416ctptvuqzhzhqgyncv5wwo2bx5skca",
+    "7phg5hk2urncfcvlrd60v4r5qy49ilxh",
     "7tilk19afpeo66r9df2ihcfmmzprn2cm",
     "bfbc0u66at1bob0y16041ozseveqbxip",
     "ca06c64znq9w12ue08y1shgtmmhuv17s",
