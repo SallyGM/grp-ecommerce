@@ -200,7 +200,8 @@ export default function Product() {
         ) : (
           <div className='flex flex-row flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 justify-center'>
             {showProduct.map((p, i) => (
-              <Card key={i} className="relative transition hover:scale-110 max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() => 
+              // PRODUCT CARD
+              <Card key={i} className="relative max-w-sm mx-3 mb-3 mt-7 w-72 bg-dark-night border-2 border-dark-night hover:shadow-card text-white transition hover:scale-110" renderImage={() => 
                 <img className="w-full h-52 object-fill cursor-pointer rounded-lg" src={p.images[2]} alt="image 1" onClick={(e) => handleClickOpenProduct(p.id, e)} />}>             
                 {currentUser  ? (
                   (favourite.some(item => item.id === p.id) ? (
@@ -217,11 +218,11 @@ export default function Product() {
                 )}
             
                 <Tooltip content={p.name}>
-                  <h5 key={i} className="text-2xl font-bold tracking-tight line-clamp-2 text-gray-900">
+                  <h5 key={i} className="text-2xl font-semibold tracking-tight line-clamp-2 text-white">
                     {p.name}
                   </h5>
                 </Tooltip>
-                <p className="font-normal text-gray-700">
+                <p className="font-normal text-white">
                   £{(p.price - (p.price * p.discount)).toFixed(2)}
                     {p.discount > 0 ? (
                       <span className='ml-2 line-through text-red-500'>£{p.price.toFixed(2)}</span>
@@ -244,23 +245,23 @@ export default function Product() {
                   )}        
                 </p>
 
-                <Button.Group className='items-center self-center'>
-                  <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
-                    </svg>
-                  </Button>
-                  <Button color="gray" className='cursor-auto p-1 hover:bg-slate-50'>
+                {/* QUANTITY PRODUCT BUTTONS */}
+                <div className='flex grid grid-rows-1 grid-cols-3 justify-content-center'>
+                  <button className='h-12 w-12 mx-auto my-auto bg-elite-blue rounded-full text-white text-2xl hover:shadow-card hover:scale-110 hover:text-light-purple' 
+                  onClick={(e) => handleClickChangeQuantity(p, "-", e)}>
+                    -
+                  </button>
+                  <button className='h-12 w-12 mx-auto my-auto bg-transparent text-light-purple text-2xl hover:scale-110 hover:text-purple'>
                     {p.amount}
-                  </Button>
-                  <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"+", e)} >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                  </Button>
-                </Button.Group>
+                  </button>
+                  <button className='h-12 w-12 mx-auto my-auto bg-elite-blue rounded-full text-white text-2xl hover:shadow-card hover:scale-110 hover:text-light-purple'
+                  onClick={(e) => handleClickChangeQuantity(p,"+", e)}>
+                    +
+                  </button>
+                </div>
 
-                <button className="bg-dark-night rounded-lg text-white p-3 hover:bg-[#0d1a8d]" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
+
+                <button className="bg-dark-night rounded-lg text-white p-3 hover:bg-elite-blue" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
                 
                 {p.quantity == 0 ? (
                   <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:bg-slate-500 rounded-lg text-center justify-center self-center">
