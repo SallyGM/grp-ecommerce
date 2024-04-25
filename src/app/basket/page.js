@@ -230,22 +230,27 @@ export default function Home() {
           const newStock = currentStock - quantity;
           const newSold = currentSold + quantity;
   
-          // Update the stock quantity of the product in the database
-          await update(ref(database, `Product/${productId}`), {
-            quantity: newStock,
-            sold: newSold,
-          });
-          
-  
-          console.log(`Updated stock quantity for product ${productId}`);
+          // make sure the product quantity needs to be valid
+          if(newStock < 0){
+            toast.error("Quantity of the " + productData.name + "is unavailable!")
+            return false;
+          } else {
+            // Update the stock quantity of the product in the database
+            await update(ref(database, `Product/${productId}`), {
+              quantity: newStock,
+              sold: newSold,
+            });
+
+            return true;
+          }
         } else {
           console.log(`Product ${productId} not found in the database`);
+          return false;
         }
       }
-      
     } catch (error) {
       console.error('Error updating product stock:', error);
-      
+      return false;
     }
   };
 
@@ -254,21 +259,26 @@ export default function Home() {
     if((cardNumberError === "" && fullNameError === "" && expirationDateError === "" && cvvError === "") || !defaultPayment){
       try{
         //calling update stock function when order is placed
-        await updateProductStock(userBasket);
-        setCurrentDate(new Date());
-        const gameKey = uuidv4();
+        const stockUpdate = await updateProductStock(userBasket);
+        if(stockUpdate){
+          setCurrentDate(new Date());
+          const gameKey = uuidv4();
 
-        if(defaultPayment){
-          await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
-        cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
+          if(defaultPayment){
+            await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, fullName.current.value,
+          cardNumber.current.value, cvv.current.value, expirationDate.current.value, sortCode.current.value);
+          } else {
+            await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, cards[paymentOption].cardName,
+          cards[paymentOption].cardNumber, cards[paymentOption].securityCode, cards[paymentOption].expDate, cards[paymentOption].sortCode);
+          }
+
+          await clearBasket();
+          toast.success('Ordered placed!');
+          router.push(`/`);
         } else {
-          await createOrder(currentDate.toLocaleDateString('en-GB'), gameKey, basketDiscount, basketPrice, currentUser.uid, cards[paymentOption].cardName,
-        cards[paymentOption].cardNumber, cards[paymentOption].securityCode, cards[paymentOption].expDate, cards[paymentOption].sortCode);
+          toast.error("Please ammend the order to CheckOut")
         }
-
-        await clearBasket();
-        toast.success('Ordered placed!');
-        router.push(`/`);
+        
       } catch (error) {
         console.log("error");
         toast.success('Error placing the order.');
