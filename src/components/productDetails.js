@@ -106,10 +106,10 @@ export default function Page({ productIDParam }) {
             <div>
                 <div className="bg-blue-gradient pb-1">  
                     <div className="flex-row pt-10" >
-                        <div className="flex flex-col gap-20 mr-20 ml-20 w-auto h-auto mb-5" >
-                        <div className='w-full text-center'>
-                            <h1 className="  bebas-neue-regular ">{product.name}</h1>
-                        </div>
+                        <div className="flex flex-col gap-20 mr-20 ml-20 md:w-auto h-10 md:h-auto mb-5" >
+                            <div className='w-full text-center'>
+                                <h1 className="  bebas-neue-regular ">{product.name}</h1>
+                            </div>
 
                         </div> 
                         <div className="flex flex-col md:flex-row gap-20 mr-20 ml-20" >
@@ -138,7 +138,7 @@ export default function Page({ productIDParam }) {
                             </div>
                             <div className='md:w-1/2 w-full '>
                                 <div className="flex-wrap mt-2" style={{ flex: 'wrap', alignItems:"right"}}>
-                                    <div className="flex flex-row justify-between">
+                                    <div className="flex flex-col md:flex-row md:justify-between">
                                     {product.discount > 0 && (
                                             <div>
                                             <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " >
@@ -154,7 +154,7 @@ export default function Page({ productIDParam }) {
                                             <h2 className="text-left roboto-lightLarge  dark:text-white self-center text-white " >Price: £{product.price.toFixed(2)}</h2>
                                         )}
                                         <div>
-                                            <h2 className="text-right flex flex-row roboto-lightLarge text-white">{averageReviews.toFixed(2)}&nbsp;<StarRating rating={averageReviews}></StarRating>&nbsp;({numReviews})</h2>
+                                            <h2 className="md:text-right text-center flex flex-wrap flex-row roboto-lightLarge text-white">{averageReviews.toFixed(2)}&nbsp;<StarRating  rating={averageReviews}></StarRating>&nbsp;({numReviews})</h2>
 
                                         </div>
 
@@ -238,24 +238,26 @@ export default function Page({ productIDParam }) {
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        
                                         {product.quantity == 0 ? (
                                             <button disabled className="bg-slate-600 mt-3 py-3 text-white hover:bg-slate-500 w-full rounded-lg roboto-light">
                                                 
                                                 OUT OF STOCK
                                             </button>
                                             ): (
-                                            <button className='prod_btn w-full rounded-lg roboto-light' hoverClassName='c50edd' onClick={(e) => handleClickAddToCart(product.id, product.amount, e)}>
+                                            <button className='prod_btn w-full  rounded-lg roboto-light' hoverClassName='c50edd' onClick={(e) => handleClickAddToCart(product.id, product.amount, e)}>
                                                 ADD TO CART
                                             </button>
                                             )}
+                                            
                                     </div>
                                 </div>    
                             </div>   
                         </div>
-                        <div className="flex w-full md:w-11/12 gap-2 my-5 mx-5 md:my-20 md:mx-20" >
-                            <div className="">
+                        <div className="flex w-full flex-col md:w-11/12 gap-2  mt-5 md:my-20 md:mx-20" >
+                            <div >
             
-                                <div className="tabs w-11/12">
+                                <div className="tabs ml-8 w-11/12">
                                     <input className="input" name="tabs" type="radio" id="tab-1" checked={activeTab ==='tab-1'} onChange={() => handleTabChange('tab-1')} />
                                     <label className="label rounded-md text-center text-xl self-center mx-2 text-white w-11/12 md:mr-5 md:ml-0" for="tab-1">ABOUT THE GAME</label>
                                     <div className="panel text-lg dark:text-white text-white shadow-2xl h-64 ml-2 md:ml-0 w-11/12 md:w-10/12" style={{ overflowY: 'auto' }} >
