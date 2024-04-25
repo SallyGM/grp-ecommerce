@@ -44,10 +44,6 @@ export default function Home() {
 
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
 
-  // Function to handle modal close
-  const handleCloseModal = () => {
-    setIsOrderPlaced(false);
-  }
 
   function handleClickOpenProduct(productID, e) {
     // Prevent the default action of the anchor tag
@@ -603,9 +599,9 @@ export default function Home() {
     )}
     {/*Check Email modal */}
       <Modal isVisible={isOrderPlaced} onClose ={()=> setIsOrderPlaced(false)}>
-        <h2 className="text-2xl font-bold mb-4">Order Placed Successfully!</h2>
-        <p>Your order has been successfully placed. Thank you for shopping with us!</p>
-        <button  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 mt-6 rounded" onClick={handleGoBackToHome}>Close</button>
+        <h2 className="text-2xl roboto-bold text-center mb-4">Order Placed Successfully!</h2>
+        <p className='text-center roboto-light'>Your order has been successfully placed. Thank you for shopping with us!</p>
+        <button  className="bg-blue-500 hover:bg-blue-600 text-white roboto-bold py-2 px-4 mt-6 rounded" onClick={handleGoBackToHome}>Close</button>
       </Modal>
     </Fragment>
   );
