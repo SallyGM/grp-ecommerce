@@ -110,14 +110,14 @@ export default function Favourites() {
             </div>
         </>
       ) : (
-        <div className="p-6 mx-5 my-5 items-center border border-gray-200 rounded-lg shadow bg-blue-gradient">
+        <div className="p-6 mx-5 my-5 items-center rounded-lg shadow bg-dark-night">
           <h2 className="text-3xl text-center font-bold text-white">Favourites</h2>
           <div className="flex items-center self-center p-4 text-sm text-white rounded-lg bg-transparent dark:bg-gray-800 dark:text-gray-300 " role="alert">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 me-5 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-6 h-6 me-5 text-white">
               <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
             </svg>
             <span className="sr-only">Info</span>
-            <div>
+            <div className="text-xl">
               No items added to favourites yet...
             </div>
           </div>
