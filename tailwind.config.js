@@ -39,7 +39,8 @@ module.exports = {
         'focus': 'inset 0 0 3px 3px rgba(227, 18, 140, 0.5)'
       },
       colors: {
-        'pink-buster': '#E3128C', // rgb(227,18,140)
+        'light-purple': '#f505f5', // rgb(245,5,245)
+        'purple': '#800080' // rgb(128,0,128)
       },
     },
     plugins: [
