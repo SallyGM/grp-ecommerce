@@ -462,7 +462,7 @@ return (
     <div className='flex bg-blue-gradient grid grid-rows-1 grid-cols-1 p-8 justify-content-center bg-dark-night'>
 
       {/*Sign in information card*/}
-      <Card className="justify-self-center w-auto h-auto  my-6 summary-box" >
+      <Card className="justify-self-center w-auto h-auto my-6 summary-box">
   
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
         <br/>
@@ -764,8 +764,8 @@ return (
             </div>
 
             <div className='flex justify-evenly'>
-              <button className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" onClick ={()=>setShowAddCardModal(false)}>DISMISS</button>
-              <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 text-center roboto-light" disabled={isButtonDisabled} onClick={setCardData}>CONFIRM</button>
+              <button className="dismiss-btn text-white rounded-lg text-m px-5 py-2.5 mb-3 text-center roboto-light" onClick ={()=>setShowAddCardModal(false)}>DISMISS</button>
+              <button type="submit" className="confirm-btn text-white rounded-lg text-m px-5 py-2.5 mb-3 text-center roboto-light" disabled={isButtonDisabled} onClick={setCardData}>CONFIRM</button>
             </div>
           </form>
         </div>

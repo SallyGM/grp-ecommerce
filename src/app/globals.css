@@ -41,12 +41,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-end-rgb));
 }
 
 @layer utilities {
@@ -69,8 +64,8 @@ body {
 }
 
 .bg-blue-gradient{
-  background: rgb(2,0,36);
-  background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
+  background: #0b1674;
+  background: linear-gradient(to top, #0b1674 100%, #020a4f 45%);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
@@ -256,8 +251,8 @@ p {
 .panel {
   display: none;
   padding: 20px 30px 30px;
-  background: rgb(2,0,36);
-  background: linear-gradient(180deg, rgba(2,0,36,1) 30%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 175%);
+  background: #0b1674;
+  background: linear-gradient(to top, #0b1674 0%, #0a1366 100%);
   color:white;
   font-family: "Roboto", sans-serif;
   font-weight: 300; 
@@ -328,8 +323,8 @@ p {
 }
 
 .basket_card{
-  background: rgb(5,3,71);
-  background: linear-gradient(180deg, rgba(5,3,71,1) 0%, rgba(6,74,164,1) 100%);
+  background: #0b1674;
+  background: linear-gradient(to top, #0b1674 0%, #0a1366 100%);
   border: 0px;
   border-radius: 8px;
 }
@@ -360,17 +355,16 @@ p {
 
 /* CHECKOUT CSS*/
 .summary-box{
-  background: rgb(2,0,36);
-  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(108,9,121,1) 100%);
+  background: #0a1366; 
   color: white;
   font-family: "Roboto", sans-serif;
   font-weight: 300; 
- border: 0px;
+  border: 0px;
 }
 
 .card-box{
-  background: rgb(2,0,36);
-  background: linear-gradient(180deg,rgb(2,0,36), rgba(6,0,112,1) 34%, rgb(34, 89, 255) 100%);
+  background: #0b1674;
+  background: linear-gradient(to top, #0b1674 0%, #0a1366 100%);
   border: 0px;
   color: white;
   font-family: "Roboto", sans-serif;
@@ -451,30 +445,24 @@ p {
 }
 /*MODAL BUTTONS*/
 .confirm-btn{
-  background:#0a1366;
-  box-shadow: 0 0 0 2px #050347; /* Optional: Add a box shadow for emphasis */
+  background:#050347;
   width: 180px;
   margin-left: 3px;
 }
 .confirm-btn:hover{
-  background: #050347;
-  box-shadow: 0 0 0 2px #050347; /* Optional: Add a box shadow for emphasis */
+  background: #081dda;
   width: 180px;
   margin-left: 3px;
 }
 
 .dismiss-btn{
-  background: transparent;
-  border-color: #0a1366; /* Change to the desired color */
-  box-shadow: 0 0 0 2px #0a1366; /* Optional: Add a box shadow for emphasis */
+  background: #800080;
   width: 180px;
   margin-right: 3px;
   
 }
 .dismiss-btn:hover{
-  background: #0a1366;
-  border-color: #0a1366; /* Change to the desired color */
-  box-shadow: 0 0 0 2px #050347; /* Optional: Add a box shadow for emphasis */
+  background: #f505f5;
   width: 180px;
   margin-right: 3px;
 }

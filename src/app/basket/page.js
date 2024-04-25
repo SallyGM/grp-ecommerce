@@ -350,7 +350,7 @@ export default function Home() {
               <p className=' text-lg roboto-bold'>Total: £{basketPrice.toFixed(2)}</p>
             </div>
           </div>
-          <div className='p-6 w-full md:w-1/2 md:m-5 card-box rounded-lg shadowed-div'>
+          <div className='p-6 w-full md:w-1/2 md:m-5 summary-box rounded-lg shadowed-div'>
           <h2 className='text-center text-xl roboto-bold'>Payment options</h2>
             <form className="max-w-md mx-auto mt-12 roboto-light" onSubmit={handleCheckOutSubmission}>
               {cards.length > 0 ? (
