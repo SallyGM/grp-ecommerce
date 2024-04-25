@@ -29,7 +29,7 @@ export default function Header() {
 
     useEffect(() => {
         // color selected navbar
-        const currentLocation = window.location.href;
+        /*const currentLocation = window.location.href;
         const home = document.getElementById("home");
         const pc = document.getElementById("pc");
         const playstation = document.getElementById("playstation");
@@ -38,46 +38,30 @@ export default function Header() {
         const bestsellers = document.getElementById("bestsellers");
         const onSales = document.getElementById("sales");
 
-        const allFields = [ home, pc, playstation, xbox, nintendo, bestsellers, onSales]
+        const allFields = [ home, pc, playstation, xbox, nintendo, bestsellers, onSales];
+        const locations = ["pc", "playstation", "xbox", "nintendo", "bestsellers", "sales"]
         const excludedLocations = ["pc", "playstation", "xbox", "nintendo", "bestsellers", "sales","register", "login", "basket", "favourites", "profile"];
 
         if(allFields.length > 0) {
             allFields.forEach((e) => {
-                if(e.classList.contains("font-extrabold")){
-                    e.classList.remove("font-extrabold");
-                    e.classList.remove("text-light-purple");
-                    e.classList.remove("border-light-purple")
+                const el = document.getElementById(e.id);
+                if (el) {
+                    if(locations.some(loc => currentLocation.includes(loc) && loc.includes(e.id)) ||
+                    (!excludedLocations.some(loc => currentLocation.includes(loc)) && e.id === "home")) {
+                        el.classList.add("font-extrabold", "text-light-purple", "border-light-purple");
+                    } else {
+                        el.classList.remove("font-extrabold", "text-light-purple", "border-light-purple");
+                        if (!el.classList.contains("text-white")) {
+                            el.classList.add("text-white");
+                        }
+                    }
                 }
-                if(!e.classList.contains("text-white")){
-                    e.classList.add("text-white");
-                }
-                return e;
             })
-        }
-
-        if(allFields.length > 0) {
-            allFields.forEach((e) => {
-                if((currentLocation.includes("pc") && e.id ==="pc") ||
-                (currentLocation.includes("playstation") && e.id ==="playstation") ||
-                (currentLocation.includes("xbox") && e.id ==="xbox") ||
-                (currentLocation.includes("nintendo") && e.id ==="nintendo") ||
-                (currentLocation.includes("bestsellers") && e.id ==="bestsellers") ||
-                (currentLocation.includes("sales") && e.id ==="sales")) {   
-                    e.classList.add("font-extrabold");
-                    e.classList.add("text-light-purple");
-                    e.classList.add("border-light-purple");
-                } else if (!excludedLocations.some(loc => currentLocation.includes(loc)) && e.id ==="home") {
-                    e.classList.add("font-extrabold");
-                    e.classList.add("text-light-purple");
-                    e.classList.add("border-light-purple");
-                }
-                return e;
-            })
-        }
+        }*/
 
         
 
-    }, [window.location.href]);
+    }, [window.location.href, window.location]);
 
     // function that logout the user
     async function signOut(e){
