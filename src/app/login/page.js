@@ -275,8 +275,9 @@ export default function Login() {
     )}
 
 
-    <div className='flex flex-col md:flex-row lg:flex-row bg-blue-gradient'> 
-      <div className="self-center h-screen w-1/2 my-6 my-12 summary-box sm:my-6 sm:mx-6 md:ml-24 md:mr-3 overflow-y-scroll no-scrollbar p-6 rounded-lg shadow" >
+    <div className='flex flex-col md:flex-row lg:flex-row bg-blue-gradient'>
+       {/* LOGIN CARD */}
+      <div className="self-center h-screen w-1/2 my-6 my-12 summary-box shadow-card border-2 border-white sm:my-6 sm:mx-6 md:ml-24 md:mr-3 overflow-y-scroll no-scrollbar p-6 rounded-lg shadow" >
         <h1 className="self-center text-4xl font-bold text-center m-3 text-white font-mono">LOGIN</h1>
         <div className="self-center sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6 text-white font-mono" onSubmit={handleSubmit}>
@@ -385,8 +386,8 @@ export default function Login() {
         </div> 
           
       </div>
-
-      <div className="self-center h-screen w-1/2 my-6 my-12 summary-box sm:my-6 sm:mx-6 md:mr-24 md:ml-3 overflow-y-scroll no-scrollbar p-6 rounded-lg shadow">
+      {/* REGISTER CARD */}
+      <div className="self-center h-screen w-1/2 my-6 my-12 summary-box shadow-card border-2 border-white sm:my-6 sm:mx-6 md:mr-24 md:ml-3 overflow-y-scroll no-scrollbar p-6 rounded-lg shadow">
         <h1 className="self-center text-4xl font-bold text-white font-mono text-center m-3">REGISTER</h1>
         <p className="text-white text-center font-mono my-8  mt-12 mb-12">SIMPLY CLICK ON THE REGISTER BUTTON AND BECOME PART OF A HUGE ONLINE COMMUNITY</p>
 
@@ -417,7 +418,8 @@ export default function Login() {
           </button>
         </div>
       </div>
-  </div>
+    </div>
+    
     {/*Forgot password modal */}
     <Modal isVisible={showForgotPassword}  onClose ={()=> setShowForgotPassword(false)}>
       <h3 className='text-xl flex self-center font-semibold text-white mb-5'>RESET YOUR PASSWORD</h3>

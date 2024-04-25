@@ -462,7 +462,7 @@ return (
     <div className='flex bg-blue-gradient grid grid-rows-1 grid-cols-1 p-8 justify-content-center bg-dark-night'>
 
       {/*Sign in information card*/}
-      <Card className="justify-self-center w-auto h-auto my-6 summary-box">
+      <div className="flex h-full flex-col justify-center gap-4 p-6 rounded-lg justify-self-center w-auto h-auto my-6 summary-box border-2 border-white shadow-card">
   
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white self-center text-white font-mono">PERSONAL INFORMATION</h1>
         <br/>
@@ -655,7 +655,7 @@ return (
                 Sign up with Google
               </Button> 
             </div>
-        </Card>
+        </div>
       </div>
 
       {/* =============================================================================================================== */}

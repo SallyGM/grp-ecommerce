@@ -359,7 +359,7 @@ p {
   color: white;
   font-family: "Roboto", sans-serif;
   font-weight: 300; 
-  border: 0px;
+  /* border: 0px; */
 }
 
 .card-box{
