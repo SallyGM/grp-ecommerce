@@ -1068,7 +1068,7 @@ export default function Account() {
                         <div className='flex mb-10 mt-3 col-span-3 justify-self-center ml-10'>
                             <button
                                 type="submit"
-                                className="w-60 inline-flex text-white self-center bold rounded-lg px-5 py-2.5 pay-btn"
+                                className="inline-flex text-white align-center bold rounded-lg px-5 py-2.5 pay-btn"
                                 onClick={()=> setShowAddCardModal(true)}
                                 disabled={showAddCardModal}> 
                                 ADD NEW CARD
@@ -1526,7 +1526,7 @@ export default function Account() {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="currentColor"
-                                            className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4"
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-10 right-4"
                                             tabIndex="-1"
                                             >
                                             <path
@@ -1547,7 +1547,7 @@ export default function Account() {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="currentColor"
-                                            className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4">
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-10 right-4">
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLineJoin="round"
@@ -1649,7 +1649,7 @@ export default function Account() {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="currentColor"
-                                            className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4"
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-10 right-4"
                                             tabIndex="-1"
                                             >
                                             <path
@@ -1670,7 +1670,7 @@ export default function Account() {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="currentColor"
-                                            className="w-6 select-none cursor-pointer h-6 absolute top-11 right-4">
+                                            className="w-6 select-none cursor-pointer h-6 absolute top-10 right-4">
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLineJoin="round"
