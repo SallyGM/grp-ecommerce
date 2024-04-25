@@ -9,8 +9,6 @@ import { useRouter } from 'next/navigation';
 import { useBasketContext } from '../app/context/BasketContext.js'
 import logo from '../../public/logo_white_magenta.png';
 import Modal from '@/components/modal.js';
-import { Button } from 'flowbite-react';
-
 
 export default function Header() {
 
@@ -24,11 +22,62 @@ export default function Header() {
     const [sizeOfBasket, setSizeOfBasket] = useState(0)
     const [showLogoutModal, setShowLogoutModal] = useState(false); // modal to confirm logout
 
-
     // updates basket size
     useEffect(() => {
         setSizeOfBasket(basketSize)
     }, [basketSize]);
+
+    useEffect(() => {
+        // color selected navbar
+        const currentLocation = window.location.href;
+        const home = document.getElementById("home");
+        const pc = document.getElementById("pc");
+        const playstation = document.getElementById("playstation");
+        const xbox = document.getElementById("xbox");
+        const nintendo = document.getElementById("nintendo");
+        const bestsellers = document.getElementById("bestsellers");
+        const onSales = document.getElementById("sales");
+
+        const allFields = [ home, pc, playstation, xbox, nintendo, bestsellers, onSales]
+        const excludedLocations = ["pc", "playstation", "xbox", "nintendo", "bestsellers", "sales","register", "login", "basket", "favourites", "profile"];
+
+        if(allFields.length > 0) {
+            allFields.forEach((e) => {
+                if(e.classList.contains("font-extrabold")){
+                    e.classList.remove("font-extrabold");
+                    e.classList.remove("text-light-purple");
+                    e.classList.remove("border-light-purple")
+                }
+                if(!e.classList.contains("text-white")){
+                    e.classList.add("text-white");
+                }
+                return e;
+            })
+        }
+
+        if(allFields.length > 0) {
+            allFields.forEach((e) => {
+                if((currentLocation.includes("pc") && e.id ==="pc") ||
+                (currentLocation.includes("playstation") && e.id ==="playstation") ||
+                (currentLocation.includes("xbox") && e.id ==="xbox") ||
+                (currentLocation.includes("nintendo") && e.id ==="nintendo") ||
+                (currentLocation.includes("bestsellers") && e.id ==="bestsellers") ||
+                (currentLocation.includes("sales") && e.id ==="sales")) {   
+                    e.classList.add("font-extrabold");
+                    e.classList.add("text-light-purple");
+                    e.classList.add("border-light-purple");
+                } else if (!excludedLocations.some(loc => currentLocation.includes(loc)) && e.id ==="home") {
+                    e.classList.add("font-extrabold");
+                    e.classList.add("text-light-purple");
+                    e.classList.add("border-light-purple");
+                }
+                return e;
+            })
+        }
+
+        
+
+    }, [window.location.href]);
 
     // function that logout the user
     async function signOut(e){
@@ -134,38 +183,38 @@ export default function Header() {
             <nav className="bg-elite-blue">
                 <div className="max-w-screen-xl mx-auto">
                     <div className="flex justify-center items-center">
-                        <ul className="flex flex-row space-x-8 rtl:space-x-reverse text-sm overflow-x-scroll no-scrollbar">
-                            <li className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                        <ul className="flex flex-row space-x-8 rtl:space-x-reverse text-sm overflow-x-scroll no-scrollbar" >
+                            <li id="home" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
                                 <Link href="/">
                                     HOME
                                 </Link>                     
                             </li>
-                            <li className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="pc" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "pc", type: "console"} }}>
                                     PC
                                 </Link>
                             </li>
-                            <li className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="xbox" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "xbox", type: "console"} }}>
                                     XBOX
                                 </Link>
                             </li>
-                            <li className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="playstation" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "playstation", type: "console"} }}>
                                 PLAYSTATION
                                 </Link>
                             </li>
-                            <li className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="nintendo" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "nintendo", type: "console"} }}>
                                 NINTENDO
                                 </Link>
                             </li>
-                            <li className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="bestsellers" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "", type: "bestsellers"} }}>
                                     BEST SELLERS
                                 </Link>
                             </li>
-                            <li className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="sales" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "", type: "sales"} }}> 
                                     SALES
                                 </Link>
