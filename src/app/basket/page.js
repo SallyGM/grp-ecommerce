@@ -1,5 +1,5 @@
 "use client"; 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { Card, Datepicker } from 'flowbite-react';
 import { useBasketContext } from '../context/BasketContext'
 import { useAuth } from '../context/AuthContext'
@@ -11,7 +11,7 @@ import { get, ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
-import orderPlacedModal from '@/components/orderPlacedModal.js';
+import Modal from '@/components/modal.js';
 
 
 export default function Home() {
@@ -47,9 +47,7 @@ export default function Home() {
   // Function to handle modal close
   const handleCloseModal = () => {
     setIsOrderPlaced(false);
-  };
-
-
+  }
 
   function handleClickOpenProduct(productID, e) {
     // Prevent the default action of the anchor tag
@@ -272,7 +270,6 @@ export default function Home() {
         const stockUpdate = await updateProductStock(userBasket);
 
         
-
         if(stockUpdate){
           setCurrentDate(new Date());
           const gameKey = uuidv4();
@@ -286,9 +283,10 @@ export default function Home() {
           }
 
           await clearBasket();
+          setIsOrderPlaced(true)
           toast.success('Ordered placed!');
           setIsOrderPlaced(true);
-          router.push(`/`);
+          //router.push(`/`);
         } else {
           toast.error("Please ammend the order to CheckOut")
         }
@@ -314,7 +312,8 @@ export default function Home() {
   }
 
   return (
-    (checkOut === true ? (
+    <Fragment>
+    {checkOut === true ? (
       <div className='pt-5 bg-blue-gradient pb-20'>
         <div>
           <h1 className="my-5 mx-5 mb-5 text-3xl text-center dark:text-white self-center text-white bebas-neue-regularLarge">CheckOut</h1>
@@ -480,7 +479,7 @@ export default function Home() {
 
               <div className='flex flex-row gap-20'>
                 <button type="submit" className="pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light"  >Pay</button>
-                <orderConfirmationModal isOpen={isOrderPlaced} onClose={handleCloseModal}></orderConfirmationModal> 
+               
 
                 {/*Button to go back to basket*/}
                 <button type="button" className="pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={handleGoBackToBasket} >Cancel</button>
@@ -597,6 +596,13 @@ export default function Home() {
           }
         
       </div>
-    ))
+    )}
+    {/*Check Email modal */}
+      <Modal isVisible={isOrderPlaced} onClose ={()=> setIsOrderPlaced(false)}>
+        <h2 className="text-2xl font-bold mb-4">Order Placed Successfully!</h2>
+        <p>Your order has been successfully placed. Thank you for shopping with us!</p>
+        <button  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 mt-6 rounded">Close</button>
+      </Modal>
+    </Fragment>
   );
 }
