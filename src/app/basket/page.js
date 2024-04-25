@@ -95,7 +95,7 @@ export default function Home() {
   
           if(b.discount > 0){
             total += parseFloat(b.price - b.price * b.discount).toFixed(2) * quantity;
-            discount += b.price * b.discount
+            discount += b.price * b.discount *b.quantity;
           } else {
             total += price * quantity;
           }
@@ -533,7 +533,7 @@ export default function Home() {
                   <h2 id="sub_total" className="flex w-1/5 text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price).toFixed(2))}</h2>
                   </td>
                   <td className="px-6 py-4">
-                  <h2 id="sub_total" className="flex w-1/5 text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2): parseFloat(b.price * b.quantity).toFixed(2))}</h2>
+                  <h2 id="total" className="flex w-1/5 text-xl dark:text-white text-white roboto-light ">£{(b.discount > 0 ? parseFloat(b.price - b.price * b.discount).toFixed(2)*b.quantity: parseFloat(b.price * b.quantity).toFixed(2))}</h2>
                   </td>
                   <td className="px-6 py-4">
                     <Tooltip content='Remove Product'>
