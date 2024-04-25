@@ -238,9 +238,16 @@ export default function Page({ productIDParam }) {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <button className='prod_btn w-full  rounded-lg roboto-light' hoverClassName='c50edd' onClick={(e) => handleClickAddToCart(product.id, product.amount, e)}>
-                                        ADD TO CART
-                                        </button>
+                                        {product.quantity == 0 ? (
+                                            <button disabled className="bg-slate-600 mt-3 py-3 text-white hover:bg-slate-500 w-full rounded-lg roboto-light">
+                                                
+                                                OUT OF STOCK
+                                            </button>
+                                            ): (
+                                            <button className='prod_btn w-full rounded-lg roboto-light' hoverClassName='c50edd' onClick={(e) => handleClickAddToCart(product.id, product.amount, e)}>
+                                                ADD TO CART
+                                            </button>
+                                            )}
                                     </div>
                                 </div>    
                             </div>   
