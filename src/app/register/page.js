@@ -76,7 +76,6 @@ export default function Home() {
         const data = {
             "firstName": name
         }
-        console.log(data,userId);
 
         // Check if the user already exists in the database
         const userRef = ref(database, 'User/' + userId);
