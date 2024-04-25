@@ -11,6 +11,8 @@ import { get, ref, update } from 'firebase/database';
 import { Tooltip } from 'flowbite-react';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
+import orderPlacedModal from '@/components/orderPlacedModal.js';
+
 
 export default function Home() {
 
@@ -39,6 +41,14 @@ export default function Home() {
   const router = useRouter();
 
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+
+  // Function to handle modal close
+  const handleCloseModal = () => {
+    setIsOrderPlaced(false);
+  };
+
 
 
   function handleClickOpenProduct(productID, e) {
@@ -260,6 +270,9 @@ export default function Home() {
       try{
         //calling update stock function when order is placed
         const stockUpdate = await updateProductStock(userBasket);
+
+        
+
         if(stockUpdate){
           setCurrentDate(new Date());
           const gameKey = uuidv4();
@@ -274,6 +287,7 @@ export default function Home() {
 
           await clearBasket();
           toast.success('Ordered placed!');
+          setIsOrderPlaced(true);
           router.push(`/`);
         } else {
           toast.error("Please ammend the order to CheckOut")
@@ -465,7 +479,8 @@ export default function Home() {
               )}
 
               <div className='flex flex-row gap-20'>
-                <button type="submit" className="pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" >Pay</button>
+                <button type="submit" className="pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light"  >Pay</button>
+                <orderConfirmationModal isOpen={isOrderPlaced} onClose={handleCloseModal}></orderConfirmationModal> 
 
                 {/*Button to go back to basket*/}
                 <button type="button" className="pay-btn text-white rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center roboto-light" onClick={handleGoBackToBasket} >Cancel</button>
