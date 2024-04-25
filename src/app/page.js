@@ -1,5 +1,5 @@
 'use client'
-import { Card, Button, Carousel } from 'flowbite-react';
+import { Card, Button, Carousel, Tooltip } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import React from "react";
 import Slider from "react-slick";
@@ -204,9 +204,11 @@ export default function Home() {
                   <></>
                 )}
               
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 h-20" >
-                  {p.name}
-                </h5>
+                <Tooltip content={p.name}>
+                  <h5 className="text-2xl font-bold tracking-tight line-clamp-2 text-gray-900">
+                    {p.name}
+                  </h5>
+                </Tooltip>
 
                 <p className="font-normal text-gray-700">
                   £{(p.price - (p.price * p.discount)).toFixed(2)}
@@ -307,18 +309,20 @@ export default function Home() {
                 <></>
               )}
              
-              <h5 className="text-2xl font-bold tracking-tight text-gray-900 h-20" >
-                {p.name}
-              </h5>
-              
-                <p className="font-normal text-gray-700">
-                  £{(p.price - (p.price * p.discount)).toFixed(2)}
-                  {p.discount > 0 ? (
-                    <span className='ml-2 text-red-500 line-through'>£{p.price.toFixed(2)}</span>
-                  ) :  (
-                    <></>
-                  )}
-                </p>
+              <Tooltip content={p.name}>
+                <h5 className="text-2xl font-bold tracking-tight line-clamp-2 text-gray-900">
+                  {p.name}
+                </h5>
+              </Tooltip>
+            
+              <p className="font-normal text-gray-700">
+                £{(p.price - (p.price * p.discount)).toFixed(2)}
+                {p.discount > 0 ? (
+                  <span className='ml-2 text-red-500 line-through'>£{p.price.toFixed(2)}</span>
+                ) :  (
+                  <></>
+                )}
+              </p>
 
               <Button.Group className='items-center self-center'>
                 <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>

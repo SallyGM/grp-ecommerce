@@ -130,7 +130,6 @@ body {
 
 }
 
-
 .game-table {
   width: 100%;
   text-align: center; /* Center-align text */
@@ -159,7 +158,6 @@ body {
 .row-1-gt{
   border-top:1px solid rgb(133, 133, 133); 
 }
-
 
 .game-table tr:nth-child(even) {
   background-color: #020a4f;

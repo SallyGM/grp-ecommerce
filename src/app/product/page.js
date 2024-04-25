@@ -2,7 +2,7 @@
 import { Select } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Card, Button} from 'flowbite-react';
+import { Card, Button, Tooltip} from 'flowbite-react';
 import { FaceFrownIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
 import { useProductContext } from '../context/ProductContext';
@@ -201,7 +201,7 @@ export default function Product() {
           <div className='flex flex-row flex-wrap sm:flex-col md:flex-col lg:flex-row xl:flex-row mx-3 mt-3 mb-5 justify-center'>
             {showProduct.map((p, i) => (
               <Card key={i} className="relative transition hover:scale-110 max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() => 
-                <img className="w-full h-60 object-fill cursor-pointer rounded-lg" src={p.images[2]} alt="image 1" onClick={(e) => handleClickOpenProduct(p.id, e)} />}>             
+                <img className="w-full h-52 object-fill cursor-pointer rounded-lg" src={p.images[2]} alt="image 1" onClick={(e) => handleClickOpenProduct(p.id, e)} />}>             
                 {currentUser  ? (
                   (favourite.some(item => item.id === p.id) ? (
                     <svg xmlns="http://www.w3.org/2000/svg" onClick={(e) => handleClickOnFavourite(p.id, e)} viewBox="0 0 24 24" fill="red" className="absolute cursor-pointer left-1 top-1 w-7 h-7">
@@ -216,9 +216,11 @@ export default function Product() {
                   <></>
                 )}
             
-                <h5 key={i} className="text-2xl font-bold tracking-tight h-20 text-gray-900">
-                  {p.name}
-                </h5>
+                <Tooltip content={p.name}>
+                  <h5 key={i} className="text-2xl font-bold tracking-tight line-clamp-2 text-gray-900">
+                    {p.name}
+                  </h5>
+                </Tooltip>
                 <p className="font-normal text-gray-700">
                   £{(p.price - (p.price * p.discount)).toFixed(2)}
                     {p.discount > 0 ? (
@@ -261,20 +263,20 @@ export default function Product() {
                 <button className="bg-dark-night rounded-lg text-white p-3 hover:bg-[#0d1a8d]" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
                 
                 {p.quantity == 0 ? (
-                <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:bg-slate-500 rounded-lg text-center justify-center self-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"className="w-6 h-6 me-3 text-white" >
-                    <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
-                  </svg>
-                  Out of stock
+                  <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:bg-slate-500 rounded-lg text-center justify-center self-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"className="w-6 h-6 me-3 text-white" >
+                      <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
+                    </svg>
+                    Out of stock
+                    </button>
+                  ): (
+                  <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
+                    <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
+                    </svg>
+                    Add to Cart
                   </button>
-                ): (
-                <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
-                  <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
-                    <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
-                  </svg>
-                  Add to Cart
-                </button>
                 )}
               </Card>
             ))}
