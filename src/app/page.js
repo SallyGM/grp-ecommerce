@@ -185,10 +185,10 @@ export default function Home() {
             <span className="sr-only">Loading...</span>
           </div>
         ) : (
-          <div className='px-5'>
-            <Slider className='my-5 pl-3 ml-10 mr-10 self-center' {...settings} >
+          <div className=''>
+            <Slider className='ml-10 mr-10 my-10 self-center' {...settings} >
             {onSale.slice(0, 7).map((p) => (
-              <Card key={p.id} className="relative transition hover:scale-110 bg-white max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() =>
+              <Card key={p.id} className="relative max-w-sm mx-3 mb-3 mt-7 w-72 bg-dark-night border-2 border-dark-night hover:shadow-card text-white transition hover:scale-110" renderImage={() =>
                 <img className="w-full h-40 object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
                 {currentUser  ? (
                   (favourite.some(item => item.id === p.id) ? (
@@ -205,12 +205,12 @@ export default function Home() {
                 )}
               
                 <Tooltip content={p.name}>
-                  <h5 className="text-2xl font-bold tracking-tight line-clamp-2 text-gray-900">
+                  <h5 className="text-2xl font-semibold h-20 tracking-tight line-clamp-2 text-white">
                     {p.name}
                   </h5>
                 </Tooltip>
 
-                <p className="font-normal text-gray-700">
+                <p className="font-normal text-white">
                   £{(p.price - (p.price * p.discount)).toFixed(2)}
                   {p.discount > 0 ? (
                     <span className='ml-2 text-red-500 line-through'>£{p.price.toFixed(2)}</span>
@@ -219,40 +219,40 @@ export default function Home() {
                   )}
                 </p>
 
-                <Button.Group className='items-center self-center'>
-                  <Button color="gray" onClick={(e) => handleClickChangeQuantityOnSales(p,"-", e)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
-                    </svg>
-                  </Button>
-                  <Button color="gray" className='cursor-auto p-1 hover:bg-slate-50'>
+                {/* QUANTITY PRODUCT BUTTONS */}
+                <div className='flex grid grid-rows-1 grid-cols-3 justify-content-center'>
+                  <button className='h-12 w-12 mx-auto my-auto bg-elite-blue rounded-full text-white text-2xl hover:shadow-card hover:scale-110 hover:text-light-purple' 
+                  onClick={(e) => handleClickChangeQuantityOnSales(p, "-", e)}>
+                    -
+                  </button>
+                  <button className='h-12 w-12 mx-auto my-auto bg-transparent text-light-purple text-2xl hover:scale-110 hover:text-purple'>
                     {p.amount}
-                  </Button>
-                  <Button color="gray" onClick={(e) => handleClickChangeQuantityOnSales(p,"+", e)} >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                  </Button>
-                </Button.Group>
+                  </button>
+                  <button className='h-12 w-12 mx-auto my-auto bg-elite-blue rounded-full text-white text-2xl hover:shadow-card hover:scale-110 hover:text-light-purple'
+                  onClick={(e) => handleClickChangeQuantityOnSales(p,"+", e)}>
+                    +
+                  </button>
+                </div>
 
-                <button className="bg-dark-night rounded-lg text-white p-3 hover:bg-[#0d1a8d]" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
+                <button className="p-3 rounded-lg bg-elite-blue text-white hover:text-light-purple hover:shadow-card" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
                 
                 {p.quantity == 0 ? (
-                  <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:bg-slate-500 rounded-lg text-center justify-center self-center">
+                  <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 rounded-lg text-center justify-center self-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"className="w-6 h-6 me-3 text-white" >
                       <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
                     </svg>
                     Out of stock
                     </button>
                   ): (
-                  <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
-                    <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                  <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-elite-blue rounded-lg text-white p-3 m-2 rounded-lg text-center justify-center self-center hover:text-light-purple hover:shadow-card">
+                    <svg className="w-6 h-6 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                       <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
                       <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
                     </svg>
                     Add to Cart
                   </button>
                 )}
+
               </Card>
             ))}
             </Slider>
@@ -293,7 +293,7 @@ export default function Home() {
         <div className='px-5'>
           <Slider className='my-5 pl-3 ml-10 mr-10 self-center' {...settings} >
           {bestsellers.slice(0, 7).map((p) => (
-            <Card key={p.id} className="relative transition hover:scale-110 bg-white max-w-sm mx-3 mb-3 mt-7 w-72" renderImage={() =>
+            <Card key={p.id} className="relative max-w-sm mx-3 mb-3 mt-7 w-72 bg-dark-night border-2 border-dark-night hover:shadow-card text-white transition hover:scale-110" renderImage={() =>
               <img className="w-full h-40 object-cover rounded-lg cursor-pointer" onClick={(e) => handleClickOpenProduct(p.id, e)} src={p.images[1]} alt="image 1" />}>
               {currentUser  ? (
                 (favourite.some(item => item.id === p.id) ? (
@@ -310,12 +310,12 @@ export default function Home() {
               )}
              
               <Tooltip content={p.name}>
-                <h5 className="text-2xl font-bold tracking-tight line-clamp-2 text-gray-900">
+                <h5 className="text-2xl font-semibold tracking-tight line-clamp-2 text-white">
                   {p.name}
                 </h5>
               </Tooltip>
             
-              <p className="font-normal text-gray-700">
+              <p className="font-normal text-white">
                 £{(p.price - (p.price * p.discount)).toFixed(2)}
                 {p.discount > 0 ? (
                   <span className='ml-2 text-red-500 line-through'>£{p.price.toFixed(2)}</span>
@@ -324,39 +324,38 @@ export default function Home() {
                 )}
               </p>
 
-              <Button.Group className='items-center self-center'>
-                <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"-", e)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
-                  </svg>
-                </Button>
-                <Button color="gray" className='cursor-auto p-1 hover:bg-slate-50'>
-                  {p.amount}
-                </Button>
-                <Button color="gray" onClick={(e) => handleClickChangeQuantity(p,"+", e)} >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                  </svg>
-                </Button>
-              </Button.Group>
-
-              <button className="bg-dark-night rounded-lg text-white p-3 hover:bg-[#0d1a8d]" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
-              
-              {p.quantity == 0 ? (
-                <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:bg-slate-500 rounded-lg text-center justify-center self-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"className="w-6 h-6 me-3 text-white" >
-                    <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
-                  </svg>
-                  Out of stock
+              {/* QUANTITY PRODUCT BUTTONS */}
+              <div className='flex grid grid-rows-1 grid-cols-3 justify-content-center'>
+                  <button className='h-12 w-12 mx-auto my-auto bg-elite-blue rounded-full text-white text-2xl hover:shadow-card hover:scale-110 hover:text-light-purple' 
+                  onClick={(e) => handleClickChangeQuantity(p, "-", e)}>
+                    -
                   </button>
-                ): (
-                <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-dark-night rounded-lg text-white p-3 m-2 hover:bg-[#0d1a8d] focus:ring-4 focus:outline-none focus:bg-elite-blue/50 rounded-lg text-center justify-center self-center">
-                  <svg className="w-6 h-6 me-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
-                    <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
-                  </svg>
-                  Add to Cart
-                </button>
+                  <button className='h-12 w-12 mx-auto my-auto bg-transparent text-light-purple text-2xl hover:scale-110 hover:text-purple'>
+                    {p.amount}
+                  </button>
+                  <button className='h-12 w-12 mx-auto my-auto bg-elite-blue rounded-full text-white text-2xl hover:shadow-card hover:scale-110 hover:text-light-purple'
+                  onClick={(e) => handleClickChangeQuantity(p,"+", e)}>
+                    +
+                  </button>
+                </div>
+
+               <button className="p-3 rounded-lg bg-elite-blue text-white hover:text-light-purple hover:shadow-card" onClick={(e) => handleClickOpenProduct(p.id, e)}>View product</button>
+                
+                {p.quantity == 0 ? (
+                  <button disabled className="flex w-full bg-slate-600 rounded-lg text-white p-3 m-2 rounded-lg text-center justify-center self-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"className="w-6 h-6 me-3 text-white" >
+                      <path fillRule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm5-1.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5Zm-6.005 5.805a.75.75 0 0 0 1.06 0 2.75 2.75 0 0 1 3.89 0 .75.75 0 0 0 1.06-1.06 4.25 4.25 0 0 0-6.01 0 .75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
+                    </svg>
+                    Out of stock
+                    </button>
+                  ): (
+                  <button onClick={(e) => handleClickAddToCart(p.id, p.amount, e)} className="flex w-full bg-elite-blue rounded-lg text-white p-3 m-2 rounded-lg text-center justify-center self-center hover:text-light-purple hover:shadow-card">
+                    <svg className="w-6 h-6 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" d="M5 3a1 1 0 0 0 0 2h.7l2.1 10.2a3 3 0 1 0 4 1.8h2.4a3 3 0 1 0 2.8-2H9.8l-.2-1h8.2a1 1 0 0 0 1-.8l1.2-6A1 1 0 0 0 19 6h-2.3c.2.3.3.6.3 1a2 2 0 0 1-2 2 2 2 0 1 1-4 0 2 2 0 0 1-1.7-3H7.9l-.4-2.2a1 1 0 0 0-1-.8H5Z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z" clipRule="evenodd" />
+                    </svg>
+                    Add to Cart
+                  </button>
                 )}
             </Card>
           ))}

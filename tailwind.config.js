@@ -49,11 +49,12 @@ module.exports = {
 
       },
       colors: {
+        'cobalt-blue': '#081cc7', //
         'dark-night': '#020a4f', // rgb(2,10,79)
         'elite-blue': '#0a1366', // rgb(10,19,102)
         'light-purple': '#f505f5', // rgb(245,5,245)
         'pink-buster': '#E3128C', // rgb(227,18,140)
-        'purple': '#800080' // rgb(128,0,128)
+        'purple': '#c50ddd', // rgb(197,13,221)
       },
     },
     plugins: [
