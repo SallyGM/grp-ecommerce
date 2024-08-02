@@ -150,7 +150,7 @@ export default function Login() {
           console.log('Login successful');
           toast.success("Login successful");
           if(Object.keys(guestBasket).length > 0){
-            await registerBasket(newUser)
+            await registerBasket(credential)
             toast.success('Basket Registered Successfull!');
           }
           router.push('/')
