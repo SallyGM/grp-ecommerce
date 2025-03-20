@@ -169,37 +169,37 @@ export default function Header() {
                 <div className="max-w-screen-xl mx-auto">
                     <div className="flex justify-center items-center">
                         <ul className="flex flex-row space-x-8 rtl:space-x-reverse text-sm overflow-x-scroll no-scrollbar" >
-                            <li id="home" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="home" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue border-b-4 border-elite-blue hover:border-light-purple hover:text-light-purple'>
                                 <Link href="/">
                                     HOME
                                 </Link>                     
                             </li>
-                            <li id="pc" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="pc" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "pc", type: "console"} }}>
                                     PC
                                 </Link>
                             </li>
-                            <li id="xbox" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="xbox" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "xbox", type: "console"} }}>
                                     XBOX
                                 </Link>
                             </li>
-                            <li id="playstation" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="playstation" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "playstation", type: "console"} }}>
                                 PLAYSTATION
                                 </Link>
                             </li>
-                            <li id="nintendo" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="nintendo" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "nintendo", type: "console"} }}>
                                 NINTENDO
                                 </Link>
                             </li>
-                            <li id="bestsellers" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="bestsellers" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "", type: "bestsellers"} }}>
                                     BEST SELLERS
                                 </Link>
                             </li>
-                            <li id="sales" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:font-extrabold hover:text-light-purple'>
+                            <li id="sales" className='py-3 px-4 text-base text-white transition border-b-4 border-elite-blue hover:border-light-purple hover:text-light-purple'>
                                 <Link href={{ pathname: '/product', query: {search: "", type: "sales"} }}> 
                                     SALES
                                 </Link>
